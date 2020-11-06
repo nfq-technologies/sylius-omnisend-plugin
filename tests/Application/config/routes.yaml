@@ -1,0 +1,5 @@
+nfq_sylius_omnisend:
+    resource: "@NFQSyliusOmnisendPlugin/Resources/config/shop_routing.yml"
+    prefix: /{_locale}
+    requirements:
+        _locale: ^[a-z]{2}(?:_[A-Z]{2})?$
