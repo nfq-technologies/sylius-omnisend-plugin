@@ -1,0 +1,4 @@
+nfq_sylius_omnisend_test:
+    path: /test
+    defaults:
+        _controller: NFQ\SyliusOmnisendPlugin\Controller\TestController

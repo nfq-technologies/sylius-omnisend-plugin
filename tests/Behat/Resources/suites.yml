@@ -1,0 +1,8 @@
+default:
+    suites:
+        test:
+            contexts:
+                - nfq_sylius_omnisend.context.ui.shop.test
+
+            filters:
+                tags: "@test"
