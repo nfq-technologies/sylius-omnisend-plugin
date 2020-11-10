@@ -1,0 +1,28 @@
+services:
+  _defaults:
+    public: true
+
+  nfq_sylius_omnisend.page.shop.test:
+    class: Tests\NFQ\SyliusOmnisendPlugin\Behat\Page\Shop\TestPage
+    parent: 'sylius.behat.symfony_page'
+    public: true
+
+  nfq_sylius_omnisend.page.admin.channel.update:
+    class: Tests\NFQ\SyliusOmnisendPlugin\Behat\Page\Admin\Channel\UpdatePage
+    parent: 'sylius.behat.page.admin.channel.update'
+    public: true
+
+  nfq_sylius_omnisend.context.ui.shop.test:
+    class: Tests\NFQ\SyliusOmnisendPlugin\Behat\Context\Ui\Shop\TestContext
+    arguments:
+      - '@nfq_sylius_omnisend.page.shop.test'
+
+  nfq_sylius_omnisend.context.ui.admin.managing_channel:
+    class: Tests\NFQ\SyliusOmnisendPlugin\Behat\Context\Ui\Admin\ManagingChannelContext
+    arguments:
+      - '@nfq_sylius_omnisend.page.admin.channel.update'
+
+  nfq_sylius_omnisend.context.hook.doctrine:
+    class: Tests\NFQ\SyliusOmnisendPlugin\Behat\Context\Hook\DoctrineORMContext
+    arguments:
+      - '@doctrine.orm.entity_manager'

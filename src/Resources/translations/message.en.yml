@@ -1,0 +1,3 @@
+nfq_sylius_omnisend_plugin:
+  ui:
+    tracking_key: Omnisend tracking key

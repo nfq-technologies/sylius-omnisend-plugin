@@ -25,10 +25,7 @@ use Webmozart\Assert\Assert;
 
 final class TestContext implements Context
 {
-    /**
-     * @var TestPage
-     */
-    private $testPage;
+    private TestPage $testPage;
 
     public function __construct(TestPage $testPage)
     {

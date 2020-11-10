@@ -6,3 +6,17 @@ default:
 
             filters:
                 tags: "@test"
+
+        omnisend_key:
+            contexts:
+                - nfq_sylius_omnisend.context.hook.doctrine
+                - sylius.behat.context.ui.admin.managing_channels
+                - nfq_sylius_omnisend.context.ui.admin.managing_channel
+                - sylius.behat.context.ui.admin.notification
+                - sylius.behat.context.transform.channel
+                - sylius.behat.context.setup.channel
+                - nfq_sylius_omnisend.context.ui.shop.test
+                - sylius.behat.context.setup.admin_security
+
+            filters:
+                tags: "@omnisend_key"
