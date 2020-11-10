@@ -32,7 +32,7 @@ class ProductPicker
     private $variantID;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $currency;
 
@@ -52,7 +52,7 @@ class ProductPicker
     private $oldPrice;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $title;
 
@@ -117,19 +117,19 @@ class ProductPicker
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getCurrency(): string
+    public function getCurrency(): ?string
     {
         return $this->currency;
     }
 
     /**
-     * @param string $currency
+     * @param string|null $currency
      *
      * @return $this
      */
-    public function setCurrency(string $currency): self
+    public function setCurrency(?string $currency): self
     {
         $this->currency = $currency;
 
@@ -197,19 +197,19 @@ class ProductPicker
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getTitle(): string
+    public function getTitle(): ?string
     {
         return $this->title;
     }
 
     /**
-     * @param string $title
+     * @param string|null $title
      *
      * @return $this
      */
-    public function setTitle(string $title): self
+    public function setTitle(?string $title): self
     {
         $this->title = $title;
 
@@ -237,17 +237,17 @@ class ProductPicker
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getImageUrl(): string
+    public function getImageUrl(): ?string
     {
         return $this->imageUrl;
     }
 
     /**
-     * @param string $imageUrl
+     * @param string|null $imageUrl
      */
-    public function setImageUrl(string $imageUrl): self
+    public function setImageUrl(?string $imageUrl): self
     {
         $this->imageUrl = $imageUrl;
 

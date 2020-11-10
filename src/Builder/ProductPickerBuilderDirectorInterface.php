@@ -20,22 +20,9 @@ declare(strict_types=1);
 namespace NFQ\SyliusOmnisendPlugin\Builder;
 
 use NFQ\SyliusOmnisendPlugin\Model\ProductPicker;
-use Sylius\Component\Core\Model\ProductVariantInterface;
 use Sylius\Component\Core\Model\ProductInterface;
 
-interface ProductPickerBuilderInterface
+interface ProductPickerBuilderDirectorInterface
 {
-    public function createProductPicker();
-
-    public function addIds(ProductInterface $product, ProductVariantInterface $productVariant);
-
-    public function addContent(ProductInterface $product, string $locale);
-
-    public function addPrices(ProductVariantInterface $productVariant);
-
-    public function addImage(ProductInterface $product);
-
-    public function addAdditionalData(ProductInterface $product);
-
-    public function getProductPicker(): ProductPicker;
+    public function build(ProductInterface $product, string $locale): ?ProductPicker;
 }

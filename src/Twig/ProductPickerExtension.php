@@ -15,10 +15,13 @@
  * http://www.nfq.lt
  */
 
+declare(strict_types=1);
+
 namespace NFQ\SyliusOmnisendPlugin\Twig;
 
-use NFQ\SyliusOmnisendPlugin\Builder\ProductPickerBuilderInterface;
+use NFQ\SyliusOmnisendPlugin\Builder\ProductPickerBuilderDirectorInterface;
 use Sylius\Component\Core\Model\ProductInterface;
+use Symfony\Component\Serializer\Normalizer\AbstractObjectNormalizer;
 use Symfony\Component\Serializer\SerializerInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
@@ -26,7 +29,7 @@ use Twig\TwigFunction;
 class ProductPickerExtension extends AbstractExtension
 {
     /**
-     * @var ProductPickerBuilderInterface
+     * @var ProductPickerBuilderDirectorInterface
      */
     private $productPickerBuilder;
 
@@ -36,7 +39,7 @@ class ProductPickerExtension extends AbstractExtension
     private $serializer;
 
     public function __construct(
-        ProductPickerBuilderInterface $productPickerBuilder,
+        ProductPickerBuilderDirectorInterface $productPickerBuilder,
         SerializerInterface $serializer
     ) {
         $this->serializer = $serializer;
@@ -56,7 +59,7 @@ class ProductPickerExtension extends AbstractExtension
             $this->productPickerBuilder->build($product, $locale),
             'json',
             [
-                'remove_empty_tags' => true,
+                AbstractObjectNormalizer::SKIP_NULL_VALUES => true,
             ]
         );
     }

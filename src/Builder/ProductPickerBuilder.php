@@ -20,26 +20,28 @@ declare(strict_types=1);
 namespace NFQ\SyliusOmnisendPlugin\Builder;
 
 use NFQ\SyliusOmnisendPlugin\Model\ProductPicker;
+use NFQ\SyliusOmnisendPlugin\Model\ProductPickerAdditionalDataAwareInterface;
 use NFQ\SyliusOmnisendPlugin\Resolver\ProductImageResolverInterface;
 use Sylius\Component\Channel\Context\ChannelContextInterface;
 use Sylius\Component\Core\Calculator\ProductVariantPricesCalculatorInterface;
+use Sylius\Component\Core\Model\Channel;
 use Sylius\Component\Core\Model\ProductInterface;
+use Sylius\Component\Core\Model\ProductTranslationInterface;
 use Sylius\Component\Core\Model\ProductVariantInterface;
-use Sylius\Component\Product\Resolver\ProductVariantResolverInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
 
 class ProductPickerBuilder implements ProductPickerBuilderInterface
 {
     /**
+     * @var ProductPicker|null
+     */
+    private $productPicker = null;
+
+    /**
      * @var ProductImageResolverInterface
      */
     private $productImageResolver;
-
-    /**
-     * @var ProductVariantResolverInterface
-     */
-    private $productVariantResolver;
 
     /**
      * @var ProductVariantPricesCalculatorInterface
@@ -58,54 +60,88 @@ class ProductPickerBuilder implements ProductPickerBuilderInterface
 
     public function __construct(
         ProductImageResolverInterface $productImageResolver,
-        ProductVariantResolverInterface $productVariantResolver,
         ProductVariantPricesCalculatorInterface $productVariantPricesCalculator,
         ChannelContextInterface $channelContext,
         RouterInterface $router
     ) {
         $this->productImageResolver = $productImageResolver;
-        $this->productVariantResolver = $productVariantResolver;
         $this->productVariantPricesCalculator = $productVariantPricesCalculator;
         $this->channelContext = $channelContext;
         $this->router = $router;
     }
 
-    public function build(ProductInterface $product, string $locale): ProductPicker
+    public function createProductPicker(): void
     {
-        $picker = new ProductPicker();
-        $translation = $product->getTranslation($locale);
-        /** @var ProductVariantInterface $variant */
-        $variant = $this->productVariantResolver->getVariant($product);
+        $this->productPicker = new ProductPicker();
+    }
 
-        return $picker
+    public function getProductPicker(): ProductPicker
+    {
+        return $this->productPicker;
+    }
+
+    public function addIds(ProductInterface $product, ProductVariantInterface $productVariant)
+    {
+        $this->productPicker
             ->setProductID($product->getCode())
-            ->setVariantID($variant->getCode())
+            ->setVariantID($productVariant->getCode());
+    }
+
+    public function addContent(ProductInterface $product, string $locale)
+    {
+        /** @var ProductTranslationInterface $translation */
+        $translation = $product->getTranslation($locale);
+
+        $this->productPicker
             ->setTitle($translation->getName())
             ->setProductUrl(
                 $this->router->generate(
                     'sylius_shop_product_show',
                     [
                         'slug' => $product->getSlug(),
+                        '_locale' => $locale,
                     ],
                     UrlGeneratorInterface::ABSOLUTE_URL
                 )
             )
-            ->setDescription($translation->getDescription())
-            ->setImageUrl($this->productImageResolver->resolve($product))
-            ->setPrice(
-                $this->productVariantPricesCalculator->calculate(
-                    $variant,
-                    [
-                        'channel' => $this->channelContext->getChannel(),
-                    ]
-                )
-            )->setOldPrice(
-                $this->productVariantPricesCalculator->calculate(
-                    $variant,
-                    [
-                        'channel' => $this->channelContext->getChannel(),
-                    ]
-                )
-            )->setCurrency($this->channelContext->getChannel()->getBaseCurrency()->getCode());
+            ->setDescription($translation->getDescription());
+    }
+
+    public function addPrices(ProductVariantInterface $productVariant)
+    {
+        /** @var Channel $channel */
+        $channel = $this->channelContext->getChannel();
+
+        $price = $this->productVariantPricesCalculator->calculate(
+            $productVariant,
+            [
+                'channel' => $channel,
+            ]
+        );
+
+        $oldPrice = $this->productVariantPricesCalculator->calculateOriginal(
+            $productVariant,
+            [
+                'channel' => $channel,
+            ]
+        );
+
+        $this->productPicker
+            ->setPrice($price)
+            ->setOldPrice($oldPrice != $price ? $oldPrice : null)
+            ->setCurrency($channel->getBaseCurrency() ? $channel->getBaseCurrency()->getCode() : null);
+    }
+
+    public function addImage(ProductInterface $product)
+    {
+        $this->productPicker->setImageUrl($this->productImageResolver->resolve($product));
+    }
+
+    public function addAdditionalData(ProductInterface $product)
+    {
+        if ($product instanceof ProductPickerAdditionalDataAwareInterface) {
+            $this->productPicker->setTags($product->getOmnisendTags());
+            $this->productPicker->setVendor($product->getOmnisendVendor());
+        }
     }
 }
