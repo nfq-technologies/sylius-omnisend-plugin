@@ -31,7 +31,7 @@ final class Version20201109235721 extends AbstractMigration
 
     public function up(Schema $schema) : void
     {
-        $this->addSql('ALTER TABLE sylius_channel ADD omnisend_tracking_key VARCHAR(32) NOT NULL');
+        $this->addSql('ALTER TABLE sylius_channel ADD omnisend_tracking_key VARCHAR(32) DEFAULT NULL');
     }
 
     public function down(Schema $schema) : void

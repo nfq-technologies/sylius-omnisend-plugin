@@ -26,7 +26,10 @@ use Webmozart\Assert\Assert;
 
 class ManagingChannelContext implements Context
 {
-    private UpdatePage $channelUpdatePage;
+    /**
+     * @var UpdatePage
+     */
+    private $channelUpdatePage;
 
     public function __construct(UpdatePage $channelUpdatePage)
     {

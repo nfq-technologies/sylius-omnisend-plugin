@@ -27,7 +27,10 @@ use Doctrine\ORM\EntityManagerInterface;
 
 final class DoctrineORMContext implements Context
 {
-    private EntityManagerInterface $entityManager;
+    /**
+     * @var EntityManagerInterface
+     */
+    private $entityManager;
 
     public function __construct(EntityManagerInterface $entityManager)
     {

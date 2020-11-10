@@ -21,7 +21,7 @@ namespace NFQ\SyliusOmnisendPlugin\Model;
 
 interface ChannelOmnisendTrackingKeyInterface
 {
-    public function isOmnisendTrackingKey(): string;
+    public function getOmnisendTrackingKey(): ?string;
 
     public function setOmnisendTrackingKey(string $omnisendTrackingKey): void;
 }

@@ -22,13 +22,13 @@ namespace NFQ\SyliusOmnisendPlugin\Model;
 trait ChannelOmnisendTrackingKeyTrait
 {
     /**
-     * @var string
+     * @var string|null
      *
-     * @ORM\Column(type="string", name="omnisend_tracking_key", length=32)
+     * @ORM\Column(type="string", name="omnisend_tracking_key", length=32, nullable=true)
      */
-    private $omnisendTrackingKey = false;
+    private $omnisendTrackingKey;
 
-    public function isOmnisendTrackingKey(): string
+    public function getOmnisendTrackingKey(): ?string
     {
         return $this->omnisendTrackingKey;
     }

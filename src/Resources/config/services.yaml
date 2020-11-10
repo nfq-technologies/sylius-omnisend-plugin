@@ -17,3 +17,10 @@ services:
       - '@@NFQSyliusOmnisendPlugin/Channel/Admin/_channel_omnisend_key.html.twig'
     tags:
       - { name: kernel.event_listener, event: sonata.block.event.sylius.admin.channel.create.form, method: onBlockEvent }
+
+  nfq_sylius_omnisend_plugin.block_event_listener.sylius.shop.layout.javascripts:
+    class: Sylius\Bundle\UiBundle\Block\BlockEventListener
+    arguments:
+      - '@@NFQSyliusOmnisendPlugin/Shop/Layout/_javascript.html.twig'
+    tags:
+      - { name: kernel.event_listener, event: sonata.block.event.sylius.shop.layout.javascripts, method: onBlockEvent }

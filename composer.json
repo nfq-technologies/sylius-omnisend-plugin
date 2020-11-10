@@ -5,7 +5,7 @@
     "description": "Omnisend plugin for Sylius.",
     "license": "MIT",
     "require": {
-        "php": "^7.4",
+        "php": "^7.3",
         "sylius/sylius": "^1.8",
         "symfony/doctrine-bridge": "4.4.15"
     },
