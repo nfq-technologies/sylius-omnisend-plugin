@@ -1,0 +1,9 @@
+<script type="text/javascript">
+    omnisend.push(
+        [
+            "track",
+            "$productViewed",
+            {{ nfq_sylius_omnisend_product_picker(settings.product, sylius.localeCode)|raw }}
+        ]
+    );
+</script>

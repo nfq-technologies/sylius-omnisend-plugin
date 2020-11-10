@@ -20,6 +20,7 @@ declare(strict_types=1);
 namespace Tests\NFQ\SyliusOmnisendPlugin\Behat\Context\Ui\Shop;
 
 use Behat\Behat\Context\Context;
+use Behat\Gherkin\Node\TableNode;
 use Sylius\Behat\Page\Shop\HomePage;
 use Webmozart\Assert\Assert;
 
@@ -47,5 +48,17 @@ class OmnisendTrackingScriptContext implements Context
     public function iDoNotSeeOmnisendTrackingScript()
     {
         Assert::notContains($this->homePage->getContent(), 'window.omnisend');
+    }
+
+    /**
+     * @Then I see omnisend product picker script with values:
+     */
+    public function iSeeOmnisendProductPickerScript(TableNode $table)
+    {
+        foreach ($table as $rowKey => $row) {
+            $value = is_numeric($row['value']) ? $row['value'] : '"' . $row['value'] . '"';
+//            var_export('"$' . $row['key'] .'":' . $value);
+            Assert::contains($this->homePage->getContent(), '"$' . $row['key'] .'":' . $value);
+        }
     }
 }

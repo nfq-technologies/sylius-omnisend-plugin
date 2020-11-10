@@ -27,8 +27,12 @@ default:
                 - sylius.behat.context.ui.channel
                 - sylius.behat.context.transform.channel
                 - sylius.behat.context.setup.channel
+                - sylius.behat.context.setup.product
                 - nfq_sylius_omnisend.context.ui.shop.omnisend_tracking_script
                 - nfq_sylius_omnisend.context.setup.channel
+                - sylius.behat.context.ui.shop.product
+                - sylius.behat.context.transform.lexical
+                - sylius.behat.context.transform.product
 
             filters:
                 tags: "@shop_tracking_scripts"

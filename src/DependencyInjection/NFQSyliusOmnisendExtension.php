@@ -30,6 +30,18 @@ final class NFQSyliusOmnisendExtension extends Extension
     public function load(array $config, ContainerBuilder $container): void
     {
         $config = $this->processConfiguration($this->getConfiguration([], $container), $config);
+        $container->setParameter(
+            'nfq_sylius_omnisend_plugin.product_image.type',
+            $config['product_image']['type']
+        );
+        $container->setParameter(
+            'nfq_sylius_omnisend_plugin.product_image.filter',
+            $config['product_image']['filter']
+        );
+        $container->setParameter(
+            'nfq_sylius_omnisend_plugin.product_image.default_image',
+            $config['product_image']['default_image']
+        );
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
 
         $loader->load('services.yaml');
