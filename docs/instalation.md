@@ -33,7 +33,24 @@ class Channel extends BaseChannel <b>implements ChannelOmnisendTrackingKeyInterf
 }
 </pre>
 
-5.Migrations should be generated:
+<pre>
+<b>
+use NFQ\SyliusOmnisendPlugin\Model\ContactAwareInterface;
+use NFQ\SyliusOmnisendPlugin\Model\ContactAwareTrait;
+</b>
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="sylius_shop_user")
+ */
+class ShopUser extends BaseShopUser  <b>implements ContactAwareInterface</b>
+{
+    <b>use ContactAwareTrait;</b>
+}
+
+</pre>
+
+5.Migrations should be generated and executed
 
 ```
     bin\console d:m:g
