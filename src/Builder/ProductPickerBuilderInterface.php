@@ -25,17 +25,17 @@ use Sylius\Component\Core\Model\ProductVariantInterface;
 
 interface ProductPickerBuilderInterface
 {
-    public function createProductPicker();
+    public function createProductPicker(): void;
 
-    public function addIds(ProductInterface $product, ProductVariantInterface $productVariant);
+    public function addIds(ProductInterface $product, ProductVariantInterface $productVariant): void;
 
-    public function addContent(ProductInterface $product, string $locale);
+    public function addContent(ProductInterface $product, string $locale): void;
 
-    public function addPrices(ProductVariantInterface $productVariant);
+    public function addPrices(ProductVariantInterface $productVariant): void;
 
-    public function addImage(ProductInterface $product);
+    public function addImage(ProductInterface $product): void;
 
-    public function addAdditionalData(ProductInterface $product);
+    public function addAdditionalData(ProductInterface $product): void;
 
     public function getProductPicker(): ProductPicker;
 }

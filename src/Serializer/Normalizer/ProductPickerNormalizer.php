@@ -25,7 +25,7 @@ use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
 class ProductPickerNormalizer implements NormalizerInterface
 {
-    /** @var ObjectNormalizer */
+    /** @var NormalizerInterface */
     private $normalizer;
 
     public function __construct(NormalizerInterface $normalizer)

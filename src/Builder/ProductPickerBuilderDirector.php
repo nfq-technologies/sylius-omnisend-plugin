@@ -43,7 +43,7 @@ class ProductPickerBuilderDirector implements ProductPickerBuilderDirectorInterf
 
     public function build(ProductInterface $product, string $locale): ?ProductPicker
     {
-        /** @var ProductVariant $variant */
+        /** @var ProductVariant|null $variant */
         $variant = $this->productVariantResolver->getVariant($product);
 
         if (null === $variant) {

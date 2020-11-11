@@ -21,10 +21,10 @@ namespace NFQ\SyliusOmnisendPlugin\Model;
 
 class ProductPicker
 {
-    /** @var string */
+    /** @var string|null */
     private $productID;
 
-    /** @var string */
+    /** @var string|null */
     private $variantID;
 
     /** @var string|null */
@@ -45,7 +45,7 @@ class ProductPicker
     /** @var string|null */
     private $description;
 
-    /** @var string */
+    /** @var string|null */
     private $imageUrl;
 
     /** @var string */
@@ -54,24 +54,24 @@ class ProductPicker
     /** @var string|null */
     private $vendor;
 
-    public function getProductID(): string
+    public function getProductID(): ?string
     {
         return $this->productID;
     }
 
-    public function setProductID(string $productID): self
+    public function setProductID(?string $productID): self
     {
         $this->productID = $productID;
 
         return $this;
     }
 
-    public function getVariantID(): string
+    public function getVariantID(): ?string
     {
         return $this->variantID;
     }
 
-    public function setVariantID(string $variantID): self
+    public function setVariantID(?string $variantID): self
     {
         $this->variantID = $variantID;
 

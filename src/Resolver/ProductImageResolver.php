@@ -51,17 +51,16 @@ class ProductImageResolver implements ProductImageResolverInterface
 
     public function resolve(ProductInterface $product): ?string
     {
-        if ($product->getImagesByType($this->imageType)->count()) {
+        if ($product->getImagesByType($this->imageType)->count() > 0) {
             $images = $product->getImagesByType($this->imageType);
             /** @var ProductImageInterface $image */
             $image = $images->first();
 
             return $this->cache->resolve($image->getPath(), $this->imageFilter);
-        }
-        if ($image = $product->getImages()->first()) {
+        } elseif ($image = $product->getImages()->first()) {
             return $this->cache->resolve($image->getPath(), $this->imageFilter);
         }
 
-        return $this->defaultImage ?: null;
+        return $this->defaultImage !== null ? $this->defaultImage : null;
     }
 }

@@ -28,12 +28,13 @@ use Sylius\Component\Core\Model\Channel;
 use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Core\Model\ProductTranslationInterface;
 use Sylius\Component\Core\Model\ProductVariantInterface;
+use Sylius\Component\Currency\Model\Currency;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
 
 class ProductPickerBuilder implements ProductPickerBuilderInterface
 {
-    /** @var ProductPicker|null */
+    /** @var ProductPicker */
     private $productPicker;
 
     /** @var ProductImageResolverInterface */
@@ -70,14 +71,14 @@ class ProductPickerBuilder implements ProductPickerBuilderInterface
         return $this->productPicker;
     }
 
-    public function addIds(ProductInterface $product, ProductVariantInterface $productVariant)
+    public function addIds(ProductInterface $product, ProductVariantInterface $productVariant): void
     {
         $this->productPicker
             ->setProductID($product->getCode())
             ->setVariantID($productVariant->getCode());
     }
 
-    public function addContent(ProductInterface $product, string $locale)
+    public function addContent(ProductInterface $product, string $locale): void
     {
         /** @var ProductTranslationInterface $translation */
         $translation = $product->getTranslation($locale);
@@ -97,10 +98,12 @@ class ProductPickerBuilder implements ProductPickerBuilderInterface
             ->setDescription($translation->getDescription());
     }
 
-    public function addPrices(ProductVariantInterface $productVariant)
+    public function addPrices(ProductVariantInterface $productVariant): void
     {
         /** @var Channel $channel */
         $channel = $this->channelContext->getChannel();
+        /** @var Currency|null $currency */
+        $currency = $channel->getBaseCurrency();
 
         $price = $this->productVariantPricesCalculator->calculate(
             $productVariant,
@@ -119,15 +122,15 @@ class ProductPickerBuilder implements ProductPickerBuilderInterface
         $this->productPicker
             ->setPrice($price)
             ->setOldPrice($oldPrice != $price ? $oldPrice : null)
-            ->setCurrency($channel->getBaseCurrency() ? $channel->getBaseCurrency()->getCode() : null);
+            ->setCurrency($currency !== null ? $currency->getCode() : null);
     }
 
-    public function addImage(ProductInterface $product)
+    public function addImage(ProductInterface $product): void
     {
         $this->productPicker->setImageUrl($this->productImageResolver->resolve($product));
     }
 
-    public function addAdditionalData(ProductInterface $product)
+    public function addAdditionalData(ProductInterface $product): void
     {
         if ($product instanceof ProductPickerAdditionalDataAwareInterface) {
             $this->productPicker->setTags($product->getOmnisendTags());
