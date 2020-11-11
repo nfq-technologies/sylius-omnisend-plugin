@@ -29,7 +29,7 @@ use Twig\TwigFunction;
 class ProductPickerExtension extends AbstractExtension
 {
     /** @var ProductPickerBuilderDirectorInterface */
-    private $productPickerBuilder;
+    private $productPickerBuilderDirector;
 
     /** @var SerializerInterface */
     private $serializer;
@@ -39,7 +39,7 @@ class ProductPickerExtension extends AbstractExtension
         SerializerInterface $serializer
     ) {
         $this->serializer = $serializer;
-        $this->productPickerBuilder = $productPickerBuilder;
+        $this->productPickerBuilderDirector = $productPickerBuilder;
     }
 
     public function getFunctions(): array
@@ -52,7 +52,7 @@ class ProductPickerExtension extends AbstractExtension
     public function getProductPickerData(ProductInterface $product, string $locale): string
     {
         return $this->serializer->serialize(
-            $this->productPickerBuilder->build($product, $locale),
+            $this->productPickerBuilderDirector->build($product, $locale),
             'json',
             [
                 AbstractObjectNormalizer::SKIP_NULL_VALUES => true,
