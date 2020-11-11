@@ -27,14 +27,10 @@ use Throwable;
 
 class ProductPickerBuilderDirector implements ProductPickerBuilderDirectorInterface
 {
-    /**
-     * @var ProductVariantResolverInterface
-     */
+    /** @var ProductVariantResolverInterface */
     private $productVariantResolver;
 
-    /**
-     * @var ProductPickerBuilderInterface
-     */
+    /** @var ProductPickerBuilderInterface */
     private $productPickerBuilder;
 
     public function __construct(
@@ -64,7 +60,6 @@ class ProductPickerBuilderDirector implements ProductPickerBuilderDirectorInterf
             $this->productPickerBuilder->addAdditionalData($product);
 
             return $this->productPickerBuilder->getProductPicker();
-
         } catch (Throwable $exception) {
             return null;
         }

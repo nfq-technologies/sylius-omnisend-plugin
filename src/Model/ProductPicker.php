@@ -21,74 +21,44 @@ namespace NFQ\SyliusOmnisendPlugin\Model;
 
 class ProductPicker
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     private $productID;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $variantID;
 
-    /**
-     * @var string|null
-     */
+    /** @var string|null */
     private $currency;
 
-    /**
-     * @var array|null
-     */
+    /** @var array|null */
     private $tags;
 
-    /**
-     * @var int
-     */
+    /** @var int */
     private $price;
 
-    /**
-     * @var int|null
-     */
+    /** @var int|null */
     private $oldPrice;
 
-    /**
-     * @var string|null
-     */
+    /** @var string|null */
     private $title;
 
-    /**
-     * @var string|null
-     */
+    /** @var string|null */
     private $description;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $imageUrl;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $productUrl;
 
-    /**
-     * @var string|null
-     */
+    /** @var string|null */
     private $vendor;
 
-    /**
-     * @return string
-     */
     public function getProductID(): string
     {
         return $this->productID;
     }
 
-    /**
-     * @param string $productID
-     *
-     * @return $this
-     */
     public function setProductID(string $productID): self
     {
         $this->productID = $productID;
@@ -96,19 +66,11 @@ class ProductPicker
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getVariantID(): string
     {
         return $this->variantID;
     }
 
-    /**
-     * @param string $variantID
-     *
-     * @return $this
-     */
     public function setVariantID(string $variantID): self
     {
         $this->variantID = $variantID;
@@ -116,19 +78,11 @@ class ProductPicker
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
     public function getCurrency(): ?string
     {
         return $this->currency;
     }
 
-    /**
-     * @param string|null $currency
-     *
-     * @return $this
-     */
     public function setCurrency(?string $currency): self
     {
         $this->currency = $currency;
@@ -136,19 +90,11 @@ class ProductPicker
         return $this;
     }
 
-    /**
-     * @return array|null
-     */
     public function getTags(): ?array
     {
         return $this->tags;
     }
 
-    /**
-     * @param array|null $tags
-     *
-     * @return $this
-     */
     public function setTags(array $tags): self
     {
         $this->tags = $tags;
@@ -156,19 +102,11 @@ class ProductPicker
         return $this;
     }
 
-    /**
-     * @return int
-     */
     public function getPrice(): int
     {
         return $this->price;
     }
 
-    /**
-     * @param int $price
-     *
-     * @return $this
-     */
     public function setPrice(int $price): self
     {
         $this->price = $price;
@@ -176,19 +114,11 @@ class ProductPicker
         return $this;
     }
 
-    /**
-     * @return int|null
-     */
     public function getOldPrice(): ?int
     {
         return $this->oldPrice;
     }
 
-    /**
-     * @param int|null $oldPrice
-     *
-     * @return $this
-     */
     public function setOldPrice(?int $oldPrice): self
     {
         $this->oldPrice = $oldPrice;
@@ -196,19 +126,11 @@ class ProductPicker
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
     public function getTitle(): ?string
     {
         return $this->title;
     }
 
-    /**
-     * @param string|null $title
-     *
-     * @return $this
-     */
     public function setTitle(?string $title): self
     {
         $this->title = $title;
@@ -216,19 +138,11 @@ class ProductPicker
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
     public function getDescription(): ?string
     {
         return $this->description;
     }
 
-    /**
-     * @param string|null $description
-     *
-     * @return $this
-     */
     public function setDescription(?string $description): self
     {
         $this->description = $description;
@@ -236,17 +150,11 @@ class ProductPicker
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
     public function getImageUrl(): ?string
     {
         return $this->imageUrl;
     }
 
-    /**
-     * @param string|null $imageUrl
-     */
     public function setImageUrl(?string $imageUrl): self
     {
         $this->imageUrl = $imageUrl;
@@ -254,19 +162,11 @@ class ProductPicker
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getProductUrl(): string
     {
         return $this->productUrl;
     }
 
-    /**
-     * @param string $productUrl
-     *
-     * @return $this
-     */
     public function setProductUrl(string $productUrl): self
     {
         $this->productUrl = $productUrl;
@@ -274,19 +174,11 @@ class ProductPicker
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
     public function getVendor(): ?string
     {
         return $this->vendor;
     }
 
-    /**
-     * @param string|null $vendor
-     *
-     * @return $this
-     */
     public function setVendor(?string $vendor): self
     {
         $this->vendor = $vendor;

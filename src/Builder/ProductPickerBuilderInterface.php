@@ -20,8 +20,8 @@ declare(strict_types=1);
 namespace NFQ\SyliusOmnisendPlugin\Builder;
 
 use NFQ\SyliusOmnisendPlugin\Model\ProductPicker;
-use Sylius\Component\Core\Model\ProductVariantInterface;
 use Sylius\Component\Core\Model\ProductInterface;
+use Sylius\Component\Core\Model\ProductVariantInterface;
 
 interface ProductPickerBuilderInterface
 {

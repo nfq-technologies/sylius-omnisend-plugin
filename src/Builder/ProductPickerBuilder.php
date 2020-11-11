@@ -33,29 +33,19 @@ use Symfony\Component\Routing\RouterInterface;
 
 class ProductPickerBuilder implements ProductPickerBuilderInterface
 {
-    /**
-     * @var ProductPicker|null
-     */
-    private $productPicker = null;
+    /** @var ProductPicker|null */
+    private $productPicker;
 
-    /**
-     * @var ProductImageResolverInterface
-     */
+    /** @var ProductImageResolverInterface */
     private $productImageResolver;
 
-    /**
-     * @var ProductVariantPricesCalculatorInterface
-     */
+    /** @var ProductVariantPricesCalculatorInterface */
     private $productVariantPricesCalculator;
 
-    /**
-     * @var ChannelContextInterface
-     */
+    /** @var ChannelContextInterface */
     private $channelContext;
 
-    /**
-     * @var RouterInterface
-     */
+    /** @var RouterInterface */
     private $router;
 
     public function __construct(

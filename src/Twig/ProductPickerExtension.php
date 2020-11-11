@@ -28,14 +28,10 @@ use Twig\TwigFunction;
 
 class ProductPickerExtension extends AbstractExtension
 {
-    /**
-     * @var ProductPickerBuilderDirectorInterface
-     */
+    /** @var ProductPickerBuilderDirectorInterface */
     private $productPickerBuilder;
 
-    /**
-     * @var SerializerInterface
-     */
+    /** @var SerializerInterface */
     private $serializer;
 
     public function __construct(

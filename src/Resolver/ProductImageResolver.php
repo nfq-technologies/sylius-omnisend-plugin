@@ -25,24 +25,16 @@ use Sylius\Component\Core\Model\ProductInterface;
 
 class ProductImageResolver implements ProductImageResolverInterface
 {
-    /**
-     * @var CacheManager
-     */
+    /** @var CacheManager */
     private $cache;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $imageType;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $imageFilter;
 
-    /**
-     * @var string|null
-     */
+    /** @var string|null */
     private $defaultImage;
 
     public function __construct(
@@ -65,7 +57,8 @@ class ProductImageResolver implements ProductImageResolverInterface
             $image = $images->first();
 
             return $this->cache->resolve($image->getPath(), $this->imageFilter);
-        } elseif ($image = $product->getImages()->first()) {
+        }
+        if ($image = $product->getImages()->first()) {
             return $this->cache->resolve($image->getPath(), $this->imageFilter);
         }
 

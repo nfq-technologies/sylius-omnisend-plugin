@@ -25,9 +25,7 @@ use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
 class ProductPickerNormalizer implements NormalizerInterface
 {
-    /**
-     * @var ObjectNormalizer
-     */
+    /** @var ObjectNormalizer */
     private $normalizer;
 
     public function __construct(NormalizerInterface $normalizer)
@@ -36,7 +34,7 @@ class ProductPickerNormalizer implements NormalizerInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function normalize($object, $format = null, array $context = [])
     {
@@ -44,7 +42,7 @@ class ProductPickerNormalizer implements NormalizerInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function supportsNormalization($data, $format = null)
     {
