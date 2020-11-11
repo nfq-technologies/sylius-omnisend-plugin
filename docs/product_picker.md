@@ -14,7 +14,7 @@
 ####Additional fields
 
 Omnisend's not mandatory fields (*vendor, tags*) can by configurated 
-by implementing `NFQ\SyliusOmnisendPlugin\Builder\NFQ\SyliusOmnisendPlugin\Model` interface.
+by implementing `NFQ\SyliusOmnisendPlugin\Model\ProductPickerAdditionalDataAwareInterface` interface.
 
 For example:
     

@@ -57,7 +57,6 @@ class OmnisendTrackingScriptContext implements Context
     {
         foreach ($table as $rowKey => $row) {
             $value = is_numeric($row['value']) ? $row['value'] : '"' . $row['value'] . '"';
-//            var_export('"$' . $row['key'] .'":' . $value);
             Assert::contains($this->homePage->getContent(), '"$' . $row['key'] .'":' . $value);
         }
     }
