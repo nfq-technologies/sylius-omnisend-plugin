@@ -15,18 +15,10 @@
  * http://www.nfq.lt
  */
 
-namespace Tests\NFQ\SyliusOmnisendPlugin\Application\Entity;
+declare(strict_types=1);
 
-use NFQ\SyliusOmnisendPlugin\Model\ContactAwareInterface;
-use NFQ\SyliusOmnisendPlugin\Model\ContactAwareTrait;
-use Sylius\Component\Core\Model\ShopUser as BaseShopUser;
-use Doctrine\ORM\Mapping as ORM;
+namespace NFQ\SyliusOmnisendPlugin\Message\Command;
 
-/**
- * @ORM\Entity
- * @ORM\Table(name="sylius_shop_user")
- */
-class ShopUser extends BaseShopUser implements ContactAwareInterface
+interface CommandInterface
 {
-    use ContactAwareTrait;
 }

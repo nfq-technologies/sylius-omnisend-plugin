@@ -19,6 +19,8 @@ declare(strict_types=1);
 
 namespace NFQ\SyliusOmnisendPlugin\Model;
 
+use stdClass;
+
 trait ContactAwareTrait
 {
     /**
@@ -36,5 +38,20 @@ trait ContactAwareTrait
     public function setOmnisendContactId(string $omnisendContactId): void
     {
         $this->omnisendContactId = $omnisendContactId;
+    }
+
+    public function getOmnisendCustomProperties(): ?stdClass
+    {
+        return null;
+    }
+
+    public function getOmnisendTags(): ?array
+    {
+        return null;
+    }
+
+    public function isSubscribedToSMS(): bool
+    {
+        return false;
     }
 }

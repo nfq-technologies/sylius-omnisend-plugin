@@ -19,11 +19,11 @@ final class Version20201111091638 extends AbstractMigration
 
     public function up(Schema $schema) : void
     {
-        $this->addSql('ALTER TABLE sylius_shop_user ADD omnisend_contact_id VARCHAR(32) DEFAULT NULL');
+        $this->addSql('ALTER TABLE sylius_customer ADD omnisend_contact_id VARCHAR(32) DEFAULT NULL');
     }
 
     public function down(Schema $schema) : void
     {
-        $this->addSql('ALTER TABLE sylius_shop_user DROP omnisend_contact_id');
+        $this->addSql('ALTER TABLE sylius_customer DROP omnisend_contact_id');
     }
 }

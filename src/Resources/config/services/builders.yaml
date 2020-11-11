@@ -1,0 +1,24 @@
+services:
+  nfq_sylius_omnisend_plugin.builder.product_picker:
+    class: NFQ\SyliusOmnisendPlugin\Builder\ProductPickerBuilder
+    arguments:
+      - '@nfq_sylius_omnisend_plugin.resolver.product_image'
+      - '@sylius.calculator.product_variant_price'
+      - '@sylius.context.channel.composite'
+      - '@router'
+
+  nfq_sylius_omnisend_plugin.builder.product_picker_director:
+    class: NFQ\SyliusOmnisendPlugin\Builder\ProductPickerBuilderDirector
+    arguments:
+      - '@sylius.product_variant_resolver.default'
+      - '@nfq_sylius_omnisend_plugin.builder.product_picker'
+
+  nfq_sylius_omnisend_plugin.builder.request.contact:
+    class: NFQ\SyliusOmnisendPlugin\Builder\Request\ContactBuilder
+    arguments:
+      - '@nfq_sylius_omnisend_plugin.factory.request.contact_identifier'
+
+  nfq_sylius_omnisend_plugin.builder.request.contact_director:
+    class: NFQ\SyliusOmnisendPlugin\Builder\Request\ContactBuilderDirector
+    arguments:
+      - '@nfq_sylius_omnisend_plugin.builder.request.contact'

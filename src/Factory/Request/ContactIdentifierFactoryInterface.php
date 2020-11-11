@@ -15,19 +15,13 @@
  * http://www.nfq.lt
  */
 
-namespace NFQ\SyliusOmnisendPlugin\Model;
+declare(strict_types=1);
 
-use stdClass;
+namespace NFQ\SyliusOmnisendPlugin\Factory\Request;
 
-interface ContactAwareInterface
+use NFQ\SyliusOmnisendPlugin\Client\Request\Model\ContactIdentifier;
+
+interface ContactIdentifierFactoryInterface
 {
-    public function getOmnisendContactId(): ?string;
-
-    public function setOmnisendContactId(string $omnisendTrackingKey): void;
-
-    public function getOmnisendCustomProperties(): ?stdClass;
-
-    public function getOmnisendTags(): ?array;
-
-    public function isSubscribedToSMS(): bool;
+    public function create(string $type, string $id, string $status): ContactIdentifier;
 }

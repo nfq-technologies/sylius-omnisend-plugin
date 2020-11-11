@@ -15,19 +15,17 @@
  * http://www.nfq.lt
  */
 
-namespace NFQ\SyliusOmnisendPlugin\Model;
+declare(strict_types=1);
 
-use stdClass;
+namespace NFQ\SyliusOmnisendPlugin\Utils;
 
-interface ContactAwareInterface
+use DateTimeInterface;
+use DateTime;
+
+class DatetimeFormatter
 {
-    public function getOmnisendContactId(): ?string;
-
-    public function setOmnisendContactId(string $omnisendTrackingKey): void;
-
-    public function getOmnisendCustomProperties(): ?stdClass;
-
-    public function getOmnisendTags(): ?array;
-
-    public function isSubscribedToSMS(): bool;
+    public static function format(DateTimeInterface $dateTime): string
+    {
+        return $dateTime->format(DateTime::ATOM);
+    }
 }

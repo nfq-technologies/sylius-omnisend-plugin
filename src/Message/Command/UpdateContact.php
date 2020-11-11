@@ -15,19 +15,24 @@
  * http://www.nfq.lt
  */
 
-namespace NFQ\SyliusOmnisendPlugin\Model;
+declare(strict_types=1);
 
-use stdClass;
+namespace NFQ\SyliusOmnisendPlugin\Message\Command;
 
-interface ContactAwareInterface
+class UpdateContact implements CommandInterface
 {
-    public function getOmnisendContactId(): ?string;
+    /** @var int */
+    private $customerId;
 
-    public function setOmnisendContactId(string $omnisendTrackingKey): void;
+    public function getCustomerId(): int
+    {
+        return $this->customerId;
+    }
 
-    public function getOmnisendCustomProperties(): ?stdClass;
+    public function setCustomerId(int $customerId): self
+    {
+        $this->customerId = $customerId;
 
-    public function getOmnisendTags(): ?array;
-
-    public function isSubscribedToSMS(): bool;
+        return $this;
+    }
 }

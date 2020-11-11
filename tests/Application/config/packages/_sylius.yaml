@@ -20,9 +20,9 @@ sylius_channel:
         channel:
             classes:
                 model: Tests\NFQ\SyliusOmnisendPlugin\Application\Entity\Channel
-sylius_user:
+
+sylius_customer:
     resources:
-        shop:
-            user:
-                classes:
-                    model: Tests\NFQ\SyliusOmnisendPlugin\Application\Entity\ShopUser
+        customer:
+            classes:
+                model: Tests\NFQ\SyliusOmnisendPlugin\Application\Entity\Customer

@@ -42,6 +42,10 @@ final class NFQSyliusOmnisendExtension extends Extension
             'nfq_sylius_omnisend_plugin.product_image.default_image',
             $config['product_image']['default_image']
         );
+        $container->setParameter(
+            'nfq_sylius_omnisend_plugin.send_welcome_message',
+            $config['send_welcome_message']
+        );
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
 
         $loader->load('services.yaml');

@@ -40,6 +40,13 @@ final class Configuration implements ConfigurationInterface
                             ->scalarNode('default_image')->defaultValue('https://placehold.it/400x30')->end()
                         ->end()
                     ->end()
+                    ->arrayNode('send_welcome_message')
+                        ->addDefaultsIfNotSet()
+                        ->children()
+                            ->booleanNode('email')->defaultValue(true)->end()
+                            ->booleanNode('phone')->defaultValue(false)->end()
+                        ->end()
+                    ->end()
                 ->end()
             ->end();
 

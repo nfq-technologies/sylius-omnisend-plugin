@@ -1,0 +1,8 @@
+services:
+  nfq_sylius_omnisend_plugin.twig.product_picker_extension:
+    class: NFQ\SyliusOmnisendPlugin\Twig\ProductPickerExtension
+    arguments:
+      - '@nfq_sylius_omnisend_plugin.builder.product_picker_director'
+      - '@serializer'
+    tags:
+      - { name: twig.extension }
