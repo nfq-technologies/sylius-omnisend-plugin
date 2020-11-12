@@ -42,10 +42,21 @@ class ChannelContext implements Context
     /**
      * @Given the channel :channel has omnisend tracking key with a value :key
      */
-    public function theChannelIsDisabled(ChannelInterface $channel, string $key)
+    public function theChannelHasOmnisendTrackingKey(ChannelInterface $channel, string $key)
     {
         /** @var ChannelOmnisendTrackingAwareInterface $channel */
         $channel->setOmnisendTrackingKey($key);
+        $this->channelManager->flush();
+        $this->sharedStorage->set('channel', $channel);
+    }
+
+    /**
+     * @Given the channel :channel has omnisend api key with a value :key
+     */
+    public function theChannelHasOmnisendApiKey(ChannelInterface $channel, string $key)
+    {
+        /** @var ChannelOmnisendTrackingAwareInterface $channel */
+        $channel->setOmnisendApiKey($key);
         $this->channelManager->flush();
         $this->sharedStorage->set('channel', $channel);
     }
