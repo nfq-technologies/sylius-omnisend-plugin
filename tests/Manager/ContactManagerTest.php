@@ -71,7 +71,7 @@ class ContactManagerTest extends TestCase
             ->expects($this->exactly(1))
             ->method('add');
 
-        $this->manager->create($customer);
+        $this->manager->create($customer, 'default');
 
         $this->assertEquals($customer->getOmnisendContactId(), 'ID');
     }
@@ -91,7 +91,7 @@ class ContactManagerTest extends TestCase
             ->expects($this->never())
             ->method('add');
 
-        $this->manager->create($customer);
+        $this->manager->create($customer, 'default');
 
         $this->assertEquals($customer->getOmnisendContactId(), null);
     }

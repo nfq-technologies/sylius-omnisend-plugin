@@ -23,7 +23,7 @@ use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Contact;
 
 interface OmnisendClientInterface
 {
-    public function postContact(Contact $contact, string $channelCode);
+    public function postContact(Contact $contact, ?string $channelCode): ?object;
 
-    public function patchContact(string $contactId, Contact $contact, string $channelCode);
+    public function patchContact(string $contactId, Contact $contact, ?string $channelCode): void;
 }

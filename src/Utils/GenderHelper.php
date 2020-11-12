@@ -21,10 +21,11 @@ namespace NFQ\SyliusOmnisendPlugin\Utils;
 
 class GenderHelper
 {
+    /** @var string[]|array */
     private static $genders = ['m', 'f'];
 
     public static function resolve(?string $gender): ?string
     {
-        return in_array($gender, self::$genders) ? $gender : null;
+        return in_array($gender, self::$genders, true) ? $gender : null;
     }
 }

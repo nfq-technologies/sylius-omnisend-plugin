@@ -41,12 +41,12 @@ class UpdateContactHandler implements MessageHandlerInterface
         $this->contactManager = $contactManager;
     }
 
-    public function __invoke(UpdateContact $message)
+    public function __invoke(UpdateContact $message): void
     {
         /** @var CustomerInterface|null $customer */
         $customer = $this->customerRepository->find($message->getCustomerId());
 
-        if ($customer) {
+        if (null !== $customer) {
             $this->contactManager->update($customer, $message->getChannelCode());
         }
     }

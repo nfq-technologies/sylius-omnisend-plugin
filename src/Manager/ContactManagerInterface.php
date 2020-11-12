@@ -23,7 +23,7 @@ use Sylius\Component\Core\Model\CustomerInterface;
 
 interface ContactManagerInterface
 {
-    public function create(CustomerInterface $customer, string $channelCode);
+    public function create(CustomerInterface $customer, ?string $channelCode): void;
 
-    public function update(CustomerInterface $customer, string $channelCode);
+    public function update(CustomerInterface $customer, ?string $channelCode): void;
 }

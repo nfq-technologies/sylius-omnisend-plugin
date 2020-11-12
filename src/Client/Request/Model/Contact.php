@@ -39,7 +39,7 @@ class Contact
     /** @var string|null */
     private $createdAt;
 
-    /** @var string[]|array */
+    /** @var string[]|array|null */
     private $tags;
 
     /** @var string|null */
@@ -74,7 +74,7 @@ class Contact
         $this->identifiers = [];
     }
 
-    public function getIdentifiers()
+    public function getIdentifiers(): ?array
     {
         return $this->identifiers;
     }

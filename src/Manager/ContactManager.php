@@ -47,25 +47,25 @@ class ContactManager implements ContactManagerInterface
         $this->customerRepository = $customerRepository;
     }
 
-    public function create(CustomerInterface $customer, string $channelCode)
+    /** @var CustomerInterface&ContactAwareInterface $customer */
+    public function create(CustomerInterface $customer, ?string $channelCode): void
     {
-        /** @var CustomerInterface&ContactAwareInterface $customer */
-        /** @var ContactSuccess $response */
+        /** @var ContactSuccess|null $response */
         $response = $this->omnisendClient->postContact(
             $this->contactBuilderDirector->build($customer),
             $channelCode
         );
 
-        if ($response) {
+        if (null !== $response) {
             $customer->setOmnisendContactId($response->getContactID());
             $this->customerRepository->add($customer);
         }
     }
 
     /** @var CustomerInterface&ContactAwareInterface $customer */
-    public function update(CustomerInterface $customer, string $channelCode)
+    public function update(CustomerInterface $customer, ?string $channelCode): void
     {
-        if ($customer->getOmnisendContactId()) {
+        if ($customer->getOmnisendContactId() !== null) {
             $this->omnisendClient->patchContact(
                 $customer->getOmnisendContactId(),
                 $this->contactBuilderDirector->build($customer),

@@ -17,3 +17,7 @@ parameters:
         - '/Only booleans are allowed in an elseif condition, Sylius\\Component\\Core\\Model\\ImageInterface\|false given./'
         - '/Method NFQ\\SyliusOmnisendPlugin\\Serializer\\NameConverter\\ProductPickerNameConverter::normalize\(\) has parameter \$propertyName with no typehint specified./'
         - '/Method NFQ\\SyliusOmnisendPlugin\\Serializer\\NameConverter\\ProductPickerNameConverter::denormalize\(\) has parameter \$propertyName with no typehint specified./'
+        - '/Variable method call on NFQ\\SyliusOmnisendPlugin\\Client\\Request\\Model\\ContactIdentifierChannel./'
+        - '/Call to an undefined method Sylius\\Component\\Core\\Model\\CustomerInterface::setOmnisendContactId\(\)./'
+        - '/Call to an undefined method Sylius\\Component\\Core\\Model\\CustomerInterface::getOmnisendContactId\(\)./'
+        - '/Method NFQ\\SyliusOmnisendPlugin\\Client\\OmnisendClient::parseResponse\(\) has no return typehint specified./'

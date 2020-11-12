@@ -28,10 +28,10 @@ class DatetimeProvider
 
     public static function currentDateTime(): DateTime
     {
-        return self::$datetime ?: new Datetime();
+        return self::$datetime !== null ? self::$datetime : new Datetime();
     }
 
-    public static function setDateTime(Datetime $datetime)
+    public static function setDateTime(Datetime $datetime): void
     {
         self::$datetime = $datetime;
     }

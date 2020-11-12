@@ -53,6 +53,7 @@ class MessageFactory
         return $this->factory;
     }
 
+    /** @param mixed $data */
     public function create(string $type, string $url, $data): RequestInterface
     {
         /** @var ChannelOmnisendTrackingAwareInterface $channel */
@@ -65,7 +66,7 @@ class MessageFactory
                 'Content-Type' => 'application/json',
                 'X-API-KEY' => '5c5af4578653ed7d78a067e5-EgZ7yp8GF0TV49JBSo7a0xRv2hjP2vmZkbTEi5xq327uK4pnxj'//TODO: $channel->getOmnisendTrackingKey()
             ],
-            $data ?
+            $data !== null ?
                 $this->serializer->serialize(
                     $data,
                     'json',

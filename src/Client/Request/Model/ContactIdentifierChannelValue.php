@@ -27,7 +27,7 @@ class ContactIdentifierChannelValue
     /** @var string */
     private $status;
 
-    /** @var string */
+    /** @var string|null */
     private $statusDate;
 
     public function getStatus(): string
@@ -42,12 +42,12 @@ class ContactIdentifierChannelValue
         return $this;
     }
 
-    public function getStatusDate(): string
+    public function getStatusDate(): ?string
     {
         return $this->statusDate;
     }
 
-    public function setStatusDate(string $statusDate): self
+    public function setStatusDate(?string $statusDate): self
     {
         $this->statusDate = $statusDate;
 

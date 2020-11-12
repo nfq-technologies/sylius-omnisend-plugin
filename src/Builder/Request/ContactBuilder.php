@@ -33,7 +33,7 @@ class ContactBuilder implements ContactBuilderInterface
     /** @var Contact */
     private $contact;
 
-    /** ContactIdentifierFactoryInterface */
+    /** @var ContactIdentifierFactoryInterface */
     private $contactIdentifierFactory;
 
     public function __construct(ContactIdentifierFactoryInterface $contactIdentifierFactory)
@@ -48,7 +48,7 @@ class ContactBuilder implements ContactBuilderInterface
 
     public function addIdentifiers(CustomerInterface $customer): void
     {
-        if ($customer->getEmail()) {
+        if (null !== $customer->getEmail()) {
             $this->contact->addIdentifier(
                 $this->contactIdentifierFactory->create(
                     ContactIdentifier::TYPE_EMAIL,
@@ -59,7 +59,7 @@ class ContactBuilder implements ContactBuilderInterface
         }
 
         /** @var ContactAwareInterface&CustomerInterface $customer */
-        if ($customer->getPhoneNumber()) {
+        if (null !== $customer->getPhoneNumber()) {
             $this->contact->addIdentifier(
                 $this->contactIdentifierFactory->create(
                     ContactIdentifier::TYPE_PHONE,
@@ -76,7 +76,7 @@ class ContactBuilder implements ContactBuilderInterface
             ->setFirstName($customer->getFirstName())
             ->setLastName($customer->getLastName())
             ->setGender(GenderHelper::resolve($customer->getGender()))
-            ->setBirthday($customer->getBirthday() ? DatetimeHelper::format($customer->getBirthday()) : null)
+            ->setBirthday($customer->getBirthday() !== null ? DatetimeHelper::format($customer->getBirthday()) : null)
             ->setCreatedAt(DatetimeHelper::format($customer->getCreatedAt()));
     }
 
@@ -94,7 +94,6 @@ class ContactBuilder implements ContactBuilderInterface
 
     public function addCustomProperties(CustomerInterface $customer): void
     {
-        /** @var ContactAwareInterface $customer */
         if ($customer instanceof ContactAwareInterface) {
             $this->contact
                 ->setTags($customer->getOmnisendTags())

@@ -21,14 +21,14 @@ services:
   nfq_sylius_omnisend_plugin.client.omnisend:
     class: NFQ\SyliusOmnisendPlugin\Client\OmnisendClient
     arguments:
-      - '@httplug.client.omnisend'
+      - '@nfq_sylius_omnisend_plugin.http_client.factory'
       - '@serializer'
       - '@nfq_sylius_omnisend_plugin.client.message_factory'
 
   nfq_sylius_omnisend_plugin.http_client.factory:
     class: NFQ\SyliusOmnisendPlugin\HttpClient\ClientFactory
     arguments:
-      - '@sylius.repository.client'
+      - '@sylius.repository.channel'
 
   nfq_sylius_omnisend_plugin.client.message_factory:
     class: NFQ\SyliusOmnisendPlugin\Client\MessageFactory

@@ -41,12 +41,12 @@ class CreateContactHandler implements MessageHandlerInterface
         $this->contactManager = $contactManager;
     }
 
-    public function __invoke(CreateContact $message)
+    public function __invoke(CreateContact $message): void
     {
         /** @var CustomerInterface|null $customer */
         $customer = $this->customerRepository->find($message->getCustomerId());
 
-        if ($customer) {
+        if (null !== $customer) {
             $this->contactManager->create($customer, $message->getChannelCode());
         }
     }

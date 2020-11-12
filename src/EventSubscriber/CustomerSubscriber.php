@@ -58,7 +58,7 @@ class CustomerSubscriber implements EventSubscriberInterface
         ];
     }
 
-    public function onCreate(ResourceControllerEvent $event)
+    public function onCreate(ResourceControllerEvent $event): void
     {
         /** @var CustomerInterface $customer */
         $customer = $event->getSubject();
@@ -72,7 +72,7 @@ class CustomerSubscriber implements EventSubscriberInterface
         );
     }
 
-    public function onUpdate(ResourceControllerEvent $event)
+    public function onUpdate(ResourceControllerEvent $event): void
     {
         /** @var CustomerInterface $customer */
         $customer = $event->getSubject();
@@ -86,22 +86,22 @@ class CustomerSubscriber implements EventSubscriberInterface
         );
     }
 
-    public function onAddressUpdate(ResourceControllerEvent $event)
+    public function onAddressUpdate(ResourceControllerEvent $event): void
     {
         /** @var AddressInterface $address */
         $address = $event->getSubject();
-        /** @var Customer $customer */
+        /** @var Customer|null $customer */
         $customer = $address->getCustomer();
 
         if (
-            $customer &&
-            $customer->getDefaultAddress() &&
+            $customer !== null &&
+            $customer->getDefaultAddress() !== null &&
             $address->getId() === $customer->getDefaultAddress()->getId()
         ) {
             $this->messageBus->dispatch(
                 new Envelope(
                     (new UpdateContact())
-                        ->setCustomerId($address->getCustomer()->getId())
+                        ->setCustomerId($customer->getId())
                         ->setChannelCode($this->channelContext->getChannel()->getCode())
                 )
             );

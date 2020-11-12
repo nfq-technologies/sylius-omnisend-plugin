@@ -32,6 +32,7 @@ class ContactIdentifierFactory implements ContactIdentifierFactoryInterface
     /** @var array */
     private $sendWelcomeMessageConfig;
 
+    /** @var string[]|array */
     private $typesMap = [
         ContactIdentifier::TYPE_EMAIL => 'email',
         ContactIdentifier::TYPE_PHONE => 'sms',

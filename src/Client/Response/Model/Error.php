@@ -21,14 +21,15 @@ namespace NFQ\SyliusOmnisendPlugin\Client\Response\Model;
 
 class Error
 {
+    /** @var string */
     private $error;
 
-    public function getError()
+    public function getError(): string
     {
         return $this->error;
     }
 
-    public function setError($error): void
+    public function setError(string $error): void
     {
         $this->error = $error;
     }

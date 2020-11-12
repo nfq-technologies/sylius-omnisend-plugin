@@ -24,8 +24,12 @@ use DateTime;
 
 class DatetimeHelper
 {
-    public static function format(DateTimeInterface $dateTime): string
+    public static function format(?DateTimeInterface $dateTime): ?string
     {
-        return $dateTime->format(DateTime::ATOM);
+        if (null !== $dateTime) {
+            return $dateTime->format(DateTime::ATOM);
+        }
+
+        return null;
     }
 }

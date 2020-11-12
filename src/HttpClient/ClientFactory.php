@@ -41,10 +41,13 @@ class ClientFactory
         $this->channelRepository = $channelRepository;
     }
 
-    public function create(string $channelCode): HttpClient
+    public function create(?string $channelCode): HttpClient
     {
-        /** @var ChannelOmnisendTrackingAwareInterface $channel */
-        $channel = $this->channelRepository->findOneByCode($channelCode);
+        $channel = null;
+        if (null !== $channelCode) {
+            /** @var ChannelOmnisendTrackingAwareInterface $channel */
+            $channel = $this->channelRepository->findOneByCode($channelCode);
+        }
         $client = HttpClientDiscovery::find();
 
         /**

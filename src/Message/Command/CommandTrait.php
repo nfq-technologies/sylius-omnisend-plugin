@@ -21,15 +21,15 @@ namespace NFQ\SyliusOmnisendPlugin\Message\Command;
 
 trait CommandTrait
 {
-    /** @var string */
+    /** @var string|null */
     private $channelCode;
 
-    public function getChannelCode(): string
+    public function getChannelCode(): ?string
     {
         return $this->channelCode;
     }
 
-    public function setChannelCode(string $channel): self
+    public function setChannelCode(?string $channel): self
     {
         $this->channelCode = $channel;
 

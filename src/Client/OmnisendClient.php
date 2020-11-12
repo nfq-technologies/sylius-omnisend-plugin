@@ -50,13 +50,14 @@ class OmnisendClient implements LoggerAwareInterface, OmnisendClientInterface
         ClientFactory $httpClient,
         SerializerInterface $serializer,
         MessageFactory $messageFactory
-    ) {
+    )
+    {
         $this->messageFactory = $messageFactory;
         $this->serializer = $serializer;
         $this->clientFactory = $httpClient;
     }
 
-    public function postContact(Contact $contact, string $channelCode)
+    public function postContact(Contact $contact, ?string $channelCode): ?object
     {
         $response = $this->sendRequest(
             $this->messageFactory->create(
@@ -70,9 +71,9 @@ class OmnisendClient implements LoggerAwareInterface, OmnisendClientInterface
         return $this->parseResponse($response, ContactSuccess::class);
     }
 
-    public function patchContact(string $contactId, Contact $contact, string $channelCode)
+    public function patchContact(string $contactId, Contact $contact, ?string $channelCode): void
     {
-        $response = $this->sendRequest(
+        $this->sendRequest(
             $this->messageFactory->create(
                 'PATCH',
                 self::API_VERSION . self::URL_PATH_CONTACTS . '/' . $contactId,
@@ -80,31 +81,28 @@ class OmnisendClient implements LoggerAwareInterface, OmnisendClientInterface
             ),
             $channelCode
         );
-
-        return $this->parseResponse($response);
     }
 
-    private function sendRequest(RequestInterface $request, string $channelCode): ?ResponseInterface
+    private function sendRequest(RequestInterface $request, ?string $channelCode): ?ResponseInterface
     {
         try {
             return $this->clientFactory->create($channelCode)->sendRequest($request);
         } catch (HttpException $requestException) {
-            $response = null;
-            if (null !== $requestException->getResponse()) {
-                $response = [
-                    'status' => $requestException->getResponse()->getStatusCode(),
-                    'headers' => $requestException->getResponse()->getHeaders(),
-                    'partial_body' => $requestException->getResponse()->getBody()->read(255),
-                ];
-            }
+            $response = [
+                'status' => $requestException->getResponse()->getStatusCode(),
+                'headers' => $requestException->getResponse()->getHeaders(),
+                'partial_body' => $requestException->getResponse()->getBody()->read(255),
+            ];
 
-            $this->logger->critical(
-                'Request to Omnisend API failed.',
-                [
-                    'request_data' => $request->getBody()->getContents(),
-                    'response' => $response,
-                ]
-            );
+            if ($this->logger !== null) {
+                $this->logger->critical(
+                    'Request to Omnisend API failed.',
+                    [
+                        'request_data' => $request->getBody()->getContents(),
+                        'response' => $response,
+                    ]
+                );
+            }
 
             return null;
         }
@@ -112,7 +110,7 @@ class OmnisendClient implements LoggerAwareInterface, OmnisendClientInterface
 
     private function parseResponse(?ResponseInterface $response, ?string $type = null)
     {
-        if ($response && $response->getStatusCode() === 200) {
+        if ($response !== null && $response->getStatusCode() === 200 && $type !== null) {
             try {
                 return $this->serializer->deserialize(
                     $response->getBody()->getContents(),
@@ -120,12 +118,14 @@ class OmnisendClient implements LoggerAwareInterface, OmnisendClientInterface
                     'json'
                 );
             } catch (Throwable $e) {
-                $this->logger && $this->logger->critical(
-                    'Failed to parse omnisend response',
-                    [
-                        'error' => $e->getMessage(),
-                    ]
-                );
+                if ($this->logger !== null) {
+                    $this->logger->critical(
+                        'Failed to parse omnisend response',
+                        [
+                            'error' => $e->getMessage(),
+                        ]
+                    );
+                }
 
                 return null;
             }
