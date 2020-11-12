@@ -50,8 +50,7 @@ class OmnisendClient implements LoggerAwareInterface, OmnisendClientInterface
         ClientFactory $httpClient,
         SerializerInterface $serializer,
         MessageFactory $messageFactory
-    )
-    {
+    ) {
         $this->messageFactory = $messageFactory;
         $this->serializer = $serializer;
         $this->clientFactory = $httpClient;
