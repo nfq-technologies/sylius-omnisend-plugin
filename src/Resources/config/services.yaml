@@ -35,3 +35,9 @@ services:
     arguments:
       - '@sylius.context.channel.composite'
       - '@serializer'
+
+  nfq_sylius_omnisend_plugin.fixture.channel:
+    class: NFQ\SyliusOmnisendPlugin\Fixture\ChannelFixture
+    arguments:
+      - '@sylius.repository.channel'
+    tags: [sylius_fixtures.fixture]
