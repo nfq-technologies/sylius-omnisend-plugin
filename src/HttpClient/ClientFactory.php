@@ -53,7 +53,7 @@ class ClientFactory
         $headersPlugin = new HeaderDefaultsPlugin(
             [
                 'Content-Type' => 'application/json',
-                'X-API-KEY' => $channel->getOmnisendApiKey(),
+                'X-API-KEY' => '5c5af4578653ed7d78a067e5-EgZ7yp8GF0TV49JBSo7a0xRv2hjP2vmZkbTEi5xq327uK4pnxj',
             ]
         );
 

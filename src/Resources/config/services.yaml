@@ -25,6 +25,11 @@ services:
       - '@serializer'
       - '@nfq_sylius_omnisend_plugin.client.message_factory'
 
+  nfq_sylius_omnisend_plugin.http_client.factory:
+    class: NFQ\SyliusOmnisendPlugin\HttpClient\ClientFactory
+    arguments:
+      - '@sylius.repository.client'
+
   nfq_sylius_omnisend_plugin.client.message_factory:
     class: NFQ\SyliusOmnisendPlugin\Client\MessageFactory
     arguments:

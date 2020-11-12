@@ -22,11 +22,13 @@ namespace NFQ\SyliusOmnisendPlugin\Client;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Contact;
 use NFQ\SyliusOmnisendPlugin\Client\Response\Model\ContactSuccess;
 use NFQ\SyliusOmnisendPlugin\HttpClient\ClientFactory;
+use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use Symfony\Component\Serializer\SerializerInterface;
 use Throwable;
+use Http\Client\Exception\HttpException;
 
 class OmnisendClient implements LoggerAwareInterface, OmnisendClientInterface
 {
@@ -56,12 +58,13 @@ class OmnisendClient implements LoggerAwareInterface, OmnisendClientInterface
 
     public function postContact(Contact $contact, string $channelCode)
     {
-        $response = $this->clientFactory->create($channelCode)->sendRequest(
+        $response = $this->sendRequest(
             $this->messageFactory->create(
                 'POST',
                 self::API_VERSION . self::URL_PATH_CONTACTS,
                 $contact
-            )
+            ),
+            $channelCode
         );
 
         return $this->parseResponse($response, ContactSuccess::class);
@@ -69,20 +72,47 @@ class OmnisendClient implements LoggerAwareInterface, OmnisendClientInterface
 
     public function patchContact(string $contactId, Contact $contact, string $channelCode)
     {
-        $response = $this->clientFactory->create($channelCode)->sendRequest(
+        $response = $this->sendRequest(
             $this->messageFactory->create(
                 'PATCH',
                 self::API_VERSION . self::URL_PATH_CONTACTS . '/' . $contactId,
                 $contact
-            )
+            ),
+            $channelCode
         );
 
         return $this->parseResponse($response);
     }
 
-    private function parseResponse(ResponseInterface $response, ?string $type = null) //TODO move to response handler
+    private function sendRequest(RequestInterface $request, string $channelCode): ?ResponseInterface
     {
-        if ($response->getStatusCode() === 200) {
+        try {
+            return $this->clientFactory->create($channelCode)->sendRequest($request);
+        } catch (HttpException $requestException) {
+            $response = null;
+            if (null !== $requestException->getResponse()) {
+                $response = [
+                    'status' => $requestException->getResponse()->getStatusCode(),
+                    'headers' => $requestException->getResponse()->getHeaders(),
+                    'partial_body' => $requestException->getResponse()->getBody()->read(255),
+                ];
+            }
+
+            $this->logger->critical(
+                'Request to Omnisend API failed.',
+                [
+                    'request_data' => $request->getBody()->getContents(),
+                    'response' => $response,
+                ]
+            );
+
+            return null;
+        }
+    }
+
+    private function parseResponse(?ResponseInterface $response, ?string $type = null)
+    {
+        if ($response && $response->getStatusCode() === 200) {
             try {
                 return $this->serializer->deserialize(
                     $response->getBody()->getContents(),
