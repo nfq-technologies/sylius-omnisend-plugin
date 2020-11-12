@@ -19,7 +19,7 @@ declare(strict_types=1);
 
 namespace NFQ\SyliusOmnisendPlugin\Manager;
 
-use NFQ\SyliusOmnisendPlugin\Builder\Request\ContactBuilderDirector;
+use NFQ\SyliusOmnisendPlugin\Builder\Request\ContactBuilderDirectorInterface;
 use NFQ\SyliusOmnisendPlugin\Client\OmnisendClientInterface;
 use NFQ\SyliusOmnisendPlugin\Client\Response\Model\ContactSuccess;
 use NFQ\SyliusOmnisendPlugin\Model\ContactAwareInterface;
@@ -28,7 +28,7 @@ use Sylius\Component\Core\Repository\CustomerRepositoryInterface;
 
 class ContactManager implements ContactManagerInterface
 {
-    /** @var ContactBuilderDirector */
+    /** @var ContactBuilderDirectorInterface */
     private $contactBuilderDirector;
 
     /** @var OmnisendClientInterface */
@@ -38,7 +38,7 @@ class ContactManager implements ContactManagerInterface
     private $customerRepository;
 
     public function __construct(
-        ContactBuilderDirector $contactBuilderDirector,
+        ContactBuilderDirectorInterface $contactBuilderDirector,
         OmnisendClientInterface $omnisendClient,
         CustomerRepositoryInterface $customerRepository
     ) {

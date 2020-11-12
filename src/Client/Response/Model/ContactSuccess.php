@@ -32,9 +32,11 @@ class ContactSuccess
         return $this->email;
     }
 
-    public function setEmail(?string $email): void
+    public function setEmail(?string $email): self
     {
         $this->email = $email;
+
+        return $this;
     }
 
     public function getContactID(): ?string
@@ -42,8 +44,10 @@ class ContactSuccess
         return $this->contactID;
     }
 
-    public function setContactID(?string $contactID): void
+    public function setContactID(?string $contactID): self
     {
         $this->contactID = $contactID;
+
+        return $this;
     }
 }
