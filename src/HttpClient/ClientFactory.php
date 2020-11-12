@@ -17,7 +17,7 @@
 
 declare(strict_types=1);
 
-namespace Omni\Sylius\OmnisendPlugin\HttpClient;
+namespace NFQ\SyliusOmnisendPlugin\HttpClient;
 
 use Http\Client\Common\Plugin\BaseUriPlugin;
 use Http\Client\Common\Plugin\ErrorPlugin;
@@ -26,41 +26,39 @@ use Http\Client\Common\PluginClient;
 use Http\Client\HttpClient;
 use Http\Discovery\HttpClientDiscovery;
 use Http\Discovery\UriFactoryDiscovery;
-use Sylius\Component\Channel\Context\CachedPerRequestChannelContext;
-use Sylius\Component\Channel\Context\ChannelContextInterface;
-use Sylius\Component\Core\Model\ChannelInterface;
-use Webmozart\Assert\Assert;
+use NFQ\SyliusOmnisendPlugin\Model\ChannelOmnisendTrackingAwareInterface;
+use Sylius\Component\Channel\Repository\ChannelRepositoryInterface;
 
-/**
- * Class ClientFactory
- * @package Omni\Sylius\OmnisendPlugin\HttpClient
- */
 class ClientFactory
 {
-    /**
-     * @param string $apiUrl
-     * @param string $apiKey
-     * @param CachedPerRequestChannelContext $channelContext
-     * @param HttpClient|null $client
-     * @return HttpClient
-     */
-    public static function create(
-        string $apiUrl,
-        string $apiKey,
-        ChannelContextInterface $channelContext = null,
-        HttpClient $client = null
-    ): HttpClient
-    {
-        if (null === $client) {
-            $client = HttpClientDiscovery::find();
-        }
+    public const ENDPOINT = 'https://api.omnisend.com/';
 
-        $headersPlugin = new HeaderDefaultsPlugin([
-            'x-api-key' => $apiKey,
-        ]);
+    /** @var ChannelRepositoryInterface */
+    private $channelRepository;
+
+    public function __construct(ChannelRepositoryInterface $channelRepository)
+    {
+        $this->channelRepository = $channelRepository;
+    }
+
+    public function create(string $channelCode): HttpClient
+    {
+        /** @var ChannelOmnisendTrackingAwareInterface $channel */
+        $channel = $this->channelRepository->findOneByCode($channelCode);
+        $client = HttpClientDiscovery::find();
+
+        /**
+         * 5c5af4578653ed7d78a067e5-EgZ7yp8GF0TV49JBSo7a0xRv2hjP2vmZkbTEi5xq327uK4pnxj
+         */
+        $headersPlugin = new HeaderDefaultsPlugin(
+            [
+                'Content-Type' => 'application/json',
+                'X-API-KEY' => $channel->getOmnisendApiKey(),
+            ]
+        );
 
         $plugins = [
-            new BaseUriPlugin(UriFactoryDiscovery::find()->createUri($apiUrl), ['replace' => true]),
+            new BaseUriPlugin(UriFactoryDiscovery::find()->createUri(self::ENDPOINT), ['replace' => true]),
             new ErrorPlugin(),
             $headersPlugin
         ];

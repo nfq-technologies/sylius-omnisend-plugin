@@ -1,8 +1,8 @@
-httplug:
-  clients:
-    omnisend:
-      plugins:
-        - add_host:
-            host: 'https://api.omnisend.com/'
-      factory: 'httplug.factory.guzzle6'
-      public: true
+#httplug:
+#  clients:
+#    omnisend:
+#      plugins:
+#        - add_host:
+#            host: 'https://api.omnisend.com/'
+#      factory: 'httplug.factory.guzzle6'
+#      public: true

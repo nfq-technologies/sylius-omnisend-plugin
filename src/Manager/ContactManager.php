@@ -47,12 +47,13 @@ class ContactManager implements ContactManagerInterface
         $this->customerRepository = $customerRepository;
     }
 
-    public function create(CustomerInterface $customer)
+    public function create(CustomerInterface $customer, string $channelCode)
     {
         /** @var CustomerInterface&ContactAwareInterface $customer */
         /** @var ContactSuccess $response */
         $response = $this->omnisendClient->postContact(
-            $this->contactBuilderDirector->build($customer)
+            $this->contactBuilderDirector->build($customer),
+            $channelCode
         );
 
         if ($response) {
@@ -62,15 +63,16 @@ class ContactManager implements ContactManagerInterface
     }
 
     /** @var CustomerInterface&ContactAwareInterface $customer */
-    public function update(CustomerInterface $customer)
+    public function update(CustomerInterface $customer, string $channelCode)
     {
         if ($customer->getOmnisendContactId()) {
             $this->omnisendClient->patchContact(
                 $customer->getOmnisendContactId(),
-                $this->contactBuilderDirector->build($customer)
+                $this->contactBuilderDirector->build($customer),
+                $channelCode
             );
         } else {
-            $this->create($customer);
+            $this->create($customer, $channelCode);
         }
     }
 }

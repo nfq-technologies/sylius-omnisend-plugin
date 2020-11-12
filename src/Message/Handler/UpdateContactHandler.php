@@ -47,7 +47,7 @@ class UpdateContactHandler implements MessageHandlerInterface
         $customer = $this->customerRepository->find($message->getCustomerId());
 
         if ($customer) {
-            $this->contactManager->update($customer);
+            $this->contactManager->update($customer, $message->getChannelCode());
         }
     }
 }

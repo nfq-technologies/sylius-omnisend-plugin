@@ -47,7 +47,7 @@ class CreateContactHandler implements MessageHandlerInterface
         $customer = $this->customerRepository->find($message->getCustomerId());
 
         if ($customer) {
-            $this->contactManager->create($customer);
+            $this->contactManager->create($customer, $message->getChannelCode());
         }
     }
 }

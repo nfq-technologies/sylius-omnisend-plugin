@@ -25,13 +25,13 @@ use NFQ\SyliusOmnisendPlugin\Client\Response\Model\ContactSuccess;
 
 class OmnisendClientMock implements OmnisendClientInterface
 {
-    public function postContact(Contact $contact): ?ContactSuccess
+    public function postContact(Contact $contact, string $channelCode): ?ContactSuccess
     {
         return (new ContactSuccess())
             ->setContactID('testId');
     }
 
-    public function patchContact(string $contactId, Contact $contact): void
+    public function patchContact(string $contactId, Contact $contact, string $channelCode): void
     {
     }
 }

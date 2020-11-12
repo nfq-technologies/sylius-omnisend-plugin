@@ -19,9 +19,9 @@ declare(strict_types=1);
 
 namespace NFQ\SyliusOmnisendPlugin\Client;
 
-use Http\Client\Common\PluginClient;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Contact;
 use NFQ\SyliusOmnisendPlugin\Client\Response\Model\ContactSuccess;
+use NFQ\SyliusOmnisendPlugin\HttpClient\ClientFactory;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
@@ -35,34 +35,28 @@ class OmnisendClient implements LoggerAwareInterface, OmnisendClientInterface
     private const API_VERSION = 'v3';
     private const URL_PATH_CONTACTS = '/contacts';
 
-    /**
-     * @var PluginClient
-     */
-    private $httpClient;
+    /** @var ClientFactory */
+    private $clientFactory;
 
-    /**
-     * @var MessageFactory
-     */
+    /** @var MessageFactory */
     private $messageFactory;
 
-    /**
-     * @var SerializerInterface
-     */
+    /** @var SerializerInterface */
     private $serializer;
 
     public function __construct(
-        PluginClient $httpClient,
+        ClientFactory $httpClient,
         SerializerInterface $serializer,
         MessageFactory $messageFactory
     ) {
         $this->messageFactory = $messageFactory;
         $this->serializer = $serializer;
-        $this->httpClient = $httpClient;
+        $this->clientFactory = $httpClient;
     }
 
-    public function postContact(Contact $contact)
+    public function postContact(Contact $contact, string $channelCode)
     {
-        $response = $this->httpClient->sendRequest(
+        $response = $this->clientFactory->create($channelCode)->sendRequest(
             $this->messageFactory->create(
                 'POST',
                 self::API_VERSION . self::URL_PATH_CONTACTS,
@@ -73,9 +67,9 @@ class OmnisendClient implements LoggerAwareInterface, OmnisendClientInterface
         return $this->parseResponse($response, ContactSuccess::class);
     }
 
-    public function patchContact(string $contactId, Contact $contact)
+    public function patchContact(string $contactId, Contact $contact, string $channelCode)
     {
-        $response = $this->httpClient->sendRequest(
+        $response = $this->clientFactory->create($channelCode)->sendRequest(
             $this->messageFactory->create(
                 'PATCH',
                 self::API_VERSION . self::URL_PATH_CONTACTS . '/' . $contactId,
