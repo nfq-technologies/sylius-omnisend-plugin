@@ -21,7 +21,6 @@ namespace Tests\NFQ\SyliusOmnisendPlugin\Manager;
 
 use NFQ\SyliusOmnisendPlugin\Builder\Request\ContactBuilderDirector;
 use NFQ\SyliusOmnisendPlugin\Builder\Request\ContactBuilderDirectorInterface;
-use NFQ\SyliusOmnisendPlugin\Builder\Request\ContactBuilderInterface;
 use NFQ\SyliusOmnisendPlugin\Client\OmnisendClientInterface;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Contact;
 use NFQ\SyliusOmnisendPlugin\Client\Response\Model\ContactSuccess;
