@@ -19,13 +19,12 @@ declare(strict_types=1);
 
 namespace NFQ\SyliusOmnisendPlugin\Utils;
 
-use DateTimeInterface;
-use DateTime;
-
-class DatetimeFormatter
+class GenderHelper
 {
-    public static function format(DateTimeInterface $dateTime): string
+    private static $genders = ['m', 'f'];
+
+    public static function resolve(?string $gender): ?string
     {
-        return $dateTime->format(DateTime::ATOM);
+        return in_array($gender, self::$genders) ? $gender : null;
     }
 }

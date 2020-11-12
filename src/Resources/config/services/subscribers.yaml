@@ -3,5 +3,6 @@ services:
     class: NFQ\SyliusOmnisendPlugin\EventSubscriber\CustomerSubscriber
     arguments:
       - '@messenger.routable_message_bus'
+      - '@sylius.context.channel.composite'
     tags:
       - { name: kernel.event_subscriber }

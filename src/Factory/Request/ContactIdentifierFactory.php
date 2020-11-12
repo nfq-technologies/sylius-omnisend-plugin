@@ -22,7 +22,8 @@ namespace NFQ\SyliusOmnisendPlugin\Factory\Request;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\ContactIdentifier;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\ContactIdentifierChannel;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\ContactIdentifierChannelValue;
-use NFQ\SyliusOmnisendPlugin\Utils\DatetimeFormatter;
+use NFQ\SyliusOmnisendPlugin\Utils\DatetimeHelper;
+use NFQ\SyliusOmnisendPlugin\Utils\DatetimeProvider;
 use function ucfirst;
 use DateTime;
 
@@ -51,10 +52,10 @@ class ContactIdentifierFactory implements ContactIdentifierFactoryInterface
         $channel = new ContactIdentifierChannel();
         $channelValue = new ContactIdentifierChannelValue();
         $channelValue->setStatus($status);
-        $channelValue->setStatusDate(DatetimeFormatter::format(new DateTime()));
+        $channelValue->setStatusDate(DatetimeHelper::format(DatetimeProvider::currentDateTime()));
         $key = 'set' . ucfirst($this->typesMap[$type]);
         $channel->$key($channelValue);
-        $contactIdentifier->addChannel($channel);
+        $contactIdentifier->setChannels($channel);
 
         return $contactIdentifier;
     }

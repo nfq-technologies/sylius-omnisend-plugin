@@ -33,7 +33,7 @@ class ContactIdentifier
     /** @var bool */
     private $sendWelcomeMessage = false;
 
-    /** @var ContactIdentifierChannel[]|array */
+    /** @var ContactIdentifierChannel|null */
     private $channels;
 
     public function getType(): string
@@ -56,17 +56,12 @@ class ContactIdentifier
         $this->id = $id;
     }
 
-    public function getChannels()
+    public function getChannels(): ?ContactIdentifierChannel
     {
         return $this->channels;
     }
 
-    public function setChannels($channels): void
-    {
-        $this->channels = $channels;
-    }
-
-    public function addChannel(ContactIdentifierChannel $channels): void
+    public function setChannels(ContactIdentifierChannel $channels): void
     {
         $this->channels = $channels;
     }

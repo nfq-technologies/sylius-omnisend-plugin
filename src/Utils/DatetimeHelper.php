@@ -17,24 +17,15 @@
 
 declare(strict_types=1);
 
-namespace NFQ\SyliusOmnisendPlugin\Message\Command;
+namespace NFQ\SyliusOmnisendPlugin\Utils;
 
-class UpdateContact implements CommandInterface
+use DateTimeInterface;
+use DateTime;
+
+class DatetimeHelper
 {
-    use CommandTrait;
-
-    /** @var int */
-    private $customerId;
-
-    public function getCustomerId(): int
+    public static function format(DateTimeInterface $dateTime): string
     {
-        return $this->customerId;
-    }
-
-    public function setCustomerId(int $customerId): self
-    {
-        $this->customerId = $customerId;
-
-        return $this;
+        return $dateTime->format(DateTime::ATOM);
     }
 }

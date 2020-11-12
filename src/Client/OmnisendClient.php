@@ -78,12 +78,12 @@ class OmnisendClient implements LoggerAwareInterface, OmnisendClientInterface
         $response = $this->httpClient->sendRequest(
             $this->messageFactory->create(
                 'PATCH',
-                self::API_VERSION . self::URL_PATH_CONTACTS . $contactId,
+                self::API_VERSION . self::URL_PATH_CONTACTS . '/' . $contactId,
                 $contact
             )
         );
 
-        return $this->parseResponse($response); //TODO add wrapper to handle errors
+        return $this->parseResponse($response);
     }
 
     private function parseResponse(ResponseInterface $response, ?string $type = null) //TODO move to response handler

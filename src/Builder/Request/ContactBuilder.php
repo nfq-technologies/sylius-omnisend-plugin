@@ -24,7 +24,8 @@ use NFQ\SyliusOmnisendPlugin\Client\Request\Model\ContactIdentifier;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\ContactIdentifierChannelValue;
 use NFQ\SyliusOmnisendPlugin\Factory\Request\ContactIdentifierFactoryInterface;
 use NFQ\SyliusOmnisendPlugin\Model\ContactAwareInterface;
-use NFQ\SyliusOmnisendPlugin\Utils\DatetimeFormatter;
+use NFQ\SyliusOmnisendPlugin\Utils\DatetimeHelper;
+use NFQ\SyliusOmnisendPlugin\Utils\GenderHelper;
 use Sylius\Component\Core\Model\CustomerInterface;
 
 class ContactBuilder implements ContactBuilderInterface
@@ -74,8 +75,9 @@ class ContactBuilder implements ContactBuilderInterface
         $this->contact
             ->setFirstName($customer->getFirstName())
             ->setLastName($customer->getLastName())
-            ->setBirthday($customer->getBirthday() ? DatetimeFormatter::format($customer->getBirthday()) : null)
-            ->setCreatedAt(DatetimeFormatter::format($customer->getCreatedAt()));
+            ->setGender(GenderHelper::resolve($customer->getGender()))
+            ->setBirthday($customer->getBirthday() ? DatetimeHelper::format($customer->getBirthday()) : null)
+            ->setCreatedAt(DatetimeHelper::format($customer->getCreatedAt()));
     }
 
     public function addAddress(CustomerInterface $customer): void

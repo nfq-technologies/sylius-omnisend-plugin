@@ -22,7 +22,11 @@ namespace NFQ\SyliusOmnisendPlugin\EventSubscriber;
 use NFQ\SyliusOmnisendPlugin\Message\Command\CreateContact;
 use NFQ\SyliusOmnisendPlugin\Message\Command\UpdateContact;
 use Sylius\Bundle\ResourceBundle\Event\ResourceControllerEvent;
+use Sylius\Component\Channel\Context\ChannelContextInterface;
+use Sylius\Component\Core\Model\AddressInterface;
+use Sylius\Component\Core\Model\Customer;
 use Sylius\Component\Core\Model\CustomerInterface;
+use Sylius\Component\Core\Model\Order;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\MessageBusInterface;
@@ -32,8 +36,14 @@ class CustomerSubscriber implements EventSubscriberInterface
     /** @var MessageBusInterface */
     private $messageBus;
 
-    public function __construct(MessageBusInterface $messageBus)
-    {
+    /** @var ChannelContextInterface */
+    private $channelContext;
+
+    public function __construct(
+        MessageBusInterface $messageBus,
+        ChannelContextInterface $channelContext
+    ) {
+        $this->channelContext = $channelContext;
         $this->messageBus = $messageBus;
     }
 
@@ -43,6 +53,8 @@ class CustomerSubscriber implements EventSubscriberInterface
             'sylius.customer.post_create' => 'onCreate',
             'sylius.customer.post_register' => 'onCreate',
             'sylius.customer.post_update' => 'onUpdate',
+            'sylius.address.post_update' => 'onAddressUpdate',
+            'sylius.address.post_create' => 'onAddressUpdate',
         ];
     }
 
@@ -51,7 +63,13 @@ class CustomerSubscriber implements EventSubscriberInterface
         /** @var CustomerInterface $customer */
         $customer = $event->getSubject();
 
-        $this->messageBus->dispatch(new Envelope((new CreateContact())->setCustomerId($customer->getId())));
+        $this->messageBus->dispatch(
+            new Envelope(
+                (new CreateContact())
+                    ->setCustomerId($customer->getId())
+                    ->setChannelCode($this->channelContext->getChannel()->getCode())
+            )
+        );
     }
 
     public function onUpdate(ResourceControllerEvent $event)
@@ -59,6 +77,34 @@ class CustomerSubscriber implements EventSubscriberInterface
         /** @var CustomerInterface $customer */
         $customer = $event->getSubject();
 
-        $this->messageBus->dispatch(new Envelope((new UpdateContact())->setCustomerId($customer->getId())));
+        $this->messageBus->dispatch(
+            new Envelope(
+                (new UpdateContact())
+                    ->setCustomerId($customer->getId())
+                    ->setChannelCode($this->channelContext->getChannel()->getCode())
+            )
+        );
+    }
+
+    public function onAddressUpdate(ResourceControllerEvent $event)
+    {
+        /** @var AddressInterface $address */
+        $address = $event->getSubject();
+        /** @var Customer $customer */
+        $customer = $address->getCustomer();
+
+        if (
+            $customer &&
+            $customer->getDefaultAddress() &&
+            $address->getId() === $customer->getDefaultAddress()->getId()
+        ) {
+            $this->messageBus->dispatch(
+                new Envelope(
+                    (new UpdateContact())
+                        ->setCustomerId($address->getCustomer()->getId())
+                        ->setChannelCode($this->channelContext->getChannel()->getCode())
+                )
+            );
+        }
     }
 }

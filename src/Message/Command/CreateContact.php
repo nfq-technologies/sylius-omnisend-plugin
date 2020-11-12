@@ -21,6 +21,8 @@ namespace NFQ\SyliusOmnisendPlugin\Message\Command;
 
 class CreateContact implements CommandInterface
 {
+    use CommandTrait;
+
     /** @var int */
     private $customerId;
 

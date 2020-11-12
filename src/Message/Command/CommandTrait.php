@@ -19,21 +19,19 @@ declare(strict_types=1);
 
 namespace NFQ\SyliusOmnisendPlugin\Message\Command;
 
-class UpdateContact implements CommandInterface
+trait CommandTrait
 {
-    use CommandTrait;
+    /** @var string */
+    private $channelCode;
 
-    /** @var int */
-    private $customerId;
-
-    public function getCustomerId(): int
+    public function getChannelCode(): string
     {
-        return $this->customerId;
+        return $this->channelCode;
     }
 
-    public function setCustomerId(int $customerId): self
+    public function setChannelCode(string $channel): self
     {
-        $this->customerId = $customerId;
+        $this->channelCode = $channel;
 
         return $this;
     }

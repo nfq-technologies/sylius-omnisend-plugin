@@ -21,4 +21,7 @@ namespace NFQ\SyliusOmnisendPlugin\Message\Command;
 
 interface CommandInterface
 {
+    public function getChannelCode(): string;
+
+    public function setChannelCode(string $channel);
 }
