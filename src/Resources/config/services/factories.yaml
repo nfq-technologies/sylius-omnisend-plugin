@@ -3,3 +3,6 @@ services:
     class: NFQ\SyliusOmnisendPlugin\Factory\Request\ContactIdentifierFactory
     arguments:
       - '%nfq_sylius_omnisend_plugin.send_welcome_message%'
+
+  nfq_sylius_omnisend_plugin.factory.request.category_identifier:
+    class: NFQ\SyliusOmnisendPlugin\Factory\Request\CategoryFactory

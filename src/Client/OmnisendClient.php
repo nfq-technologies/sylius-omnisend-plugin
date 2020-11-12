@@ -19,6 +19,7 @@ declare(strict_types=1);
 
 namespace NFQ\SyliusOmnisendPlugin\Client;
 
+use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Category;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Contact;
 use NFQ\SyliusOmnisendPlugin\Client\Response\Model\ContactSuccess;
 use NFQ\SyliusOmnisendPlugin\HttpClient\ClientFactory;
@@ -36,6 +37,7 @@ class OmnisendClient implements LoggerAwareInterface, OmnisendClientInterface
 
     private const API_VERSION = 'v3';
     private const URL_PATH_CONTACTS = '/contacts';
+    private const URL_PATH_CATEGORIES = '/categories';
 
     /** @var ClientFactory */
     private $clientFactory;
@@ -68,6 +70,44 @@ class OmnisendClient implements LoggerAwareInterface, OmnisendClientInterface
         );
 
         return $this->parseResponse($response, ContactSuccess::class);
+    }
+
+    public function postCategory(Category $category, ?string $channelCode): void
+    {
+        $response = $this->sendRequest(
+            $this->messageFactory->create(
+                'POST',
+                self::API_VERSION . self::URL_PATH_CATEGORIES,
+                $category
+            ),
+            $channelCode
+        );
+
+        var_export($response->getBody()->getContents());
+    }
+
+    public function putCategory(Category $category, ?string $channelCode): void
+    {
+        $response = $this->sendRequest(
+            $this->messageFactory->create(
+                'PUT',
+                self::API_VERSION . self::URL_PATH_CATEGORIES . '/' . $category->getCategoryID(),
+                $category
+            ),
+            $channelCode
+        );
+        var_export($response->getBody()->getContents());
+    }
+
+    public function deleteCategory(string $categoryId): void
+    {
+        $this->sendRequest(
+            $this->messageFactory->create(
+                'PUT',
+                self::API_VERSION . self::URL_PATH_CATEGORIES . '/' . $categoryId
+            ),
+            $channelCode
+        );
     }
 
     public function patchContact(string $contactId, Contact $contact, ?string $channelCode): void

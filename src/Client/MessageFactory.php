@@ -54,7 +54,7 @@ class MessageFactory
     }
 
     /** @param mixed $data */
-    public function create(string $type, string $url, $data): RequestInterface
+    public function create(string $type, string $url, $data = null): RequestInterface
     {
         return $this->getMessageFactory()->createRequest(
             $type,

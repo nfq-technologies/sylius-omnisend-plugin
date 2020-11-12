@@ -66,7 +66,7 @@ class CustomerSubscriber implements EventSubscriberInterface
         $this->messageBus->dispatch(
             new Envelope(
                 (new CreateContact())
-                    ->setCustomerId($customer->getId())
+                    ->setTaxonId($customer->getId())
                     ->setChannelCode($this->channelContext->getChannel()->getCode())
             )
         );
