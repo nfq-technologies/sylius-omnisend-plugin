@@ -12,6 +12,8 @@ Feature: Set Omnisend tracking key in channel edit form
   Scenario: Set omnisend tracking key for channel
     When I am modifying a channel "default"
     And I set omnisend tracking key "test_key"
+    And I set omnisend api key "api_key"
     And I save my changes
     Then I should be notified that it has been successfully edited
-    And channel "default" should have omnisend update key with value "test_key"
+    And channel "default" should have omnisend tracking key with value "test_key"
+    And channel "default" should have omnisend api key with value "api_key"

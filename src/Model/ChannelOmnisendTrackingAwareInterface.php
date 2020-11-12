@@ -19,22 +19,13 @@ declare(strict_types=1);
 
 namespace NFQ\SyliusOmnisendPlugin\Model;
 
-trait ChannelOmnisendTrackingKeyTrait
+interface ChannelOmnisendTrackingAwareInterface
 {
-    /**
-     * @var string|null
-     *
-     * @ORM\Column(type="string", name="omnisend_tracking_key", length=32, nullable=true)
-     */
-    private $omnisendTrackingKey;
+    public function getOmnisendTrackingKey(): ?string;
 
-    public function getOmnisendTrackingKey(): ?string
-    {
-        return $this->omnisendTrackingKey;
-    }
+    public function setOmnisendTrackingKey(string $omnisendTrackingKey): void;
 
-    public function setOmnisendTrackingKey(string $omnisendTrackingKey): void
-    {
-        $this->omnisendTrackingKey = $omnisendTrackingKey;
-    }
+    public function getOmnisendApiKey(): ?string;
+
+    public function setOmnisendApiKey(?string $omnisendApiKey): void;
 }

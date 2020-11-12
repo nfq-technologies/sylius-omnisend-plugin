@@ -20,7 +20,7 @@ declare(strict_types=1);
 namespace NFQ\SyliusOmnisendPlugin\Client;
 
 use Http\Discovery\MessageFactoryDiscovery;
-use NFQ\SyliusOmnisendPlugin\Model\ChannelOmnisendTrackingKeyInterface;
+use NFQ\SyliusOmnisendPlugin\Model\ChannelOmnisendTrackingAwareInterface;
 use Psr\Http\Message\RequestInterface;
 use Sylius\Component\Channel\Context\ChannelContextInterface;
 use Symfony\Component\Serializer\Normalizer\AbstractObjectNormalizer;
@@ -55,7 +55,7 @@ class MessageFactory
 
     public function create(string $type, string $url, $data): RequestInterface
     {
-        /** @var ChannelOmnisendTrackingKeyInterface $channel */
+        /** @var ChannelOmnisendTrackingAwareInterface $channel */
         $channel = $this->channelContext->getChannel();
 
         return $this->getMessageFactory()->createRequest(
