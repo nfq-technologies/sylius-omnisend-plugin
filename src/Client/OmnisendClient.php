@@ -82,8 +82,6 @@ class OmnisendClient implements LoggerAwareInterface, OmnisendClientInterface
             ),
             $channelCode
         );
-
-        var_export($response->getBody()->getContents());
     }
 
     public function putCategory(Category $category, ?string $channelCode): void
@@ -96,7 +94,6 @@ class OmnisendClient implements LoggerAwareInterface, OmnisendClientInterface
             ),
             $channelCode
         );
-        var_export($response->getBody()->getContents());
     }
 
     public function deleteCategory(string $categoryId): void

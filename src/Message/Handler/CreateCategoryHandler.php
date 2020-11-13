@@ -50,7 +50,7 @@ class CreateCategoryHandler implements MessageHandlerInterface
     public function __invoke(CreateCategory $message): void
     {
         /** @var TaxonInterface|null $taxon */
-        $taxon = $this->taxonRepository->find($message->getTaxonCode());
+        $taxon = $this->taxonRepository->findOneBy(['code' => $message->getTaxonCode()]);
 
         if (null !== $taxon) {
             $this->omnisendClient->postCategory($this->categoryFactory->create($taxon), $message->getChannelCode());
