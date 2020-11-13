@@ -21,13 +21,14 @@ namespace NFQ\SyliusOmnisendPlugin\Client\Request\Model;
 
 class Batch
 {
-    public const ENDPOINTS = [
-        'contacts', 'orders', 'products', 'events', 'categories',
-    ];
+    public const ENDPOINTS_CONTACT = 'contacts';
+    public const ENDPOINTS_ORDER = 'orders';
+    public const ENDPOINTS_PRODUCT = 'products';
+    public const ENDPOINTS_EVENT = 'events';
+    public const ENDPOINTS_CATEGORIES = 'categories';
 
-    public const METHODS = [
-        'POST', 'PUT'
-    ];
+    public const METHODS_POST = 'POST';
+    public const METHODS_PUT = 'PUT';
 
     /** @var string */
     private $method;
@@ -37,6 +38,9 @@ class Batch
 
     /** @var string|null */
     private $eventID;
+
+    /** @var array */
+    private $items;
 
     public function getMethod(): string
     {
@@ -70,6 +74,18 @@ class Batch
     public function setEventID(?string $eventID): self
     {
         $this->eventID = $eventID;
+
+        return $this;
+    }
+
+    public function getItems(): array
+    {
+        return $this->items;
+    }
+
+    public function setItems(array $items): self
+    {
+        $this->items = $items;
 
         return $this;
     }

@@ -4,5 +4,8 @@ services:
     arguments:
       - '%nfq_sylius_omnisend_plugin.send_welcome_message%'
 
-  nfq_sylius_omnisend_plugin.factory.request.category_identifier:
+  nfq_sylius_omnisend_plugin.factory.request.category:
     class: NFQ\SyliusOmnisendPlugin\Factory\Request\CategoryFactory
+
+  nfq_sylius_omnisend_plugin.factory.request.batch:
+    class: NFQ\SyliusOmnisendPlugin\Factory\Request\BatchFactory

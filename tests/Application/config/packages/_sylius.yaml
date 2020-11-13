@@ -32,3 +32,4 @@ sylius_taxonomy:
         taxon:
             classes:
                 model: Tests\NFQ\SyliusOmnisendPlugin\Application\Entity\Taxon
+                repository: Tests\NFQ\SyliusOmnisendPlugin\Application\Repository\TaxonRepository

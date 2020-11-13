@@ -19,10 +19,10 @@ declare(strict_types=1);
 
 namespace Tests\NFQ\SyliusOmnisendPlugin\Application\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
 use NFQ\SyliusOmnisendPlugin\Model\ChannelOmnisendTrackingAwareInterface;
 use NFQ\SyliusOmnisendPlugin\Model\ChannelOmnisendTrackingAwareTrait;
 use Sylius\Component\Core\Model\Channel as BaseChannel;
-use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity

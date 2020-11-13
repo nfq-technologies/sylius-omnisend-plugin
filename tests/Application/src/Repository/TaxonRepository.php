@@ -17,18 +17,13 @@
 
 declare(strict_types=1);
 
-namespace Tests\NFQ\SyliusOmnisendPlugin\Application\Entity;
+namespace Tests\NFQ\SyliusOmnisendPlugin\Application\Repository;
 
-use Doctrine\ORM\Mapping as ORM;
-use Sylius\Component\Core\Model\Customer as BaseCustomer;
-use NFQ\SyliusOmnisendPlugin\Model\ContactAwareInterface;
-use NFQ\SyliusOmnisendPlugin\Model\ContactAwareTrait;
+use Sylius\Bundle\TaxonomyBundle\Doctrine\ORM\TaxonRepository as BaseRepository;
+use NFQ\SyliusOmnisendPlugin\Doctrine\ORM\TaxonRepositoryInterface;
+use NFQ\SyliusOmnisendPlugin\Doctrine\ORM\TaxonRepositoryTrait;
 
-/**
- * @ORM\Entity
- * @ORM\Table(name="sylius_customer")
- */
-class Customer extends BaseCustomer implements ContactAwareInterface
+class TaxonRepository extends BaseRepository implements TaxonRepositoryInterface
 {
-    use ContactAwareTrait;
+    use TaxonRepositoryTrait;
 }

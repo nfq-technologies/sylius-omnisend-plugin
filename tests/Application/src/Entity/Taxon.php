@@ -19,10 +19,10 @@ declare(strict_types=1);
 
 namespace Tests\NFQ\SyliusOmnisendPlugin\Application\Entity;
 
-use NFQ\SyliusOmnisendPlugin\Model\TaxonTrait;
+use Doctrine\ORM\Mapping as ORM;
 use Sylius\Component\Core\Model\Taxon as BaseTaxon;
 use NFQ\SyliusOmnisendPlugin\Model\TaxonInterface;
-use Doctrine\ORM\Mapping as ORM;
+use NFQ\SyliusOmnisendPlugin\Model\TaxonTrait;
 
 /**
  * @ORM\Entity

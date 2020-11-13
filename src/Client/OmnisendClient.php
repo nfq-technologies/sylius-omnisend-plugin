@@ -19,8 +19,10 @@ declare(strict_types=1);
 
 namespace NFQ\SyliusOmnisendPlugin\Client;
 
+use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Batch;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Category;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Contact;
+use NFQ\SyliusOmnisendPlugin\Client\Response\Model\BatchSuccess;
 use NFQ\SyliusOmnisendPlugin\Client\Response\Model\CategorySuccess;
 use NFQ\SyliusOmnisendPlugin\Client\Response\Model\ContactSuccess;
 use NFQ\SyliusOmnisendPlugin\HttpClient\ClientFactory;
@@ -116,16 +118,18 @@ class OmnisendClient implements LoggerAwareInterface, OmnisendClientInterface
         return $this->parseResponse($response, CategorySuccess::class);
     }
 
-    public function postBatch(array $data, ?string $channelCode): void
+    public function postBatch(Batch $batch, ?string $channelCode): ?object
     {
-        $this->sendRequest(
+        $response = $this->sendRequest(
             $this->messageFactory->create(
-                'DELETE',
+                'POST',
                 self::API_VERSION . self::URL_PATH_BATCHES,
-                $data
+                $batch
             ),
             $channelCode
         );
+
+        return $this->parseResponse($response, BatchSuccess::class);
     }
 
     public function patchContact(string $contactId, Contact $contact, ?string $channelCode): void

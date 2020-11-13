@@ -25,6 +25,7 @@ use Symfony\Component\Console\Command\LockableTrait;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\MessageBusInterface;
 
 class PushCategoriesCommand extends Command
@@ -52,13 +53,25 @@ class PushCategoriesCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        if (null === $input->getOption('channelCode')) {
+            $output->writeln('option --channelCode is required');
+
+            return 1;
+        }
+
         if (!$this->lock()) {
             $output->writeln('The command is already running in another process.');
 
-            return 0;
+            return 1;
         }
 
-        $this->commandBus->dispatch((new PushCategories())->setChannelCode($input->getOption('channelCode')));
+        $this->commandBus->dispatch(
+            new Envelope(
+                (new PushCategories())
+                    ->setChannelCode($input->getOption('channelCode'))
+            )
+        );
+
         $this->release();
 
         return 0;

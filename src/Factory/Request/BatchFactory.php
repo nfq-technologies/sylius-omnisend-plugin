@@ -17,18 +17,18 @@
 
 declare(strict_types=1);
 
-namespace Tests\NFQ\SyliusOmnisendPlugin\Application\Entity;
+namespace NFQ\SyliusOmnisendPlugin\Factory\Request;
 
-use Doctrine\ORM\Mapping as ORM;
-use Sylius\Component\Core\Model\Customer as BaseCustomer;
-use NFQ\SyliusOmnisendPlugin\Model\ContactAwareInterface;
-use NFQ\SyliusOmnisendPlugin\Model\ContactAwareTrait;
+use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Batch;
 
-/**
- * @ORM\Entity
- * @ORM\Table(name="sylius_customer")
- */
-class Customer extends BaseCustomer implements ContactAwareInterface
+class BatchFactory implements BatchFactoryInterface
 {
-    use ContactAwareTrait;
+    public function create(string $method, string $type, array $data, ?string $eventId = null): Batch
+    {
+        return (new Batch())
+            ->setEndpoint($type)
+            ->setMethod($method)
+            ->setEventID($eventId)
+            ->setItems($data);
+    }
 }

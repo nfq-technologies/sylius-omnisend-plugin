@@ -17,18 +17,20 @@
 
 declare(strict_types=1);
 
-namespace Tests\NFQ\SyliusOmnisendPlugin\Application\Entity;
+namespace NFQ\SyliusOmnisendPlugin\Client\Response\Model;
 
-use Doctrine\ORM\Mapping as ORM;
-use Sylius\Component\Core\Model\Customer as BaseCustomer;
-use NFQ\SyliusOmnisendPlugin\Model\ContactAwareInterface;
-use NFQ\SyliusOmnisendPlugin\Model\ContactAwareTrait;
-
-/**
- * @ORM\Entity
- * @ORM\Table(name="sylius_customer")
- */
-class Customer extends BaseCustomer implements ContactAwareInterface
+class BatchSuccess
 {
-    use ContactAwareTrait;
+    /** @var string */
+    private $batchID;
+
+    public function getBatchID(): string
+    {
+        return $this->batchID;
+    }
+
+    public function setBatchID(string $batchID): void
+    {
+        $this->batchID = $batchID;
+    }
 }
