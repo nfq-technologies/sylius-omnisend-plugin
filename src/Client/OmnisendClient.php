@@ -74,7 +74,7 @@ class OmnisendClient implements LoggerAwareInterface, OmnisendClientInterface
 
     public function postCategory(Category $category, ?string $channelCode): void
     {
-        $response = $this->sendRequest(
+        $this->sendRequest(
             $this->messageFactory->create(
                 'POST',
                 self::API_VERSION . self::URL_PATH_CATEGORIES,
@@ -86,7 +86,7 @@ class OmnisendClient implements LoggerAwareInterface, OmnisendClientInterface
 
     public function putCategory(Category $category, ?string $channelCode): void
     {
-        $response = $this->sendRequest(
+        $this->sendRequest(
             $this->messageFactory->create(
                 'PUT',
                 self::API_VERSION . self::URL_PATH_CATEGORIES . '/' . $category->getCategoryID(),
@@ -96,12 +96,13 @@ class OmnisendClient implements LoggerAwareInterface, OmnisendClientInterface
         );
     }
 
-    public function deleteCategory(string $categoryId): void
+    public function deleteCategory(string $categoryId, ?string $channelCode): void
     {
         $this->sendRequest(
             $this->messageFactory->create(
-                'PUT',
-                self::API_VERSION . self::URL_PATH_CATEGORIES . '/' . $categoryId
+                'DELETE',
+                self::API_VERSION . self::URL_PATH_CATEGORIES . '/' . $categoryId,
+                null
             ),
             $channelCode
         );
