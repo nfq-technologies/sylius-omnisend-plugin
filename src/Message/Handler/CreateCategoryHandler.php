@@ -19,7 +19,7 @@ declare(strict_types=1);
 
 namespace NFQ\SyliusOmnisendPlugin\Message\Handler;
 
-use NFQ\SyliusOmnisendPlugin\Client\OmnisendClient;
+use NFQ\SyliusOmnisendPlugin\Client\OmnisendClientInterface;
 use NFQ\SyliusOmnisendPlugin\Factory\Request\CategoryFactoryInterface;
 use NFQ\SyliusOmnisendPlugin\Message\Command\CreateCategory;
 use NFQ\SyliusOmnisendPlugin\Model\TaxonInterface;
@@ -29,7 +29,7 @@ use DateTime;
 
 class CreateCategoryHandler implements MessageHandlerInterface
 {
-    /** @var OmnisendClient */
+    /** @var OmnisendClientInterface */
     private $omnisendClient;
 
     /** @var TaxonRepositoryInterface */
@@ -39,7 +39,7 @@ class CreateCategoryHandler implements MessageHandlerInterface
     private $categoryFactory;
 
     public function __construct(
-        OmnisendClient $omnisendClient,
+        OmnisendClientInterface $omnisendClient,
         TaxonRepositoryInterface $customerRepository,
         CategoryFactoryInterface $categoryFactory
     ) {

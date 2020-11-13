@@ -50,7 +50,8 @@ class PushCategoriesHandler implements MessageHandlerInterface
         TaxonRepositoryInterface $repository,
         CategoryFactoryInterface $factory,
         BatchFactoryInterface $batchFactory
-    ) {
+    )
+    {
         $this->omnisendClient = $omnisendClient;
         $this->categoryFactory = $factory;
         $this->repository = $repository;
@@ -69,19 +70,22 @@ class PushCategoriesHandler implements MessageHandlerInterface
             foreach ($rawData as $item) {
                 $categories[] = $this->categoryFactory->create($item);
             }
-            $response = $this->omnisendClient->postBatch(
-                $this->batchFactory->create(
-                    Batch::METHODS_POST,
-                    Batch::ENDPOINTS_CATEGORIES,
-                    $categories
-                ),
-                $message->getChannelCode()
-            );
 
-            if (null !== $response) {
-                foreach ($rawData as $item) {
-                    $item->setPushedToOmnisend(new DateTime());
-                    $this->repository->add($item);//TODO IMPROVE
+            if ($categories) {
+                $response = $this->omnisendClient->postBatch(
+                    $this->batchFactory->create(
+                        Batch::METHODS_POST,
+                        Batch::ENDPOINTS_CATEGORIES,
+                        $categories
+                    ),
+                    $message->getChannelCode()
+                );
+
+                if (null !== $response) {
+                    foreach ($rawData as $item) {
+                        $item->setPushedToOmnisend(new DateTime());
+                        $this->repository->add($item);//TODO IMPROVE
+                    }
                 }
             }
         }

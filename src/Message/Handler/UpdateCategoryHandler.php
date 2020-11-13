@@ -19,7 +19,7 @@ declare(strict_types=1);
 
 namespace NFQ\SyliusOmnisendPlugin\Message\Handler;
 
-use NFQ\SyliusOmnisendPlugin\Client\OmnisendClient;
+use NFQ\SyliusOmnisendPlugin\Client\OmnisendClientInterface;
 use NFQ\SyliusOmnisendPlugin\Factory\Request\CategoryFactoryInterface;
 use NFQ\SyliusOmnisendPlugin\Message\Command\UpdateCategory;
 use NFQ\SyliusOmnisendPlugin\Model\TaxonInterface;
@@ -29,7 +29,7 @@ use DateTime;
 
 class UpdateCategoryHandler implements MessageHandlerInterface
 {
-    /** @var OmnisendClient */
+    /** @var OmnisendClientInterface */
     private $omnisendClient;
 
     /** @var TaxonRepositoryInterface */
@@ -39,7 +39,7 @@ class UpdateCategoryHandler implements MessageHandlerInterface
     private $categoryFactory;
 
     public function __construct(
-        OmnisendClient $omnisendClient,
+        OmnisendClientInterface $omnisendClient,
         TaxonRepositoryInterface $customerRepository,
         CategoryFactoryInterface $categoryFactory
     ) {
@@ -55,7 +55,12 @@ class UpdateCategoryHandler implements MessageHandlerInterface
 
         if (null !== $taxon) {
             if ($taxon->isPushedToOmnisend()) {
-                $this->omnisendClient->putCategory($this->categoryFactory->create($taxon), $message->getChannelCode());
+                $response = $this->omnisendClient->putCategory($this->categoryFactory->create($taxon), $message->getChannelCode());
+
+                if (null !== $response) {
+                    $taxon->setPushedToOmnisend(new DateTime());
+                    $this->taxonRepository->add($taxon);
+                }
             } else {
                 $response = $this->omnisendClient->postCategory(
                     $this->categoryFactory->create($taxon),

@@ -19,7 +19,7 @@ declare(strict_types=1);
 
 namespace NFQ\SyliusOmnisendPlugin\Message\Handler;
 
-use NFQ\SyliusOmnisendPlugin\Client\OmnisendClient;
+use NFQ\SyliusOmnisendPlugin\Client\OmnisendClientInterface;
 use NFQ\SyliusOmnisendPlugin\Message\Command\DeleteCategory;
 use NFQ\SyliusOmnisendPlugin\Model\TaxonInterface;
 use Sylius\Component\Taxonomy\Repository\TaxonRepositoryInterface;
@@ -27,14 +27,14 @@ use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
 class DeleteCategoryHandler implements MessageHandlerInterface
 {
-    /** @var OmnisendClient */
+    /** @var OmnisendClientInterface */
     private $omnisendClient;
 
     /** @var TaxonRepositoryInterface */
     private $taxonRepository;
 
     public function __construct(
-        OmnisendClient $omnisendClient,
+        OmnisendClientInterface $omnisendClient,
         TaxonRepositoryInterface $taxonRepository
     ) {
         $this->omnisendClient = $omnisendClient;
