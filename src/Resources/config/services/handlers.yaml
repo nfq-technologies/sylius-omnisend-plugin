@@ -33,4 +33,5 @@ services:
     class: NFQ\SyliusOmnisendPlugin\Message\Handler\DeleteCategoryHandler
     arguments:
       - '@nfq_sylius_omnisend_plugin.client.omnisend'
+      - '@sylius.repository.taxon'
     tags: [ messenger.message_handler ]

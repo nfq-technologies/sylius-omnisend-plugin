@@ -17,13 +17,18 @@
 
 declare(strict_types=1);
 
-namespace NFQ\SyliusOmnisendPlugin\Model;
+namespace Tests\NFQ\SyliusOmnisendPlugin\Application\Entity;
 
-use Sylius\Component\Core\Model\ProductInterface as BaseProductAwareInterface;
+use NFQ\SyliusOmnisendPlugin\Model\TaxonTrait;
+use Sylius\Component\Core\Model\Taxon as BaseTaxon;
+use NFQ\SyliusOmnisendPlugin\Model\TaxonInterface;
+use Doctrine\ORM\Mapping as ORM;
 
-interface ProductPickerAdditionalDataAwareInterface extends BaseProductAwareInterface
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="sylius_taxon")
+ */
+class Taxon extends BaseTaxon implements TaxonInterface
 {
-    public function getOmnisendTags(): ?array;
-
-    public function getOmnisendVendor(): ?string;
+    use TaxonTrait;
 }

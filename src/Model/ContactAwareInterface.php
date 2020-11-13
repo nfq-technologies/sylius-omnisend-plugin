@@ -18,8 +18,9 @@
 namespace NFQ\SyliusOmnisendPlugin\Model;
 
 use stdClass;
+use Sylius\Component\Core\Model\CustomerInterface as BaseCustomerInterface;
 
-interface ContactAwareInterface
+interface ContactAwareInterface extends BaseCustomerInterface
 {
     public function getOmnisendContactId(): ?string;
 

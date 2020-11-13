@@ -15,6 +15,8 @@
  * http://www.nfq.lt
  */
 
+declare(strict_types=1);
+
 namespace Tests\NFQ\SyliusOmnisendPlugin\Application\Entity;
 
 use NFQ\SyliusOmnisendPlugin\Model\ContactAwareInterface;

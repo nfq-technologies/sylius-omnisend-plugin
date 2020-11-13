@@ -17,13 +17,20 @@
 
 declare(strict_types=1);
 
-namespace NFQ\SyliusOmnisendPlugin\Model;
+namespace NFQ\SyliusOmnisendPlugin\Client\Response\Model;
 
-use Sylius\Component\Core\Model\ProductInterface as BaseProductAwareInterface;
-
-interface ProductPickerAdditionalDataAwareInterface extends BaseProductAwareInterface
+class CategorySuccess
 {
-    public function getOmnisendTags(): ?array;
+    /** @var string */
+    private $categoryID;
 
-    public function getOmnisendVendor(): ?string;
+    public function getCategoryID(): string
+    {
+        return $this->categoryID;
+    }
+
+    public function setCategoryID(string $categoryID): void
+    {
+        $this->categoryID = $categoryID;
+    }
 }

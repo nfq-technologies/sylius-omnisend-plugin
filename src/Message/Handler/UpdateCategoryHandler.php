@@ -22,9 +22,10 @@ namespace NFQ\SyliusOmnisendPlugin\Message\Handler;
 use NFQ\SyliusOmnisendPlugin\Client\OmnisendClient;
 use NFQ\SyliusOmnisendPlugin\Factory\Request\CategoryFactoryInterface;
 use NFQ\SyliusOmnisendPlugin\Message\Command\UpdateCategory;
-use Sylius\Component\Core\Model\TaxonInterface;
+use NFQ\SyliusOmnisendPlugin\Model\TaxonInterface;
 use Sylius\Component\Taxonomy\Repository\TaxonRepositoryInterface;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
+use DateTime;
 
 class UpdateCategoryHandler implements MessageHandlerInterface
 {
@@ -53,7 +54,19 @@ class UpdateCategoryHandler implements MessageHandlerInterface
         $taxon = $this->taxonRepository->findOneBy(['code' => $message->getTaxonCode()]);
 
         if (null !== $taxon) {
-            $this->omnisendClient->putCategory($this->categoryFactory->create($taxon), $message->getChannelCode());
+            if ($taxon->isPushedToOmnisend()) {
+                $this->omnisendClient->putCategory($this->categoryFactory->create($taxon), $message->getChannelCode());
+            } else {
+                $response = $this->omnisendClient->postCategory(
+                    $this->categoryFactory->create($taxon),
+                    $message->getChannelCode()
+                );
+
+                if (null !== $response) {
+                    $taxon->setPushedToOmnisend(new DateTime());
+                    $this->taxonRepository->add($taxon);
+                }
+            }
         }
     }
 }

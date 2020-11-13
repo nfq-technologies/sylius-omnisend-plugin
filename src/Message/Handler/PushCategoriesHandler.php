@@ -20,36 +20,31 @@ declare(strict_types=1);
 namespace NFQ\SyliusOmnisendPlugin\Message\Handler;
 
 use NFQ\SyliusOmnisendPlugin\Client\OmnisendClient;
-use NFQ\SyliusOmnisendPlugin\Message\Command\DeleteCategory;
-use NFQ\SyliusOmnisendPlugin\Model\TaxonInterface;
+use NFQ\SyliusOmnisendPlugin\Message\Command\PushCategories;
+use Sylius\Component\Taxonomy\Factory\TaxonFactoryInterface;
 use Sylius\Component\Taxonomy\Repository\TaxonRepositoryInterface;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
-class DeleteCategoryHandler implements MessageHandlerInterface
+class PushCategoriesHandler implements MessageHandlerInterface
 {
     /** @var OmnisendClient */
     private $omnisendClient;
 
-    /** @var TaxonRepositoryInterface */
-    private $taxonRepository;
+    /** @var TaxonFactoryInterface */
+    private $factory;
 
-    public function __construct(
-        OmnisendClient $omnisendClient,
-        TaxonRepositoryInterface $taxonRepository
-    ) {
+    /** @var TaxonRepositoryInterface */
+    private $repository;
+
+    public function __construct(OmnisendClient $omnisendClient, TaxonFactoryInterface $factory, TaxonRepositoryInterface $repository)
+    {
         $this->omnisendClient = $omnisendClient;
-        $this->taxonRepository = $taxonRepository;
+        $this->factory = $factory;
+        $this->repository = $repository;
     }
 
-    public function __invoke(DeleteCategory $message): void
+    public function __invoke(PushCategories $message): void
     {
         $this->omnisendClient->deleteCategory($message->getTaxonCode(), $message->getChannelCode());
-        /** @var TaxonInterface|null $taxon */
-        $taxon = $this->taxonRepository->findOneBy(['code' => $message->getTaxonCode()]);
-
-        if (null !== $taxon) {
-            $taxon->setPushedToOmnisend(null);
-            $this->taxonRepository->add($taxon);
-        }
     }
 }

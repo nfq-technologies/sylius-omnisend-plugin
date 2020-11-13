@@ -19,7 +19,9 @@ declare(strict_types=1);
 
 namespace NFQ\SyliusOmnisendPlugin\Model;
 
-interface ChannelOmnisendTrackingAwareInterface
+use Sylius\Component\Core\Model\ChannelInterface as BaseChannelInterface;
+
+interface ChannelOmnisendTrackingAwareInterface extends BaseChannelInterface
 {
     public function getOmnisendTrackingKey(): ?string;
 
