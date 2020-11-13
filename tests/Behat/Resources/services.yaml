@@ -38,6 +38,11 @@ services:
     arguments:
       - '@nfq_sylius_omnisend.page.admin.channel.update'
 
+  nfq_sylius_omnisend.context.ui.admin.managing_taxon:
+    class: Tests\NFQ\SyliusOmnisendPlugin\Behat\Context\Ui\Admin\ManagingTaxonContext
+    arguments:
+      - '@sylius.repository.taxon'
+
   nfq_sylius_omnisend.context.hook.doctrine:
     class: Tests\NFQ\SyliusOmnisendPlugin\Behat\Context\Hook\DoctrineORMContext
     arguments:
