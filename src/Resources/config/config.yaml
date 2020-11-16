@@ -1,0 +1,8 @@
+winzou_state_machine:
+  sylius_order_checkout:
+    callbacks:
+      after:
+        ratepay_resolve_state:
+          on: ["address"]
+          do: ['@nfq_sylius_omnisend_plugin.event_subscriber.cart', "updateOrder"]
+          args: ["object"]

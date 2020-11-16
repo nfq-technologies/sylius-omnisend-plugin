@@ -20,9 +20,11 @@ declare(strict_types=1);
 namespace NFQ\SyliusOmnisendPlugin\Client;
 
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Batch;
+use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Cart;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Category;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Contact;
 use NFQ\SyliusOmnisendPlugin\Client\Response\Model\BatchSuccess;
+use NFQ\SyliusOmnisendPlugin\Client\Response\Model\CartSuccess;
 use NFQ\SyliusOmnisendPlugin\Client\Response\Model\CategorySuccess;
 use NFQ\SyliusOmnisendPlugin\Client\Response\Model\ContactSuccess;
 use NFQ\SyliusOmnisendPlugin\HttpClient\ClientFactory;
@@ -41,6 +43,7 @@ class OmnisendClient implements LoggerAwareInterface, OmnisendClientInterface
     private const API_VERSION = 'v3';
     private const URL_PATH_CONTACTS = '/contacts';
     private const URL_PATH_CATEGORIES = '/categories';
+    private const URL_PATH_CARTS = '/carts';
     private const URL_PATH_BATCHES = '/batches';
 
     /** @var ClientFactory */
@@ -88,6 +91,47 @@ class OmnisendClient implements LoggerAwareInterface, OmnisendClientInterface
         );
 
         return $this->parseResponse($response, CategorySuccess::class);
+    }
+
+    public function postCart(Cart $cart, ?string $channelCode): ?object
+    {
+        $response = $this->sendRequest(
+            $this->messageFactory->create(
+                'POST',
+                self::API_VERSION . self::URL_PATH_CARTS,
+                $cart
+            ),
+            $channelCode
+        );
+
+        return $this->parseResponse($response, CartSuccess::class);
+    }
+
+    public function patchCart(Cart $cart, ?string $channelCode): ?object
+    {
+        $response = $this->sendRequest(
+            $this->messageFactory->create(
+                'PATCH',
+                self::API_VERSION . self::URL_PATH_CARTS . '/' . $cart->getCartID(),
+                $cart
+            ),
+            $channelCode
+        );
+
+        return $this->parseResponse($response, CartSuccess::class);
+    }
+
+    public function deleteCart(string $cartId, ?string $channelCode): ?object
+    {
+        $response = $this->sendRequest(
+            $this->messageFactory->create(
+                'DELETE',
+                self::API_VERSION . self::URL_PATH_CARTS . '/' . $cartId
+            ),
+            $channelCode
+        );
+
+        return $this->parseResponse($response, CartSuccess::class);
     }
 
     public function putCategory(Category $category, ?string $channelCode): ?object

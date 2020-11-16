@@ -9,3 +9,9 @@ services:
 
   nfq_sylius_omnisend_plugin.factory.request.batch:
     class: NFQ\SyliusOmnisendPlugin\Factory\Request\BatchFactory
+
+  nfq_sylius_omnisend_plugin.factory.request.cart_product:
+    class: NFQ\SyliusOmnisendPlugin\Factory\Request\CartProductFactory
+    arguments:
+      - '@nfq_sylius_omnisend_plugin.resolver.product_image'
+      - '@router'

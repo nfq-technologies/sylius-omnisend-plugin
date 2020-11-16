@@ -2,3 +2,9 @@ nfq_sylius_omnisend_test:
     path: /test
     defaults:
         _controller: NFQ\SyliusOmnisendPlugin\Controller\TestController
+
+nfq_sylius_omnisend_recover_action:
+    path: /recover/{cartId}
+    methods: [GET]
+    defaults:
+        _controller: nfq_sylius_omnisend_plugin.contorller.cart_recover

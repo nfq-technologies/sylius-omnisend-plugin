@@ -44,3 +44,18 @@ services:
       - '@nfq_sylius_omnisend_plugin.factory.request.category'
       - '@nfq_sylius_omnisend_plugin.factory.request.batch'
     tags: [ messenger.message_handler ]
+
+  nfq_sylius_omnisend_plugin.message.handler.update_cart:
+    class: NFQ\SyliusOmnisendPlugin\Message\Handler\UpdateCartHandler
+    arguments:
+      - '@sylius.repository.order'
+      - '@nfq_sylius_omnisend_plugin.builder.request.cart_director'
+      - '@nfq_sylius_omnisend_plugin.client.omnisend'
+    tags: [ messenger.message_handler ]
+
+  nfq_sylius_omnisend_plugin.message.handler.delete_cart:
+    class: NFQ\SyliusOmnisendPlugin\Message\Handler\DeleteCartHandler
+    arguments:
+      - '@sylius.repository.order'
+      - '@nfq_sylius_omnisend_plugin.client.omnisend'
+    tags: [ messenger.message_handler ]

@@ -1,14 +1,16 @@
 imports:
-  - { resource: services/form_type_extensions.yaml }
   - { resource: services/block_events.yaml }
-  - { resource: services/factories.yaml }
   - { resource: services/builders.yaml }
+  - { resource: services/commands.yaml }
+  - { resource: services/controllers.yaml }
+  - { resource: services/form_type_extensions.yaml }
+  - { resource: services/factories.yaml }
   - { resource: services/handlers.yaml }
+  - { resource: services/managers.yaml }
+  - { resource: services/resolvers.yaml }
   - { resource: services/serialiazers.yaml }
   - { resource: services/subscribers.yaml }
-  - { resource: services/managers.yaml }
   - { resource: services/twig.yaml }
-  - { resource: services/commands.yaml }
 
 services:
   nfq_sylius_omnisend_plugin.resolver.product_image:
@@ -42,3 +44,10 @@ services:
     arguments:
       - '@sylius.repository.channel'
     tags: [sylius_fixtures.fixture]
+
+  nfq_sylius_omnisend_plugin.modifier.order:
+    class: NFQ\SyliusOmnisendPlugin\Modifier\OrderModifier
+    decorates: sylius.order_modifier
+    arguments:
+      - '@nfq_sylius_omnisend_plugin.modifier.order.inner'
+      - '@messenger.routable_message_bus'
