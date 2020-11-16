@@ -20,8 +20,10 @@ declare(strict_types=1);
 namespace Tests\NFQ\SyliusOmnisendPlugin\Behat\Context\Ui\Admin;
 
 use Behat\Behat\Context\Context;
+use Doctrine\ORM\EntityManagerInterface;
 use NFQ\SyliusOmnisendPlugin\Doctrine\ORM\TaxonRepositoryInterface;
 use NFQ\SyliusOmnisendPlugin\Model\TaxonInterface;
+use Sylius\Behat\Service\SharedStorageInterface;
 use Webmozart\Assert\Assert;
 
 class ManagingTaxonContext implements Context
@@ -29,8 +31,14 @@ class ManagingTaxonContext implements Context
     /** @var TaxonRepositoryInterface */
     private $taxonRepository;
 
-    public function __construct(TaxonRepositoryInterface $taxonRepository)
-    {
+    /** @var EntityManagerInterface */
+    private $entityManager;
+
+    public function __construct(
+        TaxonRepositoryInterface $taxonRepository,
+        EntityManagerInterface $entityManager
+    ) {
+        $this->entityManager = $entityManager;
         $this->taxonRepository = $taxonRepository;
     }
 
@@ -39,6 +47,7 @@ class ManagingTaxonContext implements Context
     {
         /** @var TaxonInterface $taxon */
         $taxon = $this->taxonRepository->findOneBy(['code' => $code]);
+        $this->entityManager->refresh($taxon);
 
         Assert::isInstanceOf($taxon, TaxonInterface::class);
         Assert::true($taxon->isPushedToOmnisend());
