@@ -71,7 +71,7 @@ class PushCategoriesHandler implements MessageHandlerInterface
                 $categories[] = $this->categoryFactory->create($item);
             }
 
-            if ($categories) {
+            if (count($categories) > 0) {
                 $response = $this->omnisendClient->postBatch(
                     $this->batchFactory->create(
                         Batch::METHODS_POST,

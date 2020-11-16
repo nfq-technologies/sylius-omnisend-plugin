@@ -21,10 +21,10 @@ namespace NFQ\SyliusOmnisendPlugin\Client\Request\Model;
 
 class Category
 {
-    /** @var string */
+    /** @var string|null */
     private $categoryID;
 
-    /** @var string */
+    /** @var string|null */
     private $title;
 
     /** @var string|null */
@@ -33,24 +33,24 @@ class Category
     /** @var string|null */
     private $updatedAt;
 
-    public function getCategoryID(): string
+    public function getCategoryID(): ?string
     {
         return $this->categoryID;
     }
 
-    public function setCategoryID(string $categoryID): self
+    public function setCategoryID(?string $categoryID): self
     {
         $this->categoryID = $categoryID;
 
         return $this;
     }
 
-    public function getTitle(): string
+    public function getTitle(): ?string
     {
         return $this->title;
     }
 
-    public function setTitle(string $title): self
+    public function setTitle(?string $title): self
     {
         $this->title = $title;
 

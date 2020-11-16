@@ -43,9 +43,11 @@ class DeleteCategoryHandler implements MessageHandlerInterface
 
     public function __invoke(DeleteCategory $message): void
     {
-        $this->omnisendClient->deleteCategory($message->getTaxonCode(), $message->getChannelCode());
+        /** @var string $taxonCode */
+        $taxonCode = $message->getTaxonCode();
+        $this->omnisendClient->deleteCategory($taxonCode, $message->getChannelCode());
         /** @var TaxonInterface|null $taxon */
-        $taxon = $this->taxonRepository->findOneBy(['code' => $message->getTaxonCode()]);
+        $taxon = $this->taxonRepository->findOneBy(['code' => $taxonCode]);
 
         if (null !== $taxon) {
             $taxon->setPushedToOmnisend(null);

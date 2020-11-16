@@ -23,15 +23,15 @@ class DeleteCategory implements CommandInterface
 {
     use CommandTrait;
 
-    /** @var string */
+    /** @var string|null */
     private $taxonCode;
 
-    public function getTaxonCode(): string
+    public function getTaxonCode(): ?string
     {
         return $this->taxonCode;
     }
 
-    public function setTaxonCode(string $taxonCode): self
+    public function setTaxonCode(?string $taxonCode): self
     {
         $this->taxonCode = $taxonCode;
 

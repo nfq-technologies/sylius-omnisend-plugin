@@ -53,7 +53,9 @@ class PushCategoriesCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        if (null === $input->getOption('channelCode')) {
+        /** @var string|null $channelCode */
+        $channelCode = $input->getOption('channelCode');
+        if (null === $channelCode) {
             $output->writeln('option --channelCode is required');
 
             return 1;
@@ -68,7 +70,7 @@ class PushCategoriesCommand extends Command
         $this->commandBus->dispatch(
             new Envelope(
                 (new PushCategories())
-                    ->setChannelCode($input->getOption('channelCode'))
+                    ->setChannelCode($channelCode)
             )
         );
 
