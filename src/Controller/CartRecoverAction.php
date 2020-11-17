@@ -20,13 +20,14 @@ namespace NFQ\SyliusOmnisendPlugin\Controller;
 use Sylius\Bundle\CoreBundle\Storage\CartSessionStorage;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Repository\OrderRepositoryInterface;
+use Sylius\Component\Core\Storage\CartStorageInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RouterInterface;
 
 class CartRecoverAction
 {
-    /** @var CartSessionStorage */
+    /** @var CartStorageInterface */
     private $sessionStorage;
 
     /** @var RouterInterface */
@@ -36,7 +37,7 @@ class CartRecoverAction
     private $orderRepository;
 
     public function __construct(
-        CartSessionStorage $sessionStorage,
+        CartStorageInterface $sessionStorage,
         RouterInterface $router,
         OrderRepositoryInterface $orderRepository
     ) {
@@ -48,6 +49,10 @@ class CartRecoverAction
     public function __invoke(Request $request): RedirectResponse
     {
         $cartId = $request->get('cartId');
+
+        if (null === $cartId) {
+            return new RedirectResponse('sylius_shop_homepage');
+        }
         /** @var OrderInterface $cart */
         $cart = $this->orderRepository->findOneBy(['omnisendCartId' => $cartId]);
 
