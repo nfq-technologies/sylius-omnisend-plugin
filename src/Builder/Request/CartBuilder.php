@@ -86,7 +86,7 @@ class CartBuilder implements CartBuilderInterface
 
         if (null !== $customer) {
             $this->cart->setEmail($customer->getEmail());
-            $this->cart->setPhone( $customer->getPhoneNumber());
+            $this->cart->setPhone($customer->getPhoneNumber());
         }
 
         if ($this->cart->getContactID() === null && $this->cart->getEmail() === null) {
@@ -106,7 +106,10 @@ class CartBuilder implements CartBuilderInterface
         $this->cart->setCartRecoveryUrl(
             $this->router->generate(
                 self::CART_ROUTE_NAME,
-                ['cartId' => $order->getOmnisendCartId()],
+                [
+                    'cartId' => $order->getOmnisendCartId(),
+                    '_locale' => $order->getLocaleCode(),
+                ],
                 UrlGeneratorInterface::ABSOLUTE_URL
             )
         );

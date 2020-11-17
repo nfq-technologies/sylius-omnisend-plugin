@@ -27,7 +27,7 @@ use Sylius\Component\Core\Model\OrderItemInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
 
-class CartProductFactory
+class CartProductFactory implements CartProductFactoryInterface
 {
     /** @var string */
     private const PRODUCT_ROUTE_NAME = 'sylius_shop_product_show';
