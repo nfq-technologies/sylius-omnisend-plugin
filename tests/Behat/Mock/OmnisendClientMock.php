@@ -63,18 +63,16 @@ class OmnisendClientMock implements OmnisendClientInterface
 
     public function postCart(Cart $cart, ?string $channelCode): ?object
     {
-        return new CartSuccess();
+        return (new CartSuccess())->setCartID('1111');
     }
 
     public function patchCart(Cart $cart, ?string $channelCode): ?object
     {
-        return new CartSuccess();
+        return (new CartSuccess())->setCartID('1111');
     }
 
     public function deleteCart(string $cartId, ?string $channelCode): ?object
     {
-        return new CartSuccess();
+        return (new CartSuccess())->setCartID('1111');
     }
-
-
 }

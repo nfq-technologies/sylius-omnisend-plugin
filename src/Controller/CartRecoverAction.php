@@ -17,7 +17,6 @@
 
 namespace NFQ\SyliusOmnisendPlugin\Controller;
 
-use Sylius\Bundle\CoreBundle\Storage\CartSessionStorage;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Repository\OrderRepositoryInterface;
 use Sylius\Component\Core\Storage\CartStorageInterface;

@@ -51,3 +51,12 @@ services:
 
   nfq_sylius_omnisend_plugin.client.omnisend:
     class: Tests\NFQ\SyliusOmnisendPlugin\Behat\Mock\OmnisendClientMock
+
+  nfq_sylius_omnisend.context.ui.shop.cart:
+    class: Tests\NFQ\SyliusOmnisendPlugin\Behat\Context\Ui\Shop\CartContext
+    arguments:
+      - '@sylius.repository.order'
+      - '@doctrine.orm.entity_manager'
+
+  nfq_sylius_omnisend.context.ui.shop.omnisend_user:
+    class: Tests\NFQ\SyliusOmnisendPlugin\Behat\Context\Ui\Shop\OmnisendUserContext

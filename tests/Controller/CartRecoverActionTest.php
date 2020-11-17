@@ -20,11 +20,8 @@ declare(strict_types=1);
 namespace Tests\NFQ\SyliusOmnisendPlugin\Controller;
 
 use NFQ\SyliusOmnisendPlugin\Controller\CartRecoverAction;
-use NFQ\SyliusOmnisendPlugin\Factory\Request\BatchFactory;
 use PHPUnit\Framework\TestCase;
-use Sylius\Bundle\CoreBundle\Storage\CartSessionStorage;
 use Sylius\Component\Core\Model\Channel;
-use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Repository\OrderRepositoryInterface;
 use Sylius\Component\Core\Storage\CartStorageInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
