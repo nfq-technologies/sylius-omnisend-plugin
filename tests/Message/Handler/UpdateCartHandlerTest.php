@@ -20,21 +20,16 @@ declare(strict_types=1);
 namespace Tests\NFQ\SyliusOmnisendPlugin\Message\Handler;
 
 use NFQ\SyliusOmnisendPlugin\Builder\Request\CartBuilderDirectorInterface;
-use NFQ\SyliusOmnisendPlugin\Client\OmnisendClient;
 use NFQ\SyliusOmnisendPlugin\Client\OmnisendClientInterface;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Cart;
 use NFQ\SyliusOmnisendPlugin\Client\Response\Model\CartSuccess;
-use NFQ\SyliusOmnisendPlugin\Doctrine\ORM\TaxonRepositoryInterface;
-use NFQ\SyliusOmnisendPlugin\Factory\Request\BatchFactoryInterface;
-use NFQ\SyliusOmnisendPlugin\Factory\Request\CategoryFactoryInterface;
 use NFQ\SyliusOmnisendPlugin\Message\Command\UpdateCart;
-use NFQ\SyliusOmnisendPlugin\Message\Handler\PushCategoriesHandler;
 use NFQ\SyliusOmnisendPlugin\Message\Handler\UpdateCartHandler;
 use NFQ\SyliusOmnisendPlugin\Model\OrderInterface;
 use PHPUnit\Framework\TestCase;
+use Sylius\Component\Core\Model\Channel;
 use Sylius\Component\Core\Repository\OrderRepositoryInterface;
 use Tests\NFQ\SyliusOmnisendPlugin\Mock\OrderMock;
-use function Clue\StreamFilter\fun;
 
 class UpdateCartHandlerTest extends TestCase
 {
@@ -80,6 +75,9 @@ class UpdateCartHandlerTest extends TestCase
     public function testIfCallCreateActionIfDoesNotExits()
     {
         $order = new OrderMock();
+        $channel = new Channel();
+        $channel->setCode('a');
+        $order->setChannel($channel);
         $this->orderRepository
             ->expects($this->once())
             ->method('find')
@@ -117,6 +115,9 @@ class UpdateCartHandlerTest extends TestCase
     public function testIfCallPatchActionIfCartExists()
     {
         $order = new OrderMock();
+        $channel = new Channel();
+        $channel->setCode('a');
+        $order->setChannel($channel);
         $order->setOmnisendCartId('2222');
         $this->orderRepository
             ->expects($this->once())
