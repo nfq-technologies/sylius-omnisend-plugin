@@ -23,6 +23,7 @@ use Behat\MinkExtension\Context\MinkContext;
 
 class OmnisendUserContext extends MinkContext
 {
+    /** @Then Browser has Omnisend contact cookie */
     public function setOmnisendClientCookie()
     {
         $this->getSession()->setCookie('omnisendContactID', '11111111');

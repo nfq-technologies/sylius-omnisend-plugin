@@ -34,25 +34,19 @@ class OmnisendTrackingScriptContext implements Context
         $this->homePage = $homePage;
     }
 
-    /**
-     * @Then I see omnisend tracking script with a key :key
-     */
+    /** @Then I see omnisend tracking script with a key :key */
     public function iSeeOmnisendTrackingScriptWithKey(string $key)
     {
         Assert::contains($this->homePage->getContent(), 'omnisend.push(["accountID", "' . $key . '"])');
     }
 
-    /**
-     * @Then I do not see omnisend tracking script
-     */
+    /** @Then I do not see omnisend tracking script */
     public function iDoNotSeeOmnisendTrackingScript()
     {
         Assert::notContains($this->homePage->getContent(), 'window.omnisend');
     }
 
-    /**
-     * @Then I see omnisend product picker script with values:
-     */
+    /** @Then I see omnisend product picker script with values: */
     public function iSeeOmnisendProductPickerScript(TableNode $table)
     {
         foreach ($table as $rowKey => $row) {

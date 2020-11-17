@@ -87,6 +87,7 @@ default:
 
         omnisend_cart:
             contexts:
+                - nfq_sylius_omnisend.context.ui.shop.omnisend_user
                 - nfq_sylius_omnisend.context.ui.shop.cart
                 - sylius.behat.context.hook.doctrine_orm
 
