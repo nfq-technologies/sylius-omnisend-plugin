@@ -2,7 +2,15 @@ winzou_state_machine:
   sylius_order_checkout:
     callbacks:
       after:
-        ratepay_resolve_state:
+        nfq_sylius_omnisend_after_address_change:
           on: ["address"]
+          do: ['@nfq_sylius_omnisend_plugin.event_subscriber.cart', "updateOrder"]
+          args: ["object"]
+        nfq_sylius_omnisend_after_select_shipping:
+          on: ["select_shipping"]
+          do: ['@nfq_sylius_omnisend_plugin.event_subscriber.cart', "updateOrder"]
+          args: ["object"]
+        nfq_sylius_omnisend_after_select_payment:
+          on: ["select_payment"]
           do: ['@nfq_sylius_omnisend_plugin.event_subscriber.cart', "updateOrder"]
           args: ["object"]

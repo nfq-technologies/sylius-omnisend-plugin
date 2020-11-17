@@ -47,8 +47,10 @@ class CartProductFactory implements CartProductFactoryInterface
     public function create(OrderItemInterface $orderItem): CartProduct
     {
         $cartItem = new CartProduct();
+        $locale = $orderItem->getOrder()->getLocaleCode();
+        $discount = $this->getDiscount($orderItem);
 
-        $cartItem->setCartProductId($orderItem->getId() ? (string)$orderItem->getId() : (string)$orderItem->getVariant()->getId());
+        $cartItem->setCartProductId((string)$orderItem->getId());
         $cartItem->setProductID((string)$orderItem->getVariant()->getProduct()->getId());
         $cartItem->setSku((string)$orderItem->getVariant()->getProduct()->getCode());
         $cartItem->setVariantID((string)$orderItem->getVariant()->getCode());
@@ -56,19 +58,30 @@ class CartProductFactory implements CartProductFactoryInterface
         $cartItem->setQuantity($orderItem->getQuantity());
         $cartItem->setPrice($orderItem->getTotal());
         $cartItem->setImageUrl($this->productImageResolver->resolve($orderItem->getProduct()));
-        $cartItem->setDiscount($orderItem->getAdjustmentsTotalRecursively(AdjustmentInterface::ORDER_UNIT_PROMOTION_ADJUSTMENT)
-            + $orderItem->getAdjustmentsTotalRecursively(AdjustmentInterface::ORDER_ITEM_PROMOTION_ADJUSTMENT)
-            + $orderItem->getAdjustmentsTotalRecursively(AdjustmentInterface::ORDER_PROMOTION_ADJUSTMENT));
-        $locale = $orderItem->getOrder()->getLocaleCode();
-
+        if ($discount > 0) {
+            $cartItem->setDiscount($this->getDiscount($orderItem));
+            $cartItem->setOldPrice($discount + $orderItem->getTotal());
+        }
         $cartItem->setProductUrl(
             $this->router->generate(
                 self::PRODUCT_ROUTE_NAME,
-                ['slug' => $orderItem->getProduct()->getTranslation($locale)->getSlug()],
+                [
+                    'slug' => $orderItem->getProduct()->getTranslation($locale)->getSlug(),
+                    '_locale' => $locale
+                ],
                 UrlGeneratorInterface::ABSOLUTE_URL
             )
         );
 
         return $cartItem;
+    }
+
+    private function getDiscount(OrderItemInterface $orderItem): int
+    {
+        return abs(
+            $orderItem->getAdjustmentsTotalRecursively(AdjustmentInterface::ORDER_UNIT_PROMOTION_ADJUSTMENT)
+            + $orderItem->getAdjustmentsTotalRecursively(AdjustmentInterface::ORDER_ITEM_PROMOTION_ADJUSTMENT)
+            + $orderItem->getAdjustmentsTotalRecursively(AdjustmentInterface::ORDER_PROMOTION_ADJUSTMENT)
+        );
     }
 }
