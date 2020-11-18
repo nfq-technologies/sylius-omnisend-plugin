@@ -72,7 +72,7 @@ class DeleteCartHandlerTest extends TestCase
             ->expects($this->never())
             ->method('deleteCart');
 
-        $this->handler->__invoke((new DeleteCart())->setOrderId(1)->setChannelCode('a'));
+        $this->handler->__invoke((new DeleteCart())->setOmnisendCartId(1)->setChannelCode('a'));
     }
 
     public function testIfDeletesIfOrderExists()
@@ -91,7 +91,7 @@ class DeleteCartHandlerTest extends TestCase
 
         $this->handler->__invoke(
             (new DeleteCart())
-                ->setOrderId(1)
+                ->setOmnisendCartId(1)
                 ->setChannelCode('a')
         );
     }

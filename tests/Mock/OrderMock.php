@@ -19,11 +19,11 @@ declare(strict_types=1);
 
 namespace Tests\NFQ\SyliusOmnisendPlugin\Mock;
 
-use NFQ\SyliusOmnisendPlugin\Model\OmnisendCartAwareTrait;
 use NFQ\SyliusOmnisendPlugin\Model\OrderInterface;
+use NFQ\SyliusOmnisendPlugin\Model\OrderTrait;
 use Sylius\Component\Core\Model\Order;
 
 class OrderMock extends Order implements OrderInterface
 {
-    use OmnisendCartAwareTrait;
+    use OrderTrait;
 }

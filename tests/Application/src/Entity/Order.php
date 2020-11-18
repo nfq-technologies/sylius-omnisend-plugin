@@ -22,6 +22,7 @@ namespace Tests\NFQ\SyliusOmnisendPlugin\Application\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use NFQ\SyliusOmnisendPlugin\Model\OmnisendCartAwareTrait;
 use NFQ\SyliusOmnisendPlugin\Model\OrderInterface;
+use NFQ\SyliusOmnisendPlugin\Model\OrderTrait;
 use Sylius\Component\Core\Model\Order as BaseOrder;
 
 /**
@@ -30,5 +31,5 @@ use Sylius\Component\Core\Model\Order as BaseOrder;
  */
 class Order extends BaseOrder implements OrderInterface
 {
-    use OmnisendCartAwareTrait;
+    use OrderTrait;
 }

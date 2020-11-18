@@ -94,13 +94,6 @@ class CartBuilder implements CartBuilderInterface
         }
     }
 
-    public function addRequestData(OrderInterface $customer): void
-    {
-        if ($this->request) {
-            $this->cart->setAttributionId($this->request->cookies->get('omnisendAttributionID'));
-        }
-    }
-
     public function addRecoveryUrl(OrderInterface $order): void
     {
         $this->cart->setCartRecoveryUrl(

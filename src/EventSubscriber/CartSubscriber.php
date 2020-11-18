@@ -26,6 +26,7 @@ use Sylius\Bundle\ResourceBundle\Event\ResourceControllerEvent;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Order\Context\CartContextInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\MessageBusInterface;
 
@@ -56,7 +57,7 @@ class CartSubscriber implements EventSubscriberInterface
             'sylius.order_item.post_add' => 'onOrderItemChange',
             'sylius.order_item.post_remove' => 'onOrderItemChange',
             'sylius.order.post_update' => 'onUpdate',
-            'sylius.order.pre_delete' => 'onDelete',
+            'sylius.carts.post_remove' => 'onCartsRemove',
         ];
     }
 
@@ -92,7 +93,7 @@ class CartSubscriber implements EventSubscriberInterface
         /** @var \NFQ\SyliusOmnisendPlugin\Model\OrderInterface $order */
         $order = $event->getSubject();
 
-        if ($order->getCheckoutState() === OrderInterface::STATE_CART) {
+        if ($order->getState() === OrderInterface::STATE_CART) {
             $this->messageBus->dispatch(
                 new Envelope(
                     (new UpdateCart())
@@ -104,19 +105,21 @@ class CartSubscriber implements EventSubscriberInterface
         }
     }
 
-    public function onDelete(ResourceControllerEvent $event): void
+    public function onCartsRemove(GenericEvent $event): void
     {
-        /** @var \NFQ\SyliusOmnisendPlugin\Model\OrderInterface $order */
-        $order = $event->getSubject();
+        /** @var array|\NFQ\SyliusOmnisendPlugin\Model\OrderInterface[] $carts */
+        $carts = $event->getSubject();
 
-        if ($order->getCheckoutState() === OrderInterface::STATE_CART) {
-            $this->messageBus->dispatch(
-                new Envelope(
-                    (new DeleteCart())
-                        ->setOrderId($order->getId())
-                        ->setChannelCode($order->getChannel()->getCode())
-                )
-            );
+        foreach ($carts as $cart) {
+            if ($cart->getOmnisendCartId()) {
+                $this->messageBus->dispatch(
+                    new Envelope(
+                        (new DeleteCart())
+                            ->setOmnisendCartId($cart->getOmnisendCartId())
+                            ->setChannelCode($cart->getChannel()->getCode())
+                    )
+                );
+            }
         }
     }
 }

@@ -29,27 +29,17 @@ class DeleteCartHandler
 {
     use LoggerAwareTrait;
 
-    /** @var OrderRepositoryInterface */
-    private $orderRepository;
-
     /** @var OmnisendClientInterface */
     private $omnisendClient;
 
     public function __construct(
-        OrderRepositoryInterface $orderRepository,
         OmnisendClientInterface $omnisendClient
     ) {
-        $this->orderRepository = $orderRepository;
         $this->omnisendClient = $omnisendClient;
     }
 
     public function __invoke(DeleteCart $message): void
     {
-        /** @var OrderInterface $order */
-        $order = $this->orderRepository->find($message->getOrderId());
-
-        if (null !== $order && null !== $order->getOmnisendCartId()) {
-            $this->omnisendClient->deleteCart($order->getOmnisendCartId(), $message->getChannelCode());
-        }
+        $this->omnisendClient->deleteCart($message->getOmnisendCartId(), $message->getChannelCode());
     }
 }

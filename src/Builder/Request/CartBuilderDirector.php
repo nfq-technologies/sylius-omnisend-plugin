@@ -37,7 +37,6 @@ class CartBuilderDirector implements CartBuilderDirectorInterface
         $this->cartBuilder->createCart();
         $this->cartBuilder->addCustomerData($order, $contactId);
         $this->cartBuilder->addOrderData($order);
-        $this->cartBuilder->addRequestData($order);
         $this->cartBuilder->addRecoveryUrl($order);
         $this->cartBuilder->addProducts($order);
 

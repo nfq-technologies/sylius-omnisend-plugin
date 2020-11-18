@@ -23,10 +23,12 @@ use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Batch;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Cart;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Category;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Contact;
+use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Order;
 use NFQ\SyliusOmnisendPlugin\Client\Response\Model\BatchSuccess;
 use NFQ\SyliusOmnisendPlugin\Client\Response\Model\CartSuccess;
 use NFQ\SyliusOmnisendPlugin\Client\Response\Model\CategorySuccess;
 use NFQ\SyliusOmnisendPlugin\Client\Response\Model\ContactSuccess;
+use NFQ\SyliusOmnisendPlugin\Client\Response\Model\OrderSuccess;
 use NFQ\SyliusOmnisendPlugin\HttpClient\ClientFactory;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -44,6 +46,7 @@ class OmnisendClient implements LoggerAwareInterface, OmnisendClientInterface
     private const URL_PATH_CONTACTS = '/contacts';
     private const URL_PATH_CATEGORIES = '/categories';
     private const URL_PATH_CARTS = '/carts';
+    private const URL_PATH_ORDERS = '/orders';
     private const URL_PATH_BATCHES = '/batches';
 
     /** @var ClientFactory */
@@ -132,6 +135,61 @@ class OmnisendClient implements LoggerAwareInterface, OmnisendClientInterface
         );
 
         return $this->parseResponse($response, CartSuccess::class);
+    }
+
+    public function postOrder(Order $order, ?string $channelCode): ?object
+    {
+        $response = $this->sendRequest(
+            $this->messageFactory->create(
+                'POST',
+                self::API_VERSION . self::URL_PATH_ORDERS,
+                $order
+            ),
+            $channelCode
+        );
+
+        return $this->parseResponse($response, OrderSuccess::class);
+    }
+
+    public function patchOrder(Order $order, ?string $channelCode): ?object
+    {
+        $response = $this->sendRequest(
+            $this->messageFactory->create(
+                'PATCH',
+                self::API_VERSION . self::URL_PATH_ORDERS . '/' . $order->getOrderID(),
+                $order
+            ),
+            $channelCode
+        );
+
+        return $this->parseResponse($response, OrderSuccess::class);
+    }
+
+    public function putOrder(Order $order, ?string $channelCode): ?object
+    {
+        $response = $this->sendRequest(
+            $this->messageFactory->create(
+                'PUT',
+                self::API_VERSION . self::URL_PATH_ORDERS . '/' . $order->getOrderID(),
+                $order
+            ),
+            $channelCode
+        );
+
+        return $this->parseResponse($response, OrderSuccess::class);
+    }
+
+    public function deleteOrder(string $orderId, ?string $channelCode): ?object
+    {
+        $response = $this->sendRequest(
+            $this->messageFactory->create(
+                'DELETE',
+                self::API_VERSION . self::URL_PATH_ORDERS . '/' . $orderId
+            ),
+            $channelCode
+        );
+
+        return $this->parseResponse($response, OrderSuccess::class);
     }
 
     public function putCategory(Category $category, ?string $channelCode): ?object

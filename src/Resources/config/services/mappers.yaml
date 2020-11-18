@@ -1,0 +1,10 @@
+services:
+  nfq_sylius_omnisend_plugin.mapper.order_state:
+    class: NFQ\SyliusOmnisendPlugin\Mapper\OrderStateMapper
+    arguments:
+      - '%nfq_sylius_omnisend_plugin.order_states%'
+
+  nfq_sylius_omnisend_plugin.mapper.order_payment_state:
+    class: NFQ\SyliusOmnisendPlugin\Mapper\OrderPaymentStateMapper
+    arguments:
+      - '%nfq_sylius_omnisend_plugin.payment_states%'

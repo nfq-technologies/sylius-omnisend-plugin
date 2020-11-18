@@ -24,3 +24,12 @@ services:
     tags:
       - { name: kernel.event_subscriber }
     public: true
+
+  nfq_sylius_omnisend_plugin.event_subscriber.order:
+    class: NFQ\SyliusOmnisendPlugin\EventSubscriber\OrderSubscriber
+    arguments:
+      - '@messenger.routable_message_bus'
+      - '@sylius.repository.order'
+    tags:
+      - { name: kernel.event_subscriber }
+    public: true
