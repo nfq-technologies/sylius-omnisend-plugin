@@ -20,7 +20,7 @@ declare(strict_types=1);
 namespace NFQ\SyliusOmnisendPlugin\Factory\Request;
 
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\OrderProduct;
-use NFQ\SyliusOmnisendPlugin\Model\ProductPickerAdditionalDataAwareInterface;
+use NFQ\SyliusOmnisendPlugin\Model\ProductAdditionalDataAwareInterface;
 use NFQ\SyliusOmnisendPlugin\Resolver\ProductImageResolverInterface;
 use Sylius\Component\Core\Model\AdjustmentInterface;
 use Sylius\Component\Core\Model\OrderItemInterface;
@@ -49,7 +49,7 @@ class OrderProductFactory implements OrderProductFactoryInterface
     {
         $cartItem = new OrderProduct();
         $locale = $orderItem->getOrder()->getLocaleCode();
-        /** @var ProductPickerAdditionalDataAwareInterface $product */
+        /** @var ProductAdditionalDataAwareInterface $product */
         $product = $orderItem->getVariant()->getProduct();
 
         $cartItem->setProductID((string)$orderItem->getVariant()->getProduct()->getId());
@@ -61,7 +61,7 @@ class OrderProductFactory implements OrderProductFactoryInterface
         $cartItem->setPrice($orderItem->getTotal());
         $cartItem->setImageUrl($this->productImageResolver->resolve($orderItem->getProduct()));
         $cartItem->setDiscount($this->getDiscount($orderItem));
-        if ($product instanceof ProductPickerAdditionalDataAwareInterface) {
+        if ($product instanceof ProductAdditionalDataAwareInterface) {
             $cartItem->setVendor($product->getOmnisendVendor());
             $cartItem->setTags($product->getOmnisendTags());
         }

@@ -77,7 +77,7 @@ class OrderSubscriber implements EventSubscriberInterface
         $graph = $event->getStateMachine()->getGraph();
         $transition = $event->getTransition();
 
-        if ($graph !== OrderTransitions::GRAPH) {
+        if ($graph !== OrderTransitions::GRAPH || null === $order->getId()) {
             return;
         }
 
@@ -116,11 +116,13 @@ class OrderSubscriber implements EventSubscriberInterface
         /** @var OrderInterface $order */
         $order = $payment->getOrder();
 
-        $this->messageBus->dispatch(
-            new Envelope(
-                (new UpdateOrderState($order->getId(), $order->getChannel()->getCode()))
-            )
-        );
+        if ($order->getId() !== null) {
+            $this->messageBus->dispatch(
+                new Envelope(
+                    (new UpdateOrderState($order->getId(), $order->getChannel()->getCode()))
+                )
+            );
+        }
     }
 
     public function onShipmentStateChange(ShipmentInterface $shipment): void
@@ -128,10 +130,12 @@ class OrderSubscriber implements EventSubscriberInterface
         /** @var OrderInterface $order */
         $order = $shipment->getOrder();
 
-        $this->messageBus->dispatch(
-            new Envelope(
-                (new UpdateOrderState($order->getId(), $order->getChannel()->getCode()))
-            )
-        );
+        if ($order->getId() !== null) {
+            $this->messageBus->dispatch(
+                new Envelope(
+                    (new UpdateOrderState($order->getId(), $order->getChannel()->getCode()))
+                )
+            );
+        }
     }
 }

@@ -20,7 +20,7 @@ declare(strict_types=1);
 namespace NFQ\SyliusOmnisendPlugin\Builder;
 
 use NFQ\SyliusOmnisendPlugin\Model\ProductPicker;
-use NFQ\SyliusOmnisendPlugin\Model\ProductPickerAdditionalDataAwareInterface;
+use NFQ\SyliusOmnisendPlugin\Model\ProductAdditionalDataAwareInterface;
 use NFQ\SyliusOmnisendPlugin\Resolver\ProductImageResolverInterface;
 use Sylius\Component\Channel\Context\ChannelContextInterface;
 use Sylius\Component\Core\Calculator\ProductVariantPricesCalculatorInterface;
@@ -132,7 +132,7 @@ class ProductPickerBuilder implements ProductPickerBuilderInterface
 
     public function addAdditionalData(ProductInterface $product): void
     {
-        if ($product instanceof ProductPickerAdditionalDataAwareInterface) {
+        if ($product instanceof ProductAdditionalDataAwareInterface) {
             $this->productPicker->setTags($product->getOmnisendTags());
             $this->productPicker->setVendor($product->getOmnisendVendor());
         }

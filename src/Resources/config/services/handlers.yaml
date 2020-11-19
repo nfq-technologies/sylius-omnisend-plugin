@@ -90,3 +90,19 @@ services:
       - '@sylius.repository.order'
       - '@nfq_sylius_omnisend_plugin.builder.request.order_director'
     tags: [ messenger.message_handler ]
+
+  nfq_sylius_omnisend_plugin.message.handler.update_product:
+    class: NFQ\SyliusOmnisendPlugin\Message\Handler\UpdateProductHandler
+    arguments:
+      - '@nfq_sylius_omnisend_plugin.client.omnisend'
+      - '@sylius.repository.product'
+      - '@sylius.repository.channel'
+      - '@nfq_sylius_omnisend_plugin.builder.request.product_director'
+    tags: [ messenger.message_handler ]
+
+  nfq_sylius_omnisend_plugin.message.handler.delete_product:
+    class: NFQ\SyliusOmnisendPlugin\Message\Handler\DeleteProductHandler
+    arguments:
+      - '@nfq_sylius_omnisend_plugin.client.omnisend'
+      - '@sylius.repository.product'
+    tags: [ messenger.message_handler ]

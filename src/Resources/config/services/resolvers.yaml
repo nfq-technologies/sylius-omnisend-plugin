@@ -21,3 +21,13 @@ services:
     class: NFQ\SyliusOmnisendPlugin\Resolver\DefaultOrderCouponResolver
     tags:
       - { name: nfq_sylius_omnisend_plugin.resolver.order_coupon, position: -100 }
+
+  nfq_sylius_omnisend_plugin.resolver.product_url:
+    class: NFQ\SyliusOmnisendPlugin\Resolver\ProductUrlResolver
+    arguments:
+      - '@router'
+
+  nfq_sylius_omnisend_plugin.resolver.product_variant_stock:
+    class: NFQ\SyliusOmnisendPlugin\Resolver\ProductVariantStockResolver
+    arguments:
+      - '@sylius.availability_checker.default'

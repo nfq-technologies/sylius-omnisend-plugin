@@ -17,13 +17,11 @@
 
 declare(strict_types=1);
 
-namespace NFQ\SyliusOmnisendPlugin\Model;
+namespace NFQ\SyliusOmnisendPlugin\Builder\Request;
 
-use Sylius\Component\Core\Model\ProductInterface as BaseProductAwareInterface;
+use Sylius\Component\Core\Model\ProductInterface;
 
-interface ProductPickerAdditionalDataAwareInterface extends BaseProductAwareInterface
+interface ProductImageListBuilderInterface
 {
-    public function getOmnisendTags(): ?array;
-
-    public function getOmnisendVendor(): ?string;
+    public function build(ProductInterface $product): array;
 }

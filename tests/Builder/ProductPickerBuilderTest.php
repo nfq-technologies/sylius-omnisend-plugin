@@ -32,7 +32,7 @@ use Sylius\Component\Core\Model\ProductVariant;
 use Sylius\Component\Currency\Model\Currency;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
-use Tests\NFQ\SyliusOmnisendPlugin\Mock\ProductPickerAdditionalDataAwareMock;
+use Tests\NFQ\SyliusOmnisendPlugin\Mock\ProductAdditionalDataAwareMock;
 
 class ProductPickerBuilderTest extends TestCase
 {
@@ -269,7 +269,7 @@ class ProductPickerBuilderTest extends TestCase
 
     public function testIfSetsAdditionalData()
     {
-        $product = new ProductPickerAdditionalDataAwareMock();
+        $product = new ProductAdditionalDataAwareMock();
         $this->builder->createProductPicker();
         $this->builder->addAdditionalData($product);
         $result = $this->builder->getProductPicker();

@@ -26,11 +26,13 @@ use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Cart;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Category;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Contact;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Order;
+use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Product;
 use NFQ\SyliusOmnisendPlugin\Client\Response\Model\BatchSuccess;
 use NFQ\SyliusOmnisendPlugin\Client\Response\Model\CartSuccess;
 use NFQ\SyliusOmnisendPlugin\Client\Response\Model\CategorySuccess;
 use NFQ\SyliusOmnisendPlugin\Client\Response\Model\ContactSuccess;
 use NFQ\SyliusOmnisendPlugin\Client\Response\Model\OrderSuccess;
+use NFQ\SyliusOmnisendPlugin\Client\Response\Model\ProductSuccess;
 
 class OmnisendClientMock implements OmnisendClientInterface
 {
@@ -129,5 +131,26 @@ class OmnisendClientMock implements OmnisendClientInterface
         $this->client->deleteOrder($orderId, $channelCode);
 
         return (new OrderSuccess())->setOrderID('1111');
+    }
+
+    public function postProduct(Product $order, ?string $channelCode): ?object
+    {
+        $this->client->postProduct($order, $channelCode);
+
+        return (new ProductSuccess())->setProductID('1111');
+    }
+
+    public function putProduct(Product $order, ?string $channelCode): ?object
+    {
+        $this->client->putProduct($order, $channelCode);
+
+        return (new ProductSuccess())->setProductID('1111');
+    }
+
+    public function deleteProduct(string $orderId, ?string $channelCode): ?object
+    {
+        $this->client->deleteProduct($orderId, $channelCode);
+
+        return (new ProductSuccess())->setProductID('1111');
     }
 }

@@ -78,14 +78,16 @@ class CartSubscriber implements EventSubscriberInterface
 
     public function updateOrder(OrderInterface $order): void
     {
-        $this->messageBus->dispatch(
-            new Envelope(
-                (new UpdateCart())
-                    ->setOrderId($order->getId())
-                    ->setChannelCode($order->getChannel()->getCode())
-                    ->setContactId($this->contactIdResolver->resolve($order))
-            )
-        );
+        if ($order->getId()) {
+            $this->messageBus->dispatch(
+                new Envelope(
+                    (new UpdateCart())
+                        ->setOrderId($order->getId())
+                        ->setChannelCode($order->getChannel()->getCode())
+                        ->setContactId($this->contactIdResolver->resolve($order))
+                )
+            );
+        }
     }
 
     public function onUpdate(ResourceControllerEvent $event): void

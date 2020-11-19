@@ -24,6 +24,7 @@ use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Cart;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Category;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Contact;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Order;
+use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Product;
 
 interface OmnisendClientInterface
 {
@@ -48,6 +49,12 @@ interface OmnisendClientInterface
     public function patchOrder(Order $order, ?string $channelCode): ?object;
 
     public function putOrder(Order $order, ?string $channelCode): ?object;
+
+    public function postProduct(Product $product, ?string $channelCode): ?object;
+
+    public function putProduct(Product $product, ?string $channelCode): ?object;
+
+    public function deleteProduct(string $productId, ?string $channelCode): ?object;
 
     public function deleteOrder(string $orderId, ?string $channelCode): ?object;
 
