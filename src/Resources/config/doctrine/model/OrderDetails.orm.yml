@@ -21,6 +21,6 @@ NFQ\SyliusOmnisendPlugin\Model\OrderDetails:
       joinColumn:
         name: order_id
         referencedColumnName: id
-        nullable: false
+        nullable: true
         onDelete: CASCADE
 

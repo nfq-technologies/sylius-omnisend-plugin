@@ -61,8 +61,10 @@ class OrderProductFactory implements OrderProductFactoryInterface
         $cartItem->setPrice($orderItem->getTotal());
         $cartItem->setImageUrl($this->productImageResolver->resolve($orderItem->getProduct()));
         $cartItem->setDiscount($this->getDiscount($orderItem));
-        $cartItem->setVendor($product->getOmnisendVendor());
-        $cartItem->setTags($product->getOmnisendTags());
+        if ($product instanceof ProductPickerAdditionalDataAwareInterface) {
+            $cartItem->setVendor($product->getOmnisendVendor());
+            $cartItem->setTags($product->getOmnisendTags());
+        }
         $cartItem->setCategoryIDs($this->getCategoriesIds($orderItem));
         $cartItem->setProductUrl(
             $this->router->generate(

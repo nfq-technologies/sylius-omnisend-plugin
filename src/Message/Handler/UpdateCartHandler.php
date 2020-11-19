@@ -82,6 +82,7 @@ class UpdateCartHandler
             );
 
             if (null !== $response) {
+                $order->getOmnisendOrderDetails()->setOrder($order);
                 $order->getOmnisendOrderDetails()->setCartId($response->getCartID());
                 $this->orderRepository->add($order);
             }

@@ -96,6 +96,7 @@ default:
             contexts:
                 - nfq_sylius_omnisend.context.hook.doctrine
                 - nfq_sylius_omnisend.context.hook.client_request
+                - nfq_sylius_omnisend.context.client_request
                 - nfq_sylius_omnisend.context.ui.shop.omnisend_user
                 - nfq_sylius_omnisend.context.ui.shop.cart
                 - sylius.behat.context.hook.doctrine_orm
@@ -135,6 +136,7 @@ default:
             contexts:
                 - nfq_sylius_omnisend.context.hook.doctrine
                 - nfq_sylius_omnisend.context.hook.client_request
+                - nfq_sylius_omnisend.context.client_request
                 - nfq_sylius_omnisend.context.ui.shop.cart
                 - sylius.behat.context.hook.doctrine_orm
                 - sylius.behat.context.hook.email_spool

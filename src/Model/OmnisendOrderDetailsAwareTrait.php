@@ -19,9 +19,16 @@ declare(strict_types=1);
 
 namespace NFQ\SyliusOmnisendPlugin\Model;
 
+use Doctrine\ORM\Mapping as ORM;
+
 trait OmnisendOrderDetailsAwareTrait
 {
-    /** @var OrderDetails|null */
+    /**
+     * @var string|null
+     * @ORM\OneToOne(targetEntity="NFQ\SyliusOmnisendPlugin\Model\OrderDetails", cascade={"all"})
+     *
+     * @ORM\JoinColumn(name="omnisend_order_details_id", onDelete="CASCADE")
+     */
     protected $omnisendOrderDetails;
 
     public function __construct()

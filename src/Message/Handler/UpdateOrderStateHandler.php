@@ -21,8 +21,6 @@ namespace NFQ\SyliusOmnisendPlugin\Message\Handler;
 
 use NFQ\SyliusOmnisendPlugin\Builder\Request\OrderBuilderDirectorInterface;
 use NFQ\SyliusOmnisendPlugin\Client\OmnisendClientInterface;
-use NFQ\SyliusOmnisendPlugin\Message\Command\CancelOrder;
-use NFQ\SyliusOmnisendPlugin\Message\Command\UpdateOrder;
 use NFQ\SyliusOmnisendPlugin\Message\Command\UpdateOrderState;
 use NFQ\SyliusOmnisendPlugin\Model\OrderInterface;
 use Sylius\Component\Core\Repository\OrderRepositoryInterface;
@@ -53,7 +51,7 @@ class UpdateOrderStateHandler
         /** @var OrderInterface $order */
         $order = $this->orderRepository->find($message->getOrderId());
 
-        if (null === $order || null === $order->getOmnisendOrderDetails()->getCartId()()) {
+        if (null === $order || null === $order->getOmnisendOrderDetails()->getCartId()) {
             return;
         }
 
