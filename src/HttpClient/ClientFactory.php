@@ -29,7 +29,7 @@ use Http\Discovery\UriFactoryDiscovery;
 use NFQ\SyliusOmnisendPlugin\Model\ChannelOmnisendTrackingAwareInterface;
 use Sylius\Component\Channel\Repository\ChannelRepositoryInterface;
 
-class ClientFactory
+class ClientFactory implements ClientFactoryInterface
 {
     public const ENDPOINT = 'https://api.omnisend.com/';
 

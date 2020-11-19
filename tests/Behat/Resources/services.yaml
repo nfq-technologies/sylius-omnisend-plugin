@@ -49,8 +49,27 @@ services:
     arguments:
       - '@doctrine.orm.entity_manager'
 
-  nfq_sylius_omnisend_plugin.client.omnisend:
+  nfq_sylius_omnisend.context.hook.client_request:
+    class: Tests\NFQ\SyliusOmnisendPlugin\Behat\Context\Hook\ClientRequestHook
+    arguments:
+      - '@nfq_sylius_omnisend_plugin.client.loggable'
+
+  nfq_sylius_omnisend_plugin.client.omnisend_decorated:
     class: Tests\NFQ\SyliusOmnisendPlugin\Behat\Mock\OmnisendClientMock
+    decorates: nfq_sylius_omnisend_plugin.client.omnisend
+    public: false
+    arguments:
+      - '@nfq_sylius_omnisend_plugin.client.omnisend_decorated.inner'
+
+  nfq_sylius_omnisend_plugin.client.loggable:
+    class: Tests\NFQ\SyliusOmnisendPlugin\Behat\Mock\LoggableClientMock
+    arguments:
+      - '%kernel.cache_dir%'
+
+  nfq_sylius_omnisend_plugin.http_client.factory:
+    class: Tests\NFQ\SyliusOmnisendPlugin\Behat\Mock\ClientFactoryMock
+    arguments:
+      - '@nfq_sylius_omnisend_plugin.client.loggable'
 
   nfq_sylius_omnisend.context.ui.shop.cart:
     class: Tests\NFQ\SyliusOmnisendPlugin\Behat\Context\Ui\Shop\CartContext
@@ -60,3 +79,8 @@ services:
 
   nfq_sylius_omnisend.context.ui.shop.omnisend_user:
     class: Tests\NFQ\SyliusOmnisendPlugin\Behat\Context\Ui\Shop\OmnisendUserContext
+
+  nfq_sylius_omnisend.context.client_request:
+    class: Tests\NFQ\SyliusOmnisendPlugin\Behat\Context\ClientRequestContext
+    arguments:
+      - '@nfq_sylius_omnisend_plugin.client.loggable'

@@ -30,6 +30,7 @@ use NFQ\SyliusOmnisendPlugin\Client\Response\Model\CategorySuccess;
 use NFQ\SyliusOmnisendPlugin\Client\Response\Model\ContactSuccess;
 use NFQ\SyliusOmnisendPlugin\Client\Response\Model\OrderSuccess;
 use NFQ\SyliusOmnisendPlugin\HttpClient\ClientFactory;
+use NFQ\SyliusOmnisendPlugin\HttpClient\ClientFactoryInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerAwareInterface;
@@ -49,7 +50,7 @@ class OmnisendClient implements LoggerAwareInterface, OmnisendClientInterface
     private const URL_PATH_ORDERS = '/orders';
     private const URL_PATH_BATCHES = '/batches';
 
-    /** @var ClientFactory */
+    /** @var ClientFactoryInterface */
     private $clientFactory;
 
     /** @var MessageFactory */
@@ -59,7 +60,7 @@ class OmnisendClient implements LoggerAwareInterface, OmnisendClientInterface
     private $serializer;
 
     public function __construct(
-        ClientFactory $httpClient,
+        ClientFactoryInterface $httpClient,
         SerializerInterface $serializer,
         MessageFactory $messageFactory
     ) {
