@@ -1,5 +1,5 @@
 @omnisend_modifying_address
-Feature: Changing order billing address info should be sent to Omnisend
+Feature: Changed order billing address info should be sent to Omnisend
 
   Background:
     Given the store operates on a single channel in the "United States" named "Web"

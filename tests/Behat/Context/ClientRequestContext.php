@@ -62,4 +62,13 @@ class ClientRequestContext implements Context
             Assert::contains($rawData, '"' . $row['key'] .'":' . $value);
         }
     }
+
+    /**
+     * @Then cancelled order date should be set
+     */
+    public function cancelledOrderDateshouldBeSet()
+    {
+        $rawData = $this->loggableClientMock->getLastRequestData();
+        Assert::notNull($rawData['body']['canceledDate']);
+    }
 }
