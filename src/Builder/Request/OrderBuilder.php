@@ -24,11 +24,11 @@ use NFQ\SyliusOmnisendPlugin\Factory\Request\OrderAddressFactoryInterface;
 use NFQ\SyliusOmnisendPlugin\Factory\Request\OrderProductFactoryInterface;
 use NFQ\SyliusOmnisendPlugin\Mapper\OrderPaymentStateMapper;
 use NFQ\SyliusOmnisendPlugin\Mapper\OrderStateMapper;
-use NFQ\SyliusOmnisendPlugin\Model\OrderInterface;
 use NFQ\SyliusOmnisendPlugin\Resolver\OrderCouponResolverInterface;
 use NFQ\SyliusOmnisendPlugin\Utils\DatetimeHelper;
 use NFQ\SyliusOmnisendPlugin\Utils\Order\OrderNumberResolver;
 use Sylius\Bundle\ShopBundle\Calculator\OrderItemsSubtotalCalculatorInterface;
+use Sylius\Component\Core\Model\OrderInterface;
 
 class OrderBuilder implements OrderBuilderInterface
 {
@@ -111,6 +111,7 @@ class OrderBuilder implements OrderBuilderInterface
         $this->order->setTrackingCode($order->getShipments()->last()->getTracking());
     }
 
+    /** @var \NFQ\SyliusOmnisendPlugin\Model\OrderInterface $order */
     public function addCartData(OrderInterface $order): void
     {
         $this->order->setCartID($order->getOmnisendOrderDetails()->getCartId());
@@ -128,9 +129,10 @@ class OrderBuilder implements OrderBuilderInterface
         }
     }
 
+    /** @var \NFQ\SyliusOmnisendPlugin\Model\OrderInterface $order */
     public function addOrderData(OrderInterface $order): void
     {
-        $this->order->setOrderID($order->getOmnisendCartId());
+        $this->order->setOrderID($order->getOmnisendOrderDetails()->getCartId());
         $this->order->setOrderNumber(OrderNumberResolver::resolve($order->getNumber()));
         $this->order->setEmail($order->getCustomer()->getEmail());
         $this->order->setShippingMethod($order->getShipments()->last()->getMethod()->getName());
@@ -150,8 +152,9 @@ class OrderBuilder implements OrderBuilderInterface
         return $this->order;
     }
 
+    /** @var \NFQ\SyliusOmnisendPlugin\Model\OrderInterface $order */
     public function addCancelData(OrderInterface $order): void
     {
-        $this->order->setCanceledDate(DatetimeHelper::format($order->getCancelledAt()));
+        $this->order->setCanceledDate(DatetimeHelper::format($order->getOmnisendOrderDetails()->getCancelledAt()));
     }
 }

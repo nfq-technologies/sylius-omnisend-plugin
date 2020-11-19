@@ -20,7 +20,7 @@ declare(strict_types=1);
 namespace NFQ\SyliusOmnisendPlugin\Builder\Request;
 
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Order;
-use NFQ\SyliusOmnisendPlugin\Model\OrderInterface;
+use Sylius\Component\Core\Model\OrderInterface;
 
 interface OrderBuilderDirectorInterface
 {
