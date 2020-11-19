@@ -19,7 +19,7 @@ namespace Tests\NFQ\SyliusOmnisendPlugin\Behat\Context\Setup;
 
 use Behat\Behat\Context\Context;
 use Doctrine\Common\Persistence\ObjectManager;
-use NFQ\SyliusOmnisendPlugin\Model\ChannelOmnisendTrackingKeyInterface;
+use NFQ\SyliusOmnisendPlugin\Model\OmnisendTrackingKeyAwareInterface;
 use Sylius\Behat\Service\SharedStorageInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
 
@@ -44,7 +44,7 @@ class ChannelContext implements Context
      */
     public function theChannelIsDisabled(ChannelInterface $channel, string $key)
     {
-        /** @var ChannelOmnisendTrackingKeyInterface $channel */
+        /** @var OmnisendTrackingKeyAwareInterface $channel */
         $channel->setOmnisendTrackingKey($key);
         $this->channelManager->flush();
         $this->sharedStorage->set('channel', $channel);

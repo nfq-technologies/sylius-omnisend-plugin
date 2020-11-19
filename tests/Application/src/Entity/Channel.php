@@ -17,8 +17,8 @@
 
 namespace Tests\NFQ\SyliusOmnisendPlugin\Application\Entity;
 
-use NFQ\SyliusOmnisendPlugin\Model\ChannelOmnisendTrackingKeyInterface;
-use NFQ\SyliusOmnisendPlugin\Model\ChannelOmnisendTrackingKeyTrait;
+use NFQ\SyliusOmnisendPlugin\Model\OmnisendTrackingKeyAwareInterface;
+use NFQ\SyliusOmnisendPlugin\Model\OmnisendTrackingKeyAwareTrait;
 use Sylius\Component\Core\Model\Channel as BaseChannel;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -26,7 +26,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\Table(name="sylius_channel")
  */
-class Channel extends BaseChannel implements ChannelOmnisendTrackingKeyInterface
+class Channel extends BaseChannel implements OmnisendTrackingKeyAwareInterface
 {
-    use ChannelOmnisendTrackingKeyTrait;
+    use OmnisendTrackingKeyAwareTrait;
 }

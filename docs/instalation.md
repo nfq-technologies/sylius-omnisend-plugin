@@ -27,17 +27,17 @@ nfq_sylius_omnisend:
 use NFQ\SyliusOmnisendPlugin\Model\ChannelOmnisendTrackingKeyTrait;</b>
 
 
-class Channel extends BaseChannel <b>implements ChannelOmnisendTrackingKeyInterface</b>
+class Channel extends BaseChannel <b>implements OmnisendTrackingKeyAwareInterface</b>
 {
-    <b>use ChannelOmnisendTrackingKeyTrait;</b>
+    <b>use OmnisendTrackingKeyAwareTrait;</b>
 }
 </pre>
 
 5.Migrations should be generated:
 
 ```
-    bin\console d:m:g
-    bin\console d:m:m
+    bin/console doctrine:migrations:diff
+    bin/console doctrine:migrations:migrate
 ```
 
 6.Include services:
