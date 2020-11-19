@@ -19,13 +19,13 @@ declare(strict_types=1);
 
 namespace NFQ\SyliusOmnisendPlugin\DependencyInjection;
 
+use Sylius\Bundle\ResourceBundle\DependencyInjection\Extension\AbstractResourceExtension;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
-final class NFQSyliusOmnisendExtension extends Extension
+final class NFQSyliusOmnisendExtension extends AbstractResourceExtension
 {
     public function load(array $config, ContainerBuilder $container): void
     {
@@ -55,7 +55,7 @@ final class NFQSyliusOmnisendExtension extends Extension
             $config['payment_states']
         );
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
-
+        $this->registerResources('nfq_sylius_omnisend_plugin', $config['driver'], $config['resources'], $container);
         $loader->load('services.yaml');
     }
 

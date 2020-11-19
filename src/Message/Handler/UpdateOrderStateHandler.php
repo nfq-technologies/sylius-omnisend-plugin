@@ -53,7 +53,7 @@ class UpdateOrderStateHandler
         /** @var OrderInterface $order */
         $order = $this->orderRepository->find($message->getOrderId());
 
-        if (null === $order || null === $order->getOmnisendCartId()) {
+        if (null === $order || null === $order->getOmnisendOrderDetails()->getCartId()()) {
             return;
         }
 

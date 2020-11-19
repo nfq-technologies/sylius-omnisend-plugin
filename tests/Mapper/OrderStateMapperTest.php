@@ -22,6 +22,7 @@ namespace Tests\NFQ\SyliusOmnisendPlugin\Mapper;
 use NFQ\SyliusOmnisendPlugin\Builder\Request\Constants\OrderFulfillmentStatus;
 use NFQ\SyliusOmnisendPlugin\Mapper\OrderStateMapper;
 use PHPUnit\Framework\TestCase;
+use Sylius\Component\Core\Model\Order;
 use Sylius\Component\Core\Model\OrderInterface;
 
 class OrderStateMapperTest extends TestCase
@@ -45,7 +46,9 @@ class OrderStateMapperTest extends TestCase
         );
 
         foreach ($testData as $key => $item) {
-            $this->assertEquals($mapper->getState($key), $item);
+            $order = new Order();
+            $order->setState($key);
+            $this->assertEquals($mapper->getState($order), $item);
         }
     }
 }

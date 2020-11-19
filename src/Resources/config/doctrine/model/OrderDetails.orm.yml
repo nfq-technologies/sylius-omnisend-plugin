@@ -1,0 +1,26 @@
+NFQ\SyliusOmnisendPlugin\Model\OrderDetails:
+  type: mappedSuperclass
+  table: nfq_omnisend_plugin_order_details
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    cartId:
+      type: string
+      nullable: true
+      length: 32
+    cancelledAt:
+      type: datetime
+      nullable: true
+  oneToOne:
+    order:
+      targetEntity: Sylius\Component\Order\Model\OrderInterface
+      inversedBy: omnisendOrderDetails
+      joinColumn:
+        name: order_id
+        referencedColumnName: id
+        nullable: false
+        onDelete: CASCADE
+

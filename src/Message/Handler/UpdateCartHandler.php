@@ -74,7 +74,7 @@ class UpdateCartHandler
 
     public function handle(OrderInterface $order, ?string $contactId = null)
     {
-        if (null === $order->getOmnisendCartId()) {
+        if (null === $order->getOmnisendOrderDetails()->getCartId()) {
             /** @var CartSuccess $response */
             $response = $this->omnisendClient->postCart(
                 $this->cartBuilderDirector->build($order, $contactId),
@@ -82,7 +82,7 @@ class UpdateCartHandler
             );
 
             if (null !== $response) {
-                $order->setOmnisendCartId($response->getCartID());
+                $order->getOmnisendOrderDetails()->setCartId($response->getCartID());
                 $this->orderRepository->add($order);
             }
         } else {

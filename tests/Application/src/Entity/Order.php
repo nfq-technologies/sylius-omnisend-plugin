@@ -20,9 +20,8 @@ declare(strict_types=1);
 namespace Tests\NFQ\SyliusOmnisendPlugin\Application\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use NFQ\SyliusOmnisendPlugin\Model\OmnisendCartAwareTrait;
+use NFQ\SyliusOmnisendPlugin\Model\OmnisendOrderDetailsAwareTrait;
 use NFQ\SyliusOmnisendPlugin\Model\OrderInterface;
-use NFQ\SyliusOmnisendPlugin\Model\OrderTrait;
 use Sylius\Component\Core\Model\Order as BaseOrder;
 
 /**
@@ -31,5 +30,15 @@ use Sylius\Component\Core\Model\Order as BaseOrder;
  */
 class Order extends BaseOrder implements OrderInterface
 {
-    use OrderTrait;
+    use OmnisendOrderDetailsAwareTrait;
+
+    use OmnisendOrderDetailsAwareTrait {
+        OmnisendOrderDetailsAwareTrait::__construct as private omnisendOrderDetailsConstruct;
+    }
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->omnisendOrderDetailsConstruct();
+    }
 }

@@ -20,11 +20,7 @@ declare(strict_types=1);
 namespace NFQ\SyliusOmnisendPlugin\Model;
 
 use Sylius\Component\Core\Model\OrderInterface as BaseOrderInterface;
-use DateTimeInterface;
 
-interface OrderInterface extends BaseOrderInterface, OmnisendCartAwareInterface
+interface OrderInterface extends BaseOrderInterface, OmnisendOrderDetailsAwareInterface
 {
-    public function getCancelledAt(): ?DateTimeInterface;
-
-    public function setCancelledAt(?DateTimeInterface $dateTime): void;
 }

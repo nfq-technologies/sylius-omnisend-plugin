@@ -111,11 +111,11 @@ class CartSubscriber implements EventSubscriberInterface
         $carts = $event->getSubject();
 
         foreach ($carts as $cart) {
-            if ($cart->getOmnisendCartId()) {
+            if ($cart->getOmnisendOrderDetails()->getCartId()) {
                 $this->messageBus->dispatch(
                     new Envelope(
                         (new DeleteCart())
-                            ->setOmnisendCartId($cart->getOmnisendCartId())
+                            ->setOmnisendCartId($cart->getOmnisendOrderDetails()->getCartId())
                             ->setChannelCode($cart->getChannel()->getCode())
                     )
                 );

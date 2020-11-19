@@ -69,10 +69,10 @@ class CartBuilder implements CartBuilderInterface
 
     public function addOrderData(OrderInterface $order): void
     {
-        if (null === $order->getOmnisendCartId()) {
-            $order->setOmnisendCartId((string)$this->generator->generateNumeric(32));
+        if (null === $order->getOmnisendOrderDetails()->getCartId()) {
+            $order->getOmnisendOrderDetails()->setCartId((string)$this->generator->generateNumeric(32));
         }
-        $this->cart->setCartID($order->getOmnisendCartId());
+        $this->cart->setCartID($order->getOmnisendOrderDetails()->getCartId());
         $this->cart->setCurrency($order->getCurrencyCode());
         $this->cart->setCartSum($order->getTotal());
         $this->cart->setCreatedAt(DatetimeHelper::format($order->getCreatedAt()));
@@ -100,7 +100,7 @@ class CartBuilder implements CartBuilderInterface
             $this->router->generate(
                 self::CART_ROUTE_NAME,
                 [
-                    'cartId' => $order->getOmnisendCartId(),
+                    'cartId' => $order->getOmnisendOrderDetails()->getCartId(),
                     '_locale' => $order->getLocaleCode(),
                 ],
                 UrlGeneratorInterface::ABSOLUTE_URL

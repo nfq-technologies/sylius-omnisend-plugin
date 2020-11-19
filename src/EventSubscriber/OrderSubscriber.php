@@ -90,7 +90,7 @@ class OrderSubscriber implements EventSubscriberInterface
                 );
                 break;
             case OrderTransitions::TRANSITION_CANCEL:
-                $order->setCancelledAt(new DateTime());
+                $order->getOmnisendOrderDetails()->setCancelledAt(new DateTime());
                 $this->orderRepository->add($order);
 
                 $this->messageBus->dispatch(

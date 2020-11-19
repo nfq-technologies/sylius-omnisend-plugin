@@ -19,9 +19,23 @@ declare(strict_types=1);
 
 namespace NFQ\SyliusOmnisendPlugin\Model;
 
-interface OmnisendCartAwareInterface
+trait OmnisendOrderDetailsAwareTrait
 {
-    public function getOmnisendCartId(): ?string;
+    /** @var OrderDetails|null */
+    protected $omnisendOrderDetails;
 
-    public function setOmnisendCartId(?string $omnisendCartId): void;
+    public function __construct()
+    {
+        $this->omnisendOrderDetails = new OrderDetails();
+    }
+
+    public function getOmnisendOrderDetails(): ?OrderDetails
+    {
+        return $this->omnisendOrderDetails;
+    }
+
+    public function setOmnisendOrderDetails(?OrderDetails $omnisendOrderDetails): void
+    {
+        $this->omnisendOrderDetails = $omnisendOrderDetails;
+    }
 }

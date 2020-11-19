@@ -87,8 +87,8 @@ class OrderBuilder implements OrderBuilderInterface
 
     public function addStates(OrderInterface $order): void
     {
-        $this->order->setFulfillmentStatus($this->stateMapper->getState($order->getState()));
-        $this->order->setPaymentStatus($this->paymentStateMapper->getState($order->getPaymentState()));
+        $this->order->setFulfillmentStatus($this->stateMapper->getState($order));
+        $this->order->setPaymentStatus($this->paymentStateMapper->getState($order));
     }
 
     public function addAddresses(OrderInterface $order): void
@@ -113,8 +113,8 @@ class OrderBuilder implements OrderBuilderInterface
 
     public function addCartData(OrderInterface $order): void
     {
-        $this->order->setCartID($order->getOmnisendCartId());
-        $this->order->setOrderID($order->getOmnisendCartId());
+        $this->order->setCartID($order->getOmnisendOrderDetails()->getCartId());
+        $this->order->setOrderID($order->getOmnisendOrderDetails()->getCartId());
     }
 
     public function addCouponData(OrderInterface $order): void

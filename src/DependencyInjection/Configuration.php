@@ -19,6 +19,8 @@ declare(strict_types=1);
 
 namespace NFQ\SyliusOmnisendPlugin\DependencyInjection;
 
+use NFQ\SyliusOmnisendPlugin\Model\OrderDetails;
+use Sylius\Bundle\ResourceBundle\SyliusResourceBundle;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -31,6 +33,32 @@ final class Configuration implements ConfigurationInterface
 
         $rootNode
             ->addDefaultsIfNotSet()
+                ->children()
+                    ->scalarNode('driver')
+                    ->defaultValue(SyliusResourceBundle::DRIVER_DOCTRINE_ORM)
+                    ->end()
+                ->end()
+            ->end();
+        $rootNode->children()
+                ->arrayNode('resources')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->arrayNode('order_details')
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->variableNode('options')->end()
+                                ->arrayNode('classes')
+                                    ->addDefaultsIfNotSet()
+                                    ->children()
+                                        ->scalarNode('model')->defaultValue(OrderDetails::class)->cannotBeEmpty()->end()
+                                    ->end()
+                                ->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end();
+        $rootNode->addDefaultsIfNotSet()
                 ->children()
                     ->arrayNode('order_states')
                         ->useAttributeAsKey('code')

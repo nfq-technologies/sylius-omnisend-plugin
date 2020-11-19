@@ -38,8 +38,9 @@ class OrderStateMapper
         $this->configuredStates = $configuredStates;
     }
 
-    public function getState(string $orderState): string
+    public function getState(OrderInterface $order): string
     {
+        $orderState = $order->getState();
         $states = array_merge(self::DEFAULT_MAP, $this->configuredStates);
         if (isset($states[$orderState])) {
             return $states[$orderState];

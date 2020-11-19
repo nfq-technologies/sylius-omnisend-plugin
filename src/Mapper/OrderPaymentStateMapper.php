@@ -21,6 +21,7 @@ namespace NFQ\SyliusOmnisendPlugin\Mapper;
 
 use NFQ\SyliusOmnisendPlugin\Builder\Request\Constants\OrderFulfillmentStatus;
 use NFQ\SyliusOmnisendPlugin\Builder\Request\Constants\OrderPaymentStatus;
+use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\OrderPaymentStates;
 
 class OrderPaymentStateMapper
@@ -45,8 +46,9 @@ class OrderPaymentStateMapper
         $this->configuredStates = $configuredStates;
     }
 
-    public function getState(string $orderState): string
+    public function getState(OrderInterface $order): string
     {
+        $orderState = $order->getPaymentState();
         $states = array_merge(self::DEFAULT_MAP, $this->configuredStates);
         if (isset($states[$orderState])) {
             return $states[$orderState];
