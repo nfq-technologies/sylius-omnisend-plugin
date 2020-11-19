@@ -24,10 +24,12 @@ use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Batch;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Cart;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Category;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Contact;
+use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Order;
 use NFQ\SyliusOmnisendPlugin\Client\Response\Model\BatchSuccess;
 use NFQ\SyliusOmnisendPlugin\Client\Response\Model\CartSuccess;
 use NFQ\SyliusOmnisendPlugin\Client\Response\Model\CategorySuccess;
 use NFQ\SyliusOmnisendPlugin\Client\Response\Model\ContactSuccess;
+use NFQ\SyliusOmnisendPlugin\Client\Response\Model\OrderSuccess;
 
 class OmnisendClientMock implements OmnisendClientInterface
 {
@@ -74,5 +76,25 @@ class OmnisendClientMock implements OmnisendClientInterface
     public function deleteCart(string $cartId, ?string $channelCode): ?object
     {
         return (new CartSuccess())->setCartID('1111');
+    }
+
+    public function postOrder(Order $order, ?string $channelCode): ?object
+    {
+        return (new OrderSuccess())->setOrderID('1111');
+    }
+
+    public function patchOrder(Order $order, ?string $channelCode): ?object
+    {
+        return (new OrderSuccess())->setOrderID('1111');
+    }
+
+    public function putOrder(Order $order, ?string $channelCode): ?object
+    {
+        return (new OrderSuccess())->setOrderID('1111');
+    }
+
+    public function deleteOrder(string $orderId, ?string $channelCode): ?object
+    {
+        return (new OrderSuccess())->setOrderID('1111');
     }
 }

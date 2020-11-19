@@ -118,7 +118,7 @@ class UpdateCartHandlerTest extends TestCase
         $channel = new Channel();
         $channel->setCode('a');
         $order->setChannel($channel);
-        $order->getOmnisendOrderDetails()->getCartId()('2222');
+        $order->getOmnisendOrderDetails()->setCartId('2222');
         $this->orderRepository
             ->expects($this->once())
             ->method('find')
