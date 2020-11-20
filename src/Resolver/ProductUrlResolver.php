@@ -38,10 +38,12 @@ class ProductUrlResolver implements ProductUrlResolverInterface
 
     public function resolve(ProductInterface $product, ?string $localeCode = null): ?string
     {
+        $translation = $product->getTranslation($localeCode);
+
         return $this->router->generate(
             self::PRODUCT_ROUTE_NAME,
             [
-                'slug' => $product->getSlug(),
+                'slug' => $translation->getSlug(),
                 '_locale' => $localeCode
             ],
             UrlGeneratorInterface::ABSOLUTE_URL
