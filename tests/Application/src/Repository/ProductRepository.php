@@ -17,11 +17,13 @@
 
 declare(strict_types=1);
 
-namespace NFQ\SyliusOmnisendPlugin\Doctrine\ORM;
+namespace Tests\NFQ\SyliusOmnisendPlugin\Application\Repository;
 
-use Doctrine\ORM\QueryBuilder;
-use Sylius\Component\Taxonomy\Repository\TaxonRepositoryInterface as BaseTaxonRepositoryInterface;
+use NFQ\SyliusOmnisendPlugin\Doctrine\ORM\ProductRepositoryInterface;
+use NFQ\SyliusOmnisendPlugin\Doctrine\ORM\PushedToOmnisendAwareRepositoryTrait;
+use Sylius\Bundle\CoreBundle\Doctrine\ORM\ProductRepository as BaseRepository;
 
-interface TaxonRepositoryInterface extends BaseTaxonRepositoryInterface, PushedToOmnisendAwareRepositoryInterface
+class ProductRepository extends BaseRepository implements ProductRepositoryInterface
 {
+    use PushedToOmnisendAwareRepositoryTrait;
 }

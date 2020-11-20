@@ -46,6 +46,7 @@ sylius_product:
         product:
             classes:
                 model: Tests\NFQ\SyliusOmnisendPlugin\Application\Entity\Product
+                repository: Tests\NFQ\SyliusOmnisendPlugin\Application\Repository\ProductRepository
         product_variant:
             classes:
                 model: Tests\NFQ\SyliusOmnisendPlugin\Application\Entity\ProductVariant

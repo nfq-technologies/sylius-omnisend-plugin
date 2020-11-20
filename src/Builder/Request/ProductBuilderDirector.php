@@ -39,8 +39,8 @@ class ProductBuilderDirector implements ProductBuilderDirectorInterface
         $this->builder->addImages($product);
         $this->builder->addVariants($product, $channel, $localeCode);
         $this->builder->addContentData($product, $channel, $localeCode);
-        $this->builder->addAdditionalData($product);
         $this->builder->addStockStatus($product);
+        $this->builder->addAdditionalData($product);
 
         return $this->builder->getProduct();
     }

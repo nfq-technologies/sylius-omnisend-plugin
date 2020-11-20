@@ -17,11 +17,13 @@
 
 declare(strict_types=1);
 
-namespace NFQ\SyliusOmnisendPlugin\Doctrine\ORM;
+namespace NFQ\SyliusOmnisendPlugin\Message\Handler\Batch;
 
-use Doctrine\ORM\QueryBuilder;
-use Sylius\Component\Taxonomy\Repository\TaxonRepositoryInterface as BaseTaxonRepositoryInterface;
+use NFQ\SyliusOmnisendPlugin\Message\Command\CreateBatch;
 
-interface TaxonRepositoryInterface extends BaseTaxonRepositoryInterface, PushedToOmnisendAwareRepositoryInterface
+interface BatchHandlerStrategyInterface
 {
+    public function support(CreateBatch $batch): bool;
+
+    public function handle(CreateBatch $batch): void;
 }

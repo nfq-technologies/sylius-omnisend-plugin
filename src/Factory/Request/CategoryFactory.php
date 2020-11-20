@@ -25,10 +25,12 @@ use Sylius\Component\Core\Model\TaxonInterface;
 
 class CategoryFactory implements CategoryFactoryInterface
 {
-    public function create(TaxonInterface $taxon): Category
+    public function create(TaxonInterface $taxon, ?string $localeCode = null): Category
     {
+        $translation = $taxon->getTranslation($localeCode);
+
         return (new Category())
-            ->setTitle($taxon->getName())
+            ->setTitle($translation->getName())
             ->setCategoryID($taxon->getCode())
             ->setCreatedAt(DatetimeHelper::format($taxon->getCreatedAt()))
             ->setUpdatedAt(DatetimeHelper::format($taxon->getUpdatedAt()));

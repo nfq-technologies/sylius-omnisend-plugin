@@ -19,11 +19,11 @@ declare(strict_types=1);
 
 namespace Tests\NFQ\SyliusOmnisendPlugin\Application\Repository;
 
+use NFQ\SyliusOmnisendPlugin\Doctrine\ORM\PushedToOmnisendAwareRepositoryTrait;
 use Sylius\Bundle\TaxonomyBundle\Doctrine\ORM\TaxonRepository as BaseRepository;
 use NFQ\SyliusOmnisendPlugin\Doctrine\ORM\TaxonRepositoryInterface;
-use NFQ\SyliusOmnisendPlugin\Doctrine\ORM\TaxonRepositoryTrait;
 
 class TaxonRepository extends BaseRepository implements TaxonRepositoryInterface
 {
-    use TaxonRepositoryTrait;
+    use PushedToOmnisendAwareRepositoryTrait;
 }

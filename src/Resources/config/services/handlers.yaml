@@ -106,3 +106,30 @@ services:
       - '@nfq_sylius_omnisend_plugin.client.omnisend'
       - '@sylius.repository.product'
     tags: [ messenger.message_handler ]
+
+  nfq_sylius_omnisend_plugin.message.handler.batch_context:
+    class: NFQ\SyliusOmnisendPlugin\Message\Handler\Batch\BatchHandlerContext
+    arguments:
+      - !tagged 'nfq_sylius_omnisend_plugin.message.handler.batch_strategy'
+    tags: [ messenger.message_handler ]
+
+  nfq_sylius_omnisend_plugin.message.handler.batch.product:
+    class: NFQ\SyliusOmnisendPlugin\Message\Handler\Batch\ProductBatchHandleStrategy
+    arguments:
+      - '@nfq_sylius_omnisend_plugin.client.omnisend'
+      - '@nfq_sylius_omnisend_plugin.builder.request.product_director'
+      - '@nfq_sylius_omnisend_plugin.factory.request.batch'
+      - '@sylius.repository.product'
+      - '@doctrine.orm.entity_manager'
+      - '@sylius.repository.channel'
+    tags: [ nfq_sylius_omnisend_plugin.message.handler.batch_strategy ]
+
+  nfq_sylius_omnisend_plugin.message.handler.batch.category:
+    class: NFQ\SyliusOmnisendPlugin\Message\Handler\Batch\CategoryBatchHandleStrategy
+    arguments:
+      - '@nfq_sylius_omnisend_plugin.client.omnisend'
+      - '@sylius.repository.taxon'
+      - '@nfq_sylius_omnisend_plugin.factory.request.category'
+      - '@nfq_sylius_omnisend_plugin.factory.request.batch'
+      - '@doctrine.orm.entity_manager'
+    tags: [ nfq_sylius_omnisend_plugin.message.handler.batch_strategy ]
