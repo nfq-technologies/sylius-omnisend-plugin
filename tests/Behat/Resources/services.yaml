@@ -44,6 +44,12 @@ services:
       - '@sylius.repository.taxon'
       - '@doctrine.orm.entity_manager'
 
+  nfq_sylius_omnisend.context.ui.admin.managing_product:
+    class: Tests\NFQ\SyliusOmnisendPlugin\Behat\Context\Ui\Admin\ManagingProductContext
+    arguments:
+      - '@sylius.repository.product'
+      - '@doctrine.orm.entity_manager'
+
   nfq_sylius_omnisend.context.hook.doctrine:
     class: Tests\NFQ\SyliusOmnisendPlugin\Behat\Context\Hook\DoctrineORMContext
     arguments:

@@ -68,7 +68,7 @@ trait PushedToOmnisendAwareRepositoryTrait
             ->getResult();
     }
 
-    public function getNotSyncedToOmnisendQueryBuilder(string $alias = 't', ChannelInterface $channel = null): QueryBuilder
+    public function getNotSyncedToOmnisendQueryBuilder(string $alias = 't', ?ChannelInterface $channel = null): QueryBuilder
     {
         /** @var QueryBuilder $qb */
         $qb = $this->createQueryBuilder($alias);
@@ -80,7 +80,7 @@ trait PushedToOmnisendAwareRepositoryTrait
         return $qb->andWhere($qb->expr()->isNull(sprintf('%s.pushedToOmnisend', $alias)));
     }
 
-    public function getSyncedToOmnisendQueryBuilder(string $alias = 't', ChannelInterface $channel = null): QueryBuilder
+    public function getSyncedToOmnisendQueryBuilder(string $alias = 't', ?ChannelInterface $channel = null): QueryBuilder
     {
         /** @var QueryBuilder $qb */
         $qb = $this->createQueryBuilder($alias);

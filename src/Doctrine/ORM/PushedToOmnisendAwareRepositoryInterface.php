@@ -32,7 +32,7 @@ interface PushedToOmnisendAwareRepositoryInterface
 
     public function findNotSyncedToOmnisend(int $offset, int $limit, ?ChannelInterface $channel = null): array;
 
-    public function getNotSyncedToOmnisendQueryBuilder(string $alias = 't', ChannelInterface $channel = null): QueryBuilder;
+    public function getNotSyncedToOmnisendQueryBuilder(string $alias = 't', ?ChannelInterface $channel = null): QueryBuilder;
 
-    public function getSyncedToOmnisendQueryBuilder(string $alias = 't', ChannelInterface $channel = null): QueryBuilder;
+    public function getSyncedToOmnisendQueryBuilder(string $alias = 't', ?ChannelInterface $channel = null): QueryBuilder;
 }

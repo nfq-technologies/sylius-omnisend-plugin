@@ -26,6 +26,7 @@ use NFQ\SyliusOmnisendPlugin\Resolver\ProductVariantStockResolverInterface;
 use Sylius\Component\Core\Calculator\ProductVariantPricesCalculatorInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\ProductVariantInterface;
+use Sylius\Component\Product\Model\ProductVariantTranslationInterface;
 
 class ProductVariantFactory implements ProductVariantFactoryInterface
 {
@@ -55,6 +56,9 @@ class ProductVariantFactory implements ProductVariantFactoryInterface
         string $localeCode = null
     ): ProductVariant {
         $variant = new ProductVariant();
+        /** @var ProductVariantTranslationInterface $translation */
+        $translation = $productVariant->getTranslation($localeCode);
+        $productTranslations = $productVariant->getProduct()->getTranslation($localeCode);
 
         $price = $this->productVariantPricesCalculator->calculate(
             $productVariant,
@@ -71,7 +75,7 @@ class ProductVariantFactory implements ProductVariantFactoryInterface
         );
 
         return $variant->setVariantID($productVariant->getCode())
-            ->setTitle($productVariant->getName())
+            ->setTitle(null !== $translation->getName() ? $translation->getName(): $productTranslations->getName())
             ->setProductUrl($this->productUrlResolver->resolve($productVariant->getProduct(), $localeCode))
             ->setStatus($this->productStockResolver->resolve($productVariant))
             ->setPrice($price)
