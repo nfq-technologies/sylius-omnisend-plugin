@@ -29,6 +29,8 @@ use NFQ\SyliusOmnisendPlugin\Utils\DatetimeHelper;
 use NFQ\SyliusOmnisendPlugin\Utils\Order\OrderNumberResolver;
 use Sylius\Bundle\ShopBundle\Calculator\OrderItemsSubtotalCalculatorInterface;
 use Sylius\Component\Core\Model\OrderInterface;
+use Sylius\Component\Core\Model\PaymentInterface;
+use Sylius\Component\Core\Model\ShipmentInterface;
 
 class OrderBuilder implements OrderBuilderInterface
 {
@@ -103,7 +105,7 @@ class OrderBuilder implements OrderBuilderInterface
 
     public function addUpdateAt(OrderInterface $order): void
     {
-        $this->order->setUpdatedAt($order->getUpdatedAt() !== null ? DatetimeHelper::format($order->getCreatedAt()) : null);
+        $this->order->setUpdatedAt($order->getUpdatedAt() !== null ? DatetimeHelper::format($order->getUpdatedAt()) : null);
     }
 
     public function addTrackingData(OrderInterface $order): void
@@ -132,19 +134,31 @@ class OrderBuilder implements OrderBuilderInterface
     /** @var \NFQ\SyliusOmnisendPlugin\Model\OrderInterface $order */
     public function addOrderData(OrderInterface $order): void
     {
-        $this->order->setOrderID($order->getOmnisendOrderDetails()->getCartId());
+        /** @var ShipmentInterface $shippingMethod */
+        $shipping = $order->getShipments()->last();
+        /** @var PaymentInterface $paymentMethod */
+        $payment = $order->getLastPayment();
+
         $this->order->setOrderNumber(OrderNumberResolver::resolve($order->getNumber()));
         $this->order->setEmail($order->getCustomer()->getEmail());
-        $this->order->setShippingMethod($order->getShipments()->last()->getMethod()->getName());
-        $this->order->setPaymentMethod($order->getLastPayment()->getMethod()->getName());
-        $this->order->setCurrency($order->getCurrencyCode());
+        if (null !== $shipping && null !== $shipping->getMethod()) {
+            $this->order->setShippingMethod($shipping->getMethod()->getTranslation($order->getLocaleCode())->getName());
+        }
+        if (null !== $payment && null !== $payment->getMethod()) {
+            $this->order->setPaymentMethod($payment->getMethod()->getTranslation($order->getLocaleCode())->getName());
+        }
         $this->order->setContactNote($order->getNotes());
+        $this->order->setCreatedAt(DatetimeHelper::format($order->getCreatedAt()));
+    }
+
+    public function addTotals(OrderInterface $order): void
+    {
+        $this->order->setCurrency($order->getCurrencyCode());
         $this->order->setOrderSum($order->getTotal());
         $this->order->setSubTotalSum($this->subtotalCalculator->getSubtotal($order));
         $this->order->setTaxSum($order->getTaxTotal());
         $this->order->setShippingSum($order->getShippingTotal());
         $this->order->setDiscountSum(abs($order->getOrderPromotionTotal()));
-        $this->order->setCreatedAt(DatetimeHelper::format($order->getCreatedAt()));
     }
 
     public function getOrder(): Order

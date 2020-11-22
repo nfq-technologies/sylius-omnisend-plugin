@@ -23,6 +23,10 @@ class OrderNumberResolver
 {
     public static function resolve(?string $orderNumber): ?int
     {
-        return (int)preg_replace('/\D/', '', $orderNumber);
+        if (null !== $orderNumber) {
+            return (int)preg_replace('/\D/', '', $orderNumber);
+        }
+
+        return null;
     }
 }
