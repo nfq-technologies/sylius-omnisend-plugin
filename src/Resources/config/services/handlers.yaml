@@ -36,15 +36,6 @@ services:
       - '@sylius.repository.taxon'
     tags: [ messenger.message_handler ]
 
-  nfq_sylius_omnisend_plugin.message.handler.push_category:
-    class: NFQ\SyliusOmnisendPlugin\Message\Handler\PushCategoriesHandler
-    arguments:
-      - '@nfq_sylius_omnisend_plugin.client.omnisend'
-      - '@sylius.repository.taxon'
-      - '@nfq_sylius_omnisend_plugin.factory.request.category'
-      - '@nfq_sylius_omnisend_plugin.factory.request.batch'
-    tags: [ messenger.message_handler ]
-
   nfq_sylius_omnisend_plugin.message.handler.update_cart:
     class: NFQ\SyliusOmnisendPlugin\Message\Handler\UpdateCartHandler
     arguments:

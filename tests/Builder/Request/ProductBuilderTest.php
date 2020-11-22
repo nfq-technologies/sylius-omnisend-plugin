@@ -23,6 +23,7 @@ use NFQ\SyliusOmnisendPlugin\Builder\Request\Constants\ProductStatus;
 use NFQ\SyliusOmnisendPlugin\Builder\Request\ProductBuilder;
 use NFQ\SyliusOmnisendPlugin\Builder\Request\ProductImageListBuilderInterface;
 use NFQ\SyliusOmnisendPlugin\Factory\Request\ProductVariantFactoryInterface;
+use NFQ\SyliusOmnisendPlugin\Resolver\ProductAdditionalDataResolverInterface;
 use NFQ\SyliusOmnisendPlugin\Resolver\ProductUrlResolverInterface;
 use NFQ\SyliusOmnisendPlugin\Resolver\ProductVariantStockResolverInterface;
 use PHPUnit\Framework\TestCase;
@@ -52,18 +53,23 @@ class ProductBuilderTest extends TestCase
     /** @var ProductUrlResolverInterface */
     private $productUrlResolver;
 
+    /** @var ProductAdditionalDataResolverInterface */
+    private $productAdditionalDataResolver;
+
     protected function setUp(): void
     {
         $this->productUrlResolver = $this->createMock(ProductUrlResolverInterface::class);
         $this->productVariantFactory = $this->createMock(ProductVariantFactoryInterface::class);
         $this->productVariantStockResolver = $this->createMock(ProductVariantStockResolverInterface::class);
         $this->productImageListBuilder = $this->createMock(ProductImageListBuilderInterface::class);
+        $this->productAdditionalDataResolver = $this->createMock(ProductAdditionalDataResolverInterface::class);
 
         $this->productBuilder = new ProductBuilder(
             $this->productVariantFactory,
             $this->productImageListBuilder,
             $this->productVariantStockResolver,
             $this->productUrlResolver,
+            $this->productAdditionalDataResolver
         );
     }
 

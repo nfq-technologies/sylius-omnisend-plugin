@@ -21,6 +21,5 @@ namespace NFQ\SyliusOmnisendPlugin\Model;
 
 trait ProductTrait
 {
-    use ProductAdditionalDataAwareTrait;
     use PushedToOmnisendAwareTrait;
 }

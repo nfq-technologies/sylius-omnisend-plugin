@@ -21,7 +21,9 @@ namespace Tests\NFQ\SyliusOmnisendPlugin\Builder;
 
 use NFQ\SyliusOmnisendPlugin\Builder\ProductPickerBuilder;
 use NFQ\SyliusOmnisendPlugin\Model\ProductPicker;
+use NFQ\SyliusOmnisendPlugin\Resolver\ProductAdditionalDataResolverInterface;
 use NFQ\SyliusOmnisendPlugin\Resolver\ProductImageResolverInterface;
+use NFQ\SyliusOmnisendPlugin\Resolver\ProductUrlResolverInterface;
 use PHPUnit\Framework\TestCase;
 use Sylius\Component\Channel\Context\ChannelContextInterface;
 use Sylius\Component\Core\Calculator\ProductVariantPricesCalculatorInterface;
@@ -36,25 +38,20 @@ use Tests\NFQ\SyliusOmnisendPlugin\Mock\ProductAdditionalDataAwareMock;
 
 class ProductPickerBuilderTest extends TestCase
 {
-    /**
-     * @var ProductImageResolverInterface
-     */
+    /** @var ProductImageResolverInterface */
     private $productImageResolver;
 
-    /**
-     * @var ProductVariantPricesCalculatorInterface
-     */
+    /** @var ProductVariantPricesCalculatorInterface */
     private $productVariantPricesCalculator;
 
-    /**
-     * @var ChannelContextInterface
-     */
+    /** @var ChannelContextInterface */
     private $channelContext;
 
-    /**
-     * @var RouterInterface
-     */
-    private $router;
+    /** @var ProductUrlResolverInterface */
+    private $productUrlResolver;
+
+    /** @var ProductAdditionalDataResolverInterface */
+    private $productAdditionalDataResolver;
 
     /**
      * @var ProductPickerBuilder
@@ -69,13 +66,15 @@ class ProductPickerBuilderTest extends TestCase
         $this->productImageResolver = $this->createMock(ProductImageResolverInterface::class);
         $this->productVariantPricesCalculator = $this->createMock(ProductVariantPricesCalculatorInterface::class);
         $this->channelContext = $this->createMock(ChannelContextInterface::class);
-        $this->router = $this->createMock(RouterInterface::class);
+        $this->productUrlResolver = $this->createMock(ProductUrlResolverInterface::class);
+        $this->productAdditionalDataResolver = $this->createMock(ProductAdditionalDataResolverInterface::class);
 
         $this->builder = new ProductPickerBuilder(
             $this->productImageResolver,
             $this->productVariantPricesCalculator,
             $this->channelContext,
-            $this->router
+            $this->productUrlResolver,
+            $this->productAdditionalDataResolver
         );
     }
 
@@ -141,21 +140,10 @@ class ProductPickerBuilderTest extends TestCase
         $product->addTranslation($productTranslation);
         $product->setCurrentLocale('en');
 
-        $this->router
+        $this->productUrlResolver
             ->expects($this->once())
-            ->method('generate')
-            ->willReturnCallback(
-                function ($route, $config, $type) {
-                    $this->assertEquals($route, 'sylius_shop_product_show');
-                    $this->assertEquals($config, [
-                        'slug' => 'product',
-                        '_locale' => 'en',
-                    ]);
-                    $this->assertEquals($type, UrlGeneratorInterface::ABSOLUTE_URL);
-
-                    return 'url';
-                }
-            );
+            ->method('resolve')
+            ->willReturn('url');
         $product->setCode('productCode');
         $this->builder->createProductPicker();
         $this->builder->addContent($product, 'en');
@@ -171,21 +159,10 @@ class ProductPickerBuilderTest extends TestCase
         $product = new Product();
         $product->setCurrentLocale('en');
 
-        $this->router
+        $this->productUrlResolver
             ->expects($this->once())
-            ->method('generate')
-            ->willReturnCallback(
-                function ($route, $config, $type) {
-                    $this->assertEquals($route, 'sylius_shop_product_show');
-                    $this->assertEquals($config, [
-                        'slug' => null,
-                        '_locale' => 'lt',
-                    ]);
-                    $this->assertEquals($type, UrlGeneratorInterface::ABSOLUTE_URL);
-
-                    return 'url';
-                }
-            );
+            ->method('resolve')
+            ->willReturn('url');
         $product->setCode('productCode');
         $this->builder->createProductPicker();
         $this->builder->addContent($product, 'lt');
@@ -269,12 +246,28 @@ class ProductPickerBuilderTest extends TestCase
 
     public function testIfSetsAdditionalData()
     {
-        $product = new ProductAdditionalDataAwareMock();
+        $product = new Product();
         $this->builder->createProductPicker();
+        $this->productAdditionalDataResolver
+            ->expects($this->once())
+            ->method('getVendor')
+            ->willReturn('vendor');
+        $this->productAdditionalDataResolver
+            ->expects($this->once())
+            ->method('getTags')
+            ->willReturn(
+                [
+                    'test1',
+                    'test2',
+                ]
+            );
         $this->builder->addAdditionalData($product);
         $result = $this->builder->getProductPicker();
 
-        $this->assertEquals($result->getVendor(), 'vendor');
+        $this->assertEquals(
+            $result->getVendor(),
+            'vendor'
+        );
         $this->assertEquals(
             $result->getTags(),
             [
