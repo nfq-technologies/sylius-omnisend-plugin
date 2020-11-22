@@ -37,13 +37,15 @@ use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
+use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 use Symfony\Component\Serializer\SerializerInterface;
 use Throwable;
 use Http\Client\Exception\HttpException;
 
 class OmnisendClient implements LoggerAwareInterface, OmnisendClientInterface
 {
-    use LoggerAwareTrait; // parasyti dokumentacijo kad reikia uzsetinti. Default loggeri uzsetinti PSR compatable
+    use LoggerAwareTrait;
 
     private const API_VERSION = 'v3';
     private const URL_PATH_CONTACTS = '/contacts';
@@ -298,6 +300,8 @@ class OmnisendClient implements LoggerAwareInterface, OmnisendClientInterface
         try {
             return $this->clientFactory->create($channelCode)->sendRequest($request);
         } catch (HttpException $requestException) {
+            var_export('????');
+            var_export(get_class($this->logger));
             $response = [
                 'status' => $requestException->getResponse()->getStatusCode(),
                 'headers' => $requestException->getResponse()->getHeaders(),

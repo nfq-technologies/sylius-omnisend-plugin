@@ -20,6 +20,8 @@ services:
       - '@nfq_sylius_omnisend_plugin.http_client.factory'
       - '@serializer'
       - '@nfq_sylius_omnisend_plugin.client.message_factory'
+    calls:
+      - ['setLogger', ['@nfq_sylius_omnisend_plugin.client.logger']]
 
   nfq_sylius_omnisend_plugin.http_client.factory:
     class: NFQ\SyliusOmnisendPlugin\HttpClient\ClientFactory

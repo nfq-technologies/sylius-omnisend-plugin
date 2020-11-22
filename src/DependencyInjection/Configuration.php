@@ -39,6 +39,15 @@ final class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
             ->end();
+        //Logger
+        $rootNode
+            ->addDefaultsIfNotSet()
+                ->children()
+                    ->scalarNode('client_logger')
+                        ->defaultNull()
+                    ->end()
+                ->end()
+            ->end();
         //Resolvers
         $rootNode
             ->addDefaultsIfNotSet()

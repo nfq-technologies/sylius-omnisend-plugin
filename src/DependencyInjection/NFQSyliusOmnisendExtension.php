@@ -19,6 +19,7 @@ declare(strict_types=1);
 
 namespace NFQ\SyliusOmnisendPlugin\DependencyInjection;
 
+use Psr\Log\NullLogger;
 use Sylius\Bundle\ResourceBundle\DependencyInjection\Extension\AbstractResourceExtension;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Symfony\Component\Config\FileLocator;
@@ -78,6 +79,15 @@ final class NFQSyliusOmnisendExtension extends AbstractResourceExtension
             'nfq_sylius_omnisend_plugin.resolver.product_variant_stock',
             $config['product_variant_stock_resolver']
         );
+
+        if (isset($config['client_logger']) && $config['client_logger']) {
+            $container->setAlias(
+                'nfq_sylius_omnisend_plugin.client.logger',
+                $config['client_logger']
+            );
+        } else {
+            $container->register('nfq_sylius_omnisend_plugin.client.logger', NullLogger::class);
+        }
 
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $this->registerResources('nfq_sylius_omnisend_plugin', $config['driver'], $config['resources'], $container);
