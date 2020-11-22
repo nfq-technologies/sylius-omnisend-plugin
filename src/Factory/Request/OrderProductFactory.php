@@ -20,36 +20,40 @@ declare(strict_types=1);
 namespace NFQ\SyliusOmnisendPlugin\Factory\Request;
 
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\OrderProduct;
-use NFQ\SyliusOmnisendPlugin\Model\ProductAdditionalDataAwareInterface;
+use NFQ\SyliusOmnisendPlugin\Resolver\ProductAdditionalDataResolverInterface;
 use NFQ\SyliusOmnisendPlugin\Resolver\ProductImageResolverInterface;
+use NFQ\SyliusOmnisendPlugin\Resolver\ProductUrlResolverInterface;
 use Sylius\Component\Core\Model\AdjustmentInterface;
 use Sylius\Component\Core\Model\OrderItemInterface;
+use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Core\Model\TaxonInterface;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Component\Routing\RouterInterface;
 
 class OrderProductFactory implements OrderProductFactoryInterface
 {
-    /** @var string */
-    private const PRODUCT_ROUTE_NAME = 'sylius_shop_product_show';
-
     /** @var ProductImageResolverInterface */
     private $productImageResolver;
 
-    /** @var RouterInterface */
-    private $router;
+    /** @var ProductUrlResolverInterface */
+    private $productUrlResolver;
 
-    public function __construct(ProductImageResolverInterface $productImageResolver, RouterInterface $router)
-    {
+    /** @var ProductAdditionalDataResolverInterface */
+    private $productAdditionalDataResolver;
+
+    public function __construct(
+        ProductImageResolverInterface $productImageResolver,
+        ProductUrlResolverInterface $productUrlResolver,
+        ProductAdditionalDataResolverInterface $productAdditionalDataResolver
+    ) {
         $this->productImageResolver = $productImageResolver;
-        $this->router = $router;
+        $this->productUrlResolver = $productUrlResolver;
+        $this->productAdditionalDataResolver = $productAdditionalDataResolver;
     }
 
     public function create(OrderItemInterface $orderItem): OrderProduct
     {
         $cartItem = new OrderProduct();
-        $locale = $orderItem->getOrder()->getLocaleCode();
-        /** @var ProductAdditionalDataAwareInterface $product */
+        $localeCode = $orderItem->getOrder()->getLocaleCode();
+        /** @var ProductInterface $product */
         $product = $orderItem->getVariant()->getProduct();
 
         $cartItem->setProductID((string)$orderItem->getVariant()->getProduct()->getId());
@@ -61,21 +65,10 @@ class OrderProductFactory implements OrderProductFactoryInterface
         $cartItem->setPrice($orderItem->getTotal());
         $cartItem->setImageUrl($this->productImageResolver->resolve($orderItem->getProduct()));
         $cartItem->setDiscount($this->getDiscount($orderItem));
-        if ($product instanceof ProductAdditionalDataAwareInterface) {
-            $cartItem->setVendor($product->getOmnisendVendor());
-            $cartItem->setTags($product->getOmnisendTags());
-        }
+        $cartItem->setVendor($this->productAdditionalDataResolver->getVendor($product, $localeCode));
+        $cartItem->setTags($this->productAdditionalDataResolver->getTags($product, $localeCode));
         $cartItem->setCategoryIDs($this->getCategoriesIds($orderItem));
-        $cartItem->setProductUrl(
-            $this->router->generate(
-                self::PRODUCT_ROUTE_NAME,
-                [
-                    'slug' => $orderItem->getProduct()->getTranslation($locale)->getSlug(),
-                    '_locale' => $locale
-                ],
-                UrlGeneratorInterface::ABSOLUTE_URL
-            )
-        );
+        $cartItem->setProductUrl($this->productUrlResolver->resolve($product, $localeCode));
 
         return $cartItem;
     }

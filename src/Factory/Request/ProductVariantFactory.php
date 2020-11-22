@@ -80,7 +80,7 @@ class ProductVariantFactory implements ProductVariantFactoryInterface
             ->setStatus($this->productStockResolver->resolve($productVariant))
             ->setPrice($price)
             ->setCustomFields($productVariant instanceof CustomTagsAwareInterface ? $productVariant->getOmnisendCustomTags() : null)
-            ->setOldPrice($oldPrice)
+            ->setOldPrice($oldPrice > $price ? $oldPrice : null)
             ->setSku($productVariant->getCode());
     }
 }

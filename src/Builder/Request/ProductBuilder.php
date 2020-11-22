@@ -22,7 +22,7 @@ namespace NFQ\SyliusOmnisendPlugin\Builder\Request;
 use NFQ\SyliusOmnisendPlugin\Builder\Request\Constants\ProductStatus;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Product;
 use NFQ\SyliusOmnisendPlugin\Factory\Request\ProductVariantFactoryInterface;
-use NFQ\SyliusOmnisendPlugin\Model\ProductAdditionalDataAwareInterface;
+use NFQ\SyliusOmnisendPlugin\Resolver\ProductAdditionalDataResolverInterface;
 use NFQ\SyliusOmnisendPlugin\Resolver\ProductUrlResolverInterface;
 use NFQ\SyliusOmnisendPlugin\Resolver\ProductVariantStockResolverInterface;
 use NFQ\SyliusOmnisendPlugin\Utils\DatetimeHelper;
@@ -47,16 +47,21 @@ class ProductBuilder implements ProductBuilderInterface
     /** @var ProductUrlResolverInterface */
     private $productUrlResolver;
 
+    /** @var ProductAdditionalDataResolverInterface */
+    private $productAdditionalDataResolver;
+
     public function __construct(
         ProductVariantFactoryInterface $productVariantFactory,
         ProductImageListBuilderInterface $productImageListBuilder,
         ProductVariantStockResolverInterface $productVariantStockResolver,
-        ProductUrlResolverInterface $productUrlResolver
+        ProductUrlResolverInterface $productUrlResolver,
+        ProductAdditionalDataResolverInterface $productAdditionalDataResolver
     ) {
         $this->productVariantFactory = $productVariantFactory;
         $this->productImageListBuilder = $productImageListBuilder;
         $this->productVariantStockResolver = $productVariantStockResolver;
         $this->productUrlResolver = $productUrlResolver;
+        $this->productAdditionalDataResolver = $productAdditionalDataResolver;
     }
 
     public function createProduct(): void
@@ -78,7 +83,7 @@ class ProductBuilder implements ProductBuilderInterface
     {
         $variants = [];
 
-        foreach ($product->getVariants() as $variant) {
+        foreach ($product->getEnabledVariants() as $variant) {
             $variants[] = $this->productVariantFactory->create($variant, $channel, $localeCode);
         }
 
@@ -109,13 +114,11 @@ class ProductBuilder implements ProductBuilderInterface
         );
     }
 
-    public function addAdditionalData(ProductInterface $product): void
+    public function addAdditionalData(ProductInterface $product, ?string $localeCode = null): void
     {
-        if ($product instanceof ProductAdditionalDataAwareInterface) {
-            $this->product->setTags($product->getOmnisendTags());
-            $this->product->setType($product->getOmnisendType());
-            $this->product->setVendor($product->getOmnisendVendor());
-        }
+        $this->product->setTags($this->productAdditionalDataResolver->getTags($product, $localeCode));
+        $this->product->setType($this->productAdditionalDataResolver->getType($product, $localeCode));
+        $this->product->setVendor($this->productAdditionalDataResolver->getVendor($product, $localeCode));
     }
 
     public function addStockStatus(ProductInterface $product): void
@@ -134,8 +137,8 @@ class ProductBuilder implements ProductBuilderInterface
 
                 return;
             }
-
-            $this->product->setStatus(ProductStatus::STATUS_OUT_OF_STOCK);
         }
+
+        $this->product->setStatus(ProductStatus::STATUS_OUT_OF_STOCK);
     }
 }

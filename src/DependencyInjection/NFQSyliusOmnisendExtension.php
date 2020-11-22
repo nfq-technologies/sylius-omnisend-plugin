@@ -43,6 +43,10 @@ final class NFQSyliusOmnisendExtension extends AbstractResourceExtension
             $config['product_image']['default_image']
         );
         $container->setParameter(
+            'nfq_sylius_omnisend_plugin.product_attributes',
+            $config['product_attributes']
+        );
+        $container->setParameter(
             'nfq_sylius_omnisend_plugin.send_welcome_message',
             $config['send_welcome_message']
         );
@@ -54,6 +58,7 @@ final class NFQSyliusOmnisendExtension extends AbstractResourceExtension
             'nfq_sylius_omnisend_plugin.payment_states',
             $config['payment_states']
         );
+
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $this->registerResources('nfq_sylius_omnisend_plugin', $config['driver'], $config['resources'], $container);
         $loader->load('services.yaml');

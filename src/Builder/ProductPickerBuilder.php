@@ -20,8 +20,9 @@ declare(strict_types=1);
 namespace NFQ\SyliusOmnisendPlugin\Builder;
 
 use NFQ\SyliusOmnisendPlugin\Model\ProductPicker;
-use NFQ\SyliusOmnisendPlugin\Model\ProductAdditionalDataAwareInterface;
+use NFQ\SyliusOmnisendPlugin\Resolver\ProductAdditionalDataResolverInterface;
 use NFQ\SyliusOmnisendPlugin\Resolver\ProductImageResolverInterface;
+use NFQ\SyliusOmnisendPlugin\Resolver\ProductUrlResolverInterface;
 use Sylius\Component\Channel\Context\ChannelContextInterface;
 use Sylius\Component\Core\Calculator\ProductVariantPricesCalculatorInterface;
 use Sylius\Component\Core\Model\Channel;
@@ -29,8 +30,6 @@ use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Core\Model\ProductTranslationInterface;
 use Sylius\Component\Core\Model\ProductVariantInterface;
 use Sylius\Component\Currency\Model\Currency;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Component\Routing\RouterInterface;
 
 class ProductPickerBuilder implements ProductPickerBuilderInterface
 {
@@ -46,19 +45,24 @@ class ProductPickerBuilder implements ProductPickerBuilderInterface
     /** @var ChannelContextInterface */
     private $channelContext;
 
-    /** @var RouterInterface */
-    private $router;
+    /** @var ProductUrlResolverInterface */
+    private $productUrlResolver;
+
+    /** @var ProductAdditionalDataResolverInterface */
+    private $productAdditionalDataResolver;
 
     public function __construct(
         ProductImageResolverInterface $productImageResolver,
         ProductVariantPricesCalculatorInterface $productVariantPricesCalculator,
         ChannelContextInterface $channelContext,
-        RouterInterface $router
+        ProductUrlResolverInterface $productUrlResolver,
+        ProductAdditionalDataResolverInterface $productAdditionalDataResolver
     ) {
         $this->productImageResolver = $productImageResolver;
         $this->productVariantPricesCalculator = $productVariantPricesCalculator;
         $this->channelContext = $channelContext;
-        $this->router = $router;
+        $this->productUrlResolver = $productUrlResolver;
+        $this->productAdditionalDataResolver = $productAdditionalDataResolver;
     }
 
     public function createProductPicker(): void
@@ -78,23 +82,14 @@ class ProductPickerBuilder implements ProductPickerBuilderInterface
             ->setVariantID($productVariant->getCode());
     }
 
-    public function addContent(ProductInterface $product, string $locale): void
+    public function addContent(ProductInterface $product, ?string $localeCode = null): void
     {
         /** @var ProductTranslationInterface $translation */
-        $translation = $product->getTranslation($locale);
+        $translation = $product->getTranslation($localeCode);
 
         $this->productPicker
             ->setTitle($translation->getName())
-            ->setProductUrl(
-                $this->router->generate(
-                    'sylius_shop_product_show',
-                    [
-                        'slug' => $product->getSlug(),
-                        '_locale' => $locale,
-                    ],
-                    UrlGeneratorInterface::ABSOLUTE_URL
-                )
-            )
+            ->setProductUrl($this->productUrlResolver->resolve($product))
             ->setDescription($translation->getDescription());
     }
 
@@ -130,11 +125,9 @@ class ProductPickerBuilder implements ProductPickerBuilderInterface
         $this->productPicker->setImageUrl($this->productImageResolver->resolve($product));
     }
 
-    public function addAdditionalData(ProductInterface $product): void
+    public function addAdditionalData(ProductInterface $product, ?string $localeCode = null): void
     {
-        if ($product instanceof ProductAdditionalDataAwareInterface) {
-            $this->productPicker->setTags($product->getOmnisendTags());
-            $this->productPicker->setVendor($product->getOmnisendVendor());
-        }
+        $this->productPicker->setTags($this->productAdditionalDataResolver->getTags($product, $localeCode));
+        $this->productPicker->setVendor($this->productAdditionalDataResolver->getVendor($product, $localeCode));
     }
 }

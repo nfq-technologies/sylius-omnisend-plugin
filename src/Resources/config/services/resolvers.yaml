@@ -17,6 +17,11 @@ services:
     arguments:
       - !tagged 'nfq_sylius_omnisend_plugin.resolver.order_coupon'
 
+  nfq_sylius_omnisend_plugin.resolver.product_additional_data:
+    class: NFQ\SyliusOmnisendPlugin\Resolver\ProductAdditionalDataResolver
+    arguments:
+      - '%nfq_sylius_omnisend_plugin.product_attributes%'
+
   nfq_sylius_omnisend_plugin.resolver.default_order_coupon:
     class: NFQ\SyliusOmnisendPlugin\Resolver\DefaultOrderCouponResolver
     tags:

@@ -43,7 +43,7 @@ use Http\Client\Exception\HttpException;
 
 class OmnisendClient implements LoggerAwareInterface, OmnisendClientInterface
 {
-    use LoggerAwareTrait;
+    use LoggerAwareTrait; // parasyti dokumentacijo kad reikia uzsetinti. Default loggeri uzsetinti PSR compatable
 
     private const API_VERSION = 'v3';
     private const URL_PATH_CONTACTS = '/contacts';
@@ -66,8 +66,7 @@ class OmnisendClient implements LoggerAwareInterface, OmnisendClientInterface
         ClientFactoryInterface $httpClient,
         SerializerInterface $serializer,
         MessageFactory $messageFactory
-    )
-    {
+    ) {
         $this->messageFactory = $messageFactory;
         $this->serializer = $serializer;
         $this->clientFactory = $httpClient;
