@@ -39,7 +39,30 @@ final class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
             ->end();
-        $rootNode->children()
+        //Resolvers
+        $rootNode
+            ->addDefaultsIfNotSet()
+                ->children()
+                    ->scalarNode('product_image_resolver')
+                        ->defaultValue('nfq_sylius_omnisend_plugin.resolver.default_product_image')
+                    ->end()
+                    ->scalarNode('order_coupon_resolver')
+                        ->defaultValue('nfq_sylius_omnisend_plugin.resolver.default_order_coupon')
+                    ->end()
+                    ->scalarNode('product_additional_data_resolver')
+                        ->defaultValue('nfq_sylius_omnisend_plugin.resolver.default_product_additional_data')
+                    ->end()
+                    ->scalarNode('product_url_resolver')
+                        ->defaultValue('nfq_sylius_omnisend_plugin.resolver.default_product_url')
+                    ->end()
+                    ->scalarNode('product_variant_stock_resolver')
+                        ->defaultValue('nfq_sylius_omnisend_plugin.resolver.default_product_variant_stock')
+                    ->end()
+                ->end()
+            ->end();
+        //Resources
+        $rootNode
+            ->children()
                 ->arrayNode('resources')
                     ->addDefaultsIfNotSet()
                     ->children()
@@ -58,7 +81,9 @@ final class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
             ->end();
-        $rootNode->addDefaultsIfNotSet()
+        //Parameters
+        $rootNode
+            ->addDefaultsIfNotSet()
                 ->children()
                     ->arrayNode('order_states')
                         ->useAttributeAsKey('code')

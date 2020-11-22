@@ -1,5 +1,5 @@
 services:
-  nfq_sylius_omnisend_plugin.resolver.product_image:
+  nfq_sylius_omnisend_plugin.resolver.default_product_image:
     class: NFQ\SyliusOmnisendPlugin\Resolver\ProductImageResolver
     arguments:
       - '@liip_imagine.cache.manager'
@@ -12,27 +12,20 @@ services:
     arguments:
       - '@request_stack'
 
-  nfq_sylius_omnisend_plugin.resolver.order_coupon_context:
-    class: NFQ\SyliusOmnisendPlugin\Resolver\OrderCouponResolverContext
-    arguments:
-      - !tagged 'nfq_sylius_omnisend_plugin.resolver.order_coupon'
-
-  nfq_sylius_omnisend_plugin.resolver.product_additional_data:
+  nfq_sylius_omnisend_plugin.resolver.default_product_additional_data:
     class: NFQ\SyliusOmnisendPlugin\Resolver\ProductAdditionalDataResolver
     arguments:
       - '%nfq_sylius_omnisend_plugin.product_attributes%'
 
   nfq_sylius_omnisend_plugin.resolver.default_order_coupon:
     class: NFQ\SyliusOmnisendPlugin\Resolver\DefaultOrderCouponResolver
-    tags:
-      - { name: nfq_sylius_omnisend_plugin.resolver.order_coupon, position: -100 }
 
-  nfq_sylius_omnisend_plugin.resolver.product_url:
+  nfq_sylius_omnisend_plugin.resolver.default_product_url:
     class: NFQ\SyliusOmnisendPlugin\Resolver\ProductUrlResolver
     arguments:
       - '@router'
 
-  nfq_sylius_omnisend_plugin.resolver.product_variant_stock:
+  nfq_sylius_omnisend_plugin.resolver.default_product_variant_stock:
     class: NFQ\SyliusOmnisendPlugin\Resolver\ProductVariantStockResolver
     arguments:
       - '@sylius.availability_checker.default'
