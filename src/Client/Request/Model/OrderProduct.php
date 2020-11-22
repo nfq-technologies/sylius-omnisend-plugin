@@ -207,7 +207,7 @@ class OrderProduct
         return $this;
     }
 
-    public function getTags()
+    public function getTags(): ?array
     {
         return $this->tags;
     }
@@ -219,7 +219,7 @@ class OrderProduct
         return $this;
     }
 
-    public function getCategoryIDs()
+    public function getCategoryIDs(): ?array
     {
         return $this->categoryIDs;
     }

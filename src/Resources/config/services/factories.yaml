@@ -20,7 +20,8 @@ services:
     class: NFQ\SyliusOmnisendPlugin\Factory\Request\OrderProductFactory
     arguments:
       - '@nfq_sylius_omnisend_plugin.resolver.product_image'
-      - '@router'
+      - '@nfq_sylius_omnisend_plugin.resolver.product_url'
+      - '@nfq_sylius_omnisend_plugin.resolver.product_additional_data'
 
   nfq_sylius_omnisend_plugin.factory.request.order_address:
     class: NFQ\SyliusOmnisendPlugin\Factory\Request\OrderAddressFactory

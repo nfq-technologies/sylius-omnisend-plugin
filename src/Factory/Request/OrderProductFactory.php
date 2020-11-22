@@ -82,15 +82,17 @@ class OrderProductFactory implements OrderProductFactoryInterface
         );
     }
 
-    private function getCategoriesIds(OrderItemInterface $orderItem): array
+    private function getCategoriesIds(OrderItemInterface $orderItem): ?array
     {
         $product = $orderItem->getProduct();
 
-        return array_map(
+        $result =  array_map(
             function (TaxonInterface $productTaxon): string {
                 return $productTaxon->getCode();
             },
             $product->getTaxons()->toArray()
         );
+
+        return count($result) === 0 ? $result : null;
     }
 }

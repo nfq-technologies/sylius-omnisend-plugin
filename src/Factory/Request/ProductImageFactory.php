@@ -42,6 +42,8 @@ class ProductImageFactory implements ProductImageFactoryInterface
 
     public function create(ProductImageInterface $productImage, bool $default = false)
     {
+        $variants = $productImage->getProductVariants()->count() === 0 ? $productImage->getOwner()->getEnabledVariants() : $productImage->getProductVariants();
+
         return (new ProductImage())
             ->setImageID((string)$productImage->getId())
             ->setIsDefault($default)
@@ -51,7 +53,7 @@ class ProductImageFactory implements ProductImageFactoryInterface
                     function (ProductVariantInterface $productVariant): string {
                         return $productVariant->getCode();
                     },
-                    $productImage->getProductVariants()->toArray()
+                    $variants->toArray()
                 )
             );
     }

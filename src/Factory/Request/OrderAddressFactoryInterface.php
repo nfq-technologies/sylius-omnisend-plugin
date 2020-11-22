@@ -24,5 +24,5 @@ use Sylius\Component\Core\Model\AddressInterface;
 
 interface OrderAddressFactoryInterface
 {
-    public function create(AddressInterface $address, string $locale): OrderAddress;
+    public function create(?AddressInterface $address, ?string $localeCode = null): ?OrderAddress;
 }
