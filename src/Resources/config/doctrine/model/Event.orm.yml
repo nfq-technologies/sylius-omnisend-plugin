@@ -1,0 +1,35 @@
+NFQ\SyliusOmnisendPlugin\Model\Event:
+  type: mappedSuperclass
+  table: nfq_omnisend_plugin_events
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    eventID:
+      type: string
+      nullable: true
+      length: 32
+    name:
+      type: string
+      nullable: true
+    systemName:
+      type: string
+      nullable: true
+    enabled:
+      type: boolean
+      options:
+        default: 1
+    createdAt:
+      type: datetime
+      nullable: true
+    updatedAt:
+      type: datetime
+      nullable: true
+  oneToMany:
+    fields:
+      targetEntity: NFQ\SyliusOmnisendPlugin\Model\EventField
+      mappedBy: event
+      cascade: [persist]
+      orphanRemoval: true

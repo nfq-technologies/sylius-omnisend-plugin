@@ -1,0 +1,5 @@
+services:
+  nfq_sylius_omnisend_plugin.validator.unique_event_field:
+    class: NFQ\SyliusOmnisendPlugin\Validator\Constraints\UniqueEventFieldValidator
+    tags:
+      - validator.constraint_validator

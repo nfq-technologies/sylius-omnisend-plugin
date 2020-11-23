@@ -3,6 +3,7 @@ imports:
   - { resource: services/builders.yaml }
   - { resource: services/commands.yaml }
   - { resource: services/controllers.yaml }
+  - { resource: services/forms.yaml }
   - { resource: services/form_type_extensions.yaml }
   - { resource: services/factories.yaml }
   - { resource: services/handlers.yaml }
@@ -11,6 +12,7 @@ imports:
   - { resource: services/resolvers.yaml }
   - { resource: services/serialiazers.yaml }
   - { resource: services/subscribers.yaml }
+  - { resource: services/validators.yaml }
   - { resource: services/twig.yaml }
 
 services:

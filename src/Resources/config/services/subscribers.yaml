@@ -42,3 +42,8 @@ services:
     tags:
       - { name: kernel.event_subscriber }
     public: true
+
+  nfq_sylius_omnisend_plugin.event_listener.admin_menu:
+    class: NFQ\SyliusOmnisendPlugin\EventListener\AdminMenuListener
+    tags:
+      - { name: kernel.event_listener, event: sylius.menu.admin.main, method: addAdminMenuItems }
