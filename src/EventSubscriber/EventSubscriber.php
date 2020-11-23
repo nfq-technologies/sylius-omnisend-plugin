@@ -53,7 +53,7 @@ class EventSubscriber implements EventSubscriberInterface
         $this->messageBus->dispatch(
             new Envelope(
                 new UpdateEvent(
-                    $trackingEvent->getSystemName(),
+                    $trackingEvent->getCode(),
                     $trackingEvent->getChannel()->getCode()
                 )
             )

@@ -38,12 +38,12 @@ class UniqueEventFieldValidator extends ConstraintValidator
 
         /** @var EventField $field */
         foreach ($value as $field) {
-            $code = $field->getSystemName();
+            $code = $field->getCode();
 
             if (isset($codes[$code])) {
                 $this->context
                     ->buildViolation($constraint->message)
-                    ->atPath("[{$iteration}].systemName")
+                    ->atPath("[{$iteration}].code")
                     ->addViolation();
             } else {
                 $codes[$code] = $field;

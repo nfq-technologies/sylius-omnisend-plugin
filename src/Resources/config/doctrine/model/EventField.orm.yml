@@ -14,7 +14,7 @@ NFQ\SyliusOmnisendPlugin\Model\EventField:
     name:
       type: string
       nullable: true
-    systemName:
+    code:
       type: string
       nullable: true
     required:

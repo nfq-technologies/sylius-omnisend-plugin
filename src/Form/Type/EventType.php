@@ -56,7 +56,7 @@ class EventType extends AbstractResourceType
                     'label' => 'sylius.ui.enable',
                 ]
             )->add(
-                'systemName',
+                'code',
                 TextType::class,
                 [
                     'label' => 'nfq_sylius_omnisend_plugin.ui.event.system_name',

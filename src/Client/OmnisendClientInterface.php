@@ -23,6 +23,7 @@ use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Batch;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Cart;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Category;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Contact;
+use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Event;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Order;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Product;
 
@@ -59,4 +60,6 @@ interface OmnisendClientInterface
     public function deleteOrder(string $orderId, ?string $channelCode): ?object;
 
     public function postBatch(Batch $batch, ?string $channelCode): ?object;
+
+    public function postEvent(Event $event, ?string $channelCode): ?object;
 }

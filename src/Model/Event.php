@@ -40,7 +40,7 @@ class Event implements ResourceInterface, TimestampableInterface
     private $name;
 
     /** @var string|null */
-    private $systemName;
+    private $code;
 
     /** @var bool */
     private $enabled;
@@ -81,14 +81,14 @@ class Event implements ResourceInterface, TimestampableInterface
         $this->name = $name;
     }
 
-    public function getSystemName(): ?string
+    public function getCode(): ?string
     {
-        return $this->systemName;
+        return $this->code;
     }
 
-    public function setSystemName(string $systemName): void
+    public function setCode(string $code): void
     {
-        $this->systemName = $systemName;
+        $this->code = $code;
     }
 
     public function isEnabled(): ?bool

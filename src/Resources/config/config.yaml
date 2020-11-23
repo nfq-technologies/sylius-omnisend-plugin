@@ -51,7 +51,7 @@ sylius_grid:
         name:
           type: string
           label: nfq_sylius_omnisend_plugin.ui.event.name
-        systemName:
+        code:
           type: string
           label: nfq_sylius_omnisend_plugin.ui.event.system_name
         enabled:
@@ -71,7 +71,7 @@ sylius_grid:
       filters:
         name:
           type: string
-        systemName:
+        code:
           type: string
         enabled:
           type: boolean
