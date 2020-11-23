@@ -10,6 +10,7 @@ nfq_sylius_omnisend_plugin:
       name: Name
       fields: Fields
       system_name: System Name
+      channel: Channel
     event_field:
       name: Name
       type: Type

@@ -43,6 +43,11 @@ sylius_grid:
         options:
           class: NFQ\SyliusOmnisendPlugin\Model\Event
       fields:
+        channel:
+          type: twig
+          label: sylius.ui.channel
+          options:
+            template: "@SyliusAdmin/Order/Grid/Field/channel.html.twig"
         name:
           type: string
           label: nfq_sylius_omnisend_plugin.ui.event.name

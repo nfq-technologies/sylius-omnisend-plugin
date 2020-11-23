@@ -33,3 +33,11 @@ NFQ\SyliusOmnisendPlugin\Model\Event:
       mappedBy: event
       cascade: [persist]
       orphanRemoval: true
+  manyToOne:
+    channel:
+      targetEntity: Sylius\Component\Channel\Model\ChannelInterface
+      joinColumn:
+        name: channel_id
+        referencedColumnName: id
+        nullable: true
+        onDelete: CASCADE

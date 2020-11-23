@@ -20,6 +20,7 @@ declare(strict_types=1);
 namespace NFQ\SyliusOmnisendPlugin\Form\Type;
 
 use NFQ\SyliusOmnisendPlugin\Validator\Constraints\UniqueEventField;
+use Sylius\Bundle\ChannelBundle\Form\Type\ChannelChoiceType;
 use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -59,6 +60,12 @@ class EventType extends AbstractResourceType
                 TextType::class,
                 [
                     'label' => 'nfq_sylius_omnisend_plugin.ui.event.system_name',
+                ]
+            )->add(
+                'channel',
+                ChannelChoiceType::class,
+                [
+                    'label' => 'nfq_sylius_omnisend_plugin.ui.event.channel',
                 ]
             )->add(
                 'fields',
