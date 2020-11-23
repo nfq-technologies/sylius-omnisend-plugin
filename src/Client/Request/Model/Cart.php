@@ -21,7 +21,7 @@ namespace NFQ\SyliusOmnisendPlugin\Client\Request\Model;
 
 class Cart
 {
-    /** @var string */
+    /** @var string|null */
     private $cartID;
 
     /** @var string|null */
@@ -39,7 +39,7 @@ class Cart
     /** @var string|null */
     private $updatedAt;
 
-    /** @var string */
+    /** @var string|null */
     private $currency;
 
     /** @var int */
@@ -56,12 +56,12 @@ class Cart
         $this->products = [];
     }
 
-    public function getCartID(): string
+    public function getCartID(): ?string
     {
         return $this->cartID;
     }
 
-    public function setCartID(string $cartID): void
+    public function setCartID(?string $cartID): void
     {
         $this->cartID = $cartID;
     }
@@ -101,7 +101,7 @@ class Cart
         return $this->createdAt;
     }
 
-    public function setCreatedAt(string $createdAt): void
+    public function setCreatedAt(?string $createdAt): void
     {
         $this->createdAt = $createdAt;
     }
@@ -116,12 +116,12 @@ class Cart
         $this->updatedAt = $updatedAt;
     }
 
-    public function getCurrency(): string
+    public function getCurrency(): ?string
     {
         return $this->currency;
     }
 
-    public function setCurrency(string $currency): void
+    public function setCurrency(?string $currency): void
     {
         $this->currency = $currency;
     }

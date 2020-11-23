@@ -48,7 +48,7 @@ class ProductPicker
     /** @var string|null */
     private $imageUrl;
 
-    /** @var string */
+    /** @var string|null */
     private $productUrl;
 
     /** @var string|null */
@@ -162,12 +162,12 @@ class ProductPicker
         return $this;
     }
 
-    public function getProductUrl(): string
+    public function getProductUrl(): ?string
     {
         return $this->productUrl;
     }
 
-    public function setProductUrl(string $productUrl): self
+    public function setProductUrl(?string $productUrl): self
     {
         $this->productUrl = $productUrl;
 

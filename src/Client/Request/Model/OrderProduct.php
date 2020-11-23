@@ -207,24 +207,24 @@ class OrderProduct
         return $this;
     }
 
-    public function getTags()
+    public function getTags(): ?array
     {
         return $this->tags;
     }
 
-    public function setTags($tags): self
+    public function setTags(?array $tags): self
     {
         $this->tags = $tags;
 
         return $this;
     }
 
-    public function getCategoryIDs()
+    public function getCategoryIDs(): ?array
     {
         return $this->categoryIDs;
     }
 
-    public function setCategoryIDs($categoryIDs): self
+    public function setCategoryIDs(?array $categoryIDs): self
     {
         $this->categoryIDs = $categoryIDs;
 

@@ -130,7 +130,7 @@ class Order
         return $this->orderID;
     }
 
-    public function setOrderID(string $orderID): self
+    public function setOrderID(?string $orderID): self
     {
         $this->orderID = $orderID;
 
@@ -310,7 +310,7 @@ class Order
         return $this->currency;
     }
 
-    public function setCurrency(string $currency): self
+    public function setCurrency(?string $currency): self
     {
         $this->currency = $currency;
 

@@ -37,6 +37,7 @@ class OrderBuilderDirector implements OrderBuilderDirectorInterface
         $this->builder->createOrder();
         $this->builder->addCartData($order);
         $this->builder->addOrderData($order);
+        $this->builder->addTotals($order);
         $this->builder->addProducts($order);
         $this->builder->addTrackingData($order);
         $this->builder->addCancelData($order);

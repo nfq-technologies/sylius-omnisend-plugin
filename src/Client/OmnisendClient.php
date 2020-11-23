@@ -24,17 +24,21 @@ use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Cart;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Category;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Contact;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Order;
+use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Product;
 use NFQ\SyliusOmnisendPlugin\Client\Response\Model\BatchSuccess;
 use NFQ\SyliusOmnisendPlugin\Client\Response\Model\CartSuccess;
 use NFQ\SyliusOmnisendPlugin\Client\Response\Model\CategorySuccess;
 use NFQ\SyliusOmnisendPlugin\Client\Response\Model\ContactSuccess;
 use NFQ\SyliusOmnisendPlugin\Client\Response\Model\OrderSuccess;
+use NFQ\SyliusOmnisendPlugin\Client\Response\Model\ProductSuccess;
 use NFQ\SyliusOmnisendPlugin\HttpClient\ClientFactory;
 use NFQ\SyliusOmnisendPlugin\HttpClient\ClientFactoryInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
+use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 use Symfony\Component\Serializer\SerializerInterface;
 use Throwable;
 use Http\Client\Exception\HttpException;
@@ -49,6 +53,7 @@ class OmnisendClient implements LoggerAwareInterface, OmnisendClientInterface
     private const URL_PATH_CARTS = '/carts';
     private const URL_PATH_ORDERS = '/orders';
     private const URL_PATH_BATCHES = '/batches';
+    private const URL_PATH_PRODUCTS = '/products';
 
     /** @var ClientFactoryInterface */
     private $clientFactory;
@@ -221,6 +226,49 @@ class OmnisendClient implements LoggerAwareInterface, OmnisendClientInterface
         return $this->parseResponse($response, CategorySuccess::class);
     }
 
+    public function postProduct(Product $product, ?string $channelCode): ?object
+    {
+        $response = $this->sendRequest(
+            $this->messageFactory->create(
+                'POST',
+                self::API_VERSION . self::URL_PATH_PRODUCTS,
+                $product
+            ),
+            $channelCode
+        );
+
+        return $this->parseResponse($response, CategorySuccess::class);
+    }
+
+    public function putProduct(Product $product, ?string $channelCode): ?object
+    {
+        $response = $this->sendRequest(
+            $this->messageFactory->create(
+                'PUT',
+                self::API_VERSION . self::URL_PATH_PRODUCTS . '/' . $product->getProductID(),
+                $product
+            ),
+            $channelCode
+        );
+
+        return $this->parseResponse($response, CategorySuccess::class);
+    }
+
+    public function deleteProduct(string $productId, ?string $channelCode): ?object
+    {
+        $response = $this->sendRequest(
+            $this->messageFactory->create(
+                'DELETE',
+                self::API_VERSION . self::URL_PATH_PRODUCTS . '/' . $productId,
+                null
+            ),
+            $channelCode
+        );
+
+        return $this->parseResponse($response, ProductSuccess::class);
+    }
+
+
     public function postBatch(Batch $batch, ?string $channelCode): ?object
     {
         $response = $this->sendRequest(
@@ -252,6 +300,8 @@ class OmnisendClient implements LoggerAwareInterface, OmnisendClientInterface
         try {
             return $this->clientFactory->create($channelCode)->sendRequest($request);
         } catch (HttpException $requestException) {
+            var_export('????');
+            var_export(get_class($this->logger));
             $response = [
                 'status' => $requestException->getResponse()->getStatusCode(),
                 'headers' => $requestException->getResponse()->getHeaders(),

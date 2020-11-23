@@ -21,4 +21,7 @@ parameters:
         - '/Variable method call on NFQ\\SyliusOmnisendPlugin\\Client\\Request\\Model\\ContactIdentifierChannel./'
         - '/Call to an undefined method Sylius\\Component\\Core\\Model\\CustomerInterface::setOmnisendContactId\(\)./'
         - '/Call to an undefined method Sylius\\Component\\Core\\Model\\CustomerInterface::getOmnisendContactId\(\)./'
+        - '/Call to an undefined method Sylius\\Component\\Core\\Model\\OrderInterface::getOmnisendOrderDetails\(\)./'
+        - '/Cannot cast array\<string\>\|string\|null to string./'
+        - '/Cannot cast array\<string\>\|bool\|string to int./'
         - '/Method NFQ\\SyliusOmnisendPlugin\\Client\\OmnisendClient::parseResponse\(\) has no return typehint specified./'

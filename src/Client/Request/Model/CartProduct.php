@@ -18,7 +18,7 @@ class CartProduct
     /** @var string|null */
     private $sku;
 
-    /** @var string */
+    /** @var string|null */
     private $title;
 
     /** @var string|null */
@@ -82,12 +82,12 @@ class CartProduct
         $this->sku = $sku;
     }
 
-    public function getTitle(): string
+    public function getTitle(): ?string
     {
         return $this->title;
     }
 
-    public function setTitle(string $title): void
+    public function setTitle(?string $title): void
     {
         $this->title = $title;
     }

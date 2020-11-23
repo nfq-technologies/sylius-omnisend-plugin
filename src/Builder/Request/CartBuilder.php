@@ -41,7 +41,7 @@ class CartBuilder implements CartBuilderInterface
     /** @var RouterInterface */
     private $router;
 
-    /** @var Request */
+    /** @var Request|null */
     private $request;
 
     /** @var CartProductFactory */
@@ -70,7 +70,7 @@ class CartBuilder implements CartBuilderInterface
     public function addOrderData(OrderInterface $order): void
     {
         if (null === $order->getOmnisendOrderDetails()->getCartId()) {
-            $order->getOmnisendOrderDetails()->setCartId((string)$this->generator->generateNumeric(32));
+            $order->getOmnisendOrderDetails()->setCartId($this->generator->generateNumeric(32));
         }
         $this->cart->setCartID($order->getOmnisendOrderDetails()->getCartId());
         $this->cart->setCurrency($order->getCurrencyCode());

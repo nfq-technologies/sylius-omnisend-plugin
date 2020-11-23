@@ -21,6 +21,7 @@ namespace Tests\NFQ\SyliusOmnisendPlugin\Factory\Request;
 
 use NFQ\SyliusOmnisendPlugin\Factory\Request\CartProductFactory;
 use NFQ\SyliusOmnisendPlugin\Resolver\ProductImageResolverInterface;
+use NFQ\SyliusOmnisendPlugin\Resolver\ProductUrlResolverInterface;
 use PHPUnit\Framework\TestCase;
 use Sylius\Component\Core\Model\AdjustmentInterface;
 use Sylius\Component\Core\Model\OrderItem;
@@ -41,17 +42,17 @@ class CartProductFactoryTest extends TestCase
     /** @var ProductImageResolverInterface */
     private $productImageResolver;
 
-    /** @var RouterInterface */
-    private $router;
+    /** @var ProductUrlResolverInterface */
+    private $productUrlResolver;
 
     protected function setUp(): void
     {
         $this->productImageResolver = $this->createMock(ProductImageResolverInterface::class);
-        $this->router = $this->createMock(RouterInterface::class);
+        $this->productUrlResolver = $this->createMock(ProductUrlResolverInterface::class);
 
         $this->factory = new CartProductFactory(
             $this->productImageResolver,
-            $this->router
+            $this->productUrlResolver
         );
     }
 
@@ -78,21 +79,10 @@ class CartProductFactoryTest extends TestCase
         $product->setCode('product_code');
         $variant->setCode('variant_code');
         $orderItem->setVariant($variant);
-        $this->router
+        $this->productUrlResolver
             ->expects($this->once())
-            ->method('generate')
-            ->willReturnCallback(
-                function ($route, $config, $type) {
-                    $this->assertEquals($route, 'sylius_shop_product_show');
-                    $this->assertEquals($config, [
-                        'slug' => 'product',
-                        '_locale' => 'en',
-                    ]);
-                    $this->assertEquals($type, UrlGeneratorInterface::ABSOLUTE_URL);
-
-                    return 'url';
-                }
-            );
+            ->method('resolve')
+            ->willReturn('url');
         $this->productImageResolver
             ->expects($this->once())
             ->method('resolve')

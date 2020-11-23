@@ -40,7 +40,10 @@ class ClientRequestContext implements Context
         Assert::true(null !== $this->loggableClientMock->getLastRequestData());
     }
 
-    /** @Then Request type :type to Omnisend endpoint :endpoint was sent */
+    /**
+     * @Then Request type :type to Omnisend endpoint :endpoint was sent
+     * @Then Request type :type to Omnisend endpoint :endpoint should be sent
+     */
     public function requestToOmnisendEndpointWasSent(string $type, string $endpoint)
     {
         $rawData = $this->loggableClientMock->getLastRequestData();

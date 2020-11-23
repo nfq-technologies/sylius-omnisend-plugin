@@ -21,7 +21,7 @@ namespace NFQ\SyliusOmnisendPlugin\Model;
 
 interface OmnisendOrderDetailsAwareInterface
 {
-    public function getOmnisendOrderDetails(): ?OrderDetails;
+    public function getOmnisendOrderDetails(): OrderDetails;
 
     public function setOmnisendOrderDetails(OrderDetails $orderDetails): void;
 }

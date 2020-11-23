@@ -28,6 +28,8 @@ interface OrderBuilderInterface
 
     public function addOrderData(OrderInterface $order): void;
 
+    public function addTotals(OrderInterface $order): void;
+
     public function addCartData(OrderInterface $order): void;
 
     public function addProducts(OrderInterface $order): void;

@@ -26,7 +26,7 @@ class UpdateOrderState implements CommandInterface
     /** @var int */
     private $orderId;
 
-    public function __construct(int $orderId, string $channelCode)
+    public function __construct(int $orderId, ?string $channelCode)
     {
         $this->channelCode = $channelCode;
         $this->orderId = $orderId;

@@ -39,7 +39,39 @@ final class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
             ->end();
-        $rootNode->children()
+        //Logger
+        $rootNode
+            ->addDefaultsIfNotSet()
+                ->children()
+                    ->scalarNode('client_logger')
+                        ->defaultNull()
+                    ->end()
+                ->end()
+            ->end();
+        //Resolvers
+        $rootNode
+            ->addDefaultsIfNotSet()
+                ->children()
+                    ->scalarNode('product_image_resolver')
+                        ->defaultValue('nfq_sylius_omnisend_plugin.resolver.default_product_image')
+                    ->end()
+                    ->scalarNode('order_coupon_resolver')
+                        ->defaultValue('nfq_sylius_omnisend_plugin.resolver.default_order_coupon')
+                    ->end()
+                    ->scalarNode('product_additional_data_resolver')
+                        ->defaultValue('nfq_sylius_omnisend_plugin.resolver.default_product_additional_data')
+                    ->end()
+                    ->scalarNode('product_url_resolver')
+                        ->defaultValue('nfq_sylius_omnisend_plugin.resolver.default_product_url')
+                    ->end()
+                    ->scalarNode('product_variant_stock_resolver')
+                        ->defaultValue('nfq_sylius_omnisend_plugin.resolver.default_product_variant_stock')
+                    ->end()
+                ->end()
+            ->end();
+        //Resources
+        $rootNode
+            ->children()
                 ->arrayNode('resources')
                     ->addDefaultsIfNotSet()
                     ->children()
@@ -58,7 +90,9 @@ final class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
             ->end();
-        $rootNode->addDefaultsIfNotSet()
+        //Parameters
+        $rootNode
+            ->addDefaultsIfNotSet()
                 ->children()
                     ->arrayNode('order_states')
                         ->useAttributeAsKey('code')
@@ -76,6 +110,17 @@ final class Configuration implements ConfigurationInterface
                             ->scalarNode('type')->defaultValue('main')->end()
                             ->scalarNode('filter')->defaultValue('sylius_shop_product_large_thumbnail')->end()
                             ->scalarNode('default_image')->defaultValue('https://placehold.it/400x30')->end()
+                        ->end()
+                    ->end()
+                    ->arrayNode('product_attributes')
+                        ->addDefaultsIfNotSet()
+                        ->children()
+                            ->scalarNode('vendor')->defaultValue('omnisend_vendor')->end()
+                            ->scalarNode('type')->defaultValue('omnisend_type')->end()
+                            ->arrayNode('tags')
+                                ->prototype('scalar')->end()
+                                ->defaultValue(['omnisend_tag_1', 'omnisend_tag_2'])
+                            ->end()
                         ->end()
                     ->end()
                     ->arrayNode('send_welcome_message')

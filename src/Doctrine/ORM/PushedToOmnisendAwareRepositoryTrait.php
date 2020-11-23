@@ -20,23 +20,24 @@ declare(strict_types=1);
 namespace NFQ\SyliusOmnisendPlugin\Doctrine\ORM;
 
 use Doctrine\ORM\QueryBuilder;
+use Sylius\Component\Core\Model\ChannelInterface;
 
-trait TaxonRepositoryTrait
+trait PushedToOmnisendAwareRepositoryTrait
 {
-    public function getSyncedToOmnisendCount(): int
+    public function getSyncedToOmnisendCount(?ChannelInterface $channel = null): int
     {
         /** @var QueryBuilder $qb */
-        $qb = $this->getSyncedToOmnisendQueryBuilder('t');
+        $qb = $this->getSyncedToOmnisendQueryBuilder('t', $channel);
 
         return (int)$qb->select('count(t.id)')
             ->getQuery()
             ->getSingleScalarResult();
     }
 
-    public function findSyncedToOmnisend(int $offset, int $limit): array
+    public function findSyncedToOmnisend(int $offset, int $limit, ?ChannelInterface $channel = null): array
     {
         /** @var QueryBuilder $qb */
-        $qb = $this->getSyncedToOmnisendQueryBuilder('t');
+        $qb = $this->getSyncedToOmnisendQueryBuilder('t', $channel);
 
         return $qb
             ->setMaxResults($limit)
@@ -45,20 +46,20 @@ trait TaxonRepositoryTrait
             ->getResult();
     }
 
-    public function getNotSyncedToOmnisendCount(): int
+    public function getNotSyncedToOmnisendCount(?ChannelInterface $channel = null): int
     {
         /** @var QueryBuilder $qb */
-        $qb = $this->getNotSyncedToOmnisendQueryBuilder('t');
+        $qb = $this->getNotSyncedToOmnisendQueryBuilder('t', $channel);
 
         return (int)$qb->select('count(t.id)')
             ->getQuery()
             ->getSingleScalarResult();
     }
 
-    public function findNotSyncedToOmnisend(int $offset, int $limit): array
+    public function findNotSyncedToOmnisend(int $offset, int $limit, ?ChannelInterface $channel = null): array
     {
         /** @var QueryBuilder $qb */
-        $qb = $this->getNotSyncedToOmnisendQueryBuilder('t');
+        $qb = $this->getNotSyncedToOmnisendQueryBuilder('t', $channel);
 
         return $qb
             ->setMaxResults($limit)
@@ -67,19 +68,35 @@ trait TaxonRepositoryTrait
             ->getResult();
     }
 
-    public function getNotSyncedToOmnisendQueryBuilder(string $alias = 't'): QueryBuilder
+    public function getNotSyncedToOmnisendQueryBuilder(string $alias = 't', ?ChannelInterface $channel = null): QueryBuilder
     {
         /** @var QueryBuilder $qb */
         $qb = $this->createQueryBuilder($alias);
+
+        if (null !== $channel) {
+            $this->addChannelFilter($qb, $alias, $channel);
+        }
 
         return $qb->andWhere($qb->expr()->isNull(sprintf('%s.pushedToOmnisend', $alias)));
     }
 
-    public function getSyncedToOmnisendQueryBuilder(string $alias = 't'): QueryBuilder
+    public function getSyncedToOmnisendQueryBuilder(string $alias = 't', ?ChannelInterface $channel = null): QueryBuilder
     {
         /** @var QueryBuilder $qb */
         $qb = $this->createQueryBuilder($alias);
 
+        if (null !== $channel) {
+            $this->addChannelFilter($qb, $alias, $channel);
+        }
+
         return $qb->andWhere($qb->expr()->isNotNull(sprintf('%s.pushedToOmnisend', $alias)));
+    }
+
+    private function addChannelFilter(QueryBuilder $qb, string $alias, ChannelInterface $channel): QueryBuilder
+    {
+        return $qb
+            ->andWhere(sprintf(':channel MEMBER OF %s.channels', $alias))
+            ->andWhere(sprintf('%s.enabled = true', $alias))
+            ->setParameter('channel', $channel);
     }
 }

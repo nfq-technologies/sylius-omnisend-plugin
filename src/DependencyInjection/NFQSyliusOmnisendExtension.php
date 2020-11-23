@@ -19,6 +19,7 @@ declare(strict_types=1);
 
 namespace NFQ\SyliusOmnisendPlugin\DependencyInjection;
 
+use Psr\Log\NullLogger;
 use Sylius\Bundle\ResourceBundle\DependencyInjection\Extension\AbstractResourceExtension;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Symfony\Component\Config\FileLocator;
@@ -43,6 +44,10 @@ final class NFQSyliusOmnisendExtension extends AbstractResourceExtension
             $config['product_image']['default_image']
         );
         $container->setParameter(
+            'nfq_sylius_omnisend_plugin.product_attributes',
+            $config['product_attributes']
+        );
+        $container->setParameter(
             'nfq_sylius_omnisend_plugin.send_welcome_message',
             $config['send_welcome_message']
         );
@@ -54,6 +59,36 @@ final class NFQSyliusOmnisendExtension extends AbstractResourceExtension
             'nfq_sylius_omnisend_plugin.payment_states',
             $config['payment_states']
         );
+        $container->setAlias(
+            'nfq_sylius_omnisend_plugin.resolver.product_image',
+            $config['product_image_resolver']
+        );
+        $container->setAlias(
+            'nfq_sylius_omnisend_plugin.resolver.order_coupon',
+            $config['order_coupon_resolver']
+        );
+        $container->setAlias(
+            'nfq_sylius_omnisend_plugin.resolver.product_additional_data',
+            $config['product_additional_data_resolver']
+        );
+        $container->setAlias(
+            'nfq_sylius_omnisend_plugin.resolver.product_url',
+            $config['product_url_resolver']
+        );
+        $container->setAlias(
+            'nfq_sylius_omnisend_plugin.resolver.product_variant_stock',
+            $config['product_variant_stock_resolver']
+        );
+
+        if (isset($config['client_logger']) && $config['client_logger']) {
+            $container->setAlias(
+                'nfq_sylius_omnisend_plugin.client.logger',
+                $config['client_logger']
+            );
+        } else {
+            $container->register('nfq_sylius_omnisend_plugin.client.logger', NullLogger::class);
+        }
+
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $this->registerResources('nfq_sylius_omnisend_plugin', $config['driver'], $config['resources'], $container);
         $loader->load('services.yaml');

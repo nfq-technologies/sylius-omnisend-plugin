@@ -29,13 +29,13 @@ interface ProductPickerBuilderInterface
 
     public function addIds(ProductInterface $product, ProductVariantInterface $productVariant): void;
 
-    public function addContent(ProductInterface $product, string $locale): void;
+    public function addContent(ProductInterface $product, ?string $localeCode = null): void;
 
     public function addPrices(ProductVariantInterface $productVariant): void;
 
     public function addImage(ProductInterface $product): void;
 
-    public function addAdditionalData(ProductInterface $product): void;
+    public function addAdditionalData(ProductInterface $product, ?string $localeCode = null): void;
 
     public function getProductPicker(): ProductPicker;
 }

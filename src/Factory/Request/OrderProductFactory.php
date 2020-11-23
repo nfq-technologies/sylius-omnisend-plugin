@@ -20,62 +20,62 @@ declare(strict_types=1);
 namespace NFQ\SyliusOmnisendPlugin\Factory\Request;
 
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\OrderProduct;
-use NFQ\SyliusOmnisendPlugin\Model\ProductPickerAdditionalDataAwareInterface;
+use NFQ\SyliusOmnisendPlugin\Resolver\ProductAdditionalDataResolverInterface;
 use NFQ\SyliusOmnisendPlugin\Resolver\ProductImageResolverInterface;
+use NFQ\SyliusOmnisendPlugin\Resolver\ProductUrlResolverInterface;
 use Sylius\Component\Core\Model\AdjustmentInterface;
+use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\OrderItemInterface;
+use Sylius\Component\Core\Model\Product;
+use Sylius\Component\Core\Model\ProductInterface;
+use Sylius\Component\Core\Model\ProductVariant;
 use Sylius\Component\Core\Model\TaxonInterface;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Component\Routing\RouterInterface;
 
 class OrderProductFactory implements OrderProductFactoryInterface
 {
-    /** @var string */
-    private const PRODUCT_ROUTE_NAME = 'sylius_shop_product_show';
-
     /** @var ProductImageResolverInterface */
     private $productImageResolver;
 
-    /** @var RouterInterface */
-    private $router;
+    /** @var ProductUrlResolverInterface */
+    private $productUrlResolver;
 
-    public function __construct(ProductImageResolverInterface $productImageResolver, RouterInterface $router)
-    {
+    /** @var ProductAdditionalDataResolverInterface */
+    private $productAdditionalDataResolver;
+
+    public function __construct(
+        ProductImageResolverInterface $productImageResolver,
+        ProductUrlResolverInterface $productUrlResolver,
+        ProductAdditionalDataResolverInterface $productAdditionalDataResolver
+    ) {
         $this->productImageResolver = $productImageResolver;
-        $this->router = $router;
+        $this->productUrlResolver = $productUrlResolver;
+        $this->productAdditionalDataResolver = $productAdditionalDataResolver;
     }
 
     public function create(OrderItemInterface $orderItem): OrderProduct
     {
         $cartItem = new OrderProduct();
-        $locale = $orderItem->getOrder()->getLocaleCode();
-        /** @var ProductPickerAdditionalDataAwareInterface $product */
-        $product = $orderItem->getVariant()->getProduct();
+        /** @var OrderInterface $order */
+        $order = $orderItem->getOrder();
+        $localeCode = $order->getLocaleCode();
+        /** @var ProductVariant $variant */
+        $variant = $orderItem->getVariant();
+        /** @var ProductInterface $product */
+        $product = $variant->getProduct();
 
-        $cartItem->setProductID((string)$orderItem->getVariant()->getProduct()->getId());
-        $cartItem->setSku((string)$orderItem->getVariant()->getProduct()->getCode());
-        $cartItem->setVariantID((string)$orderItem->getVariant()->getCode());
+        $cartItem->setProductID((string)$product->getId());
+        $cartItem->setSku((string)$product->getCode());
+        $cartItem->setVariantID((string)$variant->getCode());
         $cartItem->setVariantTitle($orderItem->getVariantName());
         $cartItem->setTitle($orderItem->getProductName());
         $cartItem->setQuantity($orderItem->getQuantity());
         $cartItem->setPrice($orderItem->getTotal());
-        $cartItem->setImageUrl($this->productImageResolver->resolve($orderItem->getProduct()));
+        $cartItem->setImageUrl($this->productImageResolver->resolve($product));
         $cartItem->setDiscount($this->getDiscount($orderItem));
-        if ($product instanceof ProductPickerAdditionalDataAwareInterface) {
-            $cartItem->setVendor($product->getOmnisendVendor());
-            $cartItem->setTags($product->getOmnisendTags());
-        }
+        $cartItem->setVendor($this->productAdditionalDataResolver->getVendor($product, $localeCode));
+        $cartItem->setTags($this->productAdditionalDataResolver->getTags($product, $localeCode));
         $cartItem->setCategoryIDs($this->getCategoriesIds($orderItem));
-        $cartItem->setProductUrl(
-            $this->router->generate(
-                self::PRODUCT_ROUTE_NAME,
-                [
-                    'slug' => $orderItem->getProduct()->getTranslation($locale)->getSlug(),
-                    '_locale' => $locale
-                ],
-                UrlGeneratorInterface::ABSOLUTE_URL
-            )
-        );
+        $cartItem->setProductUrl($this->productUrlResolver->resolve($product, $localeCode));
 
         return $cartItem;
     }
@@ -89,15 +89,18 @@ class OrderProductFactory implements OrderProductFactoryInterface
         );
     }
 
-    private function getCategoriesIds(OrderItemInterface $orderItem): array
+    private function getCategoriesIds(OrderItemInterface $orderItem): ?array
     {
+        /** @var Product $product */
         $product = $orderItem->getProduct();
 
-        return array_map(
-            function (TaxonInterface $productTaxon): string {
+        $result =  array_map(
+            function (TaxonInterface $productTaxon): ?string {
                 return $productTaxon->getCode();
             },
             $product->getTaxons()->toArray()
         );
+
+        return count($result) === 0 ? $result : null;
     }
 }

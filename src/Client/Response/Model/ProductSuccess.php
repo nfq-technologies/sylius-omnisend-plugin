@@ -17,23 +17,22 @@
 
 declare(strict_types=1);
 
-namespace Tests\NFQ\SyliusOmnisendPlugin\Mock;
+namespace NFQ\SyliusOmnisendPlugin\Client\Response\Model;
 
-use Sylius\Component\Core\Model\Product;
-use NFQ\SyliusOmnisendPlugin\Model\ProductPickerAdditionalDataAwareInterface;
-
-class ProductPickerAdditionalDataAwareMock extends Product implements ProductPickerAdditionalDataAwareInterface
+class ProductSuccess
 {
-    public function getOmnisendTags(): ?array
+    /** @var string */
+    private $productID;
+
+    public function getProductID(): string
     {
-        return [
-            'test1',
-            'test2',
-        ];
+        return $this->productID;
     }
 
-    public function getOmnisendVendor(): ?string
+    public function setProductID(string $productID): self
     {
-        return 'vendor';
+        $this->productID = $productID;
+
+        return $this;
     }
 }

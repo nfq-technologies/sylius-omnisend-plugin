@@ -19,11 +19,7 @@ declare(strict_types=1);
 
 namespace NFQ\SyliusOmnisendPlugin\Resolver;
 
-use NFQ\SyliusOmnisendPlugin\Model\ContactAwareInterface;
-use NFQ\SyliusOmnisendPlugin\Model\OrderInterface;
-use Sylius\Component\Core\Model\CustomerInterface;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestStack;
+use Sylius\Component\Core\Model\OrderInterface;
 
 interface ContactIdResolverInterface
 {

@@ -15,6 +15,15 @@ services:
     tags:
       - { name: kernel.event_subscriber }
 
+  nfq_sylius_omnisend_plugin.event_subscriber.product:
+    class: NFQ\SyliusOmnisendPlugin\EventSubscriber\ProductSubscriber
+    arguments:
+      - '@messenger.routable_message_bus'
+      - '@sylius.context.channel.composite'
+      - '@sylius.context.locale'
+    tags:
+      - { name: kernel.event_subscriber }
+
   nfq_sylius_omnisend_plugin.event_subscriber.cart:
     class: NFQ\SyliusOmnisendPlugin\EventSubscriber\CartSubscriber
     arguments:

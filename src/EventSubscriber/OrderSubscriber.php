@@ -26,6 +26,7 @@ use NFQ\SyliusOmnisendPlugin\Message\Command\UpdateOrderState;
 use NFQ\SyliusOmnisendPlugin\Model\OrderInterface;
 use SM\Event\TransitionEvent;
 use Sylius\Bundle\ResourceBundle\Event\ResourceControllerEvent;
+use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\PaymentInterface;
 use Sylius\Component\Core\Model\ShipmentInterface;
 use Sylius\Component\Core\Repository\OrderRepositoryInterface;
@@ -58,15 +59,17 @@ class OrderSubscriber implements EventSubscriberInterface
         ];
     }
 
-    public function onUpdate(ResourceControllerEvent $event)
+    public function onUpdate(ResourceControllerEvent $event): void
     {
         /** @var OrderInterface $order */
         $order = $event->getSubject();
+        /** @var ChannelInterface $channel */
+        $channel = $order->getChannel();
 
         if ($order->getState() !== OrderInterface::STATE_CART) {
             $this->messageBus->dispatch(
                 new Envelope(
-                    new UpdateOrder($order->getId(), $order->getChannel()->getCode())
+                    new UpdateOrder($order->getId(), $channel->getCode())
                 )
             );
         }
@@ -76,8 +79,10 @@ class OrderSubscriber implements EventSubscriberInterface
     {
         $graph = $event->getStateMachine()->getGraph();
         $transition = $event->getTransition();
+        /** @var ChannelInterface $channel */
+        $channel = $order->getChannel();
 
-        if ($graph !== OrderTransitions::GRAPH) {
+        if ($graph !== OrderTransitions::GRAPH || null === $order->getId()) {
             return;
         }
 
@@ -85,7 +90,7 @@ class OrderSubscriber implements EventSubscriberInterface
             case OrderTransitions::TRANSITION_CREATE:
                 $this->messageBus->dispatch(
                     new Envelope(
-                        (new CreateOrder($order->getId(), $order->getChannel()->getCode()))
+                        (new CreateOrder($order->getId(), $channel->getCode()))
                     )
                 );
                 break;
@@ -95,14 +100,14 @@ class OrderSubscriber implements EventSubscriberInterface
 
                 $this->messageBus->dispatch(
                     new Envelope(
-                        new CancelOrder($order->getId(), $order->getChannel()->getCode())
+                        new CancelOrder($order->getId(), $channel->getCode())
                     )
                 );
                 break;
             case OrderTransitions::TRANSITION_FULFILL:
                 $this->messageBus->dispatch(
                     new Envelope(
-                        (new UpdateOrderState($order->getId(), $order->getChannel()->getCode()))
+                        (new UpdateOrderState($order->getId(), $channel->getCode()))
                     )
                 );
                 break;
@@ -115,23 +120,31 @@ class OrderSubscriber implements EventSubscriberInterface
     {
         /** @var OrderInterface $order */
         $order = $payment->getOrder();
+        /** @var ChannelInterface $channel */
+        $channel = $order->getChannel();
 
-        $this->messageBus->dispatch(
-            new Envelope(
-                (new UpdateOrderState($order->getId(), $order->getChannel()->getCode()))
-            )
-        );
+        if ($order->getId() !== null) {
+            $this->messageBus->dispatch(
+                new Envelope(
+                    (new UpdateOrderState($order->getId(), $channel->getCode()))
+                )
+            );
+        }
     }
 
     public function onShipmentStateChange(ShipmentInterface $shipment): void
     {
         /** @var OrderInterface $order */
         $order = $shipment->getOrder();
+        /** @var ChannelInterface $channel */
+        $channel = $order->getChannel();
 
-        $this->messageBus->dispatch(
-            new Envelope(
-                (new UpdateOrderState($order->getId(), $order->getChannel()->getCode()))
-            )
-        );
+        if ($order->getId() !== null) {
+            $this->messageBus->dispatch(
+                new Envelope(
+                    (new UpdateOrderState($order->getId(), $channel->getCode()))
+                )
+            );
+        }
     }
 }
