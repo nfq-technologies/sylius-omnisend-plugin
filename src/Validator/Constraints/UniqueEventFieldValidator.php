@@ -19,7 +19,7 @@ declare(strict_types=1);
 
 namespace NFQ\SyliusOmnisendPlugin\Validator\Constraints;
 
-use NFQ\SyliusOmnisendPlugin\Model\Event;
+use Doctrine\Common\Collections\Collection;
 use NFQ\SyliusOmnisendPlugin\Model\EventField;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
@@ -27,7 +27,7 @@ use Webmozart\Assert\Assert;
 
 class UniqueEventFieldValidator extends ConstraintValidator
 {
-    /** @var Event $value */
+    /** @var Collection $value */
     public function validate($value, Constraint $constraint): void
     {
         /** @var UniqueEventField $constraint */
