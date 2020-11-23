@@ -26,6 +26,7 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class EventType extends AbstractResourceType
 {
@@ -60,6 +61,7 @@ class EventType extends AbstractResourceType
                 TextType::class,
                 [
                     'label' => 'nfq_sylius_omnisend_plugin.ui.event.system_name',
+                    'constraints' => [new NotBlank(['groups' => ['sylius']])],
                 ]
             )->add(
                 'channel',

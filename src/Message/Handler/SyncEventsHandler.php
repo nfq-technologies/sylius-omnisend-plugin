@@ -53,7 +53,7 @@ class SyncEventsHandler implements MessageHandlerInterface
         $this->omnisendClient = $omnisendClient;
     }
 
-    public function __invoke(SyncEvents $message)
+    public function __invoke(SyncEvents $message): void
     {
         /** @var Event[]|null $events */
         $events = $this->omnisendClient->getEvents($message->getChannelCode());

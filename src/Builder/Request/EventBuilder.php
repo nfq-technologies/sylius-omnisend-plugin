@@ -59,6 +59,21 @@ class EventBuilder implements EventBuilderInterface
         $this->event->setFields($fields);
     }
 
+    public function addEmail(string $email): void
+    {
+        $this->event->setEmail($email);
+    }
+
+    public function addFormattedFields(array $fields): void
+    {
+        $this->event->setFields($fields);
+    }
+
+    public function addSystemName(string $name): void
+    {
+        $this->event->setSystemName($name);
+    }
+
     public function getEvent(): CreateEvent
     {
         return $this->event;

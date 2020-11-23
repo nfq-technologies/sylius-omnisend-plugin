@@ -44,4 +44,14 @@ class EventBuilderDirector implements EventBuilderDirectorInterface
 
         return $this->builder->getEvent();
     }
+
+    public function buildWithFormattedFields(string $email, string $systemName, array $fields): CreateEvent
+    {
+        $this->builder->createEvent();
+        $this->builder->addEmail($email);
+        $this->builder->addSystemName($systemName);
+        $this->builder->addFormattedFields($fields);
+
+        return $this->builder->getEvent();
+    }
 }

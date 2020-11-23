@@ -30,5 +30,11 @@ interface EventBuilderInterface
 
     public function addFields(BaseEvent $event): void;
 
+    public function addEmail(string $email): void;
+
+    public function addFormattedFields(array $fields): void;
+
+    public function addSystemName(string $name): void;
+
     public function getEvent(): CreateEvent;
 }

@@ -143,6 +143,17 @@ class Event implements ResourceInterface, TimestampableInterface
         }
     }
 
+    public function getFieldBySystemName(string $systemName): ?EventField
+    {
+        $field = $this->fields->filter(
+            function (EventField $eventField) use ($systemName) {
+                return $eventField->getSystemName() === $systemName;
+            }
+        )->first();
+
+        return $field ?: null;
+    }
+
     public function getChannel(): ?ChannelInterface
     {
         return $this->channel;

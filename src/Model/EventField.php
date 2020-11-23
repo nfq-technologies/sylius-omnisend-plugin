@@ -23,15 +23,23 @@ use Sylius\Component\Resource\Model\ResourceInterface;
 
 class EventField implements ResourceInterface
 {
+    public const TYPE_INT = 'int';
+    public const TYPE_FLOAT = 'float';
+    public const TYPE_BOOL = 'bool';
+    public const TYPE_STRING = 'string';
+    public const TYPE_EMAIL = 'email';
+    public const TYPE_URL = 'url';
+    public const TYPE_DATE = 'date';
+    public const TYPE_DATETIME = 'dateTime';
     public const TYPES = [
-        'int',
-        'float',
-        'bool',
-        'string',
-        'email',
-        'url',
-        'date',
-        'dateTime',
+        self::TYPE_INT,
+        self::TYPE_FLOAT,
+        self::TYPE_BOOL,
+        self::TYPE_STRING,
+        self::TYPE_EMAIL,
+        self::TYPE_URL,
+        self::TYPE_DATE,
+        self::TYPE_DATETIME,
     ];
 
     /** @var int */

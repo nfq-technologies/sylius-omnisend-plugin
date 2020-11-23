@@ -25,4 +25,6 @@ use NFQ\SyliusOmnisendPlugin\Model\Event as BaseEvent;
 interface EventBuilderDirectorInterface
 {
     public function build(BaseEvent $event): CreateEvent;
+
+    public function buildWithFormattedFields(string $email, string $systemName, array $fields): CreateEvent;
 }

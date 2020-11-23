@@ -19,6 +19,8 @@ declare(strict_types=1);
 
 namespace NFQ\SyliusOmnisendPlugin\EventSubscriber;
 
+use NFQ\SyliusOmnisendPlugin\Event\CustomEvent;
+use NFQ\SyliusOmnisendPlugin\Message\Command\PushCustomEvent;
 use NFQ\SyliusOmnisendPlugin\Message\Command\UpdateEvent;
 use NFQ\SyliusOmnisendPlugin\Model\Event;
 use Sylius\Bundle\ResourceBundle\Event\ResourceControllerEvent;
@@ -42,6 +44,7 @@ class EventSubscriber implements EventSubscriberInterface
         return [
             'nfq_sylius_omnisend_plugin.event.post_update' => 'onEventChange',
             'nfq_sylius_omnisend_plugin.event.post_create' => 'onEventChange',
+            CustomEvent::class => 'onCustomEventCreate',
         ];
     }
 
@@ -55,6 +58,20 @@ class EventSubscriber implements EventSubscriberInterface
                 new UpdateEvent(
                     $trackingEvent->getSystemName(),
                     $trackingEvent->getChannel()->getCode()
+                )
+            )
+        );
+    }
+
+    public function onCustomEventCreate(CustomEvent $event): void
+    {
+        $this->messageBus->dispatch(
+            new Envelope(
+                new PushCustomEvent(
+                    $event->getEmail(),
+                    $event->getSystemName(),
+                    $event->getFields(),
+                    $event->getChannelCode()
                 )
             )
         );

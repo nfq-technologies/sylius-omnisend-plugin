@@ -38,6 +38,17 @@ services:
       - '@sylius.repository.channel'
     tags: [ messenger.message_handler ]
 
+  nfq_sylius_omnisend_plugin.message.handler.push_custom_event:
+    class: NFQ\SyliusOmnisendPlugin\Message\Handler\PushCustomEventHandler
+    arguments:
+      - '@nfq_sylius_omnisend_plugin.repository.event'
+      - '@nfq_sylius_omnisend_plugin.builder.request.event_director'
+      - '@nfq_sylius_omnisend_plugin.client.omnisend'
+      - '@validator'
+    tags: [ messenger.message_handler ]
+    calls:
+      - ['setLogger', ['@monolog.logger']]
+
   nfq_sylius_omnisend_plugin.message.handler.create_category:
     class: NFQ\SyliusOmnisendPlugin\Message\Handler\CreateCategoryHandler
     arguments:

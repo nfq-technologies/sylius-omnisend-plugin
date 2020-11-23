@@ -3,3 +3,10 @@ services:
     class: NFQ\SyliusOmnisendPlugin\Validator\Constraints\UniqueEventFieldValidator
     tags:
       - validator.constraint_validator
+
+  nfq_sylius_omnisend_plugin.validator.custom_event_fields:
+    class: NFQ\SyliusOmnisendPlugin\Validator\Constraints\CustomEventFieldsValidator
+    arguments:
+      - "@nfq_sylius_omnisend_plugin.repository.event"
+    tags:
+      - validator.constraint_validator
