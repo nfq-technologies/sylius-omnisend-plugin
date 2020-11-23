@@ -40,7 +40,7 @@ class Event implements ResourceInterface, TimestampableInterface
     private $name;
 
     /** @var string|null */
-    private $code;
+    private $systemName;
 
     /** @var bool */
     private $enabled;
@@ -59,6 +59,11 @@ class Event implements ResourceInterface, TimestampableInterface
     public function getId()
     {
         return $this->id;
+    }
+
+    public function setId(int $id)
+    {
+        return $this->id = $id;
     }
 
     public function getEventID(): ?string
@@ -81,14 +86,14 @@ class Event implements ResourceInterface, TimestampableInterface
         $this->name = $name;
     }
 
-    public function getCode(): ?string
+    public function getSystemName(): ?string
     {
-        return $this->code;
+        return $this->systemName;
     }
 
-    public function setCode(string $code): void
+    public function setSystemName(string $systemName): void
     {
-        $this->code = $code;
+        $this->systemName = $systemName;
     }
 
     public function isEnabled(): ?bool
@@ -119,6 +124,13 @@ class Event implements ResourceInterface, TimestampableInterface
         }
     }
 
+    public function removeFields(): void
+    {
+        foreach ($this->fields as $field) {
+            $this->removeField($field);
+        }
+    }
+
     public function hasField(EventField $eventField): bool
     {
         return $this->fields->contains($eventField);
@@ -127,7 +139,7 @@ class Event implements ResourceInterface, TimestampableInterface
     public function removeField(EventField $eventField): void
     {
         if ($this->hasField($eventField)) {
-            $this->fields->remove($eventField);
+            $this->fields->removeElement($eventField);
         }
     }
 

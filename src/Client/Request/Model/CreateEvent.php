@@ -19,7 +19,7 @@ declare(strict_types=1);
 
 namespace NFQ\SyliusOmnisendPlugin\Client\Request\Model;
 
-class Event
+class CreateEvent
 {
     /** @var string|null */
     private $name;

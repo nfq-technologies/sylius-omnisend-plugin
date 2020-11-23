@@ -23,7 +23,7 @@ use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Batch;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Cart;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Category;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Contact;
-use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Event;
+use NFQ\SyliusOmnisendPlugin\Client\Request\Model\CreateEvent;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Order;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Product;
 use NFQ\SyliusOmnisendPlugin\Client\Response\Model\BatchSuccess;
@@ -34,6 +34,7 @@ use NFQ\SyliusOmnisendPlugin\Client\Response\Model\EventSuccess;
 use NFQ\SyliusOmnisendPlugin\Client\Response\Model\OrderSuccess;
 use NFQ\SyliusOmnisendPlugin\Client\Response\Model\ProductSuccess;
 use NFQ\SyliusOmnisendPlugin\HttpClient\ClientFactoryInterface;
+use NFQ\SyliusOmnisendPlugin\Model\Event;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerAwareInterface;
@@ -282,7 +283,7 @@ class OmnisendClient implements LoggerAwareInterface, OmnisendClientInterface
         return $this->parseResponse($response, BatchSuccess::class);
     }
 
-    public function postEvent(Event $event, ?string $channelCode): ?object
+    public function postEvent(CreateEvent $event, ?string $channelCode): ?object
     {
         $response = $this->sendRequest(
             $this->messageFactory->create(
@@ -294,6 +295,19 @@ class OmnisendClient implements LoggerAwareInterface, OmnisendClientInterface
         );
 
         return $this->parseResponse($response, EventSuccess::class);
+    }
+
+    public function getEvents(?string $channelCode): ?array
+    {
+        $response = $this->sendRequest(
+            $this->messageFactory->create(
+                'GET',
+                self::API_VERSION . self::URL_PATH_EVENTS,
+            ),
+            $channelCode
+        );
+
+        return $this->parseResponse($response, Event::class . '[]');
     }
 
     public function patchContact(string $contactId, Contact $contact, ?string $channelCode): void

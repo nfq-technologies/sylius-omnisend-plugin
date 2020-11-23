@@ -19,7 +19,7 @@ declare(strict_types=1);
 
 namespace NFQ\SyliusOmnisendPlugin\Builder\Request;
 
-use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Event;
+use NFQ\SyliusOmnisendPlugin\Client\Request\Model\CreateEvent;
 use NFQ\SyliusOmnisendPlugin\Model\Event as BaseEvent;
 
 interface EventBuilderInterface
@@ -30,5 +30,5 @@ interface EventBuilderInterface
 
     public function addFields(BaseEvent $event): void;
 
-    public function getEvent(): Event;
+    public function getEvent(): CreateEvent;
 }

@@ -41,7 +41,7 @@ class EventField implements ResourceInterface
     private $name;
 
     /** @var string */
-    private $code;
+    private $systemName;
 
     /** @var string */
     private $type;
@@ -67,14 +67,14 @@ class EventField implements ResourceInterface
         $this->name = $name;
     }
 
-    public function getCode(): ?string
+    public function getSystemName(): ?string
     {
-        return $this->code;
+        return $this->systemName;
     }
 
-    public function setCode(string $code): void
+    public function setSystemName(string $systemName): void
     {
-        $this->code = $code;
+        $this->systemName = $systemName;
     }
 
     public function isRequired(): ?bool

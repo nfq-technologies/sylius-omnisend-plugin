@@ -84,8 +84,8 @@ class UniqueEventFieldValidatorTest extends TestCase
     {
         $productAttribute1 = new EventField();
         $productAttribute2 = new EventField();
-        $productAttribute1->setCode('test1');
-        $productAttribute2->setCode('test2');
+        $productAttribute1->setSystemName('test1');
+        $productAttribute2->setSystemName('test2');
 
         return [
             'empty list' => [
@@ -101,7 +101,7 @@ class UniqueEventFieldValidatorTest extends TestCase
                     $productAttribute1,
                     $productAttribute1,
                 ],
-                ['[1].code'],
+                ['[1].systemName'],
             ],
             'different attributes' => [
                 [
@@ -117,8 +117,8 @@ class UniqueEventFieldValidatorTest extends TestCase
                     $productAttribute2,
                 ],
                 [
-                    '[1].code',
-                    '[2].code',
+                    '[1].systemName',
+                    '[2].systemName',
                 ],
             ],
             'different groups display different duplicated errors' => [
@@ -130,9 +130,9 @@ class UniqueEventFieldValidatorTest extends TestCase
                     $productAttribute1,
                 ],
                 [
-                    '[1].code',
-                    '[2].code',
-                    '[4].code',
+                    '[1].systemName',
+                    '[2].systemName',
+                    '[4].systemName',
                 ],
             ],
         ];

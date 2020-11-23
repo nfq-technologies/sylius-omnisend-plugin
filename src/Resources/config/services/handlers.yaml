@@ -29,6 +29,15 @@ services:
       - '@nfq_sylius_omnisend_plugin.client.omnisend'
     tags: [ messenger.message_handler ]
 
+  nfq_sylius_omnisend_plugin.message.handler.sync_events:
+    class: NFQ\SyliusOmnisendPlugin\Message\Handler\SyncEventsHandler
+    arguments:
+      - '@nfq_sylius_omnisend_plugin.repository.event'
+      - '@doctrine.orm.entity_manager'
+      - '@nfq_sylius_omnisend_plugin.client.omnisend'
+      - '@sylius.repository.channel'
+    tags: [ messenger.message_handler ]
+
   nfq_sylius_omnisend_plugin.message.handler.create_category:
     class: NFQ\SyliusOmnisendPlugin\Message\Handler\CreateCategoryHandler
     arguments:

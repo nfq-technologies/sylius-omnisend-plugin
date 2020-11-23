@@ -36,6 +36,9 @@ winzou_state_machine:
           priority: 255
 
 sylius_grid:
+  templates:
+    action:
+      nfq_sylius_omnisend_sync_events: "@NFQSyliusOmnisendPlugin/Event/Admin/_sync.html.twig"
   grids:
     nfq_sylius_omnisend_event:
       driver:
@@ -51,7 +54,7 @@ sylius_grid:
         name:
           type: string
           label: nfq_sylius_omnisend_plugin.ui.event.name
-        code:
+        systemName:
           type: string
           label: nfq_sylius_omnisend_plugin.ui.event.system_name
         enabled:
@@ -63,6 +66,12 @@ sylius_grid:
         main:
           create:
             type: create
+          sync:
+            type: nfq_sylius_omnisend_sync_events
+            label: nfq_sylius_omnisend_plugin.ui.sync_events
+            options:
+              link:
+                route: nfq_sylius_omnisend_sync_events_action
         item:
           update:
             type: update
@@ -71,7 +80,7 @@ sylius_grid:
       filters:
         name:
           type: string
-        code:
+        systemName:
           type: string
         enabled:
           type: boolean

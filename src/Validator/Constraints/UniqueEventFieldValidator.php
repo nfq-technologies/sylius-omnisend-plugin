@@ -38,7 +38,7 @@ class UniqueEventFieldValidator extends ConstraintValidator
 
         /** @var EventField $field */
         foreach ($value as $field) {
-            $code = $field->getCode();
+            $code = $field->getSystemName();
 
             if (isset($codes[$code])) {
                 $this->context

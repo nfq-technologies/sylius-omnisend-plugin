@@ -19,7 +19,7 @@ declare(strict_types=1);
 
 namespace NFQ\SyliusOmnisendPlugin\Builder\Request;
 
-use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Event;
+use NFQ\SyliusOmnisendPlugin\Client\Request\Model\CreateEvent;
 use NFQ\SyliusOmnisendPlugin\Mapper\EventFieldTypeDefaultValueMapper;
 use NFQ\SyliusOmnisendPlugin\Model\Event as BaseEvent;
 use NFQ\SyliusOmnisendPlugin\Model\EventField;
@@ -28,17 +28,17 @@ class EventBuilder implements EventBuilderInterface
 {
     const DEFAULT_EMAIL = 'sylius@example.com';
 
-    /** @var Event */
+    /** @var CreateEvent */
     private $event;
 
     public function createEvent(): void
     {
-        $this->event = new Event();
+        $this->event = new CreateEvent();
     }
 
     public function addMainData(BaseEvent $event): void
     {
-        $this->event->setSystemName($event->getCode());
+        $this->event->setSystemName($event->getSystemName());
         $this->event->setName($event->getName());
         $this->event->setEmail(self::DEFAULT_EMAIL);
     }
@@ -52,14 +52,14 @@ class EventBuilder implements EventBuilderInterface
             $value = EventFieldTypeDefaultValueMapper::map($field->getType());
 
             if ($value) {
-                $fields[$field->getCode()] = $value;
+                $fields[$field->getSystemName()] = $value;
             }
         }
 
         $this->event->setFields($fields);
     }
 
-    public function getEvent(): Event
+    public function getEvent(): CreateEvent
     {
         return $this->event;
     }

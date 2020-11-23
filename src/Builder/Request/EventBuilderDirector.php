@@ -19,7 +19,7 @@ declare(strict_types=1);
 
 namespace NFQ\SyliusOmnisendPlugin\Builder\Request;
 
-use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Event;
+use NFQ\SyliusOmnisendPlugin\Client\Request\Model\CreateEvent;
 use NFQ\SyliusOmnisendPlugin\Model\Event as BaseEvent;
 
 class EventBuilderDirector implements EventBuilderDirectorInterface
@@ -36,7 +36,7 @@ class EventBuilderDirector implements EventBuilderDirectorInterface
         $this->builder = $builder;
     }
 
-    public function build(BaseEvent $event): Event
+    public function build(BaseEvent $event): CreateEvent
     {
         $this->builder->createEvent();
         $this->builder->addMainData($event);

@@ -5,6 +5,9 @@ nfq_sylius_omnisend_plugin:
     events: Omnisend events
     new_event: New event
     edit_event: Update event
+    sync_events: Sync events from Omnisend
+    syncs_started: Events sync initiated
+    syncs_failed: Failed to initiate events sync
     event:
       event_id: Event Id
       name: Name

@@ -17,12 +17,15 @@
 
 declare(strict_types=1);
 
-namespace NFQ\SyliusOmnisendPlugin\Builder\Request;
+namespace NFQ\SyliusOmnisendPlugin\Message\Command;
 
-use NFQ\SyliusOmnisendPlugin\Client\Request\Model\CreateEvent;
-use NFQ\SyliusOmnisendPlugin\Model\Event as BaseEvent;
-
-interface EventBuilderDirectorInterface
+class SyncEvents implements CommandInterface
 {
-    public function build(BaseEvent $event): CreateEvent;
+    use CommandTrait;
+
+    public function __construct(?string $channelCode)
+    {
+        $this->channelCode = $channelCode;
+    }
 }
+
