@@ -25,6 +25,7 @@ use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Batch;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Cart;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Category;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Contact;
+use NFQ\SyliusOmnisendPlugin\Client\Request\Model\CreateEvent;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Order;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Product;
 use NFQ\SyliusOmnisendPlugin\Client\Response\Model\BatchSuccess;
@@ -152,5 +153,13 @@ class OmnisendClientMock implements OmnisendClientInterface
         $this->client->deleteProduct($orderId, $channelCode);
 
         return (new ProductSuccess())->setProductID('1111');
+    }
+
+    public function postEvent(CreateEvent $event, ?string $channelCode): ?object
+    {
+    }
+
+    public function getEvents(?string $channelCode): ?array
+    {
     }
 }

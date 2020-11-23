@@ -30,28 +30,16 @@ class UniqueEventFieldValidatorTest extends TestCase
         setUp as setUpValidatorMock;
     }
 
-    /**
-     * @var UniqueEventFieldValidator
-     */
+    /** @var UniqueEventFieldValidator */
     private $validator;
 
-    /**
-     * This method is called before each test.
-     */
     protected function setUp(): void
     {
         $this->setUpValidatorMock();
         $this->validator = new UniqueEventFieldValidator();
     }
 
-    /**
-     * @dataProvider data
-     *
-     * @param array $field
-     * @param array $errorPath
-     *
-     * @return void
-     */
+    /** @dataProvider data */
     public function testIfValidatesUniqueParams(array $field, array $errorPath)
     {
         if (count($errorPath)) {
@@ -77,9 +65,6 @@ class UniqueEventFieldValidatorTest extends TestCase
         $this->validator->validate($field, new UniqueEventField());
     }
 
-    /**
-     * @return array
-     */
     public function data(): array
     {
         $productAttribute1 = new EventField();

@@ -79,8 +79,6 @@ class CustomEventFieldsValidator extends ConstraintValidator
                         ->addViolation();
                 }
             } else {
-                var_export($field->getSystemName());
-                var_export($field->getType());
                 $this->context
                     ->buildViolation(CustomEventFields::INVALID_FIELD_TYPE)
                     ->setParameter('%field%', $fieldName)
