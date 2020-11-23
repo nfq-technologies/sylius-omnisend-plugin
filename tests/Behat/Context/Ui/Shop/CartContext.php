@@ -45,7 +45,7 @@ class CartContext implements Context
         /** @var OrderInterface $cart */
         $cart = $this->getLatestCart();
         $this->entityManager->refresh($cart);
-        Assert::notNull($cart->getOmnisendOrderDetails()->getCartId()());
+        Assert::notNull($cart->getOmnisendOrderDetails()->getCartId());
     }
 
     /** @Then Cart should not be synced with Omnisend */
@@ -54,7 +54,7 @@ class CartContext implements Context
         /** @var OrderInterface $cart */
         $cart = $this->getLatestCart();
         $this->entityManager->refresh($cart);
-        Assert::null($cart->getOmnisendOrderDetails()->getCartId()());
+        Assert::null($cart->getOmnisendOrderDetails()->getCartId());
     }
 
     private function getLatestCart()
