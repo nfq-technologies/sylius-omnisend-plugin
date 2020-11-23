@@ -28,7 +28,10 @@ use NFQ\SyliusOmnisendPlugin\Resolver\ProductVariantStockResolverInterface;
 use NFQ\SyliusOmnisendPlugin\Utils\DatetimeHelper;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\ProductInterface;
+use Sylius\Component\Core\Model\ProductVariant;
+use Sylius\Component\Core\Model\ProductVariantInterface;
 use Sylius\Component\Core\Model\TaxonInterface;
+use Sylius\Component\Currency\Model\CurrencyInterface;
 
 class ProductBuilder implements ProductBuilderInterface
 {
@@ -83,6 +86,7 @@ class ProductBuilder implements ProductBuilderInterface
     {
         $variants = [];
 
+        /** @var ProductVariant $variant */
         foreach ($product->getEnabledVariants() as $variant) {
             $variants[] = $this->productVariantFactory->create($variant, $channel, $localeCode);
         }
@@ -92,8 +96,10 @@ class ProductBuilder implements ProductBuilderInterface
 
     public function addContentData(ProductInterface $product, ChannelInterface $channel, ?string $localeCode = null): void
     {
+        /** @var CurrencyInterface|null $currency */
+        $currency = $channel->getBaseCurrency();
         $this->product->setProductID($product->getCode());
-        $this->product->setCurrency($channel->getBaseCurrency()->getCode());
+        $this->product->setCurrency(null !== $currency ? $currency->getCode() : null);
 
         $translation = $product->getTranslation($localeCode);
 
@@ -102,7 +108,7 @@ class ProductBuilder implements ProductBuilderInterface
         $this->product->setDescription($translation->getDescription());
         $this->product->setCategoryIDs(
             array_map(
-                function (TaxonInterface $productTaxon): string {
+                function (TaxonInterface $productTaxon): ?string {
                     return $productTaxon->getCode();
                 },
                 $product->getTaxons()->toArray()
@@ -129,6 +135,7 @@ class ProductBuilder implements ProductBuilderInterface
             return;
         }
 
+        /** @var ProductVariantInterface $variant */
         foreach ($product->getEnabledVariants() as $variant) {
             $status = $this->productVariantStockResolver->resolve($variant);
 

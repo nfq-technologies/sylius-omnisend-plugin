@@ -27,8 +27,6 @@ use Sylius\Component\Core\Repository\OrderRepositoryInterface;
 
 class DeleteCartHandler
 {
-    use LoggerAwareTrait;
-
     /** @var OmnisendClientInterface */
     private $omnisendClient;
 
@@ -40,6 +38,9 @@ class DeleteCartHandler
 
     public function __invoke(DeleteCart $message): void
     {
-        $this->omnisendClient->deleteCart($message->getOmnisendCartId(), $message->getChannelCode());
+        $this->omnisendClient->deleteCart(
+            $message->getOmnisendCartId(),
+            $message->getChannelCode()
+        );
     }
 }

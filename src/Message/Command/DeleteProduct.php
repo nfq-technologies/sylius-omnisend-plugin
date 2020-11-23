@@ -23,16 +23,16 @@ class DeleteProduct implements CommandInterface
 {
     use CommandTrait;
 
-    /** @var string */
+    /** @var string|null */
     private $productCode;
 
-    public function __construct(string $productCode, string $channelCode)
+    public function __construct(?string $productCode, ?string $channelCode)
     {
         $this->productCode = $productCode;
         $this->channelCode = $channelCode;
     }
 
-    public function getProductCode(): string
+    public function getProductCode(): ?string
     {
         return $this->productCode;
     }

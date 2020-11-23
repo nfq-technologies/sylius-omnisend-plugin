@@ -21,6 +21,7 @@ namespace Tests\NFQ\SyliusOmnisendPlugin\Factory\Request;
 
 use NFQ\SyliusOmnisendPlugin\Builder\Request\Constants\ProductStatus;
 use NFQ\SyliusOmnisendPlugin\Factory\Request\ProductVariantFactory;
+use NFQ\SyliusOmnisendPlugin\Resolver\ProductAdditionalDataResolverInterface;
 use NFQ\SyliusOmnisendPlugin\Resolver\ProductUrlResolverInterface;
 use NFQ\SyliusOmnisendPlugin\Resolver\ProductVariantStockResolverInterface;
 use PHPUnit\Framework\TestCase;
@@ -45,16 +46,21 @@ class ProductVariantFactoryTest extends TestCase
     /** @var ProductVariantPricesCalculatorInterface */
     private $productVariantPricesCalculator;
 
+    /** @var ProductAdditionalDataResolverInterface */
+    private $productAdditionalDataResolver;
+
     protected function setUp(): void
     {
         $this->productUrlResolver = $this->createMock(ProductUrlResolverInterface::class);
         $this->productStockResolver = $this->createMock(ProductVariantStockResolverInterface::class);
         $this->productVariantPricesCalculator = $this->createMock(ProductVariantPricesCalculatorInterface::class);
+        $this->productAdditionalDataResolver = $this->createMock(ProductAdditionalDataResolverInterface::class);
 
         $this->factory = new ProductVariantFactory(
             $this->productUrlResolver,
             $this->productStockResolver,
-            $this->productVariantPricesCalculator
+            $this->productVariantPricesCalculator,
+            $this->productAdditionalDataResolver
         );
     }
 

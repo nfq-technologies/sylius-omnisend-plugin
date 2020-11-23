@@ -19,6 +19,8 @@ declare(strict_types=1);
 
 namespace NFQ\SyliusOmnisendPlugin\Model;
 
-interface ProductInterface extends PushedToOmnisendAwareInterface
+use Sylius\Component\Core\Model\ProductInterface as BaseProductInterface;
+
+interface ProductInterface extends BaseProductInterface, PushedToOmnisendAwareInterface
 {
 }

@@ -22,6 +22,7 @@ namespace NFQ\SyliusOmnisendPlugin\Factory\Request;
 use Liip\ImagineBundle\Imagine\Cache\CacheManager;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\ProductImage;
 use Sylius\Component\Core\Model\ProductImageInterface;
+use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Core\Model\ProductVariantInterface;
 
 class ProductImageFactory implements ProductImageFactoryInterface
@@ -40,17 +41,19 @@ class ProductImageFactory implements ProductImageFactoryInterface
         $this->imageFilter = $imageFilter;
     }
 
-    public function create(ProductImageInterface $productImage, bool $default = false)
+    public function create(ProductImageInterface $productImage, bool $default = false): ProductImage
     {
-        $variants = $productImage->getProductVariants()->count() === 0 ? $productImage->getOwner()->getEnabledVariants() : $productImage->getProductVariants();
+        /** @var ProductInterface $product */
+        $product = $productImage->getOwner();
+        $variants = $productImage->getProductVariants()->count() === 0 ? $product->getEnabledVariants() : $productImage->getProductVariants();
 
         return (new ProductImage())
             ->setImageID((string)$productImage->getId())
             ->setIsDefault($default)
-            ->setUrl($this->cache->generateUrl($productImage->getPath(), $this->imageFilter))
+            ->setUrl(null !== $productImage->getPath() ? $this->cache->generateUrl($productImage->getPath(), $this->imageFilter) : null)
             ->setVariantIDs(
                 array_map(
-                    function (ProductVariantInterface $productVariant): string {
+                    function (ProductVariantInterface $productVariant): ?string {
                         return $productVariant->getCode();
                     },
                     $variants->toArray()

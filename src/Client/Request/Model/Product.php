@@ -24,7 +24,7 @@ class Product
     /** @var string|null */
     private $productID;
 
-    /** @var string */
+    /** @var string|null */
     private $title;
 
     /** @var string */
@@ -33,7 +33,7 @@ class Product
     /** @var string|null */
     private $description;
 
-    /** @var string */
+    /** @var string|null */
     private $currency;
 
     /** @var string|null */
@@ -57,10 +57,10 @@ class Product
     /** @var array|string[]|null */
     private $categoryIDs;
 
-    /** @var array|ProductImage[] */
+    /** @var array|ProductImage[]|null */
     private $images;
 
-    /** @var array|ProductImage[] */
+    /** @var array|ProductVariant[]|null */
     private $variants;
 
     public function getProductID(): ?string
@@ -75,12 +75,12 @@ class Product
         return $this;
     }
 
-    public function getTitle(): string
+    public function getTitle(): ?string
     {
         return $this->title;
     }
 
-    public function setTitle(string $title): self
+    public function setTitle(?string $title): self
     {
         $this->title = $title;
 
@@ -111,12 +111,12 @@ class Product
         return $this;
     }
 
-    public function getCurrency(): string
+    public function getCurrency(): ?string
     {
         return $this->currency;
     }
 
-    public function setCurrency(string $currency): self
+    public function setCurrency(?string $currency): self
     {
         $this->currency = $currency;
 
@@ -183,48 +183,48 @@ class Product
         return $this;
     }
 
-    public function getTags()
+    public function getTags(): ?array
     {
         return $this->tags;
     }
 
-    public function setTags($tags): self
+    public function setTags(?array $tags): self
     {
         $this->tags = $tags;
 
         return $this;
     }
 
-    public function getCategoryIDs()
+    public function getCategoryIDs(): ?array
     {
         return $this->categoryIDs;
     }
 
-    public function setCategoryIDs($categoryIDs): self
+    public function setCategoryIDs(?array $categoryIDs): self
     {
         $this->categoryIDs = $categoryIDs;
 
         return $this;
     }
 
-    public function getImages()
+    public function getImages(): ?array
     {
         return $this->images;
     }
 
-    public function setImages($images): self
+    public function setImages(?array $images): self
     {
         $this->images = $images;
 
         return $this;
     }
 
-    public function getVariants()
+    public function getVariants(): ?array
     {
         return $this->variants;
     }
 
-    public function setVariants($variants): self
+    public function setVariants(?array $variants): self
     {
         $this->variants = $variants;
 

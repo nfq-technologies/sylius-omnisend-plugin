@@ -56,12 +56,12 @@ class UpdateProductHandler
 
     public function __invoke(UpdateProduct $message): void
     {
-        /** @var ProductInterface $product */
+        /** @var ProductInterface|null $product */
         $product = $this->productRepository->find($message->getProductId());
 
         if (null !== $product) {
             /** @var ChannelInterface $channel */
-            $channel = $this->channelRepository->findOneByCode($message->getChannelCode());
+            $channel = $this->channelRepository->findOneBy(['code' => $message->getChannelCode()]);
             if ($product->isPushedToOmnisend()) {
                 $response = $this->omnisendClient->putProduct(
                     $this->productBuilderDirector->build($product, $channel, $message->getLocaleCode()),

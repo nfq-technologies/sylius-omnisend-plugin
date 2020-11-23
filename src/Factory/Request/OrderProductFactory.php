@@ -24,8 +24,11 @@ use NFQ\SyliusOmnisendPlugin\Resolver\ProductAdditionalDataResolverInterface;
 use NFQ\SyliusOmnisendPlugin\Resolver\ProductImageResolverInterface;
 use NFQ\SyliusOmnisendPlugin\Resolver\ProductUrlResolverInterface;
 use Sylius\Component\Core\Model\AdjustmentInterface;
+use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\OrderItemInterface;
+use Sylius\Component\Core\Model\Product;
 use Sylius\Component\Core\Model\ProductInterface;
+use Sylius\Component\Core\Model\ProductVariant;
 use Sylius\Component\Core\Model\TaxonInterface;
 
 class OrderProductFactory implements OrderProductFactoryInterface
@@ -52,18 +55,22 @@ class OrderProductFactory implements OrderProductFactoryInterface
     public function create(OrderItemInterface $orderItem): OrderProduct
     {
         $cartItem = new OrderProduct();
-        $localeCode = $orderItem->getOrder()->getLocaleCode();
+        /** @var OrderInterface $order */
+        $order = $orderItem->getOrder();
+        $localeCode = $order->getLocaleCode();
+        /** @var ProductVariant $variant */
+        $variant = $orderItem->getVariant();
         /** @var ProductInterface $product */
-        $product = $orderItem->getVariant()->getProduct();
+        $product = $variant->getProduct();
 
-        $cartItem->setProductID((string)$orderItem->getVariant()->getProduct()->getId());
-        $cartItem->setSku((string)$orderItem->getVariant()->getProduct()->getCode());
-        $cartItem->setVariantID((string)$orderItem->getVariant()->getCode());
+        $cartItem->setProductID((string)$product->getId());
+        $cartItem->setSku((string)$product->getCode());
+        $cartItem->setVariantID((string)$variant->getCode());
         $cartItem->setVariantTitle($orderItem->getVariantName());
         $cartItem->setTitle($orderItem->getProductName());
         $cartItem->setQuantity($orderItem->getQuantity());
         $cartItem->setPrice($orderItem->getTotal());
-        $cartItem->setImageUrl($this->productImageResolver->resolve($orderItem->getProduct()));
+        $cartItem->setImageUrl($this->productImageResolver->resolve($product));
         $cartItem->setDiscount($this->getDiscount($orderItem));
         $cartItem->setVendor($this->productAdditionalDataResolver->getVendor($product, $localeCode));
         $cartItem->setTags($this->productAdditionalDataResolver->getTags($product, $localeCode));
@@ -84,10 +91,11 @@ class OrderProductFactory implements OrderProductFactoryInterface
 
     private function getCategoriesIds(OrderItemInterface $orderItem): ?array
     {
+        /** @var Product $product */
         $product = $orderItem->getProduct();
 
         $result =  array_map(
-            function (TaxonInterface $productTaxon): string {
+            function (TaxonInterface $productTaxon): ?string {
                 return $productTaxon->getCode();
             },
             $product->getTaxons()->toArray()

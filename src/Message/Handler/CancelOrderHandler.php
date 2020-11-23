@@ -48,7 +48,7 @@ class CancelOrderHandler
 
     public function __invoke(CancelOrder $message): void
     {
-        /** @var OrderInterface $order */
+        /** @var OrderInterface|null $order */
         $order = $this->orderRepository->find($message->getOrderId());
 
         if (null === $order || null === $order->getOmnisendOrderDetails()->getCartId()) {

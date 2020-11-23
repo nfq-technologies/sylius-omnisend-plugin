@@ -31,6 +31,7 @@ class OrderStateMapper
         OrderInterface::STATE_FULFILLED => OrderFulfillmentStatus::FULFILL
     ];
 
+    /** @var array */
     private $configuredStates;
 
     public function __construct(array $configuredStates = [])

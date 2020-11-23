@@ -17,6 +17,7 @@
 
 namespace NFQ\SyliusOmnisendPlugin\Controller;
 
+use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Repository\OrderRepositoryInterface;
 use Sylius\Component\Core\Storage\CartStorageInterface;
@@ -52,14 +53,16 @@ class CartRecoverAction
         if (null === $cartId) {
             return new RedirectResponse('sylius_shop_homepage');
         }
-        /** @var OrderInterface $cart */
+        /** @var OrderInterface|null $cart */
         $cart = $this->orderRepository->findOneBy(['omnisendCartId' => $cartId]);
 
         if (null === $cart) {
             return new RedirectResponse('sylius_shop_homepage');
         }
+        /** @var ChannelInterface $channel */
+        $channel = $cart->getChannel();
 
-        $this->sessionStorage->setForChannel($cart->getChannel(), $cart);
+        $this->sessionStorage->setForChannel($channel, $cart);
 
         return new RedirectResponse(
             $request->headers->get(

@@ -19,14 +19,12 @@ declare(strict_types=1);
 
 namespace NFQ\SyliusOmnisendPlugin\Client\Request\Model;
 
-use stdClass;
-
 class ProductVariant
 {
-    /** @var string */
+    /** @var string|null */
     private $variantID;
 
-    /** @var string */
+    /** @var string|null */
     private $title;
 
     /** @var string|null */
@@ -47,27 +45,27 @@ class ProductVariant
     /** @var string|null */
     private $imageID;
 
-    /** @var stdClass|null */
+    /** @var array|null */
     private $customFields;
 
-    public function getVariantID(): string
+    public function getVariantID(): ?string
     {
         return $this->variantID;
     }
 
-    public function setVariantID(string $variantID): self
+    public function setVariantID(?string $variantID): self
     {
         $this->variantID = $variantID;
 
         return $this;
     }
 
-    public function getTitle(): string
+    public function getTitle(): ?string
     {
         return $this->title;
     }
 
-    public function setTitle(string $title): self
+    public function setTitle(?string $title): self
     {
         $this->title = $title;
 
@@ -146,12 +144,12 @@ class ProductVariant
         return $this;
     }
 
-    public function getCustomFields(): ?stdClass
+    public function getCustomFields(): ?array
     {
         return $this->customFields;
     }
 
-    public function setCustomFields(?stdClass $customFields): self
+    public function setCustomFields(?array $customFields): self
     {
         $this->customFields = $customFields;
 

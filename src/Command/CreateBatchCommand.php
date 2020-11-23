@@ -70,11 +70,11 @@ class CreateBatchCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $channelCode = $input->getArgument('channelCode');
-        $localeCode = $input->getArgument('localeCode');
-        $type = $input->getArgument('type');
+        $channelCode = (string)$input->getArgument('channelCode');
+        $localeCode = (string)$input->getArgument('localeCode');
+        $type = (string)$input->getArgument('type');
         $batchSize = CreateBatch::DEFAULT_BATCH_SIZE;
-        if (!in_array($type, self::AVAILABLE_TYPES)) {
+        if (!in_array($type, self::AVAILABLE_TYPES, true)) {
             $output->writeln('Invalid type provided');
 
             return 1;

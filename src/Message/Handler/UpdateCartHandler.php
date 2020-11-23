@@ -53,7 +53,7 @@ class UpdateCartHandler
 
     public function __invoke(UpdateCart $message): void
     {
-        /** @var OrderInterface $order */
+        /** @var OrderInterface|null $order */
         $order = $this->orderRepository->find($message->getOrderId());
 
         if (null !== $order) {
@@ -72,13 +72,13 @@ class UpdateCartHandler
         }
     }
 
-    public function handle(OrderInterface $order, ?string $contactId = null)
+    public function handle(OrderInterface $order, ?string $contactId = null): void
     {
         if (null === $order->getOmnisendOrderDetails()->getCartId()) {
-            /** @var CartSuccess $response */
+            /** @var CartSuccess|null $response */
             $response = $this->omnisendClient->postCart(
                 $this->cartBuilderDirector->build($order, $contactId),
-                $order->getChannel()->getCode()
+                null !== $order->getChannel() ? $order->getChannel()->getCode() : null
             );
 
             if (null !== $response) {
@@ -89,7 +89,7 @@ class UpdateCartHandler
         } else {
             $this->omnisendClient->patchCart(
                 $this->cartBuilderDirector->build($order, $contactId),
-                $order->getChannel()->getCode()
+                null !== $order->getChannel() ? $order->getChannel()->getCode() : null
             );
         }
     }

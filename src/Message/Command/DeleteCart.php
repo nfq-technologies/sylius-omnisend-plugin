@@ -23,15 +23,15 @@ class DeleteCart implements CommandInterface
 {
     use CommandTrait;
 
-    /** @var int|null */
+    /** @var string */
     private $omnisendCartId;
 
-    public function getOmnisendCartId(): ?string
+    public function getOmnisendCartId(): string
     {
         return $this->omnisendCartId;
     }
 
-    public function setOmnisendCartId(?string $omnisendCartId): self
+    public function setOmnisendCartId(string $omnisendCartId): self
     {
         $this->omnisendCartId = $omnisendCartId;
 

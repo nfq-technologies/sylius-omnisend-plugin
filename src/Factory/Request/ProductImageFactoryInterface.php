@@ -19,9 +19,10 @@ declare(strict_types=1);
 
 namespace NFQ\SyliusOmnisendPlugin\Factory\Request;
 
+use NFQ\SyliusOmnisendPlugin\Client\Request\Model\ProductImage;
 use Sylius\Component\Core\Model\ProductImageInterface;
 
 interface ProductImageFactoryInterface
 {
-    public function create(ProductImageInterface $productImage, bool $default = false);
+    public function create(ProductImageInterface $productImage, bool $default = false): ProductImage;
 }

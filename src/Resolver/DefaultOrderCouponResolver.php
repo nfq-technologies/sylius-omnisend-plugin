@@ -39,7 +39,7 @@ class DefaultOrderCouponResolver implements OrderCouponResolverInterface
 
             if ($total > 0) {
                 return new OrderCoupon(
-                    $order->getPromotionCoupon()->getCode(),
+                    $coupon->getCode(),
                     self::DEFAULT_TYPE,
                     $total
                 );

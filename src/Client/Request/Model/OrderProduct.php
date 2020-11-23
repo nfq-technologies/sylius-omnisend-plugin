@@ -212,7 +212,7 @@ class OrderProduct
         return $this->tags;
     }
 
-    public function setTags($tags): self
+    public function setTags(?array $tags): self
     {
         $this->tags = $tags;
 
@@ -224,7 +224,7 @@ class OrderProduct
         return $this->categoryIDs;
     }
 
-    public function setCategoryIDs($categoryIDs): self
+    public function setCategoryIDs(?array $categoryIDs): self
     {
         $this->categoryIDs = $categoryIDs;
 

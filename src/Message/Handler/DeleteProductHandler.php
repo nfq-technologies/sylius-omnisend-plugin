@@ -45,6 +45,11 @@ class DeleteProductHandler implements MessageHandlerInterface
 
     public function __invoke(DeleteProduct $message): void
     {
-        $this->omnisendClient->deleteProduct($message->getProductCode(), $message->getChannelCode());
+        if (null !== $message->getProductCode()) {
+            $this->omnisendClient->deleteProduct(
+                $message->getProductCode(),
+                $message->getChannelCode()
+            );
+        }
     }
 }

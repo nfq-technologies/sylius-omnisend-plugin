@@ -56,9 +56,13 @@ class ProductImageResolver implements ProductImageResolverInterface
             /** @var ProductImageInterface $image */
             $image = $images->first();
 
-            return $this->cache->generateUrl($image->getPath(), $this->imageFilter);
+            if (null !== $image->getPath()) {
+                return $this->cache->generateUrl($image->getPath(), $this->imageFilter);
+            }
         } elseif ($image = $product->getImages()->first()) {
-            return $this->cache->generateUrl($image->getPath(), $this->imageFilter);
+            if (null !== $image->getPath()) {
+                return $this->cache->generateUrl($image->getPath(), $this->imageFilter);
+            }
         }
 
         return $this->defaultImage !== null ? $this->defaultImage : null;

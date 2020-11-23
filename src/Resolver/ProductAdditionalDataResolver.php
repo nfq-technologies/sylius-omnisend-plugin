@@ -38,11 +38,15 @@ class ProductAdditionalDataResolver implements ProductAdditionalDataResolverInte
 
         if (isset($this->attributes['tags'])) {
             foreach ($this->attributes['tags'] as $tagAttrKey) {
-                /** @var AttributeValueInterface $attribute */
-                $attribute = $product->getAttributeByCodeAndLocale($tagAttrKey, $localeCode);
+                /** @var AttributeValueInterface|null $attributeValue */
+                $attributeValue = $product->getAttributeByCodeAndLocale($tagAttrKey, $localeCode);
 
-                if (null !== $attribute && $attribute->getAttribute()->getStorageType() === 'text') {
-                    $attributes[$tagAttrKey] = $attribute->getValue();
+                if (
+                    null !== $attributeValue
+                    && null !== $attributeValue->getAttribute()
+                    && $attributeValue->getAttribute()->getStorageType() === 'text'
+                ) {
+                    $attributes[$tagAttrKey] = $attributeValue->getValue();
                 }
             }
         }
@@ -60,17 +64,28 @@ class ProductAdditionalDataResolver implements ProductAdditionalDataResolverInte
         return $this->getAttributeValue('type', $product, $localeCode);
     }
 
-    private function getAttributeValue(string $attributeKey, ProductInterface $product, string $localeCode = null)
-    {
+    private function getAttributeValue(
+        string $attributeKey,
+        ProductInterface $product,
+        string $localeCode = null
+    ): ?string {
         $attributeKeyName = isset($this->attributes[$attributeKey]) ? $this->attributes[$attributeKey] : null;
 
         if (null === $attributeKeyName) {
             return null;
         }
 
-        /** @var AttributeValueInterface $attribute */
+        /** @var AttributeValueInterface|null $attribute */
         $attribute = $product->getAttributeByCodeAndLocale($this->attributes[$attributeKey], $localeCode);
 
-        return $attribute !== null && $attribute->getAttribute()->getStorageType() === 'text' ? $attribute->getValue() : null;
+        if (
+            null !== $attribute
+            && null !== $attribute->getAttribute()
+            && $attribute->getAttribute()->getStorageType() === 'text'
+        ) {
+            return $attribute->getValue();
+        }
+
+        return null;
     }
 }

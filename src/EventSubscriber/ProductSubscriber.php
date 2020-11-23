@@ -23,6 +23,7 @@ use NFQ\SyliusOmnisendPlugin\Message\Command\DeleteProduct;
 use NFQ\SyliusOmnisendPlugin\Message\Command\UpdateProduct;
 use Sylius\Bundle\ResourceBundle\Event\ResourceControllerEvent;
 use Sylius\Component\Channel\Context\ChannelContextInterface;
+use Sylius\Component\Core\Model\Channel;
 use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Locale\Context\LocaleContextInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -63,11 +64,14 @@ class ProductSubscriber implements EventSubscriberInterface
     {
         /** @var ProductInterface $product */
         $product = $event->getSubject();
+        /** @var Channel $channel */
+        $channel = $this->channelContext->getChannel();
+
         $this->messageBus->dispatch(
             new Envelope(
                 new UpdateProduct(
                     $product->getId(),
-                    $this->channelContext->getChannel()->getCode(),
+                    $channel->getCode(),
                     $this->localeContext->getLocaleCode()
                 )
             )
@@ -78,12 +82,14 @@ class ProductSubscriber implements EventSubscriberInterface
     {
         /** @var ProductInterface $product */
         $product = $event->getSubject();
+        /** @var Channel $channel */
+        $channel = $this->channelContext->getChannel();
 
         $this->messageBus->dispatch(
             new Envelope(
                 new DeleteProduct(
                     $product->getCode(),
-                    $this->channelContext->getChannel()->getCode(),
+                    $channel->getCode(),
                 )
             )
         );

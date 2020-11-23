@@ -27,7 +27,7 @@ class BatchHandlerContext implements MessageHandlerInterface
     /** @var iterable|BatchHandlerStrategyInterface[] */
     private $strategies;
 
-    public function __construct($strategies)
+    public function __construct(array $strategies)
     {
         $this->strategies = $strategies;
     }

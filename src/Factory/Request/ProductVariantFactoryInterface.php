@@ -20,9 +20,6 @@ declare(strict_types=1);
 namespace NFQ\SyliusOmnisendPlugin\Factory\Request;
 
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\ProductVariant;
-use NFQ\SyliusOmnisendPlugin\Resolver\ProductUrlResolverInterface;
-use NFQ\SyliusOmnisendPlugin\Resolver\ProductVariantStockResolverInterface;
-use Sylius\Component\Core\Calculator\ProductVariantPricesCalculatorInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\ProductVariantInterface;
 

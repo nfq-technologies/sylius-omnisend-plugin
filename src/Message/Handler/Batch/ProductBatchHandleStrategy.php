@@ -75,7 +75,7 @@ class ProductBatchHandleStrategy implements BatchHandlerStrategyInterface
     public function handle(CreateBatch $message): void
     {
         /** @var ChannelInterface $channel */
-        $channel = $this->channelRepository->findOneByCode($message->getChannelCode());
+        $channel = $this->channelRepository->findOneBy(['code' => $message->getChannelCode()]);
         $this->updateProducts($channel, $message);
         $this->createProducts($channel, $message);
     }
@@ -87,7 +87,7 @@ class ProductBatchHandleStrategy implements BatchHandlerStrategyInterface
         for ($i = 0; $i < ceil($count / $message->getBatchSize()); $i++) {
             /** @var TaxonInterface[] $rawData */
             $rawData = $this->repository->findNotSyncedToOmnisend($i * $message->getBatchSize(), $message->getBatchSize(), $channel);
-            $this->pushData($rawData, $message, $channel, Batch::METHODS_PUT);
+            $this->pushData($rawData, $message, $channel, Batch::METHODS_POST);
         }
     }
 
@@ -102,7 +102,7 @@ class ProductBatchHandleStrategy implements BatchHandlerStrategyInterface
         }
     }
 
-    public function pushData(array $rawData, CreateBatch $message, ChannelInterface $channel, string $method)
+    public function pushData(array $rawData, CreateBatch $message, ChannelInterface $channel, string $method): void
     {
         $resources = [];
 
@@ -113,7 +113,7 @@ class ProductBatchHandleStrategy implements BatchHandlerStrategyInterface
         if (count($resources) > 0) {
             $response = $this->omnisendClient->postBatch(
                 $this->batchFactory->create(
-                    Batch::METHODS_POST,
+                    $method,
                     Batch::ENDPOINTS_PRODUCT,
                     $resources
                 ),

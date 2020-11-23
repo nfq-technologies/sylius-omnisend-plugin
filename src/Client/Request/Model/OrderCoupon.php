@@ -21,33 +21,33 @@ namespace NFQ\SyliusOmnisendPlugin\Client\Request\Model;
 
 class OrderCoupon
 {
-    /** @var string */
+    /** @var string|null */
     private $code;
 
-    /** @var string */
+    /** @var string|null */
     private $type;
 
-    /** @var int */
+    /** @var int|null */
     private $value;
 
-    public function __construct(string $code, string $type, int $value)
+    public function __construct(?string $code, ?string $type, ?int $value)
     {
         $this->code = $code;
         $this->type = $type;
         $this->value = $value;
     }
 
-    public function getCode(): string
+    public function getCode(): ?string
     {
         return $this->code;
     }
 
-    public function getType(): string
+    public function getType(): ?string
     {
         return $this->type;
     }
 
-    public function getValue(): int
+    public function getValue(): ?int
     {
         return $this->value;
     }

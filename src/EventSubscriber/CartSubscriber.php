@@ -21,8 +21,10 @@ namespace NFQ\SyliusOmnisendPlugin\EventSubscriber;
 
 use NFQ\SyliusOmnisendPlugin\Message\Command\DeleteCart;
 use NFQ\SyliusOmnisendPlugin\Message\Command\UpdateCart;
+use NFQ\SyliusOmnisendPlugin\Model\OrderDetails;
 use NFQ\SyliusOmnisendPlugin\Resolver\ContactIdResolverInterface;
 use Sylius\Bundle\ResourceBundle\Event\ResourceControllerEvent;
+use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Order\Context\CartContextInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -65,12 +67,14 @@ class CartSubscriber implements EventSubscriberInterface
     {
         /** @var \NFQ\SyliusOmnisendPlugin\Model\OrderInterface $cart */
         $cart = $this->cartContext->getCart();
+        /** @var ChannelInterface $channel */
+        $channel = $cart->getChannel();
 
         $this->messageBus->dispatch(
             new Envelope(
                 (new UpdateCart())
                     ->setOrderId($cart->getId())
-                    ->setChannelCode($cart->getChannel()->getCode())
+                    ->setChannelCode($channel->getCode())
                     ->setContactId($this->contactIdResolver->resolve($cart))
             )
         );
@@ -78,12 +82,15 @@ class CartSubscriber implements EventSubscriberInterface
 
     public function updateOrder(OrderInterface $order): void
     {
+        /** @var ChannelInterface $channel */
+        $channel = $order->getChannel();
+
         if ($order->getId()) {
             $this->messageBus->dispatch(
                 new Envelope(
                     (new UpdateCart())
                         ->setOrderId($order->getId())
-                        ->setChannelCode($order->getChannel()->getCode())
+                        ->setChannelCode($channel->getCode())
                         ->setContactId($this->contactIdResolver->resolve($order))
                 )
             );
@@ -94,13 +101,15 @@ class CartSubscriber implements EventSubscriberInterface
     {
         /** @var \NFQ\SyliusOmnisendPlugin\Model\OrderInterface $order */
         $order = $event->getSubject();
+        /** @var ChannelInterface $channel */
+        $channel = $order->getChannel();
 
         if ($order->getState() === OrderInterface::STATE_CART) {
             $this->messageBus->dispatch(
                 new Envelope(
                     (new UpdateCart())
                         ->setOrderId($order->getId())
-                        ->setChannelCode($order->getChannel()->getCode())
+                        ->setChannelCode($channel->getCode())
                         ->setContactId($this->contactIdResolver->resolve($order))
                 )
             );
@@ -113,12 +122,17 @@ class CartSubscriber implements EventSubscriberInterface
         $carts = $event->getSubject();
 
         foreach ($carts as $cart) {
-            if ($cart->getOmnisendOrderDetails()->getCartId()) {
+            /** @var ChannelInterface $channel */
+            $channel = $cart->getChannel();
+            /** @var OrderDetails $details */
+            $details = $cart->getOmnisendOrderDetails();
+
+            if (null !== $details->getCartId()) {
                 $this->messageBus->dispatch(
                     new Envelope(
                         (new DeleteCart())
-                            ->setOmnisendCartId($cart->getOmnisendOrderDetails()->getCartId())
-                            ->setChannelCode($cart->getChannel()->getCode())
+                            ->setOmnisendCartId($details->getCartId())
+                            ->setChannelCode($channel->getCode())
                     )
                 );
             }

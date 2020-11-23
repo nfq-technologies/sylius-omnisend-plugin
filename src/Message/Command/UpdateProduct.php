@@ -23,25 +23,25 @@ class UpdateProduct implements CommandInterface
 {
     use CommandTrait;
 
-    /** @var int */
+    /** @var int|null */
     private $productId;
 
-    /** @var string */
+    /** @var string|null */
     private $localeCode;
 
-    public function __construct(int $productId, string $channelCode, string $localeCode)
+    public function __construct(int $productId, ?string $channelCode, ?string $localeCode = null)
     {
         $this->productId = $productId;
         $this->localeCode = $localeCode;
         $this->channelCode = $channelCode;
     }
 
-    public function getProductId(): int
+    public function getProductId(): ?int
     {
         return $this->productId;
     }
 
-    public function getLocaleCode(): string
+    public function getLocaleCode(): ?string
     {
         return $this->localeCode;
     }

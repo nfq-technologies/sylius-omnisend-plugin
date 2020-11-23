@@ -24,6 +24,7 @@ use NFQ\SyliusOmnisendPlugin\Factory\Request\OrderAddressFactoryInterface;
 use NFQ\SyliusOmnisendPlugin\Factory\Request\OrderProductFactoryInterface;
 use NFQ\SyliusOmnisendPlugin\Mapper\OrderPaymentStateMapper;
 use NFQ\SyliusOmnisendPlugin\Mapper\OrderStateMapper;
+use NFQ\SyliusOmnisendPlugin\Model\OrderDetails;
 use NFQ\SyliusOmnisendPlugin\Resolver\OrderCouponResolverInterface;
 use NFQ\SyliusOmnisendPlugin\Utils\DatetimeHelper;
 use NFQ\SyliusOmnisendPlugin\Utils\Order\OrderNumberResolver;
@@ -110,14 +111,22 @@ class OrderBuilder implements OrderBuilderInterface
 
     public function addTrackingData(OrderInterface $order): void
     {
-        $this->order->setTrackingCode($order->getShipments()->last()->getTracking());
+        /** @var ShipmentInterface|null $shipping */
+        $shipping = $order->getShipments()->last();
+
+        if (null !== $shipping) {
+            $this->order->setTrackingCode($shipping->getTracking());
+        }
     }
 
     /** @var \NFQ\SyliusOmnisendPlugin\Model\OrderInterface $order */
     public function addCartData(OrderInterface $order): void
     {
-        $this->order->setCartID($order->getOmnisendOrderDetails()->getCartId());
-        $this->order->setOrderID($order->getOmnisendOrderDetails()->getCartId());
+        /** @var OrderDetails $details */
+        $details = $order->getOmnisendOrderDetails();
+
+        $this->order->setCartID($details->getCartId());
+        $this->order->setOrderID($details->getCartId());
     }
 
     public function addCouponData(OrderInterface $order): void
@@ -134,13 +143,15 @@ class OrderBuilder implements OrderBuilderInterface
     /** @var \NFQ\SyliusOmnisendPlugin\Model\OrderInterface $order */
     public function addOrderData(OrderInterface $order): void
     {
-        /** @var ShipmentInterface $shippingMethod */
+        /** @var ShipmentInterface|null $shipping */
         $shipping = $order->getShipments()->last();
-        /** @var PaymentInterface $paymentMethod */
+        /** @var PaymentInterface|null $payment */
         $payment = $order->getLastPayment();
 
         $this->order->setOrderNumber(OrderNumberResolver::resolve($order->getNumber()));
-        $this->order->setEmail($order->getCustomer()->getEmail());
+        if (null !== $order->getCustomer()) {
+            $this->order->setEmail($order->getCustomer()->getEmail());
+        }
         if (null !== $shipping && null !== $shipping->getMethod()) {
             $this->order->setShippingMethod($shipping->getMethod()->getTranslation($order->getLocaleCode())->getName());
         }

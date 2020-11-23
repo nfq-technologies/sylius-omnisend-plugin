@@ -24,7 +24,7 @@ class ProductImage
     /** @var string */
     private $imageID;
 
-    /** @var string */
+    /** @var string|null */
     private $url;
 
     /** @var bool */
@@ -45,12 +45,12 @@ class ProductImage
         return $this;
     }
 
-    public function getUrl(): string
+    public function getUrl(): ?string
     {
         return $this->url;
     }
 
-    public function setUrl(string $url): self
+    public function setUrl(?string $url): self
     {
         $this->url = $url;
 

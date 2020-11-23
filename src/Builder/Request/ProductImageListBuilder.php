@@ -20,6 +20,7 @@ declare(strict_types=1);
 namespace NFQ\SyliusOmnisendPlugin\Builder\Request;
 
 use NFQ\SyliusOmnisendPlugin\Factory\Request\ProductImageFactoryInterface;
+use Sylius\Component\Core\Model\ProductImageInterface;
 use Sylius\Component\Core\Model\ProductInterface;
 
 class ProductImageListBuilder implements ProductImageListBuilderInterface
@@ -29,7 +30,7 @@ class ProductImageListBuilder implements ProductImageListBuilderInterface
     /** @var ProductImageFactoryInterface */
     private $productImageFactory;
 
-    /** @var string */
+    /** @var string|null */
     private $imageType;
 
     public function __construct(ProductImageFactoryInterface $productImageFactory, ?string $imageType)
@@ -42,8 +43,9 @@ class ProductImageListBuilder implements ProductImageListBuilderInterface
     {
         $count = 0;
         $images = [];
-        $productImages = $this->imageType ? $product->getImagesByType($this->imageType) : $product->getImages();
+        $productImages = null !== $this->imageType ? $product->getImagesByType($this->imageType) : $product->getImages();
 
+        /** @var ProductImageInterface $image */
         foreach ($productImages as $image) {
             if ($count > self::MAX_IMAGE_COUNT) {
                 break;

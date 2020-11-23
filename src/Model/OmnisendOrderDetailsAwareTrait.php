@@ -24,7 +24,7 @@ use Doctrine\ORM\Mapping as ORM;
 trait OmnisendOrderDetailsAwareTrait
 {
     /**
-     * @var string|null
+     * @var OrderDetails
      * @ORM\OneToOne(targetEntity="NFQ\SyliusOmnisendPlugin\Model\OrderDetails", cascade={"all"})
      *
      * @ORM\JoinColumn(name="omnisend_order_details_id", onDelete="CASCADE")
@@ -36,12 +36,12 @@ trait OmnisendOrderDetailsAwareTrait
         $this->omnisendOrderDetails = new OrderDetails();
     }
 
-    public function getOmnisendOrderDetails(): ?OrderDetails
+    public function getOmnisendOrderDetails(): OrderDetails
     {
         return $this->omnisendOrderDetails;
     }
 
-    public function setOmnisendOrderDetails(?OrderDetails $omnisendOrderDetails): void
+    public function setOmnisendOrderDetails(OrderDetails $omnisendOrderDetails): void
     {
         $this->omnisendOrderDetails = $omnisendOrderDetails;
     }
