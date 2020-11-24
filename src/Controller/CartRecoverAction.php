@@ -28,7 +28,7 @@ use Symfony\Component\Routing\RouterInterface;
 class CartRecoverAction
 {
     /** @var CartStorageInterface */
-    private $sessionStorage;
+    private $cartStorage;
 
     /** @var RouterInterface */
     private $router;
@@ -41,7 +41,7 @@ class CartRecoverAction
         RouterInterface $router,
         OrderRepositoryInterface $orderRepository
     ) {
-        $this->sessionStorage = $sessionStorage;
+        $this->cartStorage = $sessionStorage;
         $this->router = $router;
         $this->orderRepository = $orderRepository;
     }
@@ -62,7 +62,7 @@ class CartRecoverAction
         /** @var ChannelInterface $channel */
         $channel = $cart->getChannel();
 
-        $this->sessionStorage->setForChannel($channel, $cart);
+        $this->cartStorage->setForChannel($channel, $cart);
 
         return new RedirectResponse(
             $request->headers->get(
