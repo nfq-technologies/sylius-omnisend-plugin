@@ -36,3 +36,29 @@ default:
 
             filters:
                 tags: "@shop_tracking_scripts"
+
+        contact_registration:
+            contexts:
+                - sylius.behat.context.hook.doctrine_orm
+                - sylius.behat.context.hook.email_spool
+
+                - sylius.behat.context.transform.customer
+                - sylius.behat.context.transform.locale
+                - sylius.behat.context.transform.shared_storage
+                - sylius.behat.context.transform.channel
+
+                - sylius.behat.context.setup.channel
+                - nfq_sylius_omnisend.context.setup.channel
+                - sylius.behat.context.setup.customer
+                - sylius.behat.context.setup.locale
+                - sylius.behat.context.setup.order
+                - sylius.behat.context.setup.shop_security
+                - sylius.behat.context.setup.user
+
+                - sylius.behat.context.ui.email
+                - sylius.behat.context.ui.shop.locale
+                - sylius.behat.context.ui.shop.registration
+                - nfq_sylius_omnisend.context.ui.shop.customer
+
+            filters:
+                tags: "@contact_registration && @ui"

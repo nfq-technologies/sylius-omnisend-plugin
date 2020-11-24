@@ -24,7 +24,7 @@ use NFQ\SyliusOmnisendPlugin\Model\ProductPickerAdditionalDataAwareInterface;
 
 class ProductPickerAdditionalDataAwareMock extends Product implements ProductPickerAdditionalDataAwareInterface
 {
-    public function getOmnisendTags(): array
+    public function getOmnisendTags(): ?array
     {
         return [
             'test1',
@@ -32,7 +32,7 @@ class ProductPickerAdditionalDataAwareMock extends Product implements ProductPic
         ];
     }
 
-    public function getOmnisendVendor(): string
+    public function getOmnisendVendor(): ?string
     {
         return 'vendor';
     }

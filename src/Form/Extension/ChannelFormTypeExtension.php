@@ -28,13 +28,20 @@ class ChannelFormTypeExtension extends AbstractTypeExtension
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder->add(
-            'omnisendTrackingKey',
-            TextType::class,
-            [
-                'label' => 'nfq_sylius_omnisend_plugin.ui.tracking_key',
-            ]
-        );
+        $builder
+            ->add(
+                'omnisendTrackingKey',
+                TextType::class,
+                [
+                    'label' => 'nfq_sylius_omnisend_plugin.ui.tracking_key',
+                ]
+            )->add(
+                'omnisendApiKey',
+                TextType::class,
+                [
+                    'label' => 'nfq_sylius_omnisend_plugin.ui.api_key',
+                ]
+            );
     }
 
     public function getExtendedTypes(): array

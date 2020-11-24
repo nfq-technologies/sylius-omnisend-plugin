@@ -21,7 +21,7 @@ namespace NFQ\SyliusOmnisendPlugin\Model;
 
 interface ProductPickerAdditionalDataAwareInterface
 {
-    public function getOmnisendTags(): array;
+    public function getOmnisendTags(): ?array;
 
-    public function getOmnisendVendor(): string;
+    public function getOmnisendVendor(): ?string;
 }

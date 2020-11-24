@@ -23,14 +23,24 @@ use Sylius\Behat\Page\Admin\Channel\UpdatePage as BaseUpdatePage;
 
 class UpdatePage extends BaseUpdatePage
 {
-    public function setOmnisendUpdateKey(string $key)
+    public function setOmnisendTrackingKey(string $key)
     {
         $this->getElement('omnisend_tracking_key')->setValue($key);
     }
 
-    public function getOmnisendKey(): string
+    public function getOmnisendTrackingKey(): string
     {
         return $this->getElement('omnisend_tracking_key')->getValue();
+    }
+
+    public function setOmnisendApiKey(string $key)
+    {
+        $this->getElement('omnisend_api_key')->setValue($key);
+    }
+
+    public function getOmnisendApiKey(): string
+    {
+        return $this->getElement('omnisend_api_key')->getValue();
     }
 
     protected function getDefinedElements(): array
@@ -39,6 +49,7 @@ class UpdatePage extends BaseUpdatePage
             parent::getDefinedElements(),
             [
                 'omnisend_tracking_key' => '#sylius_channel_omnisendTrackingKey',
+                'omnisend_api_key' => '#sylius_channel_omnisendApiKey',
             ]
         );
     }

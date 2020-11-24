@@ -1,0 +1,5 @@
+services:
+  nfq_sylius_omnisend_plugin.factory.request.contact_identifier:
+    class: NFQ\SyliusOmnisendPlugin\Factory\Request\ContactIdentifierFactory
+    arguments:
+      - '%nfq_sylius_omnisend_plugin.send_welcome_message%'

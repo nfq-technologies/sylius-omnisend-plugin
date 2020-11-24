@@ -22,6 +22,11 @@ services:
     arguments:
       - '@sylius.behat.page.shop.home'
 
+  nfq_sylius_omnisend.context.ui.shop.customer:
+    class: Tests\NFQ\SyliusOmnisendPlugin\Behat\Context\Ui\Shop\CustomerContext
+    arguments:
+      - '@sylius.repository.customer'
+
   nfq_sylius_omnisend.context.setup.channel:
     class: Tests\NFQ\SyliusOmnisendPlugin\Behat\Context\Setup\ChannelContext
     arguments:
@@ -37,3 +42,6 @@ services:
     class: Tests\NFQ\SyliusOmnisendPlugin\Behat\Context\Hook\DoctrineORMContext
     arguments:
       - '@doctrine.orm.entity_manager'
+
+  nfq_sylius_omnisend_plugin.client.omnisend:
+    class: Tests\NFQ\SyliusOmnisendPlugin\Behat\Mock\OmnisendClientMock

@@ -1,4 +1,4 @@
 nfq_sylius_omnisend_plugin:
   ui:
-    omnisend: Omnisend
-    tracking_key: Account ID
+    tracking_key: Omnisend tracking key
+    api_key: Omnisend Api key
