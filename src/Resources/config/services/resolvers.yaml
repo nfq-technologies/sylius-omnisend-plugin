@@ -1,0 +1,13 @@
+services:
+  nfq_sylius_omnisend_plugin.resolver.product_image:
+    class: NFQ\SyliusOmnisendPlugin\Resolver\ProductImageResolver
+    arguments:
+      - '@liip_imagine.cache.manager'
+      - '%nfq_sylius_omnisend_plugin.product_image.type%'
+      - '%nfq_sylius_omnisend_plugin.product_image.filter%'
+      - '%nfq_sylius_omnisend_plugin.product_image.default_image%'
+
+  nfq_sylius_omnisend_plugin.resolver.contact_id:
+    class: NFQ\SyliusOmnisendPlugin\Resolver\ContactIdResolver
+    arguments:
+      - '@request_stack'

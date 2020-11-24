@@ -7,6 +7,7 @@ imports:
     - { resource: "@SyliusShopBundle/Resources/config/app/config.yml" }
 
     - { resource: "@SyliusApiBundle/Resources/config/app/config.yaml" }
+    - { resource: "@NFQSyliusOmnisendPlugin/Resources/config/config.yaml" }
 
 parameters:
     sylius_core.public_dir: '%kernel.project_dir%/public'
@@ -33,3 +34,9 @@ sylius_taxonomy:
             classes:
                 model: Tests\NFQ\SyliusOmnisendPlugin\Application\Entity\Taxon
                 repository: Tests\NFQ\SyliusOmnisendPlugin\Application\Repository\TaxonRepository
+
+sylius_order:
+    resources:
+        order:
+            classes:
+                model: Tests\NFQ\SyliusOmnisendPlugin\Application\Entity\Order

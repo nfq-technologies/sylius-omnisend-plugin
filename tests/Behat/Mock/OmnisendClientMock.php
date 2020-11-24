@@ -21,9 +21,11 @@ namespace Tests\NFQ\SyliusOmnisendPlugin\Behat\Mock;
 
 use NFQ\SyliusOmnisendPlugin\Client\OmnisendClientInterface;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Batch;
+use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Cart;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Category;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Contact;
 use NFQ\SyliusOmnisendPlugin\Client\Response\Model\BatchSuccess;
+use NFQ\SyliusOmnisendPlugin\Client\Response\Model\CartSuccess;
 use NFQ\SyliusOmnisendPlugin\Client\Response\Model\CategorySuccess;
 use NFQ\SyliusOmnisendPlugin\Client\Response\Model\ContactSuccess;
 
@@ -57,5 +59,20 @@ class OmnisendClientMock implements OmnisendClientInterface
     public function postBatch(Batch $batch, ?string $channelCode): ?object
     {
         return new BatchSuccess();
+    }
+
+    public function postCart(Cart $cart, ?string $channelCode): ?object
+    {
+        return (new CartSuccess())->setCartID('1111');
+    }
+
+    public function patchCart(Cart $cart, ?string $channelCode): ?object
+    {
+        return (new CartSuccess())->setCartID('1111');
+    }
+
+    public function deleteCart(string $cartId, ?string $channelCode): ?object
+    {
+        return (new CartSuccess())->setCartID('1111');
     }
 }

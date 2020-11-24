@@ -70,5 +70,6 @@ class UpdateCategoryHandler implements MessageHandlerInterface
             $taxon->setPushedToOmnisend(new DateTime());
             $this->taxonRepository->add($taxon);
         }
+        
     }
 }

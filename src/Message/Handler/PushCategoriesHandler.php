@@ -50,8 +50,7 @@ class PushCategoriesHandler implements MessageHandlerInterface
         TaxonRepositoryInterface $repository,
         CategoryFactoryInterface $factory,
         BatchFactoryInterface $batchFactory
-    )
-    {
+    ) {
         $this->omnisendClient = $omnisendClient;
         $this->categoryFactory = $factory;
         $this->repository = $repository;

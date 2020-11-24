@@ -20,6 +20,7 @@ declare(strict_types=1);
 namespace NFQ\SyliusOmnisendPlugin\Client;
 
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Batch;
+use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Cart;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Category;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Contact;
 
@@ -34,6 +35,12 @@ interface OmnisendClientInterface
     public function putCategory(Category $category, ?string $channelCode): ?object;
 
     public function deleteCategory(string $categoryId, ?string $channelCode): ?object;
+
+    public function postCart(Cart $cart, ?string $channelCode): ?object;
+
+    public function patchCart(Cart $cart, ?string $channelCode): ?object;
+
+    public function deleteCart(string $cartId, ?string $channelCode): ?object;
 
     public function postBatch(Batch $batch, ?string $channelCode): ?object;
 }

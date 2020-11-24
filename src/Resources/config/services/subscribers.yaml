@@ -14,3 +14,13 @@ services:
       - '@sylius.context.channel.composite'
     tags:
       - { name: kernel.event_subscriber }
+
+  nfq_sylius_omnisend_plugin.event_subscriber.cart:
+    class: NFQ\SyliusOmnisendPlugin\EventSubscriber\CartSubscriber
+    arguments:
+      - '@messenger.routable_message_bus'
+      - '@sylius.context.cart.composite'
+      - '@nfq_sylius_omnisend_plugin.resolver.contact_id'
+    tags:
+      - { name: kernel.event_subscriber }
+    public: true

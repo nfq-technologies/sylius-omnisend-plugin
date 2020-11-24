@@ -22,3 +22,16 @@ services:
     class: NFQ\SyliusOmnisendPlugin\Builder\Request\ContactBuilderDirector
     arguments:
       - '@nfq_sylius_omnisend_plugin.builder.request.contact'
+
+  nfq_sylius_omnisend_plugin.builder.request.cart:
+    class: NFQ\SyliusOmnisendPlugin\Builder\Request\CartBuilder
+    arguments:
+      - '@router'
+      - '@request_stack'
+      - '@nfq_sylius_omnisend_plugin.factory.request.cart_product'
+      - '@sylius.random_generator'
+
+  nfq_sylius_omnisend_plugin.builder.request.cart_director:
+    class: NFQ\SyliusOmnisendPlugin\Builder\Request\CartBuilderDirector
+    arguments:
+      - '@nfq_sylius_omnisend_plugin.builder.request.cart'
