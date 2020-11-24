@@ -27,17 +27,9 @@ use Sylius\Component\Core\Model\OrderInterface;
 
 class OrderStateMapperTest extends TestCase
 {
-    public function testIfReturnsCorrectState()
+    /** @dataProvider data */
+    public function testIfReturnsCorrectState(string $fromState, string $toState)
     {
-        $testData = [
-            OrderInterface::STATE_CART => OrderFulfillmentStatus::UNFULFILL,
-            OrderInterface::STATE_NEW => OrderFulfillmentStatus::NEW,
-            OrderInterface::STATE_CANCELLED => 'AAAA',
-            OrderInterface::STATE_FULFILLED => OrderFulfillmentStatus::FULFILL,
-            'CUSTOM' => 'CUSTOM',
-            '???' => OrderFulfillmentStatus::NEW,
-        ];
-
         $mapper = new OrderStateMapper(
             [
                 OrderInterface::STATE_CANCELLED => 'AAAA',
@@ -45,10 +37,38 @@ class OrderStateMapperTest extends TestCase
             ]
         );
 
-        foreach ($testData as $key => $item) {
-            $order = new Order();
-            $order->setState($key);
-            $this->assertEquals($mapper->getState($order), $item);
-        }
+        $order = new Order();
+        $order->setState($fromState);
+        $this->assertEquals($mapper->getState($order), $toState);
+    }
+
+    public function data()
+    {
+        return [
+            'state_cart' => [
+                OrderInterface::STATE_CART,
+                OrderFulfillmentStatus::UNFULFILL
+            ],
+            'new' => [
+                OrderInterface::STATE_NEW,
+                OrderFulfillmentStatus::NEW
+            ],
+            'cancelled' => [
+                OrderInterface::STATE_CANCELLED,
+                'AAAA'
+            ],
+            'fulfilled' => [
+                OrderInterface::STATE_FULFILLED,
+                OrderFulfillmentStatus::FULFILL,
+            ],
+            'custom' => [
+                'CUSTOM',
+                'CUSTOM'
+            ],
+            'custom2 not applied' => [
+                '???',
+                OrderFulfillmentStatus::NEW
+            ]
+        ];
     }
 }

@@ -16,7 +16,7 @@ Feature: Updated product data should be sent to Omnisend
     Then I should be notified that it has been successfully edited
     And this product name should be "7 Wonders"
     And Product with a code "DICE_BREWING" should be marked as pushed to Omnisend
-    And Omnisend request should contains data:
+    And Omnisend request should contain data:
       | key       | value        |
       | productID | DICE_BREWING |
       | title     | 7 Wonders    |

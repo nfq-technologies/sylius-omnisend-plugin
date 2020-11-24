@@ -18,7 +18,7 @@ Feature: Adding a new taxon to Omnisend
     And I add it
     Then I should be notified that it has been successfully created
     And Taxon with a code "t-shirts" should be pushed to Omnisend
-    And Omnisend request should contains data:
+    And Omnisend request should contain data:
       | key        | value    |
       | categoryID | t-shirts |
       | title      | T-Shirts |

@@ -18,7 +18,7 @@ Feature: Omnisend should be notified about created order in checkout
     And I confirm my order
     Then I should see the thank you page
     And Request type "POST" to Omnisend endpoint "orders" was sent
-    And Omnisend request should contains data:
+    And Omnisend request should contain data:
       | key               | value           |
       | orderSum          | 1999            |
       | paymentMethod     | Offline         |

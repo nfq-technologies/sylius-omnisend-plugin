@@ -118,7 +118,7 @@ class CartSubscriber implements EventSubscriberInterface
 
     public function onCartsRemove(GenericEvent $event): void
     {
-        /** @var array|\NFQ\SyliusOmnisendPlugin\Model\OrderInterface[] $carts */
+        /** @var OrderInterface[] $carts */
         $carts = $event->getSubject();
 
         foreach ($carts as $cart) {
