@@ -6,3 +6,11 @@ services:
       - '@sylius.context.channel.composite'
     tags:
       - { name: kernel.event_subscriber }
+
+  nfq_sylius_omnisend_plugin.event_subscriber.taxon:
+    class: NFQ\SyliusOmnisendPlugin\EventSubscriber\TaxonSubscriber
+    arguments:
+      - '@messenger.routable_message_bus'
+      - '@sylius.context.channel.composite'
+    tags:
+      - { name: kernel.event_subscriber }

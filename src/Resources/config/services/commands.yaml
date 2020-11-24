@@ -1,0 +1,8 @@
+services:
+  nfq_sylius_omnisend_plugin.command.push_categories:
+    class: NFQ\SyliusOmnisendPlugin\Command\PushCategoriesCommand
+    arguments:
+      - '@messenger.routable_message_bus'
+    tags:
+      - console.command
+

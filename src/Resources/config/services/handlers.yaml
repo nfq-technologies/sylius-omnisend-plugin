@@ -12,3 +12,35 @@ services:
       - '@nfq_sylius_omnisend_plugin.manager.contact'
       - '@sylius.repository.customer'
     tags: [ messenger.message_handler ]
+
+  nfq_sylius_omnisend_plugin.message.handler.update_category:
+    class: NFQ\SyliusOmnisendPlugin\Message\Handler\UpdateCategoryHandler
+    arguments:
+      - '@nfq_sylius_omnisend_plugin.client.omnisend'
+      - '@sylius.repository.taxon'
+      - '@nfq_sylius_omnisend_plugin.factory.request.category'
+    tags: [ messenger.message_handler ]
+
+  nfq_sylius_omnisend_plugin.message.handler.create_category:
+    class: NFQ\SyliusOmnisendPlugin\Message\Handler\CreateCategoryHandler
+    arguments:
+      - '@nfq_sylius_omnisend_plugin.client.omnisend'
+      - '@sylius.repository.taxon'
+      - '@nfq_sylius_omnisend_plugin.factory.request.category'
+    tags: [ messenger.message_handler ]
+
+  nfq_sylius_omnisend_plugin.message.handler.delete_category:
+    class: NFQ\SyliusOmnisendPlugin\Message\Handler\DeleteCategoryHandler
+    arguments:
+      - '@nfq_sylius_omnisend_plugin.client.omnisend'
+      - '@sylius.repository.taxon'
+    tags: [ messenger.message_handler ]
+
+  nfq_sylius_omnisend_plugin.message.handler.push_category:
+    class: NFQ\SyliusOmnisendPlugin\Message\Handler\PushCategoriesHandler
+    arguments:
+      - '@nfq_sylius_omnisend_plugin.client.omnisend'
+      - '@sylius.repository.taxon'
+      - '@nfq_sylius_omnisend_plugin.factory.request.category'
+      - '@nfq_sylius_omnisend_plugin.factory.request.batch'
+    tags: [ messenger.message_handler ]

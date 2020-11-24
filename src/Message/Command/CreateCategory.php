@@ -17,13 +17,24 @@
 
 declare(strict_types=1);
 
-namespace NFQ\SyliusOmnisendPlugin\Model;
+namespace NFQ\SyliusOmnisendPlugin\Message\Command;
 
-use Sylius\Component\Core\Model\ProductInterface as BaseProductAwareInterface;
-
-interface ProductPickerAdditionalDataAwareInterface extends BaseProductAwareInterface
+class CreateCategory implements CommandInterface
 {
-    public function getOmnisendTags(): ?array;
+    use CommandTrait;
 
-    public function getOmnisendVendor(): ?string;
+    /** @var string|null */
+    private $taxonCode;
+
+    public function getTaxonCode(): ?string
+    {
+        return $this->taxonCode;
+    }
+
+    public function setTaxonCode(?string $taxonCode): self
+    {
+        $this->taxonCode = $taxonCode;
+
+        return $this;
+    }
 }

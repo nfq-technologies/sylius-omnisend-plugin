@@ -17,13 +17,11 @@
 
 declare(strict_types=1);
 
-namespace NFQ\SyliusOmnisendPlugin\Model;
+namespace NFQ\SyliusOmnisendPlugin\Factory\Request;
 
-use Sylius\Component\Core\Model\ProductInterface as BaseProductAwareInterface;
+use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Batch;
 
-interface ProductPickerAdditionalDataAwareInterface extends BaseProductAwareInterface
+interface BatchFactoryInterface
 {
-    public function getOmnisendTags(): ?array;
-
-    public function getOmnisendVendor(): ?string;
+    public function create(string $method, string $type, array $data, ?string $eventId = null): Batch;
 }

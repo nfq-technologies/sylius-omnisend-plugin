@@ -27,3 +27,10 @@ sylius_customer:
         customer:
             classes:
                 model: Tests\NFQ\SyliusOmnisendPlugin\Application\Entity\Customer
+
+sylius_taxonomy:
+    resources:
+        taxon:
+            classes:
+                model: Tests\NFQ\SyliusOmnisendPlugin\Application\Entity\Taxon
+                repository: Tests\NFQ\SyliusOmnisendPlugin\Application\Repository\TaxonRepository

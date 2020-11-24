@@ -17,13 +17,12 @@
 
 declare(strict_types=1);
 
-namespace NFQ\SyliusOmnisendPlugin\Model;
+namespace NFQ\SyliusOmnisendPlugin\Factory\Request;
 
-use Sylius\Component\Core\Model\ProductInterface as BaseProductAwareInterface;
+use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Category;
+use Sylius\Component\Core\Model\TaxonInterface;
 
-interface ProductPickerAdditionalDataAwareInterface extends BaseProductAwareInterface
+interface CategoryFactoryInterface
 {
-    public function getOmnisendTags(): ?array;
-
-    public function getOmnisendVendor(): ?string;
+    public function create(TaxonInterface $taxon): Category;
 }
