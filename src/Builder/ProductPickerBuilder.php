@@ -84,7 +84,7 @@ class ProductPickerBuilder implements ProductPickerBuilderInterface
         $translation = $product->getTranslation($locale);
 
         $this->productPicker
-            ->setTitle(null !== $translation->getName() ? htmlspecialchars((string)$translation->getName()) : null)
+            ->setTitle(null !== $translation->getName() ? htmlspecialchars($translation->getName()) : null)
             ->setProductUrl(
                 $this->router->generate(
                     'sylius_shop_product_show',
