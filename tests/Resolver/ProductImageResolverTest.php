@@ -27,19 +27,12 @@ use Sylius\Component\Core\Model\ProductImage;
 
 class ProductImageResolverTest extends TestCase
 {
-    /**
-     * @var ProductImageResolver
-     */
+    /** @var ProductImageResolver */
     private $resolver;
 
-    /**
-     * @var CacheManager
-     */
+    /** @var CacheManager */
     private $cacheManager;
 
-    /**
-     * @return void
-     */
     protected function setUp(): void
     {
         $this->cacheManager = $this->createMock(CacheManager::class);

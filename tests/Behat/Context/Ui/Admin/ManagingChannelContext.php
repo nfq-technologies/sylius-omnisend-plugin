@@ -35,18 +35,27 @@ class ManagingChannelContext implements Context
     {
         $this->channelUpdatePage = $channelUpdatePage;
     }
+
     /**
      * @When I set omnisend tracking key :key
      */
-    public function markVariantAsAvailableOnDemand(string $key): void
+    public function iSetOmnisendTrackingKey(string $key): void
     {
-        $this->channelUpdatePage->setOmnisendUpdateKey($key);
+        $this->channelUpdatePage->setOmnisendTrackingKey($key);
     }
 
     /**
-     * @Given /^(channel "([^"]+)") should have omnisend update key with value "([^"]+)"$/
+     * @When I set omnisend api key :key
      */
-    public function thisChannelMenuTaxonShouldBe(
+    public function iSetOmnisendApiKey(string $key): void
+    {
+        $this->channelUpdatePage->setOmnisendApiKey($key);
+    }
+
+    /**
+     * @Given /^(channel "([^"]+)") should have omnisend tracking key with value "([^"]+)"$/
+     */
+    public function thisChannelOmnisendTrackingKeyShouldBe(
         ChannelInterface $channel,
         string $channelCode,
         string $omnisendTrackingKey
@@ -55,6 +64,21 @@ class ManagingChannelContext implements Context
             $this->channelUpdatePage->open(['id' => $channel->getId()]);
         }
 
-        Assert::same($this->channelUpdatePage->getOmnisendKey(), $omnisendTrackingKey);
+        Assert::same($this->channelUpdatePage->getOmnisendTrackingKey(), $omnisendTrackingKey);
+    }
+
+    /**
+     * @Given /^(channel "([^"]+)") should have omnisend api key with value "([^"]+)"$/
+     */
+    public function thisChannelOmnisendApiKeyShouldBe(
+        ChannelInterface $channel,
+        string $channelCode,
+        string $key
+    ): void {
+        if (!$this->channelUpdatePage->isOpen(['id' => $channel->getId()])) {
+            $this->channelUpdatePage->open(['id' => $channel->getId()]);
+        }
+
+        Assert::same($this->channelUpdatePage->getOmnisendApiKey(), $key);
     }
 }

@@ -21,3 +21,9 @@ sylius_channel:
         channel:
             classes:
                 model: Tests\NFQ\SyliusOmnisendPlugin\Application\Entity\Channel
+
+sylius_customer:
+    resources:
+        customer:
+            classes:
+                model: Tests\NFQ\SyliusOmnisendPlugin\Application\Entity\Customer

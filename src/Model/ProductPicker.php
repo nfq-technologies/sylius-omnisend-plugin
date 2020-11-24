@@ -95,7 +95,7 @@ class ProductPicker
         return $this->tags;
     }
 
-    public function setTags(array $tags): self
+    public function setTags(?array $tags): self
     {
         $this->tags = $tags;
 
