@@ -61,12 +61,12 @@ class SyncEventsAction extends AbstractController
             );
             $this->session->getFlashBag()->add(
                 'success',
-                'nfq_sylius_omnisend_plugin.ui.syncs_started'
+                'nfq_sylius_omnisend_plugin.ui.sync_started'
             );
         } else {
             $this->session->getFlashBag()->add(
                 'success',
-                'nfq_sylius_omnisend_plugin.ui.syncs_failed'
+                'nfq_sylius_omnisend_plugin.ui.sync_failed'
             );
         }
 

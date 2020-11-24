@@ -327,8 +327,6 @@ class OmnisendClient implements LoggerAwareInterface, OmnisendClientInterface
         try {
             return $this->clientFactory->create($channelCode)->sendRequest($request);
         } catch (HttpException $requestException) {
-            var_export('????');
-            var_export(get_class($this->logger));
             $response = [
                 'status' => $requestException->getResponse()->getStatusCode(),
                 'headers' => $requestException->getResponse()->getHeaders(),

@@ -19,6 +19,7 @@ declare(strict_types=1);
 
 namespace Tests\NFQ\SyliusOmnisendPlugin\Behat\Mock;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use NFQ\SyliusOmnisendPlugin\Client\OmnisendClient;
 use NFQ\SyliusOmnisendPlugin\Client\OmnisendClientInterface;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Batch;
@@ -32,8 +33,11 @@ use NFQ\SyliusOmnisendPlugin\Client\Response\Model\BatchSuccess;
 use NFQ\SyliusOmnisendPlugin\Client\Response\Model\CartSuccess;
 use NFQ\SyliusOmnisendPlugin\Client\Response\Model\CategorySuccess;
 use NFQ\SyliusOmnisendPlugin\Client\Response\Model\ContactSuccess;
+use NFQ\SyliusOmnisendPlugin\Client\Response\Model\EventSuccess;
 use NFQ\SyliusOmnisendPlugin\Client\Response\Model\OrderSuccess;
 use NFQ\SyliusOmnisendPlugin\Client\Response\Model\ProductSuccess;
+use NFQ\SyliusOmnisendPlugin\Model\Event;
+use NFQ\SyliusOmnisendPlugin\Model\EventField;
 
 class OmnisendClientMock implements OmnisendClientInterface
 {
@@ -157,9 +161,24 @@ class OmnisendClientMock implements OmnisendClientInterface
 
     public function postEvent(CreateEvent $event, ?string $channelCode): ?object
     {
+        $this->client->postEvent($event, $channelCode);
+        return (new EventSuccess());
     }
 
     public function getEvents(?string $channelCode): ?array
     {
+        $this->client->getEvents($channelCode);
+        $event = new Event();
+        $eventField = new EventField();
+        $eventField->setSystemName('int');
+        $eventField->setType('int');
+        $event->setSystemName('testName');
+        $event->setEnabled(true);
+        $event->setName('test Name');
+        $event->setFields(new ArrayCollection([$eventField]));
+
+        return [
+            $event
+        ];
     }
 }

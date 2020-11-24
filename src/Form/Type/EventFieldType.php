@@ -42,6 +42,8 @@ class EventFieldType extends AbstractResourceType
                 CheckboxType::class,
                 [
                     'label' => 'nfq_sylius_omnisend_plugin.ui.event_field.required',
+                    'disabled' => true,
+                    'required' => false,
                     'attr' => [
                         'readonly' => 'readonly',
                     ],
@@ -52,6 +54,8 @@ class EventFieldType extends AbstractResourceType
                 TextType::class,
                 [
                     'label' => 'nfq_sylius_omnisend_plugin.ui.event_field.name',
+                    'disabled' => true,
+                    'required' => false,
                     'attr' => [
                         'readonly' => 'readonly',
                     ],

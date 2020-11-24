@@ -1,0 +1,4 @@
+nfq_sylius_omnisend_plugin:
+  ui:
+    sync_started: Events sync initiated
+    sync_failed: Failed to initiate events sync

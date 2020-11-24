@@ -43,9 +43,11 @@ class EventType extends AbstractResourceType
                 TextType::class,
                 [
                     'label' => 'nfq_sylius_omnisend_plugin.ui.event.event_id',
+                    'disabled' => true,
                     'attr' => [
                         'readonly' => 'readonly',
                     ],
+                    'required' => false,
                 ]
             )
             ->add(
@@ -53,18 +55,22 @@ class EventType extends AbstractResourceType
                 TextType::class,
                 [
                     'label' => 'nfq_sylius_omnisend_plugin.ui.event.name',
+                    'disabled' => true,
                     'attr' => [
                         'readonly' => 'readonly',
                     ],
+                    'required' => false,
                 ]
             )->add(
                 'enabled',
                 CheckboxType::class,
                 [
                     'label' => 'sylius.ui.enable',
+                    'disabled' => true,
                     'attr' => [
                         'readonly' => 'readonly',
                     ],
+                    'required' => false,
                 ]
             )->add(
                 'systemName',

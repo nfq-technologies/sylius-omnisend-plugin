@@ -12,6 +12,27 @@ services:
     parent: 'sylius.behat.page.admin.channel.update'
     public: true
 
+  nfq_sylius_omnisend.page.admin.event.update:
+    class: Tests\NFQ\SyliusOmnisendPlugin\Behat\Page\Admin\Event\UpdatePage
+    parent: 'sylius.behat.page.admin.crud.update'
+    arguments:
+      $routeName: 'nfq_sylius_omnisend_plugin_admin_event_update'
+    public: true
+
+  nfq_sylius_omnisend.page.admin.event.index:
+    class: Tests\NFQ\SyliusOmnisendPlugin\Behat\Page\Admin\Event\IndexPage
+    parent: 'sylius.behat.page.admin.crud.index'
+    arguments:
+      $routeName: 'nfq_sylius_omnisend_plugin_admin_event_index'
+    public: true
+
+  nfq_sylius_omnisend.page.admin.event.create:
+    class: Tests\NFQ\SyliusOmnisendPlugin\Behat\Page\Admin\Event\CreatePage
+    parent: 'sylius.behat.page.admin.crud.index'
+    arguments:
+      $routeName: 'nfq_sylius_omnisend_plugin_admin_event_create'
+    public: true
+
   nfq_sylius_omnisend.context.ui.shop.test:
     class: Tests\NFQ\SyliusOmnisendPlugin\Behat\Context\Ui\Shop\TestContext
     arguments:
@@ -37,6 +58,14 @@ services:
     class: Tests\NFQ\SyliusOmnisendPlugin\Behat\Context\Ui\Admin\ManagingChannelContext
     arguments:
       - '@nfq_sylius_omnisend.page.admin.channel.update'
+
+  nfq_sylius_omnisend.context.ui.admin.managing_event:
+    class: Tests\NFQ\SyliusOmnisendPlugin\Behat\Context\Ui\Admin\ManagingEventsContext
+    arguments:
+      - '@sylius.behat.shared_storage'
+      - '@nfq_sylius_omnisend.page.admin.event.create'
+      - '@nfq_sylius_omnisend.page.admin.event.update'
+      - '@nfq_sylius_omnisend.page.admin.event.index'
 
   nfq_sylius_omnisend.context.ui.admin.managing_taxon:
     class: Tests\NFQ\SyliusOmnisendPlugin\Behat\Context\Ui\Admin\ManagingTaxonContext
