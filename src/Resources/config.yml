@@ -1,0 +1,13 @@
+sylius_ui:
+  events:
+    sonata.block.event.sylius.admin.channel.update.form:
+      blocks:
+        omnisend: '@NFQSyliusOmnisendPlugin/Channel/Admin/_channel_omnisend_key.html.twig'
+
+    sonata.block.event.sylius.admin.channel.create.form:
+      blocks:
+        omnisend: '@NFQSyliusOmnisendPlugin/Channel/Admin/_channel_omnisend_key.html.twig'
+
+    sonata.block.event.sylius.shop.layout.javascripts:
+      blocks:
+        omnisend: '@NFQSyliusOmnisendPlugin/Shop/Layout/_javascript.html.twig'

@@ -3,24 +3,3 @@ services:
     class: NFQ\SyliusOmnisendPlugin\Form\Extension\ChannelFormTypeExtension
     tags:
       - { name: form.type_extension, extended_type: Sylius\Bundle\ChannelBundle\Form\Type\ChannelType }
-
-  nfq_sylius_omnisend_plugin.block_event_listener.sylius.admin.channel.update:
-    class: Sylius\Bundle\UiBundle\Block\BlockEventListener
-    arguments:
-      - '@@NFQSyliusOmnisendPlugin/Channel/Admin/_channel_omnisend_key.html.twig'
-    tags:
-      - { name: kernel.event_listener, event: sonata.block.event.sylius.admin.channel.update.form, method: onBlockEvent }
-
-  nfq_sylius_omnisend_plugin.block_event_listener.sylius.admin.channel.create:
-    class: Sylius\Bundle\UiBundle\Block\BlockEventListener
-    arguments:
-      - '@@NFQSyliusOmnisendPlugin/Channel/Admin/_channel_omnisend_key.html.twig'
-    tags:
-      - { name: kernel.event_listener, event: sonata.block.event.sylius.admin.channel.create.form, method: onBlockEvent }
-
-  nfq_sylius_omnisend_plugin.block_event_listener.sylius.shop.layout.javascripts:
-    class: Sylius\Bundle\UiBundle\Block\BlockEventListener
-    arguments:
-      - '@@NFQSyliusOmnisendPlugin/Shop/Layout/_javascript.html.twig'
-    tags:
-      - { name: kernel.event_listener, event: sonata.block.event.sylius.shop.layout.javascripts, method: onBlockEvent }
