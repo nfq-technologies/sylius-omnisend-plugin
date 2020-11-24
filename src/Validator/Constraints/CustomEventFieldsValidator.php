@@ -44,7 +44,7 @@ class CustomEventFieldsValidator extends ConstraintValidator
     /** @var PushCustomEvent $value */
     public function validate($value, Constraint $constraint): void
     {
-        /** @var Event $baseEvent */
+        /** @var Event|null $baseEvent */
         $baseEvent = $this->eventRepository->findOneBy(['systemName' => $value->getSystemName()]);
 
         if (null === $baseEvent) {
@@ -75,20 +75,20 @@ class CustomEventFieldsValidator extends ConstraintValidator
                     $this->context->buildViolation(CustomEventFields::INVALID_FIELD_VALUE)
                         ->setParameter('%field%', $fieldName)
                         ->setParameter('%value%', $fieldValue)
-                        ->setParameter('%type%', $field->getType())
+                        ->setParameter('%type%', (string)$field->getType())
                         ->addViolation();
                 }
             } else {
                 $this->context
                     ->buildViolation(CustomEventFields::INVALID_FIELD_TYPE)
                     ->setParameter('%field%', $fieldName)
-                    ->setParameter('%type%', $field->getType())
+                    ->setParameter('%type%', (string)$field->getType())
                     ->addViolation();
             }
         }
     }
 
-    private function getFieldConstraint(?EventField $field): ?Constraint
+    private function getFieldConstraint(EventField $field): ?Constraint
     {
         $fieldConstraint = null;
 

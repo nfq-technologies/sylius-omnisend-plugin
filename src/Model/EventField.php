@@ -65,7 +65,7 @@ class EventField implements ResourceInterface
         $this->required = false;
     }
 
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }

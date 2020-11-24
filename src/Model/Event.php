@@ -57,14 +57,9 @@ class Event implements ResourceInterface, TimestampableInterface
         $this->enabled = true;
     }
 
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
-    }
-
-    public function setId(int $id)
-    {
-        return $this->id = $id;
     }
 
     public function getEventID(): ?string
@@ -72,7 +67,7 @@ class Event implements ResourceInterface, TimestampableInterface
         return $this->eventID;
     }
 
-    public function setEventID(string $eventID): void
+    public function setEventID(?string $eventID): void
     {
         $this->eventID = $eventID;
     }
@@ -82,7 +77,7 @@ class Event implements ResourceInterface, TimestampableInterface
         return $this->name;
     }
 
-    public function setName(string $name): void
+    public function setName(?string $name): void
     {
         $this->name = $name;
     }
@@ -92,7 +87,7 @@ class Event implements ResourceInterface, TimestampableInterface
         return $this->systemName;
     }
 
-    public function setSystemName(string $systemName): void
+    public function setSystemName(?string $systemName): void
     {
         $this->systemName = $systemName;
     }
@@ -149,12 +144,12 @@ class Event implements ResourceInterface, TimestampableInterface
     public function getFieldBySystemName(string $systemName): ?EventField
     {
         $field = $this->fields->filter(
-            function (EventField $eventField) use ($systemName) {
+            function (EventField $eventField) use ($systemName): bool {
                 return $eventField->getSystemName() === $systemName;
             }
         )->first();
 
-        return $field ?: null;
+        return $field ? $field : null;
     }
 
     public function getChannel(): ?ChannelInterface

@@ -32,7 +32,7 @@ class EventFieldTypeDefaultValueMapper
         'dateTime' => '2017-05-30T14:11:12Z',
     ];
 
-    public static function map(string $type)
+    public static function map(?string $type)
     {
         if (isset(self::TYPES[$type])) {
             return self::TYPES[$type];

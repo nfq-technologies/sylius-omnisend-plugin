@@ -24,6 +24,7 @@ use NFQ\SyliusOmnisendPlugin\Message\Command\PushCustomEvent;
 use NFQ\SyliusOmnisendPlugin\Message\Command\UpdateEvent;
 use NFQ\SyliusOmnisendPlugin\Model\Event;
 use Sylius\Bundle\ResourceBundle\Event\ResourceControllerEvent;
+use Sylius\Component\Core\Model\ChannelInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\MessageBusInterface;
@@ -52,12 +53,14 @@ class EventSubscriber implements EventSubscriberInterface
     {
         /** @var Event $trackingEvent */
         $trackingEvent = $event->getSubject();
+        /** @var ChannelInterface $channel */
+        $channel = $trackingEvent->getChannel();
 
         $this->messageBus->dispatch(
             new Envelope(
                 new UpdateEvent(
                     $trackingEvent->getSystemName(),
-                    $trackingEvent->getChannel()->getCode()
+                    $channel->getCode()
                 )
             )
         );

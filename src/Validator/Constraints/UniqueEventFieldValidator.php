@@ -30,7 +30,6 @@ class UniqueEventFieldValidator extends ConstraintValidator
     /** @var Collection $value */
     public function validate($value, Constraint $constraint): void
     {
-        /** @var UniqueEventField $constraint */
         Assert::isInstanceOf($constraint, UniqueEventField::class);
 
         $codes = [];

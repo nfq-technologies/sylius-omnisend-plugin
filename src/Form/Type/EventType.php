@@ -103,11 +103,11 @@ class EventType extends AbstractResourceType
 
         $builder->addEventListener(
             FormEvents::PRE_SET_DATA,
-            function (FormEvent $event) {
+            function (FormEvent $event): void {
                 $object = $event->getData();
                 $form = $event->getForm();
 
-                if (!$object || null === $object->getId()) {
+                if (null === $object || null === $object->getId()) {
                     $form->remove('eventID');
                     $form->remove('name');
                     $form->remove('enabled');

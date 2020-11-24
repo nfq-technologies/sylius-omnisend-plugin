@@ -53,7 +53,7 @@ class SyncEventsAction extends AbstractController
         /** @var ChannelOmnisendTrackingAwareInterface $channel */
         $channel = $this->channelContext->getChannel();
 
-        if ($channel->getOmnisendApiKey()) {
+        if (null !== $channel->getOmnisendApiKey()) {
             $this->messageBus->dispatch(
                 new Envelope(
                     new SyncEvents($channel->getCode())

@@ -23,16 +23,16 @@ class UpdateEvent implements CommandInterface
 {
     use CommandTrait;
 
-    /** @var string */
+    /** @var string|null */
     private $code;
 
-    public function __construct(string $code, ?string $channelCode)
+    public function __construct(?string $code, ?string $channelCode)
     {
         $this->code = $code;
         $this->channelCode = $channelCode;
     }
 
-    public function getCode(): string
+    public function getCode(): ?string
     {
         return $this->code;
     }

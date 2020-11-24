@@ -25,3 +25,5 @@ parameters:
         - '/Cannot cast array\<string\>\|string\|null to string./'
         - '/Cannot cast array\<string\>\|bool\|string to int./'
         - '/Method NFQ\\SyliusOmnisendPlugin\\Client\\OmnisendClient::parseResponse\(\) has no return typehint specified./'
+        - '/Call to an undefined method Symfony\\Component\\HttpFoundation\\Session\\SessionInterface::getFlashBag\(\)./'
+        - '/Method NFQ\\SyliusOmnisendPlugin\\Mapper\\EventFieldTypeDefaultValueMapper::map\(\) has no return typehint specified/'

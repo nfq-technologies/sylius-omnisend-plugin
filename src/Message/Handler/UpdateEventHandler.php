@@ -47,7 +47,7 @@ class UpdateEventHandler implements MessageHandlerInterface
         $this->omnisendClient = $omnisendClient;
     }
 
-    public function __invoke(UpdateEvent $message)
+    public function __invoke(UpdateEvent $message): void
     {
         /** @var BaseEvent|null $event */
         $event = $this->eventRepository->findOneBy(['systemName' => $message->getCode()]);
