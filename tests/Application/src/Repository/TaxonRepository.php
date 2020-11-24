@@ -17,13 +17,13 @@
 
 declare(strict_types=1);
 
-namespace NFQ\SyliusOmnisendPlugin\Model;
+namespace Tests\NFQ\SyliusOmnisendPlugin\Application\Repository;
 
-use Sylius\Component\Core\Model\ProductInterface as BaseProductAwareInterface;
+use Sylius\Bundle\TaxonomyBundle\Doctrine\ORM\TaxonRepository as BaseRepository;
+use NFQ\SyliusOmnisendPlugin\Doctrine\ORM\TaxonRepositoryInterface;
+use NFQ\SyliusOmnisendPlugin\Doctrine\ORM\TaxonRepositoryTrait;
 
-interface ProductPickerAdditionalDataAwareInterface extends BaseProductAwareInterface
+class TaxonRepository extends BaseRepository implements TaxonRepositoryInterface
 {
-    public function getOmnisendTags(): ?array;
-
-    public function getOmnisendVendor(): ?string;
+    use TaxonRepositoryTrait;
 }

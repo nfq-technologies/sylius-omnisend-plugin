@@ -7,6 +7,7 @@ imports:
   - { resource: services/subscribers.yaml }
   - { resource: services/managers.yaml }
   - { resource: services/twig.yaml }
+  - { resource: services/commands.yaml }
 
 services:
   nfq_sylius_omnisend_plugin.resolver.product_image:

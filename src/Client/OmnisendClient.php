@@ -19,7 +19,11 @@ declare(strict_types=1);
 
 namespace NFQ\SyliusOmnisendPlugin\Client;
 
+use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Batch;
+use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Category;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Contact;
+use NFQ\SyliusOmnisendPlugin\Client\Response\Model\BatchSuccess;
+use NFQ\SyliusOmnisendPlugin\Client\Response\Model\CategorySuccess;
 use NFQ\SyliusOmnisendPlugin\Client\Response\Model\ContactSuccess;
 use NFQ\SyliusOmnisendPlugin\HttpClient\ClientFactory;
 use Psr\Http\Message\RequestInterface;
@@ -36,6 +40,8 @@ class OmnisendClient implements LoggerAwareInterface, OmnisendClientInterface
 
     private const API_VERSION = 'v3';
     private const URL_PATH_CONTACTS = '/contacts';
+    private const URL_PATH_CATEGORIES = '/categories';
+    private const URL_PATH_BATCHES = '/batches';
 
     /** @var ClientFactory */
     private $clientFactory;
@@ -68,6 +74,62 @@ class OmnisendClient implements LoggerAwareInterface, OmnisendClientInterface
         );
 
         return $this->parseResponse($response, ContactSuccess::class);
+    }
+
+    public function postCategory(Category $category, ?string $channelCode): ?object
+    {
+        $response = $this->sendRequest(
+            $this->messageFactory->create(
+                'POST',
+                self::API_VERSION . self::URL_PATH_CATEGORIES,
+                $category
+            ),
+            $channelCode
+        );
+
+        return $this->parseResponse($response, CategorySuccess::class);
+    }
+
+    public function putCategory(Category $category, ?string $channelCode): ?object
+    {
+        $response = $this->sendRequest(
+            $this->messageFactory->create(
+                'PUT',
+                self::API_VERSION . self::URL_PATH_CATEGORIES . '/' . $category->getCategoryID(),
+                $category
+            ),
+            $channelCode
+        );
+
+        return $this->parseResponse($response, CategorySuccess::class);
+    }
+
+    public function deleteCategory(string $categoryId, ?string $channelCode): ?object
+    {
+        $response = $this->sendRequest(
+            $this->messageFactory->create(
+                'DELETE',
+                self::API_VERSION . self::URL_PATH_CATEGORIES . '/' . $categoryId,
+                null
+            ),
+            $channelCode
+        );
+
+        return $this->parseResponse($response, CategorySuccess::class);
+    }
+
+    public function postBatch(Batch $batch, ?string $channelCode): ?object
+    {
+        $response = $this->sendRequest(
+            $this->messageFactory->create(
+                'POST',
+                self::API_VERSION . self::URL_PATH_BATCHES,
+                $batch
+            ),
+            $channelCode
+        );
+
+        return $this->parseResponse($response, BatchSuccess::class);
     }
 
     public function patchContact(string $contactId, Contact $contact, ?string $channelCode): void

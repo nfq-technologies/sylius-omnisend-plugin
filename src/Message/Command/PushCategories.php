@@ -17,13 +17,9 @@
 
 declare(strict_types=1);
 
-namespace NFQ\SyliusOmnisendPlugin\Model;
+namespace NFQ\SyliusOmnisendPlugin\Message\Command;
 
-use Sylius\Component\Core\Model\ProductInterface as BaseProductAwareInterface;
-
-interface ProductPickerAdditionalDataAwareInterface extends BaseProductAwareInterface
+class PushCategories implements CommandInterface
 {
-    public function getOmnisendTags(): ?array;
-
-    public function getOmnisendVendor(): ?string;
+    use CommandTrait;
 }

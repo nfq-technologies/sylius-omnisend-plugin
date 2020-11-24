@@ -13,6 +13,7 @@
         "php-http/httplug-bundle": "^1.19",
         "sylius/sylius": "^1.8",
         "symfony/doctrine-bridge": "4.4.15",
+        "symfony/lock": "^5.1",
         "symfony/messenger": "^4.4"
     },
     "require-dev": {

@@ -20,7 +20,11 @@ declare(strict_types=1);
 namespace Tests\NFQ\SyliusOmnisendPlugin\Behat\Mock;
 
 use NFQ\SyliusOmnisendPlugin\Client\OmnisendClientInterface;
+use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Batch;
+use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Category;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Contact;
+use NFQ\SyliusOmnisendPlugin\Client\Response\Model\BatchSuccess;
+use NFQ\SyliusOmnisendPlugin\Client\Response\Model\CategorySuccess;
 use NFQ\SyliusOmnisendPlugin\Client\Response\Model\ContactSuccess;
 
 class OmnisendClientMock implements OmnisendClientInterface
@@ -33,5 +37,25 @@ class OmnisendClientMock implements OmnisendClientInterface
 
     public function patchContact(string $contactId, Contact $contact, ?string $channelCode): void
     {
+    }
+
+    public function postCategory(Category $category, ?string $channelCode): ?object
+    {
+        return new CategorySuccess();
+    }
+
+    public function putCategory(Category $category, ?string $channelCode): ?object
+    {
+        return new CategorySuccess();
+    }
+
+    public function deleteCategory(string $categoryId, ?string $channelCode): ?object
+    {
+        return new CategorySuccess();
+    }
+
+    public function postBatch(Batch $batch, ?string $channelCode): ?object
+    {
+        return new BatchSuccess();
     }
 }

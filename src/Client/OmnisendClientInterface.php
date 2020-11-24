@@ -19,6 +19,8 @@ declare(strict_types=1);
 
 namespace NFQ\SyliusOmnisendPlugin\Client;
 
+use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Batch;
+use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Category;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Contact;
 
 interface OmnisendClientInterface
@@ -26,4 +28,12 @@ interface OmnisendClientInterface
     public function postContact(Contact $contact, ?string $channelCode): ?object;
 
     public function patchContact(string $contactId, Contact $contact, ?string $channelCode): void;
+
+    public function postCategory(Category $category, ?string $channelCode): ?object;
+
+    public function putCategory(Category $category, ?string $channelCode): ?object;
+
+    public function deleteCategory(string $categoryId, ?string $channelCode): ?object;
+
+    public function postBatch(Batch $batch, ?string $channelCode): ?object;
 }

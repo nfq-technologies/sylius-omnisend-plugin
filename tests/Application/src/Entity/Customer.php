@@ -15,12 +15,14 @@
  * http://www.nfq.lt
  */
 
+declare(strict_types=1);
+
 namespace Tests\NFQ\SyliusOmnisendPlugin\Application\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+use Sylius\Component\Core\Model\Customer as BaseCustomer;
 use NFQ\SyliusOmnisendPlugin\Model\ContactAwareInterface;
 use NFQ\SyliusOmnisendPlugin\Model\ContactAwareTrait;
-use Sylius\Component\Core\Model\Customer as BaseCustomer;
-use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity

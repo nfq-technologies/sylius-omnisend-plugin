@@ -19,11 +19,8 @@ declare(strict_types=1);
 
 namespace NFQ\SyliusOmnisendPlugin\Model;
 
-use Sylius\Component\Core\Model\ProductInterface as BaseProductAwareInterface;
+use Sylius\Component\Core\Model\TaxonInterface as BaseTaxonInterface;
 
-interface ProductPickerAdditionalDataAwareInterface extends BaseProductAwareInterface
+interface TaxonInterface extends PushedToOmnisendAwareInterface, BaseTaxonInterface
 {
-    public function getOmnisendTags(): ?array;
-
-    public function getOmnisendVendor(): ?string;
 }
