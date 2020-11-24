@@ -23,8 +23,12 @@ use Psr\Log\NullLogger;
 use Sylius\Bundle\ResourceBundle\DependencyInjection\Extension\AbstractResourceExtension;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Symfony\Component\Config\FileLocator;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\Config\Loader\DelegatingLoader;
+use Symfony\Component\DependencyInjection\Loader\DirectoryLoader;
+use Symfony\Component\DependencyInjection\Loader\GlobFileLoader;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
+use Symfony\Component\Config\Loader\LoaderResolver;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 final class NFQSyliusOmnisendExtension extends AbstractResourceExtension
 {
@@ -89,7 +93,16 @@ final class NFQSyliusOmnisendExtension extends AbstractResourceExtension
             $container->register('nfq_sylius_omnisend_plugin.client.logger', NullLogger::class);
         }
 
-        $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        $locator = new FileLocator(__DIR__ . '/../Resources/config');
+        $loader = new DelegatingLoader(
+            new LoaderResolver(
+                [
+                    new YamlFileLoader($container, $locator),
+                    new GlobFileLoader($container, $locator),
+                    new DirectoryLoader($container, $locator),
+                ]
+            )
+        );
         $this->registerResources('nfq_sylius_omnisend_plugin', $config['driver'], $config['resources'], $container);
         $loader->load('services.yaml');
     }
