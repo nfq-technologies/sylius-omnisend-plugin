@@ -83,7 +83,7 @@ class CategoryBatchHandleStrategy implements BatchHandlerStrategyInterface
             $iteration++;
         }
 
-        if (!empty($categories)) {
+        if (count($categories) !== 0) {
             $this->postData($categories, $message);
         }
     }

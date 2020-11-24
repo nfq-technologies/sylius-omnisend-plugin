@@ -109,7 +109,7 @@ class ProductBatchHandleStrategy implements BatchHandlerStrategyInterface
             $iteration++;
         }
 
-        if (!empty($resources)) {
+        if (count($resources) !== 0) {
             $this->postData($resources, $message, $method);
         }
     }
