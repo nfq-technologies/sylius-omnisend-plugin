@@ -80,8 +80,8 @@ class TaxonRepository extends BaseRepository implements TaxonRepositoryInterface
 5.Migrations should be generated and executed
 
 ```
-    bin\console d:m:g
-    bin\console d:m:m
+    bin/console doctrine:migrations:diff
+    bin/console doctrine:migrations:migrate
 ```
 
 6.Include services:

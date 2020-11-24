@@ -20,9 +20,9 @@ declare(strict_types=1);
 namespace Tests\NFQ\SyliusOmnisendPlugin\Application\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use NFQ\SyliusOmnisendPlugin\Model\PushedToOmnisendAwareTrait;
 use Sylius\Component\Core\Model\Taxon as BaseTaxon;
 use NFQ\SyliusOmnisendPlugin\Model\TaxonInterface;
-use NFQ\SyliusOmnisendPlugin\Model\TaxonTrait;
 
 /**
  * @ORM\Entity
@@ -30,5 +30,5 @@ use NFQ\SyliusOmnisendPlugin\Model\TaxonTrait;
  */
 class Taxon extends BaseTaxon implements TaxonInterface
 {
-    use TaxonTrait;
+    use PushedToOmnisendAwareTrait;
 }

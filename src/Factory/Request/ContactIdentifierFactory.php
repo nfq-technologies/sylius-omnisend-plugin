@@ -25,7 +25,7 @@ use NFQ\SyliusOmnisendPlugin\Client\Request\Model\ContactIdentifierChannelValue;
 use NFQ\SyliusOmnisendPlugin\Utils\DatetimeHelper;
 use NFQ\SyliusOmnisendPlugin\Utils\DatetimeProvider;
 use function ucfirst;
-use DateTime;
+use function method_exists;
 
 class ContactIdentifierFactory implements ContactIdentifierFactoryInterface
 {
@@ -55,7 +55,11 @@ class ContactIdentifierFactory implements ContactIdentifierFactoryInterface
         $channelValue->setStatus($status);
         $channelValue->setStatusDate(DatetimeHelper::format(DatetimeProvider::currentDateTime()));
         $key = 'set' . ucfirst($this->typesMap[$type]);
-        $channel->$key($channelValue);
+
+        if (method_exists($channel, $key)) {
+            $channel->$key($channelValue);
+        }
+
         $contactIdentifier->setChannels($channel);
 
         return $contactIdentifier;
