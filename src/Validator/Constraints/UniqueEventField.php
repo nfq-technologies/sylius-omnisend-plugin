@@ -15,17 +15,19 @@
  * http://www.nfq.lt
  */
 
-namespace Tests\NFQ\SyliusOmnisendPlugin\Controller;
+declare(strict_types=1);
 
-use NFQ\SyliusOmnisendPlugin\Controller\TestController;
-use PHPUnit\Framework\TestCase;
+namespace NFQ\SyliusOmnisendPlugin\Validator\Constraints;
 
-class TestControllerTest extends TestCase
+use Symfony\Component\Validator\Constraint;
+
+class UniqueEventField extends Constraint
 {
-    public function testActionResponse()
-    {
-        $testController = new TestController();
+    /** @var string */
+    public $message = 'Duplicated system name field';
 
-        $this->assertEquals('Omnisend', $testController->__invoke()->getContent());
+    public function getTargets()
+    {
+        return self::PROPERTY_CONSTRAINT;
     }
 }

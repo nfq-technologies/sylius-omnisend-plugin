@@ -34,3 +34,53 @@ winzou_state_machine:
           do: ["@nfq_sylius_omnisend_plugin.event_subscriber.order", "onShipmentStateChange"]
           args: ["object"]
           priority: 255
+
+sylius_grid:
+  templates:
+    action:
+      nfq_sylius_omnisend_sync_events: "@NFQSyliusOmnisendPlugin/Event/Admin/_sync.html.twig"
+  grids:
+    nfq_sylius_omnisend_event:
+      driver:
+        name: doctrine/orm
+        options:
+          class: NFQ\SyliusOmnisendPlugin\Model\Event
+      fields:
+        channel:
+          type: twig
+          label: sylius.ui.channel
+          options:
+            template: "@SyliusAdmin/Order/Grid/Field/channel.html.twig"
+        name:
+          type: string
+          label: nfq_sylius_omnisend_plugin.ui.event.name
+        systemName:
+          type: string
+          label: nfq_sylius_omnisend_plugin.ui.event.system_name
+        enabled:
+          type: twig
+          label: sylius.ui.enabled
+          options:
+            template: SyliusUiBundle:Grid/Field:enabled.html.twig
+      actions:
+        main:
+          create:
+            type: create
+          sync:
+            type: nfq_sylius_omnisend_sync_events
+            label: nfq_sylius_omnisend_plugin.ui.sync_events
+            options:
+              link:
+                route: nfq_sylius_omnisend_sync_events_action
+        item:
+          update:
+            type: update
+      sorting:
+        name: asc
+      filters:
+        name:
+          type: string
+        systemName:
+          type: string
+        enabled:
+          type: boolean

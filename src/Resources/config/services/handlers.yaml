@@ -21,6 +21,34 @@ services:
       - '@nfq_sylius_omnisend_plugin.factory.request.category'
     tags: [ messenger.message_handler ]
 
+  nfq_sylius_omnisend_plugin.message.handler.update_event:
+    class: NFQ\SyliusOmnisendPlugin\Message\Handler\UpdateEventHandler
+    arguments:
+      - '@nfq_sylius_omnisend_plugin.repository.event'
+      - '@nfq_sylius_omnisend_plugin.builder.request.event_director'
+      - '@nfq_sylius_omnisend_plugin.client.omnisend'
+    tags: [ messenger.message_handler ]
+
+  nfq_sylius_omnisend_plugin.message.handler.sync_events:
+    class: NFQ\SyliusOmnisendPlugin\Message\Handler\SyncEventsHandler
+    arguments:
+      - '@nfq_sylius_omnisend_plugin.repository.event'
+      - '@doctrine.orm.entity_manager'
+      - '@nfq_sylius_omnisend_plugin.client.omnisend'
+      - '@sylius.repository.channel'
+    tags: [ messenger.message_handler ]
+
+  nfq_sylius_omnisend_plugin.message.handler.push_custom_event:
+    class: NFQ\SyliusOmnisendPlugin\Message\Handler\PushCustomEventHandler
+    arguments:
+      - '@nfq_sylius_omnisend_plugin.repository.event'
+      - '@nfq_sylius_omnisend_plugin.builder.request.event_director'
+      - '@nfq_sylius_omnisend_plugin.client.omnisend'
+      - '@validator'
+    tags: [ messenger.message_handler ]
+    calls:
+      - ['setLogger', ['@monolog.logger']]
+
   nfq_sylius_omnisend_plugin.message.handler.create_category:
     class: NFQ\SyliusOmnisendPlugin\Message\Handler\CreateCategoryHandler
     arguments:

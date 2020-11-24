@@ -71,3 +71,11 @@ services:
     class: NFQ\SyliusOmnisendPlugin\Builder\Request\ProductBuilderDirector
     arguments:
       - '@nfq_sylius_omnisend_plugin.builder.request.product'
+
+  nfq_sylius_omnisend_plugin.builder.request.event:
+    class: NFQ\SyliusOmnisendPlugin\Builder\Request\EventBuilder
+
+  nfq_sylius_omnisend_plugin.builder.request.event_director:
+    class: NFQ\SyliusOmnisendPlugin\Builder\Request\EventBuilderDirector
+    arguments:
+      - '@nfq_sylius_omnisend_plugin.builder.request.event'

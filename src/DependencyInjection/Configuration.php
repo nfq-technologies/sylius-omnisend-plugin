@@ -19,6 +19,12 @@ declare(strict_types=1);
 
 namespace NFQ\SyliusOmnisendPlugin\DependencyInjection;
 
+use NFQ\SyliusOmnisendPlugin\Form\Type\EventFieldType;
+use NFQ\SyliusOmnisendPlugin\Form\Type\EventType;
+use NFQ\SyliusOmnisendPlugin\Model\Event;
+use NFQ\SyliusOmnisendPlugin\Model\EventField;
+use Sylius\Bundle\ResourceBundle\Controller\ResourceController;
+use Sylius\Component\Resource\Factory\Factory;
 use NFQ\SyliusOmnisendPlugin\Model\OrderDetails;
 use Sylius\Bundle\ResourceBundle\SyliusResourceBundle;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
@@ -83,6 +89,47 @@ final class Configuration implements ConfigurationInterface
                                     ->addDefaultsIfNotSet()
                                     ->children()
                                         ->scalarNode('model')->defaultValue(OrderDetails::class)->cannotBeEmpty()->end()
+                                    ->end()
+                                ->end()
+                            ->end()
+                        ->end()
+                        ->arrayNode('event')
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->variableNode('options')->end()
+                                ->arrayNode('classes')
+                                    ->addDefaultsIfNotSet()
+                                    ->children()
+                                        ->scalarNode('model')
+                                            ->defaultValue(Event::class)->cannotBeEmpty()
+                                        ->end()
+                                        ->scalarNode('form')
+                                            ->defaultValue(EventType::class)
+                                        ->end()
+                                        ->scalarNode('controller')
+                                            ->defaultValue(ResourceController::class)
+                                        ->end()
+                                        ->scalarNode('factory')
+                                            ->defaultValue(Factory::class)
+                                        ->end()
+                                    ->end()
+                                ->end()
+                            ->end()
+                        ->end()
+                        ->arrayNode('event_field')
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->variableNode('options')->end()
+                                ->arrayNode('classes')
+                                    ->addDefaultsIfNotSet()
+                                    ->children()
+                                        ->scalarNode('model')->defaultValue(EventField::class)->cannotBeEmpty()->end()
+                                        ->scalarNode('form')
+                                            ->defaultValue(EventFieldType::class)
+                                        ->end()
+                                        ->scalarNode('factory')
+                                            ->defaultValue(Factory::class)
+                                        ->end()
                                     ->end()
                                 ->end()
                             ->end()
