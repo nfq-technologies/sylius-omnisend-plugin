@@ -1,5 +1,4 @@
 imports:
-  - { resource: services/block_events.yaml }
   - { resource: services/builders.yaml }
   - { resource: services/commands.yaml }
   - { resource: services/controllers.yaml }

@@ -24,48 +24,24 @@ use Sylius\Component\Core\Model\ChannelInterface;
 
 trait PushedToOmnisendAwareRepositoryTrait
 {
-    public function getSyncedToOmnisendCount(?ChannelInterface $channel = null): int
-    {
-        /** @var QueryBuilder $qb */
-        $qb = $this->getSyncedToOmnisendQueryBuilder('t', $channel);
-
-        return (int)$qb->select('count(t.id)')
-            ->getQuery()
-            ->getSingleScalarResult();
-    }
-
-    public function findSyncedToOmnisend(int $offset, int $limit, ?ChannelInterface $channel = null): array
+    public function findSyncedToOmnisend(?ChannelInterface $channel = null): iterable
     {
         /** @var QueryBuilder $qb */
         $qb = $this->getSyncedToOmnisendQueryBuilder('t', $channel);
 
         return $qb
-            ->setMaxResults($limit)
-            ->setFirstResult($offset)
             ->getQuery()
-            ->getResult();
+            ->iterate();
     }
 
-    public function getNotSyncedToOmnisendCount(?ChannelInterface $channel = null): int
-    {
-        /** @var QueryBuilder $qb */
-        $qb = $this->getNotSyncedToOmnisendQueryBuilder('t', $channel);
-
-        return (int)$qb->select('count(t.id)')
-            ->getQuery()
-            ->getSingleScalarResult();
-    }
-
-    public function findNotSyncedToOmnisend(int $offset, int $limit, ?ChannelInterface $channel = null): array
+    public function findNotSyncedToOmnisend(?ChannelInterface $channel = null): iterable
     {
         /** @var QueryBuilder $qb */
         $qb = $this->getNotSyncedToOmnisendQueryBuilder('t', $channel);
 
         return $qb
-            ->setMaxResults($limit)
-            ->setFirstResult($offset)
             ->getQuery()
-            ->getResult();
+            ->iterate();
     }
 
     public function getNotSyncedToOmnisendQueryBuilder(string $alias = 't', ?ChannelInterface $channel = null): QueryBuilder
