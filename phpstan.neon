@@ -1,6 +1,7 @@
 parameters:
     reportUnmatchedIgnoredErrors: false
     checkMissingIterableValueType: false
+    checkGenericClassInNonGenericObjectType: false
 
     excludes_analyse:
         # Makes PHPStan crash
@@ -12,3 +13,7 @@ parameters:
 
     ignoreErrors:
         - '/Parameter #1 \$configuration of method Symfony\\Component\\DependencyInjection\\Extension\\Extension::processConfiguration\(\) expects Symfony\\Component\\Config\\Definition\\ConfigurationInterface, Symfony\\Component\\Config\\Definition\\ConfigurationInterface\|null given\./'
+        - '/Parameter #1 \$path of method Liip\\ImagineBundle\\Imagine\\Cache\\CacheManager::resolve\(\) expects string, string\|null given/'
+        - '/Only booleans are allowed in an elseif condition, Sylius\\Component\\Core\\Model\\ImageInterface\|false given./'
+        - '/Method NFQ\\SyliusOmnisendPlugin\\Serializer\\NameConverter\\ProductPickerNameConverter::normalize\(\) has parameter \$propertyName with no typehint specified./'
+        - '/Method NFQ\\SyliusOmnisendPlugin\\Serializer\\NameConverter\\ProductPickerNameConverter::denormalize\(\) has parameter \$propertyName with no typehint specified./'
