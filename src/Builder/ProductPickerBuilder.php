@@ -84,7 +84,7 @@ class ProductPickerBuilder implements ProductPickerBuilderInterface
         $translation = $product->getTranslation($locale);
 
         $this->productPicker
-            ->setTitle($translation->getName())
+            ->setTitle(htmlspecialchars($translation->getName()))
             ->setProductUrl(
                 $this->router->generate(
                     'sylius_shop_product_show',
@@ -95,7 +95,7 @@ class ProductPickerBuilder implements ProductPickerBuilderInterface
                     UrlGeneratorInterface::ABSOLUTE_URL
                 )
             )
-            ->setDescription($translation->getDescription());
+            ->setDescription(htmlspecialchars($translation->getDescription()));
     }
 
     public function addPrices(ProductVariantInterface $productVariant): void

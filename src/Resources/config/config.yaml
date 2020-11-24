@@ -13,6 +13,6 @@ sylius_ui:
         omnisend_script:
           template: '@NFQSyliusOmnisendPlugin/Shop/Layout/_javascript.html.twig'
 
-    sylius.shop.product.show.after_description:
+    sylius.shop.product.show.content:
       blocks:
         omnisend_script: '@NFQSyliusOmnisendPlugin/Shop/Product/_product_picker.html.twig'
