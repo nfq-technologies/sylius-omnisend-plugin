@@ -121,7 +121,7 @@ class CartBuilderTest extends TestCase
             );
         $order = new OrderMock();
         $order->setLocaleCode('en');
-        $order->setOmnisendCartId('4444');
+        $order->getOmnisendOrderDetails()->setCartId('4444');
         $this->builder->createCart();
         $this->builder->addRecoveryUrl($order);
         $this->builder->getCart();

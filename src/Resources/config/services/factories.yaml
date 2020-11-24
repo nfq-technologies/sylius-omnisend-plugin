@@ -15,3 +15,12 @@ services:
     arguments:
       - '@nfq_sylius_omnisend_plugin.resolver.product_image'
       - '@router'
+
+  nfq_sylius_omnisend_plugin.factory.request.order_product:
+    class: NFQ\SyliusOmnisendPlugin\Factory\Request\OrderProductFactory
+    arguments:
+      - '@nfq_sylius_omnisend_plugin.resolver.product_image'
+      - '@router'
+
+  nfq_sylius_omnisend_plugin.factory.request.order_address:
+    class: NFQ\SyliusOmnisendPlugin\Factory\Request\OrderAddressFactory

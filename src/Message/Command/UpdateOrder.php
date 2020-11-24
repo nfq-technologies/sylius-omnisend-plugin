@@ -17,24 +17,23 @@
 
 declare(strict_types=1);
 
-namespace NFQ\SyliusOmnisendPlugin\Model;
+namespace NFQ\SyliusOmnisendPlugin\Message\Command;
 
-trait OmnisendCartAwareTrait
+class UpdateOrder implements CommandInterface
 {
-    /**
-     * @var string|null
-     *
-     * @ORM\Column(type="string", name="omnisend_cart_id", length=32, nullable=true)
-     */
-    private $omnisendCartId;
+    use CommandTrait;
 
-    public function getOmnisendCartId(): ?string
+    /** @var int */
+    private $orderId;
+
+    public function __construct(int $orderId, string $channelCode)
     {
-        return $this->omnisendCartId;
+        $this->channelCode = $channelCode;
+        $this->orderId = $orderId;
     }
 
-    public function setOmnisendCartId(?string $omnisendCartId): void
+    public function getOrderId(): int
     {
-        $this->omnisendCartId = $omnisendCartId;
+        return $this->orderId;
     }
 }

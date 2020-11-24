@@ -1,16 +1,36 @@
 winzou_state_machine:
+  sylius_order:
+    callbacks:
+      after:
+        nfq_sylius_omnisend_after_order_state_change:
+          on: ["create", "cancel", "fulfill"]
+          do: ["@nfq_sylius_omnisend_plugin.event_subscriber.order", "onOrderStateChange"]
+          args: ["event", "object"]
+          priority: 255
+
   sylius_order_checkout:
     callbacks:
       after:
-        nfq_sylius_omnisend_after_address_change:
-          on: ["address"]
+        nfq_sylius_omnisend_after_checkout_step_change:
+          on: ["address", "select_shipping", "select_payment"]
           do: ['@nfq_sylius_omnisend_plugin.event_subscriber.cart', "updateOrder"]
           args: ["object"]
-        nfq_sylius_omnisend_after_select_shipping:
-          on: ["select_shipping"]
-          do: ['@nfq_sylius_omnisend_plugin.event_subscriber.cart', "updateOrder"]
+          priority: 255
+
+  sylius_payment:
+    callbacks:
+      after:
+        nfq_sylius_omnisend_after_payment_change:
+          on: ["create", "process", "authorize", "complete", "fail", "cancel", "refund"]
+          do: ["@nfq_sylius_omnisend_plugin.event_subscriber.order", "onPaymentStateChange"]
           args: ["object"]
-        nfq_sylius_omnisend_after_select_payment:
-          on: ["select_payment"]
-          do: ['@nfq_sylius_omnisend_plugin.event_subscriber.cart', "updateOrder"]
+          priority: 255
+
+  sylius_shipment:
+    callbacks:
+      after:
+        nfq_sylius_omnisend_after_shipment_change:
+          on: ["create", "ship", "cancel"]
+          do: ["@nfq_sylius_omnisend_plugin.event_subscriber.order", "onShipmentStateChange"]
           args: ["object"]
+          priority: 255

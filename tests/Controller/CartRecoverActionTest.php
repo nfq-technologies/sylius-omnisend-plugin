@@ -84,7 +84,7 @@ class CartRecoverActionTest extends TestCase
         $channel = new Channel();
         $channel->setCode('a');
         $order->setChannel($channel);
-        $order->setOmnisendCartId('111');
+        $order->getOmnisendOrderDetails()->setCartId('111');
         $order->setTokenValue('TOKEN');
         $this->orderRepository
             ->expects($this->once())

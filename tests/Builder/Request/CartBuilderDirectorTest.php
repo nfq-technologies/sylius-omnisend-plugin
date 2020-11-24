@@ -44,7 +44,6 @@ class CartBuilderDirectorTest extends TestCase
         $this->builder->expects($this->once())->method('createCart');
         $this->builder->expects($this->once())->method('addOrderData');
         $this->builder->expects($this->once())->method('addCustomerData');
-        $this->builder->expects($this->once())->method('addRequestData');
         $this->builder->expects($this->once())->method('addRecoveryUrl');
         $this->builder->expects($this->once())->method('addProducts');
         $this->builder

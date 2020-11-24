@@ -18,8 +18,9 @@
 declare(strict_types=1);
 
 namespace NFQ\SyliusOmnisendPlugin\Model;
+
 use Sylius\Component\Core\Model\OrderInterface as BaseOrderInterface;
 
-interface OrderInterface extends BaseOrderInterface, OmnisendCartAwareInterface
+interface OrderInterface extends BaseOrderInterface, OmnisendOrderDetailsAwareInterface
 {
 }

@@ -19,9 +19,9 @@ declare(strict_types=1);
 
 namespace NFQ\SyliusOmnisendPlugin\Model;
 
-interface OmnisendCartAwareInterface
+interface OmnisendOrderDetailsAwareInterface
 {
-    public function getOmnisendCartId(): ?string;
+    public function getOmnisendOrderDetails(): ?OrderDetails;
 
-    public function setOmnisendCartId(?string $omnisendCartId): void;
+    public function setOmnisendOrderDetails(OrderDetails $orderDetails): void;
 }

@@ -101,7 +101,7 @@ class UpdateCartHandlerTest extends TestCase
             ->expects($this->once())
             ->method('add')
             ->willReturnCallback(function (OrderInterface $order) {
-                $this->assertEquals($order->getOmnisendCartId(), '444');
+                $this->assertEquals($order->getOmnisendOrderDetails()->getCartId(), '444');
             });
 
         $this->handler->__invoke(
@@ -118,7 +118,7 @@ class UpdateCartHandlerTest extends TestCase
         $channel = new Channel();
         $channel->setCode('a');
         $order->setChannel($channel);
-        $order->setOmnisendCartId('2222');
+        $order->getOmnisendOrderDetails()->setCartId('2222');
         $this->orderRepository
             ->expects($this->once())
             ->method('find')

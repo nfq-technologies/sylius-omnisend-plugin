@@ -44,45 +44,22 @@ class DeleteCartHandlerTest extends TestCase
     /** @var DeleteCartHandler */
     private $handler;
 
-    /** @var OrderRepositoryInterface */
-    private $orderRepository;
-
     /** @var OmnisendClientInterface */
     private $omnisendClient;
 
     protected function setUp(): void
     {
-        $this->orderRepository = $this->createMock(OrderRepositoryInterface::class);
         $this->omnisendClient = $this->createMock(OmnisendClientInterface::class);
 
         $this->handler = new DeleteCartHandler(
-            $this->orderRepository,
             $this->omnisendClient
         );
-    }
-
-    public function testIfDoesNotApplyAnyActionIfOrderDoesNotExists()
-    {
-        $this->orderRepository
-            ->expects($this->once())
-            ->method('find')
-            ->willReturn(null);
-
-        $this->omnisendClient
-            ->expects($this->never())
-            ->method('deleteCart');
-
-        $this->handler->__invoke((new DeleteCart())->setOrderId(1)->setChannelCode('a'));
     }
 
     public function testIfDeletesIfOrderExists()
     {
         $order = new OrderMock();
-        $order->setOmnisendCartId('444');
-        $this->orderRepository
-            ->expects($this->once())
-            ->method('find')
-            ->willReturn($order);
+        $order->getOmnisendOrderDetails()->setCartId('444');
 
         $this->omnisendClient
             ->expects($this->once())
@@ -91,7 +68,7 @@ class DeleteCartHandlerTest extends TestCase
 
         $this->handler->__invoke(
             (new DeleteCart())
-                ->setOrderId(1)
+                ->setOmnisendCartId("1")
                 ->setChannelCode('a')
         );
     }

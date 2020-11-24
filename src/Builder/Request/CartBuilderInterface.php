@@ -30,8 +30,6 @@ interface CartBuilderInterface
 
     public function addCustomerData(OrderInterface $order, ?string $contactId = null): void;
 
-    public function addRequestData(OrderInterface $order): void;
-
     public function addRecoveryUrl(OrderInterface $order): void;
 
     public function addProducts(OrderInterface $order): void;

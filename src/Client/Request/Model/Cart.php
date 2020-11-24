@@ -19,8 +19,6 @@ declare(strict_types=1);
 
 namespace NFQ\SyliusOmnisendPlugin\Client\Request\Model;
 
-use DateTimeInterface;
-
 class Cart
 {
     /** @var string */
@@ -28,9 +26,6 @@ class Cart
 
     /** @var string|null */
     private $contactID;
-
-    /** @var string|null */
-    private $attributionID;
 
     /** @var string|null */
     private $email;
@@ -79,16 +74,6 @@ class Cart
     public function setContactID(?string $contactID): void
     {
         $this->contactID = $contactID;
-    }
-
-    public function getAttributionID(): ?string
-    {
-        return $this->attributionID;
-    }
-
-    public function setAttributionID(?string $attributionID): void
-    {
-        $this->attributionID = $attributionID;
     }
 
     public function getEmail(): ?string
