@@ -54,6 +54,16 @@ services:
       - '@sylius.behat.shared_storage'
       - '@sylius.manager.channel'
 
+  nfq_sylius_omnisend.provider.custom_event:
+    class: Tests\NFQ\SyliusOmnisendPlugin\Behat\Provider\CustomEventProvider
+    arguments:
+      - '@nfq_sylius_omnisend_plugin.repository.event'
+
+  nfq_sylius_omnisend.context.setup.custom_event:
+    class: Tests\NFQ\SyliusOmnisendPlugin\Behat\Context\Setup\CustomEventContext
+    arguments:
+      - '@nfq_sylius_omnisend.provider.custom_event'
+
   nfq_sylius_omnisend.context.ui.admin.managing_channel:
     class: Tests\NFQ\SyliusOmnisendPlugin\Behat\Context\Ui\Admin\ManagingChannelContext
     arguments:
@@ -66,6 +76,8 @@ services:
       - '@nfq_sylius_omnisend.page.admin.event.create'
       - '@nfq_sylius_omnisend.page.admin.event.update'
       - '@nfq_sylius_omnisend.page.admin.event.index'
+      - '@nfq_sylius_omnisend_plugin.repository.event'
+      - '@nfq_sylius_omnisend.provider.custom_event'
 
   nfq_sylius_omnisend.context.ui.admin.managing_taxon:
     class: Tests\NFQ\SyliusOmnisendPlugin\Behat\Context\Ui\Admin\ManagingTaxonContext

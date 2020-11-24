@@ -114,7 +114,9 @@ class Event implements ResourceInterface, TimestampableInterface
 
     public function setFields(Collection $fields): void
     {
-        $this->fields = $fields;
+        foreach ($fields as $field) {
+            $this->addField($field);
+        }
     }
 
     public function addField(EventField $eventField): void

@@ -309,6 +309,8 @@ default:
                 - sylius.behat.context.transform.shared_storage
 
                 - sylius.behat.context.setup.channel
+                - nfq_sylius_omnisend.context.setup.channel
+                - nfq_sylius_omnisend.context.setup.custom_event
                 - sylius.behat.context.setup.locale
                 - sylius.behat.context.setup.admin_security
 

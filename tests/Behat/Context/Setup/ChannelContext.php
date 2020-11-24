@@ -15,6 +15,8 @@
  * http://www.nfq.lt
  */
 
+declare(strict_types=1);
+
 namespace Tests\NFQ\SyliusOmnisendPlugin\Behat\Context\Setup;
 
 use Behat\Behat\Context\Context;

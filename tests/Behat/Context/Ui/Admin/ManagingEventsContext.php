@@ -20,11 +20,12 @@ declare(strict_types=1);
 namespace Tests\NFQ\SyliusOmnisendPlugin\Behat\Context\Ui\Admin;
 
 use Behat\Behat\Context\Context;
-use Sylius\Behat\NotificationType;
 use Sylius\Behat\Service\SharedStorageInterface;
+use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Tests\NFQ\SyliusOmnisendPlugin\Behat\Page\Admin\Event\CreatePage;
 use Tests\NFQ\SyliusOmnisendPlugin\Behat\Page\Admin\Event\IndexPage;
 use Tests\NFQ\SyliusOmnisendPlugin\Behat\Page\Admin\Event\UpdatePage;
+use Tests\NFQ\SyliusOmnisendPlugin\Behat\Provider\CustomEventProvider;
 use Webmozart\Assert\Assert;
 
 class ManagingEventsContext implements Context
@@ -41,22 +42,50 @@ class ManagingEventsContext implements Context
     /** @var IndexPage */
     private $indexPage;
 
+    /** @var RepositoryInterface */
+    private $repository;
+
+    /** @var CustomEventProvider */
+    private $customEventProvider;
+
     public function __construct(
         SharedStorageInterface $sharedStorage,
         CreatePage $createPage,
         UpdatePage $updatePage,
-        IndexPage $indexPage
+        IndexPage $indexPage,
+        RepositoryInterface $repository,
+        CustomEventProvider $customEventProvider
     ) {
         $this->sharedStorage = $sharedStorage;
         $this->createPage = $createPage;
         $this->updatePage = $updatePage;
         $this->indexPage = $indexPage;
+        $this->repository = $repository;
+        $this->customEventProvider = $customEventProvider;
     }
 
     /** @Given I want to create a new custom event */
     public function iWantToCreateANewTaxon(): void
     {
         $this->createPage->open();
+    }
+
+    /** @Given I view custom Omnisend event list */
+    public function iViewEventsList(): void
+    {
+        $this->indexPage->open();
+    }
+
+    /** @When I initialize sync process */
+    public function iInitializeSyncProcess(): void
+    {
+        $this->indexPage->startSyncProcess();
+    }
+
+    /** @Then I should see one item in the list */
+    public function iShouldSeeItemInList(): void
+    {
+        Assert::count($this->indexPage->getItems(), 1);
     }
 
     /** @When I specify its system name as :name */
@@ -91,10 +120,29 @@ class ManagingEventsContext implements Context
     {
         $this->createPage->create();
     }
+    /**
+     * @When I update it
+     */
+    public function iUpdateIt()
+    {
+        $this->updatePage->saveChanges();
+    }
 
     /** @Then I should be notified that form contains errors */
     public function iShouldBeNotifiedItHasBeenSuccessfullyCreated()
     {
         Assert::notNull($this->createPage->getFormError());
+    }
+
+    /**
+     * @When I want to modify the :systemName event
+     */
+    public function iWantToModifyAProduct(string $systemName): void
+    {
+        $event = $this->repository->findOneBy(['systemName' => $systemName]);
+
+        if (null !== $event) {
+            $this->updatePage->open(['id' => $event->getId()]);
+        }
     }
 }

@@ -23,4 +23,26 @@ use Sylius\Behat\Page\Admin\Crud\IndexPage as BaseIndexPage;
 
 class IndexPage extends BaseIndexPage
 {
+    public function startSyncProcess(): void
+    {
+        $button = $this->getDocument()->find('css', '#omnisend_sync_events');
+        $button->click();
+//        $button = $this->getElement('sync_button');
+//        $button->click();
+    }
+
+    public function getItems(): array
+    {
+        return $this->getDocument()->findAll('css', 'tr.item');
+    }
+
+    protected function getDefinedElements(): array
+    {
+        return array_merge(
+            parent::getDefinedElements(),
+            [
+                'sync_button' => '#omnisend_sync_events',
+            ]
+        );
+    }
 }
