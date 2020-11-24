@@ -57,7 +57,7 @@ class Event implements ResourceInterface, TimestampableInterface
         $this->enabled = true;
     }
 
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
