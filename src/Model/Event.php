@@ -54,6 +54,7 @@ class Event implements ResourceInterface, TimestampableInterface
     public function __construct()
     {
         $this->fields = new ArrayCollection();
+        $this->enabled = true;
     }
 
     public function getId()

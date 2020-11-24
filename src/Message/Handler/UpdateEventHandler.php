@@ -51,7 +51,6 @@ class UpdateEventHandler implements MessageHandlerInterface
     {
         /** @var BaseEvent|null $event */
         $event = $this->eventRepository->findOneBy(['systemName' => $message->getCode()]);
-
         if (null !== $event) {
             $this->omnisendClient->postEvent(
                 $this->eventBuilderDirector->build($event),

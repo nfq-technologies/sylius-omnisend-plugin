@@ -26,6 +26,8 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 class EventType extends AbstractResourceType
@@ -41,7 +43,9 @@ class EventType extends AbstractResourceType
                 TextType::class,
                 [
                     'label' => 'nfq_sylius_omnisend_plugin.ui.event.event_id',
-                    'disabled' => true,
+                    'attr' => [
+                        'readonly' => 'readonly',
+                    ],
                 ]
             )
             ->add(
@@ -49,12 +53,18 @@ class EventType extends AbstractResourceType
                 TextType::class,
                 [
                     'label' => 'nfq_sylius_omnisend_plugin.ui.event.name',
+                    'attr' => [
+                        'readonly' => 'readonly',
+                    ],
                 ]
             )->add(
                 'enabled',
                 CheckboxType::class,
                 [
                     'label' => 'sylius.ui.enable',
+                    'attr' => [
+                        'readonly' => 'readonly',
+                    ],
                 ]
             )->add(
                 'systemName',
@@ -77,11 +87,27 @@ class EventType extends AbstractResourceType
                     'allow_add' => true,
                     'allow_delete' => false,
                     'by_reference' => false,
+                    'entry_options' => ['attr' => ['class' => 'ui attached segment']],
                     'label' => 'nfq_sylius_omnisend_plugin.ui.event.fields',
                     'constraints' => [
                         new UniqueEventField(['groups' => 'sylius']),
                     ],
                 ]
             );
+
+        $builder->addEventListener(
+            FormEvents::PRE_SET_DATA,
+            function (FormEvent $event) {
+                $object = $event->getData();
+                $form = $event->getForm();
+
+                if (!$object || null === $object->getId()) {
+                    $form->remove('eventID');
+                    $form->remove('name');
+                    $form->remove('enabled');
+                }
+            }
+        );
+
     }
 }

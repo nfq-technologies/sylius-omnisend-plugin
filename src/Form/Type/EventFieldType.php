@@ -25,6 +25,8 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 class EventFieldType extends AbstractResourceType
@@ -40,6 +42,9 @@ class EventFieldType extends AbstractResourceType
                 CheckboxType::class,
                 [
                     'label' => 'nfq_sylius_omnisend_plugin.ui.event_field.required',
+                    'attr' => [
+                        'readonly' => 'readonly',
+                    ],
                 ]
             )
             ->add(
@@ -47,6 +52,9 @@ class EventFieldType extends AbstractResourceType
                 TextType::class,
                 [
                     'label' => 'nfq_sylius_omnisend_plugin.ui.event_field.name',
+                    'attr' => [
+                        'readonly' => 'readonly',
+                    ],
                 ]
             )->add(
                 'systemName',
@@ -61,7 +69,23 @@ class EventFieldType extends AbstractResourceType
                 [
                     'choices' => array_combine(EventField::TYPES, EventField::TYPES),
                     'label' => 'nfq_sylius_omnisend_plugin.ui.event_field.type',
+                    'attr' => [
+                        'readonly' => 'readonly',
+                    ],
                 ]
             );
+
+        $builder->addEventListener(
+            FormEvents::PRE_SET_DATA,
+            function (FormEvent $event) {
+                $object = $event->getData();
+                $form = $event->getForm();
+
+                if (!$object || null === $object->getId()) {
+                    $form->remove('required');
+                    $form->remove('name');
+                }
+            }
+        );
     }
 }

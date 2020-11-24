@@ -60,6 +60,11 @@ class EventField implements ResourceInterface
     /** @var Event|null */
     private $event;
 
+    public function __construct()
+    {
+        $this->required = false;
+    }
+
     public function getId()
     {
         return $this->id;
