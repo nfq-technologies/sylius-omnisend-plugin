@@ -10,4 +10,9 @@ sylius_ui:
 
     sylius.shop.layout.javascripts:
       blocks:
-        omnisend: '@NFQSyliusOmnisendPlugin/Shop/Layout/_javascript.html.twig'
+        omnisend_script:
+          template: '@NFQSyliusOmnisendPlugin/Shop/Layout/_javascript.html.twig'
+
+    sylius.shop.product.show.after_description:
+      blocks:
+        omnisend_script: '@NFQSyliusOmnisendPlugin/Shop/Product/_product_picker.html.twig'

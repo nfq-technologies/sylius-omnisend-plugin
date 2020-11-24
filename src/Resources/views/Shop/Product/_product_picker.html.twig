@@ -1,6 +1,7 @@
 {% set productPickerData = nfq_sylius_omnisend_product_picker(settings.product, sylius.localeCode) %}
 {% if productPickerData %}
     <script type="text/javascript">
+        window.omnisend = window.omnisend || [];
         omnisend.push(
             [
                 "track",

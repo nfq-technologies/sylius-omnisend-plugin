@@ -4,14 +4,6 @@ services:
     tags:
       - { name: form.type_extension, extended_type: Sylius\Bundle\ChannelBundle\Form\Type\ChannelType }
 
-
-  nfq_sylius_omnisend_plugin.block_event_listener.sylius.product.show.content:
-    class: Sylius\Bundle\UiBundle\Block\BlockEventListener
-    arguments:
-      - '@@NFQSyliusOmnisendPlugin/Shop/Product/_product_picker.html.twig'
-    tags:
-      - { name: kernel.event_listener, event: sonata.block.event.sylius.shop.product.show.after_description, method: onBlockEvent }
-
   nfq_sylius_omnisend_plugin.resolver.product_image:
     class: NFQ\SyliusOmnisendPlugin\Resolver\ProductImageResolver
     arguments:
