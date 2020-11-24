@@ -21,7 +21,7 @@ Feature: Changed order billing address info should be sent to Omnisend
     Then I should be notified that it has been successfully edited
     And this order bill should be shipped to "Lucifer Morningstar", "Seaside Fwy", "90802", "Los Angeles", "United States"
     And Request type "PUT" to Omnisend endpoint "orders" was sent
-    And Omnisend request should contains data:
+    And Omnisend request should contain data:
       | key        | value       |
       | city       | Los Angeles |
       | address    | Seaside Fwy |

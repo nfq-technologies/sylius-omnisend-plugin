@@ -83,7 +83,7 @@ class ProductVariantFactory implements ProductVariantFactoryInterface
         );
 
         return $variant->setVariantID($productVariant->getCode())
-            ->setTitle(null !== $translation->getName() ? $translation->getName() : $productTranslation->getName())
+            ->setTitle($translation->getName() ?? $productTranslation->getName())
             ->setProductUrl($this->productUrlResolver->resolve($product, $localeCode))
             ->setStatus($this->productStockResolver->resolve($productVariant))
             ->setPrice($price)

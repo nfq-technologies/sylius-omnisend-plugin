@@ -24,13 +24,9 @@ use Sylius\Component\Core\Model\ChannelInterface;
 
 interface PushedToOmnisendAwareRepositoryInterface
 {
-    public function getSyncedToOmnisendCount(?ChannelInterface $channel = null): int;
+    public function findSyncedToOmnisend(?ChannelInterface $channel = null): iterable;
 
-    public function findSyncedToOmnisend(int $offset, int $limit, ?ChannelInterface $channel = null): array;
-
-    public function getNotSyncedToOmnisendCount(?ChannelInterface $channel = null): int;
-
-    public function findNotSyncedToOmnisend(int $offset, int $limit, ?ChannelInterface $channel = null): array;
+    public function findNotSyncedToOmnisend(?ChannelInterface $channel = null): iterable;
 
     public function getNotSyncedToOmnisendQueryBuilder(string $alias = 't', ?ChannelInterface $channel = null): QueryBuilder;
 

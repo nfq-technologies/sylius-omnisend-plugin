@@ -20,8 +20,8 @@ Feature: Changed order state data should be sent to Omnisend
     And it should have shipment in state "Cancelled"
     And it should have payment state "Cancelled"
     And Request type "PUT" to Omnisend endpoint "orders" was sent
-    And Omnisend request should contains data:
+    And Omnisend request should contain data:
       | key               | value       |
       | paymentStatus     | voided      |
       | fulfillmentStatus | unfulfilled |
-    And cancelled order date should be set
+    And order should have date of cancellation set

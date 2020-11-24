@@ -26,15 +26,14 @@ class CreateContact implements CommandInterface
     /** @var int */
     private $customerId;
 
+    public function __construct(int $customerId, ?string $channelCode)
+    {
+        $this->customerId = $customerId;
+        $this->channelCode = $channelCode;
+    }
+
     public function getCustomerId(): int
     {
         return $this->customerId;
-    }
-
-    public function setCustomerId(int $customerId): self
-    {
-        $this->customerId = $customerId;
-
-        return $this;
     }
 }

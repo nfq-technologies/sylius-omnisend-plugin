@@ -16,7 +16,7 @@ Feature: Push edited taxon to Omnisend
     When I rename it to "Stickers" in "English (United States)"
     And I save my changes
     And Taxon with a code "shirts" should be pushed to Omnisend
-    And Omnisend request should contains data:
+    And Omnisend request should contain data:
       | key        | value    |
       | categoryID | shirts   |
       | title      | Stickers |

@@ -1,20 +1,21 @@
 services:
   _defaults:
-    public: true
-
-  nfq_sylius_omnisend.page.shop.test:
-    class: Tests\NFQ\SyliusOmnisendPlugin\Behat\Page\Shop\TestPage
-    parent: 'sylius.behat.symfony_page'
+    autowire: true
+    autoconfigure: true
     public: true
 
   nfq_sylius_omnisend.page.admin.channel.update:
     class: Tests\NFQ\SyliusOmnisendPlugin\Behat\Page\Admin\Channel\UpdatePage
     parent: 'sylius.behat.page.admin.channel.update'
+    autowire: false
+    autoconfigure: false
     public: true
 
   nfq_sylius_omnisend.page.admin.event.update:
     class: Tests\NFQ\SyliusOmnisendPlugin\Behat\Page\Admin\Event\UpdatePage
     parent: 'sylius.behat.page.admin.crud.update'
+    autowire: false
+    autoconfigure: false
     arguments:
       $routeName: 'nfq_sylius_omnisend_plugin_admin_event_update'
     public: true
@@ -22,6 +23,8 @@ services:
   nfq_sylius_omnisend.page.admin.event.index:
     class: Tests\NFQ\SyliusOmnisendPlugin\Behat\Page\Admin\Event\IndexPage
     parent: 'sylius.behat.page.admin.crud.index'
+    autowire: false
+    autoconfigure: false
     arguments:
       $routeName: 'nfq_sylius_omnisend_plugin_admin_event_index'
     public: true
@@ -29,14 +32,11 @@ services:
   nfq_sylius_omnisend.page.admin.event.create:
     class: Tests\NFQ\SyliusOmnisendPlugin\Behat\Page\Admin\Event\CreatePage
     parent: 'sylius.behat.page.admin.crud.index'
+    autowire: false
+    autoconfigure: false
     arguments:
       $routeName: 'nfq_sylius_omnisend_plugin_admin_event_create'
     public: true
-
-  nfq_sylius_omnisend.context.ui.shop.test:
-    class: Tests\NFQ\SyliusOmnisendPlugin\Behat\Context\Ui\Shop\TestContext
-    arguments:
-      - '@nfq_sylius_omnisend.page.shop.test'
 
   nfq_sylius_omnisend.context.ui.shop.omnisend_tracking_script:
     class: Tests\NFQ\SyliusOmnisendPlugin\Behat\Context\Ui\Shop\OmnisendTrackingScriptContext

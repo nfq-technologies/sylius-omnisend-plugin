@@ -1,12 +1,5 @@
 default:
     suites:
-        test:
-            contexts:
-                - nfq_sylius_omnisend.context.ui.shop.test
-
-            filters:
-                tags: "@test"
-
         omnisend_key:
             contexts:
                 - nfq_sylius_omnisend.context.hook.doctrine
@@ -16,7 +9,6 @@ default:
                 - sylius.behat.context.ui.admin.notification
                 - sylius.behat.context.transform.channel
                 - sylius.behat.context.setup.channel
-                - nfq_sylius_omnisend.context.ui.shop.test
                 - sylius.behat.context.setup.admin_security
 
             filters:

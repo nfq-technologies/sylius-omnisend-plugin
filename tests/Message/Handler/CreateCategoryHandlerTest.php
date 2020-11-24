@@ -87,7 +87,7 @@ class CreateCategoryHandlerTest extends TestCase
         $this->taxonRepository
             ->expects($this->exactly(1))
             ->method('findOneBy')
-            ->willReturnCallback(function () use($taxon) { return $taxon; });
+            ->willReturn($taxon);
         $this->omnisendClient
             ->expects($this->exactly(1))
             ->method('postCategory')

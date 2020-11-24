@@ -26,7 +26,6 @@ use NFQ\SyliusOmnisendPlugin\Doctrine\ORM\TaxonRepositoryInterface;
 use NFQ\SyliusOmnisendPlugin\Factory\Request\BatchFactoryInterface;
 use NFQ\SyliusOmnisendPlugin\Factory\Request\CategoryFactoryInterface;
 use NFQ\SyliusOmnisendPlugin\Message\Command\CreateBatch;
-use NFQ\SyliusOmnisendPlugin\Model\TaxonInterface;
 use DateTime;
 
 class CategoryBatchHandleStrategy implements BatchHandlerStrategyInterface
@@ -67,35 +66,41 @@ class CategoryBatchHandleStrategy implements BatchHandlerStrategyInterface
 
     public function handle(CreateBatch $message): void
     {
-        $count = $this->repository->getNotSyncedToOmnisendCount();
+        $rawData = $this->repository->findNotSyncedToOmnisend();
+        $categories = [];
+        $iteration = 1;
 
-        for ($i = 0; $i < ceil($count / $message->getBatchSize()); $i++) {
-            /** @var TaxonInterface[] $rawData */
-            $rawData = $this->repository->findNotSyncedToOmnisend( $i * $message->getBatchSize(), $message->getBatchSize());
-            $categories = [];
+        foreach ($rawData as $row) {
+            $item = $row[0];
+            $categories[] = $this->categoryFactory->create($item, $message->getLocaleCode());
+            $item->setPushedToOmnisend(new DateTime());
+            $this->entityManager->persist($item);
 
-            foreach ($rawData as $item) {
-                $categories[] = $this->categoryFactory->create($item, $message->getLocaleCode());
+            if (($iteration % $message->getBatchSize()) === 0) {
+                $this->postData($categories, $message);
+                $categories = [];
             }
+            $iteration++;
+        }
 
-            if (count($categories) > 0) {
-                $response = $this->omnisendClient->postBatch(
-                    $this->batchFactory->create(
-                        Batch::METHODS_POST,
-                        Batch::ENDPOINTS_CATEGORIES,
-                        $categories
-                    ),
-                    $message->getChannelCode()
-                );
+        if (count($categories) !== 0) {
+            $this->postData($categories, $message);
+        }
+    }
 
-                if (null !== $response) {
-                    foreach ($rawData as $item) {
-                        $item->setPushedToOmnisend(new DateTime());
-                        $this->entityManager->persist($item);
-                    }
-                    $this->entityManager->flush();
-                }
-            }
+    private function postData(array $categories, CreateBatch $message): void
+    {
+        $response = $this->omnisendClient->postBatch(
+            $this->batchFactory->create(
+                Batch::METHODS_POST,
+                Batch::ENDPOINTS_CATEGORIES,
+                $categories
+            ),
+            $message->getChannelCode()
+        );
+
+        if (null !== $response) {
+            $this->entityManager->flush();
         }
     }
 }

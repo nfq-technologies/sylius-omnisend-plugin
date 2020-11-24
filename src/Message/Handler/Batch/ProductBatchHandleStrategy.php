@@ -26,7 +26,6 @@ use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Batch;
 use NFQ\SyliusOmnisendPlugin\Doctrine\ORM\ProductRepositoryInterface;
 use NFQ\SyliusOmnisendPlugin\Factory\Request\BatchFactoryInterface;
 use NFQ\SyliusOmnisendPlugin\Message\Command\CreateBatch;
-use NFQ\SyliusOmnisendPlugin\Model\TaxonInterface;
 use Sylius\Component\Channel\Repository\ChannelRepositoryInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
 use DateTime;
@@ -82,51 +81,52 @@ class ProductBatchHandleStrategy implements BatchHandlerStrategyInterface
 
     private function createProducts(ChannelInterface $channel, CreateBatch $message): void
     {
-        $count = $this->repository->getNotSyncedToOmnisendCount($channel);
-
-        for ($i = 0; $i < ceil($count / $message->getBatchSize()); $i++) {
-            /** @var TaxonInterface[] $rawData */
-            $rawData = $this->repository->findNotSyncedToOmnisend($i * $message->getBatchSize(), $message->getBatchSize(), $channel);
-            $this->pushData($rawData, $message, $channel, Batch::METHODS_POST);
-        }
+        $rawData = $this->repository->findNotSyncedToOmnisend($channel);
+        $this->pushData($rawData, $message, $channel, Batch::METHODS_POST);
     }
 
     private function updateProducts(ChannelInterface $channel, CreateBatch $message): void
     {
-        $count = $this->repository->getSyncedToOmnisendCount($channel);
+        $rawData = $this->repository->findSyncedToOmnisend($channel);
+        $this->pushData($rawData, $message, $channel, Batch::METHODS_POST);
+    }
 
-        for ($i = 0; $i < ceil($count / $message->getBatchSize()); $i++) {
-            /** @var TaxonInterface[] $rawData */
-            $rawData = $this->repository->findSyncedToOmnisend($i * $message->getBatchSize(), $message->getBatchSize(), $channel);
-            $this->pushData($rawData, $message, $channel, Batch::METHODS_PUT);
+    public function pushData(iterable $rawData, CreateBatch $message, ChannelInterface $channel, string $method): void
+    {
+        $resources = [];
+        $iteration = 1;
+
+        foreach ($rawData as $row) {
+            $item = $row[0];
+            $resources[] = $this->productBuilderDirectory->build($item, $channel, $message->getLocaleCode());;
+            $item->setPushedToOmnisend(new DateTime());
+            $this->entityManager->persist($item);
+
+            if (($iteration % $message->getBatchSize()) === 0) {
+                $this->postData($resources, $message, $method);
+                $resources = [];
+            }
+            $iteration++;
+        }
+
+        if (count($resources) !== 0) {
+            $this->postData($resources, $message, $method);
         }
     }
 
-    public function pushData(array $rawData, CreateBatch $message, ChannelInterface $channel, string $method): void
+    private function postData(array $resources, CreateBatch $message, string $method): void
     {
-        $resources = [];
+        $response = $this->omnisendClient->postBatch(
+            $this->batchFactory->create(
+                $method,
+                Batch::ENDPOINTS_PRODUCT,
+                $resources
+            ),
+            $message->getChannelCode()
+        );
 
-        foreach ($rawData as $item) {
-            $resources[] = $this->productBuilderDirectory->build($item, $channel, $message->getLocaleCode());
-        }
-
-        if (count($resources) > 0) {
-            $response = $this->omnisendClient->postBatch(
-                $this->batchFactory->create(
-                    $method,
-                    Batch::ENDPOINTS_PRODUCT,
-                    $resources
-                ),
-                $message->getChannelCode()
-            );
-
-            if (null !== $response) {
-                foreach ($rawData as $item) {
-                    $item->setPushedToOmnisend(new DateTime());
-                    $this->entityManager->persist($item);
-                }
-                $this->entityManager->flush();
-            }
+        if (null !== $response) {
+            $this->entityManager->flush();
         }
     }
 }

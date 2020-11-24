@@ -88,9 +88,9 @@ class ProductPickerBuilder implements ProductPickerBuilderInterface
         $translation = $product->getTranslation($localeCode);
 
         $this->productPicker
-            ->setTitle($translation->getName())
+            ->setTitle(null !== $translation->getName() ? htmlspecialchars($translation->getName()) : null)
             ->setProductUrl($this->productUrlResolver->resolve($product))
-            ->setDescription($translation->getDescription());
+            ->setDescription(null !== $translation->getDescription() ? htmlspecialchars($translation->getDescription()) : null);
     }
 
     public function addPrices(ProductVariantInterface $productVariant): void

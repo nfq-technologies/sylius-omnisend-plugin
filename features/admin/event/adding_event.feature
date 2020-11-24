@@ -19,7 +19,7 @@ Feature: Adding a new custom event to Omnisend
     And I add it
     Then I should be notified that it has been successfully created
     And Request type "POST" to Omnisend endpoint "events" should be sent
-    And Omnisend request should contains data:
+    And Omnisend request should contain data:
       | key        | value            |
       | systemName | Test System name |
       | fieldName  | sylius           |

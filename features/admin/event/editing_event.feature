@@ -21,7 +21,7 @@ Feature: Changed custom event data should by sent to Omnisend
     And I select last added field type "email"
     And I update it
     Then Request type "POST" to Omnisend endpoint "events" should be sent
-    And Omnisend request should contains data:
+    And Omnisend request should contain data:
       | key         | value              |
       | systemName  | TestSystemName     |
       | stringField | sylius             |

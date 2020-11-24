@@ -34,11 +34,11 @@ fi
 
 (
 	bin/console doctrine:database:create --if-not-exists -n
-	bin/console doctrine:migrations:migrate -n
+	bin/console doctrine:schema:update --force
 ) &
 (
 	bin/console doctrine:database:create --env=test --if-not-exists -n
-	bin/console doctrine:migrations:migrate --env=test -n
+	bin/console doctrine:schema:update --force --env=test -n
 ) &
 
 wait

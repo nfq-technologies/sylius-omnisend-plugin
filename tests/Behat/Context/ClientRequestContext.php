@@ -54,7 +54,7 @@ class ClientRequestContext implements Context
 
     /**
      * @Then Request to Omnisend was sent with data:
-     * @Then Omnisend request should contains data:
+     * @Then Omnisend request should contain data:
      */
     public function requestToOmnisendWasSentWithData(TableNode $table)
     {
@@ -67,9 +67,9 @@ class ClientRequestContext implements Context
     }
 
     /**
-     * @Then cancelled order date should be set
+     * @Then order should have date of cancellation set
      */
-    public function cancelledOrderDateshouldBeSet()
+    public function cancelledOrderDateShouldBeSet()
     {
         $rawData = $this->loggableClientMock->getLastRequestData();
         Assert::notNull($rawData['body']['canceledDate']);

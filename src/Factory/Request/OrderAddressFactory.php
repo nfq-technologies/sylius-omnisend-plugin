@@ -28,22 +28,21 @@ class OrderAddressFactory implements OrderAddressFactoryInterface
 {
     public function create(?AddressInterface $address, ?string $localeCode = null): ?OrderAddress
     {
-        if (null !== $address) {
-            return (new OrderAddress())
-                ->setFirstName($address->getFirstName())
-                ->setLastName($address->getLastName())
-                ->setCompany($address->getCompany())
-                ->setPhone($address->getPhoneNumber())
-                ->setCountry($this->getCountryName($address, $localeCode))
-                ->setCountryCode($address->getCountryCode())
-                ->setState($address->getProvinceName())
-                ->setStateCode($address->getProvinceCode())
-                ->setCity($address->getCity())
-                ->setAddress($address->getStreet())
-                ->setPostalCode($address->getPostcode());
+        if (null === $address) {
+            return null;
         }
-
-        return null;
+        return (new OrderAddress())
+            ->setFirstName($address->getFirstName())
+            ->setLastName($address->getLastName())
+            ->setCompany($address->getCompany())
+            ->setPhone($address->getPhoneNumber())
+            ->setCountry($this->getCountryName($address, $localeCode))
+            ->setCountryCode($address->getCountryCode())
+            ->setState($address->getProvinceName())
+            ->setStateCode($address->getProvinceCode())
+            ->setCity($address->getCity())
+            ->setAddress($address->getStreet())
+            ->setPostalCode($address->getPostcode());
     }
 
     private function getCountryName(AddressInterface $address, ?string $localeCode): ?string

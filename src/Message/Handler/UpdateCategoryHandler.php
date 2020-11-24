@@ -53,25 +53,22 @@ class UpdateCategoryHandler implements MessageHandlerInterface
         /** @var TaxonInterface|null $taxon */
         $taxon = $this->taxonRepository->findOneBy(['code' => $message->getTaxonCode()]);
 
-        if (null !== $taxon) {
-            if ($taxon->isPushedToOmnisend()) {
-                $response = $this->omnisendClient->putCategory($this->categoryFactory->create($taxon), $message->getChannelCode());
+        if (null === $taxon) {
+            return;
+        }
 
-                if (null !== $response) {
-                    $taxon->setPushedToOmnisend(new DateTime());
-                    $this->taxonRepository->add($taxon);
-                }
-            } else {
-                $response = $this->omnisendClient->postCategory(
-                    $this->categoryFactory->create($taxon),
-                    $message->getChannelCode()
-                );
+        if ($taxon->isPushedToOmnisend()) {
+            $response = $this->omnisendClient->putCategory($this->categoryFactory->create($taxon), $message->getChannelCode());
+        } else {
+            $response = $this->omnisendClient->postCategory(
+                $this->categoryFactory->create($taxon),
+                $message->getChannelCode()
+            );
+        }
 
-                if (null !== $response) {
-                    $taxon->setPushedToOmnisend(new DateTime());
-                    $this->taxonRepository->add($taxon);
-                }
-            }
+        if (null !== $response) {
+            $taxon->setPushedToOmnisend(new DateTime());
+            $this->taxonRepository->add($taxon);
         }
     }
 }

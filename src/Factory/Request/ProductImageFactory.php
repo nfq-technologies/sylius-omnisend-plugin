@@ -45,7 +45,7 @@ class ProductImageFactory implements ProductImageFactoryInterface
     {
         /** @var ProductInterface $product */
         $product = $productImage->getOwner();
-        $variants = $productImage->getProductVariants()->count() === 0 ? $product->getEnabledVariants() : $productImage->getProductVariants();
+        $variants = $productImage->getProductVariants()->isEmpty() ? $product->getEnabledVariants() : $productImage->getProductVariants();
 
         return (new ProductImage())
             ->setImageID((string)$productImage->getId())

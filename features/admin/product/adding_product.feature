@@ -18,7 +18,7 @@ Feature: Created product data should be sent to Omnisend
     Then I should be notified that it has been successfully created
     And the product "Dice Brewing" should appear in the store
     And Product with a code "BOARD_DICE_BREWING" should be marked as pushed to Omnisend
-    And Omnisend request should contains data:
+    And Omnisend request should contain data:
       | key       | value              |
       | productID | BOARD_DICE_BREWING |
       | title     | Dice Brewing       |

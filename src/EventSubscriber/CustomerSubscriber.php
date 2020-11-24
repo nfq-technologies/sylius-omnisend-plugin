@@ -65,9 +65,10 @@ class CustomerSubscriber implements EventSubscriberInterface
 
         $this->messageBus->dispatch(
             new Envelope(
-                (new CreateContact())
-                    ->setCustomerId($customer->getId())
-                    ->setChannelCode($this->channelContext->getChannel()->getCode())
+                new CreateContact(
+                    $customer->getId(),
+                    $this->channelContext->getChannel()->getCode()
+                )
             )
         );
     }
@@ -79,9 +80,10 @@ class CustomerSubscriber implements EventSubscriberInterface
 
         $this->messageBus->dispatch(
             new Envelope(
-                (new UpdateContact())
-                    ->setCustomerId($customer->getId())
-                    ->setChannelCode($this->channelContext->getChannel()->getCode())
+                new UpdateContact(
+                    $customer->getId(),
+                    $this->channelContext->getChannel()->getCode()
+                )
             )
         );
     }
@@ -100,9 +102,10 @@ class CustomerSubscriber implements EventSubscriberInterface
         ) {
             $this->messageBus->dispatch(
                 new Envelope(
-                    (new UpdateContact())
-                        ->setCustomerId($customer->getId())
-                        ->setChannelCode($this->channelContext->getChannel()->getCode())
+                    new UpdateContact(
+                        $customer->getId(),
+                        $this->channelContext->getChannel()->getCode()
+                    )
                 )
             );
         }

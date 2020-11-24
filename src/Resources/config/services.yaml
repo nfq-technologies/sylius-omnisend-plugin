@@ -1,19 +1,5 @@
 imports:
-  - { resource: services/block_events.yaml }
-  - { resource: services/builders.yaml }
-  - { resource: services/commands.yaml }
-  - { resource: services/controllers.yaml }
-  - { resource: services/forms.yaml }
-  - { resource: services/form_type_extensions.yaml }
-  - { resource: services/factories.yaml }
-  - { resource: services/handlers.yaml }
-  - { resource: services/managers.yaml }
-  - { resource: services/mappers.yaml }
-  - { resource: services/resolvers.yaml }
-  - { resource: services/serialiazers.yaml }
-  - { resource: services/subscribers.yaml }
-  - { resource: services/validators.yaml }
-  - { resource: services/twig.yaml }
+  - { resource: services/ }
 
 services:
   nfq_sylius_omnisend_plugin.client.omnisend:
