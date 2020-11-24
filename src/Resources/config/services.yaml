@@ -1,6 +1,5 @@
 imports:
   - { resource: services/form_type_extensions.yaml }
-  - { resource: services/block_events.yaml }
   - { resource: services/factories.yaml }
   - { resource: services/builders.yaml }
   - { resource: services/handlers.yaml }
