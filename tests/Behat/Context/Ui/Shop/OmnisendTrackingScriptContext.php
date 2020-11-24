@@ -20,32 +20,32 @@ declare(strict_types=1);
 namespace Tests\NFQ\SyliusOmnisendPlugin\Behat\Context\Ui\Shop;
 
 use Behat\Behat\Context\Context;
-use Tests\NFQ\SyliusOmnisendPlugin\Behat\Page\Shop\TestPage;
+use Sylius\Behat\Page\Shop\HomePage;
 use Webmozart\Assert\Assert;
 
-final class TestContext implements Context
+class OmnisendTrackingScriptContext implements Context
 {
-    /** @var TestPage */
-    private $testPage;
+    /** @var HomePage */
+    private $homePage;
 
-    public function __construct(TestPage $testPage)
+    public function __construct(HomePage $homePage)
     {
-        $this->testPage = $testPage;
+        $this->homePage = $homePage;
     }
 
     /**
-     * @When I visit a test plugin page
+     * @Then I see omnisend tracking script with a key :key
      */
-    public function iVisitTestPluginPage(): void
+    public function iSeeOmnisendTrackingScriptWithKey(string $key)
     {
-        $this->testPage->open();
+        Assert::contains($this->homePage->getContent(), 'omnisend.push(["accountID", "' . $key . '"])');
     }
 
     /**
-     * @When I should see plugin name
+     * @Then I do not see omnisend tracking script
      */
-    public function iSeePluginName(): void
+    public function iDoNotSeeOmnisendTrackingScript()
     {
-        Assert::same('Omnisend', $this->testPage->getContent());
+        Assert::notContains($this->homePage->getContent(), 'window.omnisend');
     }
 }
