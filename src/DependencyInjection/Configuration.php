@@ -29,6 +29,20 @@ final class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder('nfq_sylius_omnisend_plugin');
         $rootNode = $treeBuilder->getRootNode();
 
+        $rootNode
+            ->addDefaultsIfNotSet()
+                ->children()
+                    ->arrayNode('product_image')
+                        ->addDefaultsIfNotSet()
+                        ->children()
+                            ->scalarNode('type')->defaultValue('main')->end()
+                            ->scalarNode('filter')->defaultValue('sylius_shop_product_large_thumbnail')->end()
+                            ->scalarNode('default_image')->defaultValue('https://placehold.it/400x30')->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end();
+
         return $treeBuilder;
     }
 }
