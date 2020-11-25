@@ -34,7 +34,7 @@ final class Configuration implements ConfigurationInterface
 {
     public function getConfigTreeBuilder(): TreeBuilder
     {
-        $treeBuilder = new TreeBuilder('nfq_sylius_omnisend_plugin');
+        $treeBuilder = new TreeBuilder('nfq_sylius_omnisend');
         $rootNode = $treeBuilder->getRootNode();
 
         $rootNode

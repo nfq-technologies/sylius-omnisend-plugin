@@ -1,10 +1,10 @@
 ###Logger
 
-Invalid Omnisend requests can be logged by your provided logger. Logger must implement: `Psr\Log\LoggerInterface` interface.
+Invalid Omnisend requests can be logged by custom provided logger. Logger must implement: `Psr\Log\LoggerInterface` interface.
 
 Configuration:
 ```yaml
-nfq_sylius_omnisend_plugin:
+nfq_sylius_omnisend:
     client_logger: 'your_custom_logger_service_name'
 ```
 

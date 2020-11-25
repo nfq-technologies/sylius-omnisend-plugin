@@ -1,5 +1,2 @@
-imports:
-    - { resource: "@NFQSyliusOmnisendPlugin/Resources/config/services.yaml" }
-
 parameters:
     locale: en_US
