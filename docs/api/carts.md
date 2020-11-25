@@ -45,8 +45,10 @@ All subscribed actions are defined in `CartSubscriber` class.
         return [
             'sylius.order_item.post_add' => 'onOrderItemChange',
             'sylius.order_item.post_remove' => 'onOrderItemChange',
-            'sylius.order.post_update' => 'onUpdate', #ONLY IF ORDER STATE IS CART
+            'sylius.order.post_update' => 'onUpdate',
+            'sylius.cart_change' => 'onCartChange',
             'sylius.carts.post_remove' => 'onCartsRemove',
+            'sylius.order.pre_delete' => 'onCartRemove',
         ];
     }
 ```
