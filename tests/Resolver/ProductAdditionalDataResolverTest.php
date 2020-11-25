@@ -108,11 +108,11 @@ class ProductAdditionalDataResolverTest extends TestCase
             ],
             'bool' => [
                 $attributeValue4,
-                '0'
+                false
             ],
             'float' => [
                 $attributeValue3,
-                '3.3'
+                3.3
             ],
         ];
     }
@@ -142,7 +142,7 @@ class ProductAdditionalDataResolverTest extends TestCase
         $attributeValue2->setProduct($product);
         $product->addAttribute($attributeValue2);
 
-        $result = $this->resolver->getTags($product);
+        $result = $this->resolver->getCustomFields($product);
 
         $this->assertEquals(
             $result,

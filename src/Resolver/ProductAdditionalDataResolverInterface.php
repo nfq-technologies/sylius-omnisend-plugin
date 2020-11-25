@@ -24,6 +24,11 @@ use Sylius\Component\Core\Model\ProductInterface;
 interface ProductAdditionalDataResolverInterface
 {
     /**
+     * Array of custom Fields.
+     */
+    public function getCustomFields(ProductInterface $product, string $localeCode = null): ?array;
+
+    /**
      * Array of product tags.
      */
     public function getTags(ProductInterface $product, string $localeCode = null): ?array;

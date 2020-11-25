@@ -240,6 +240,19 @@ class OmnisendClient implements LoggerAwareInterface, OmnisendClientInterface
         return $this->parseResponse($response, CategorySuccess::class);
     }
 
+    public function getProduct(string $productId, ?string $channelCode): ?object
+    {
+        $response = $this->sendRequest(
+            $this->messageFactory->create(
+                'GET',
+                self::API_VERSION . self::URL_PATH_PRODUCTS . '/' . $productId
+            ),
+            $channelCode
+        );
+
+        return $this->parseResponse($response, ProductSuccess::class);
+    }
+
     public function postProduct(Product $product, ?string $channelCode): ?object
     {
         $response = $this->sendRequest(
@@ -251,7 +264,7 @@ class OmnisendClient implements LoggerAwareInterface, OmnisendClientInterface
             $channelCode
         );
 
-        return $this->parseResponse($response, CategorySuccess::class);
+        return $this->parseResponse($response, ProductSuccess::class);
     }
 
     public function putProduct(Product $product, ?string $channelCode): ?object
@@ -265,7 +278,7 @@ class OmnisendClient implements LoggerAwareInterface, OmnisendClientInterface
             $channelCode
         );
 
-        return $this->parseResponse($response, CategorySuccess::class);
+        return $this->parseResponse($response, ProductSuccess::class);
     }
 
     public function deleteProduct(string $productId, ?string $channelCode): ?object

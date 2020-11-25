@@ -33,12 +33,12 @@ class ProductAdditionalDataResolver implements ProductAdditionalDataResolverInte
         $this->attributes = $attributes;
     }
 
-    public function getTags(ProductInterface $product, string $localeCode = null): ?array
+    public function getCustomFields(ProductInterface $product, string $localeCode = null): ?array
     {
         $attributes = [];
 
-        if (isset($this->attributes['tags'])) {
-            foreach ($this->attributes['tags'] as $tagAttrKey) {
+        if (isset($this->attributes['custom_fields'])) {
+            foreach ($this->attributes['custom_fields'] as $tagAttrKey) {
                 /** @var AttributeValueInterface|null $attributeValue */
                 $attributeValue = $product->getAttributeByCodeAndLocale($tagAttrKey, $localeCode);
 
@@ -46,7 +46,7 @@ class ProductAdditionalDataResolver implements ProductAdditionalDataResolverInte
                     null !== $attributeValue
                     && null !== $attributeValue->getAttribute()
                 ) {
-                    $attributes[$tagAttrKey] = $this->resolveAttributeValue($attributeValue);
+                    $attributes[$tagAttrKey] = (string)$this->resolveAttributeValue($attributeValue);
                 }
             }
         }
@@ -57,6 +57,40 @@ class ProductAdditionalDataResolver implements ProductAdditionalDataResolverInte
     public function getVendor(ProductInterface $product, string $localeCode = null): ?string
     {
         return $this->getAttributeValue('vendor', $product, $localeCode);
+    }
+
+    public function getTags(ProductInterface $product, string $localeCode = null): array
+    {
+        $attributeKey = 'tags';
+        $attributeKeyName = isset($this->attributes[$attributeKey]) ? $this->attributes[$attributeKey] : null;
+
+        if (null === $attributeKeyName) {
+            return [];
+        }
+
+        /** @var AttributeValueInterface|null $attributeValue */
+        $attributeValue = $product->getAttributeByCodeAndLocale($this->attributes[$attributeKey], $localeCode);
+
+        if (
+            null !== $attributeValue
+            && null !== $attributeValue->getAttribute()
+        ) {
+            if ($attributeValue->getAttribute()->getStorageType() === AttributeValueInterface::STORAGE_JSON) {
+                $config = $attributeValue->getAttribute()->getConfiguration();
+
+                $choices = [];
+                foreach ($attributeValue->getValue() as $value) {
+                    if (isset($config['choices'][$value][$localeCode])) {
+                        $choices[] = $config['choices'][$value][$localeCode];
+                    }
+                }
+
+                return $choices;
+            }
+            return [(string)$this->resolveAttributeValue($attributeValue)];
+        }
+
+        return [];
     }
 
     public function getType(ProductInterface $product, string $localeCode = null): ?string
@@ -83,21 +117,20 @@ class ProductAdditionalDataResolver implements ProductAdditionalDataResolverInte
             null !== $attribute
             && null !== $attribute->getAttribute()
         ) {
-            return $this->resolveAttributeValue($attribute);
+            return (string)$this->resolveAttributeValue($attribute);
         }
 
         return null;
     }
 
-    protected function resolveAttributeValue(AttributeValueInterface $attributeValue): ?string
+    protected function resolveAttributeValue(AttributeValueInterface $attributeValue)
     {
         switch ($attributeValue->getAttribute()->getStorageType()) {
             case AttributeValueInterface::STORAGE_BOOLEAN:
-                return (string)(int)$attributeValue->getValue();
             case AttributeValueInterface::STORAGE_FLOAT:
             case AttributeValueInterface::STORAGE_INTEGER:
             case AttributeValueInterface::STORAGE_TEXT:
-                return (string)$attributeValue->getValue();
+                return $attributeValue->getValue();
             case AttributeValueInterface::STORAGE_DATETIME:
                 if (null !== $attributeValue->getValue()) {
                     return DatetimeHelper::format($attributeValue->getValue());

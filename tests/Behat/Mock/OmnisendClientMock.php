@@ -166,6 +166,13 @@ class OmnisendClientMock implements OmnisendClientInterface
         return (new ProductSuccess())->setProductID('1111');
     }
 
+    public function getProduct(string $productId, ?string $channelCode): ?object
+    {
+        $this->client->getProduct($productId, $channelCode);
+
+        return null;
+    }
+
     public function postEvent(CreateEvent $event, ?string $channelCode): ?object
     {
         $this->client->postEvent($event, $channelCode);

@@ -35,7 +35,7 @@ interface ProductBuilderInterface
 
     public function addContentData(ProductInterface $product, ChannelInterface $channel, ?string $localeCode): void;
 
-    public function addAdditionalData(ProductInterface $product): void;
+    public function addAdditionalData(ProductInterface $product, ?string $localeCode): void;
 
     public function addStockStatus(ProductInterface $product): void;
 }

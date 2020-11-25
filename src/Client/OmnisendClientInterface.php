@@ -53,6 +53,8 @@ interface OmnisendClientInterface
 
     public function putOrder(Order $order, ?string $channelCode): ?object;
 
+    public function getProduct(string $productId, ?string $channelCode): ?object;
+
     public function postProduct(Product $product, ?string $channelCode): ?object;
 
     public function putProduct(Product $product, ?string $channelCode): ?object;

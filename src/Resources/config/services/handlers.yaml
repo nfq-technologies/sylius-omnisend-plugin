@@ -118,6 +118,8 @@ services:
       - '@sylius.repository.channel'
       - '@nfq_sylius_omnisend_plugin.builder.request.product_director'
     tags: [ messenger.message_handler ]
+    calls:
+      - ['setLogger', ['@nfq_sylius_omnisend_plugin.client.logger']]
 
   nfq_sylius_omnisend_plugin.message.handler.delete_product:
     class: NFQ\SyliusOmnisendPlugin\Message\Handler\DeleteProductHandler

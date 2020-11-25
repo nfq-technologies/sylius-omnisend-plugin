@@ -204,3 +204,178 @@ And endpoint `/v3/categories` should return all categories:
 }
 ```
 
+
+##Products:
+
+- On product create in admin area, data should be sent to OMNISEND
+
+`/v3/products	`
+
+Request body:
+```json
+{
+  "productID": "000F_office_grey_jeans",
+  "title": "000F office grey jeans",
+  "status": "inStock",
+  "description": "Facilis veritatis quo sunt asperiores ut. Et occaecati reiciendis rerum nemo nostrum et molestiae. Nobis beatae ad ipsa laboriosam sed sed nemo mollitia.\r\n\r\nTotam suscipit voluptatibus repudiandae velit. Neque saepe libero et.\r\n\r\nVeniam fugit hic et consequatur iure dolores. Quis ut cumque possimus omnis. Laborum a dolorem dolores qui quia sit ipsam. Error aut eligendi neque et est.",
+  "currency": "USD",
+  "productUrl": "http://10.24.3.97/en_US/products/000f-office-grey-jeans",
+  "vendor": "VENDRO OMNISEND TEST",
+  "createdAt": "2020-11-20T02:36:32+00:00",
+  "updatedAt": "2020-11-25T09:55:19+00:00",
+  "tags": [
+    "e94de110-2f1f-11eb-ae68-02420a180367",
+    "e94da27c-2f1f-11eb-a54b-02420a180367"
+  ],
+  "categoryIDs": [
+    "jeans",
+    "womens_jeans"
+  ],
+  "images": [
+    {
+      "imageID": "41",
+      "url": "http://10.24.3.97/media/cache/resolve/sylius_shop_product_large_thumbnail/58/3d/08baa406494be70b7aac10259236.jpeg",
+      "default": true,
+      "variantIDs": [
+        "000F_office_grey_jeans-variant-0",
+        "000F_office_grey_jeans-variant-1",
+        "000F_office_grey_jeans-variant-2",
+        "000F_office_grey_jeans-variant-3",
+        "000F_office_grey_jeans-variant-4"
+      ]
+    }
+  ],
+  "variants": [
+    {
+      "variantID": "000F_office_grey_jeans-variant-0",
+      "title": "S",
+      "sku": "000F_office_grey_jeans-variant-0",
+      "status": "inStock",
+      "price": 8545,
+      "productUrl": "http://10.24.3.97/en_US/products/000f-office-grey-jeans"
+    },
+    {
+      "variantID": "000F_office_grey_jeans-variant-1",
+      "title": "M",
+      "sku": "000F_office_grey_jeans-variant-1",
+      "status": "inStock",
+      "price": 5922,
+      "productUrl": "http://10.24.3.97/en_US/products/000f-office-grey-jeans"
+    },
+    {
+      "variantID": "000F_office_grey_jeans-variant-2",
+      "title": "L",
+      "sku": "000F_office_grey_jeans-variant-2",
+      "status": "inStock",
+      "price": 7787,
+      "productUrl": "http://10.24.3.97/en_US/products/000f-office-grey-jeans"
+    },
+    {
+      "variantID": "000F_office_grey_jeans-variant-3",
+      "title": "XL",
+      "sku": "000F_office_grey_jeans-variant-3",
+      "status": "inStock",
+      "price": 9765,
+      "productUrl": "http://10.24.3.97/en_US/products/000f-office-grey-jeans"
+    },
+    {
+      "variantID": "000F_office_grey_jeans-variant-4",
+      "title": "XXL",
+      "sku": "000F_office_grey_jeans-variant-4",
+      "status": "inStock",
+      "price": 4116,
+      "productUrl": "http://10.24.3.97/en_US/products/000f-office-grey-jeans"
+    }
+  ]
+}
+```
+
+Response body:
+
+```json
+{
+  "productID": "000F_office_grey_jeans"
+}
+```
+- On product update in amdin area, data should be send to Omnisend
+
+`/v3/products/000F_office_grey_jeans`
+
+Request body:
+
+```json
+{
+  "productID": "000F_office_grey_jeans",
+  "title": "000F office grey jeans",
+  "status": "inStock",
+.....
+}
+```
+Response body:
+
+```json
+{
+  "productID": "000F_office_grey_jeans"
+}
+```
+
+- On product delete in amdin area, data should be send to Omnisend
+
+`DELETE	/v3/products/000F_office_grey_jeans`
+
+- On product sync
+
+command should be executed:
+
+```
+php tests/Application/bin/console nfq:sylius-omnisend:create-batch products FASHION_WEB en_US --batchSize=4
+```
+
+Several batch request should be sent to Omnisend:
+
+```json
+{
+  "method": "POST",
+  "endpoint": "products",
+  "items": [
+    {
+      "productID": "007M_black_elegance_jeans",
+      "title": "007M black elegance jeans",
+      "status": "inStock",
+      "description": "Magni et suscipit corporis id quaerat vel quibusdam. Aperiam minus aut cumque ut adipisci. Sint ea quis rerum et odio aut ducimus. Pariatur voluptates ratione nihil qui eveniet ipsum cum.\r\n\r\nQuam illum odio voluptas eveniet est provident est molestiae. Autem magni nobis numquam. Ea enim voluptatem ad consectetur consequatur placeat totam. Voluptas sit voluptates recusandae aut.\r\n\r\nIllum praesentium ut dolor in possimus. Ut consectetur maxime eligendi. Fugit aliquam iusto dolores quis error reiciendis. Molestias aut est sit quam hic.",
+      "currency": "USD",
+      "productUrl": "http://localhost/en_US/products/007m-black-elegance-jeans",
+      "createdAt": "2020-11-24T16:08:58+00:00",
+      "updatedAt": "2020-11-25T12:56:41+00:00",
+      "tags": [],
+      "categoryIDs": [
+        "jeans",
+        "mens_jeans"
+      ],
+      "images": [
+        {
+          "imageID": "38",
+          "url": "http://localhost/media/cache/resolve/sylius_shop_product_large_thumbnail/58/ef/08d44a883930fe8a283381087c41.jpeg",
+          "default": true,
+          "variantIDs": [
+...
+}
+```
+
+And endpoint `/v3/products` should return all products:
+
+```json
+{
+  "products": [
+    {
+      "productID": "007M_black_elegance_jeans",
+      "title": "007M black elegance jeans",
+      "status": "inStock",
+      "description": "Magni et suscipit corporis id quaerat vel quibusdam. Aperiam minus aut cumque ut adipisci. Sint ea quis rerum et odio aut ducimus. Pariatur voluptates ratione nihil qui eveniet ipsum cum....",
+      "currency": "USD",
+      "images": [
+        {
+    ...
+}
+```
+

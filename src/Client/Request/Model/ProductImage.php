@@ -57,7 +57,7 @@ class ProductImage
         return $this;
     }
 
-    public function isDefault(): bool
+    public function getIsDefault(): bool
     {
         return $this->isDefault;
     }
