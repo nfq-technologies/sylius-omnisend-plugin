@@ -60,7 +60,7 @@ class CartRecoverAction
             return new RedirectResponse('sylius_shop_homepage');
         }
 
-        if ($request->get(ContactCookieSetter::COOKIE_NAME)) {
+        if (null !== $request->get(ContactCookieSetter::COOKIE_NAME)) {
             $this->contactCookieSetter->set($request->get(ContactCookieSetter::COOKIE_NAME));
         }
 

@@ -20,6 +20,7 @@ declare(strict_types=1);
 namespace NFQ\SyliusOmnisendPlugin\Resolver;
 
 use NFQ\SyliusOmnisendPlugin\Utils\DatetimeHelper;
+use Sylius\Component\Attribute\Model\AttributeInterface;
 use Sylius\Component\Attribute\Model\AttributeValueInterface;
 use Sylius\Component\Core\Model\ProductInterface;
 
@@ -125,7 +126,10 @@ class ProductAdditionalDataResolver implements ProductAdditionalDataResolverInte
 
     protected function resolveAttributeValue(AttributeValueInterface $attributeValue)
     {
-        switch ($attributeValue->getAttribute()->getStorageType()) {
+        /** @var AttributeInterface $attribute */
+        $attribute = $attributeValue->getAttribute();
+
+        switch ($attribute->getStorageType()) {
             case AttributeValueInterface::STORAGE_BOOLEAN:
             case AttributeValueInterface::STORAGE_FLOAT:
             case AttributeValueInterface::STORAGE_INTEGER:

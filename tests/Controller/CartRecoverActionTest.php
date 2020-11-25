@@ -20,6 +20,7 @@ declare(strict_types=1);
 namespace Tests\NFQ\SyliusOmnisendPlugin\Controller;
 
 use NFQ\SyliusOmnisendPlugin\Controller\CartRecoverAction;
+use NFQ\SyliusOmnisendPlugin\Setter\ContactCookieSetter;
 use PHPUnit\Framework\TestCase;
 use Sylius\Component\Core\Model\Channel;
 use Sylius\Component\Core\Repository\OrderRepositoryInterface;
@@ -43,16 +44,22 @@ class CartRecoverActionTest extends TestCase
     /** @var OrderRepositoryInterface */
     private $orderRepository;
 
+    /** @var ContactCookieSetter */
+    private $contactCookieSetter;
+
     protected function setUp(): void
     {
         $this->sessionStorage = $this->createMock(CartStorageInterface::class);
         $this->router = $this->createMock(RouterInterface::class);
         $this->orderRepository = $this->createMock(OrderRepositoryInterface::class);
+        $this->orderRepository = $this->createMock(OrderRepositoryInterface::class);
+        $this->contactCookieSetter = $this->createMock(ContactCookieSetter::class);
 
         $this->controller = new CartRecoverAction(
             $this->sessionStorage,
             $this->router,
             $this->orderRepository,
+            $this->contactCookieSetter,
         );
     }
 
@@ -71,7 +78,7 @@ class CartRecoverActionTest extends TestCase
             ->willReturn(null);
         $request = $this->createMock(Request::class);
         $request
-            ->expects($this->once())
+            ->expects($this->any())
             ->method('get')
             ->willReturn('111111');
         $redirect = $this->controller->__invoke($request);
@@ -94,7 +101,10 @@ class CartRecoverActionTest extends TestCase
             ->expects($this->once())
             ->method('generate')
             ->willReturn('url');
-        $request = new Request(['cartId' => '11111'], ['cartId' => '11111']);
+        $request = new Request(['cartId' => '11111', 'omnisendContactID' => '444'], ['cartId' => '11111', 'omnisendContactID' => '444']);
+        $this->contactCookieSetter
+            ->expects($this->once())
+            ->method('set');
         $redirect = $this->controller->__invoke($request);
         $this->assertEquals('url', $redirect->getTargetUrl());
     }

@@ -33,8 +33,10 @@ class ContactCookieSetter
         $this->cookieStorage = $cookieStorage;
     }
 
-    public function set(string $contactId)
+    public function set(?string $contactId): void
     {
-        $this->cookieStorage->set(self::COOKIE_NAME, $contactId);
+        if (null !== $contactId) {
+            $this->cookieStorage->set(self::COOKIE_NAME, $contactId);
+        }
     }
 }

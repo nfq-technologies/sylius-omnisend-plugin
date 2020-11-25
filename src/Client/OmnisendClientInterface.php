@@ -31,13 +31,13 @@ interface OmnisendClientInterface
 {
     public function postContact(Contact $contact, ?string $channelCode): ?object;
 
-    public function getContactByEmail(string $email, ?string $channelCode): ?object;
+    public function getContactByEmail(?string $email, ?string $channelCode): ?object;
 
     public function patchContact(string $contactId, Contact $contact, ?string $channelCode): ?object;
 
     public function postCategory(Category $category, ?string $channelCode): ?object;
 
-    public function getCategory(string $category, ?string $channelCode): ?object;
+    public function getCategory(?string $category, ?string $channelCode): ?object;
 
     public function putCategory(Category $category, ?string $channelCode): ?object;
 
@@ -55,7 +55,7 @@ interface OmnisendClientInterface
 
     public function putOrder(Order $order, ?string $channelCode): ?object;
 
-    public function getProduct(string $productId, ?string $channelCode): ?object;
+    public function getProduct(?string $productId, ?string $channelCode): ?object;
 
     public function postProduct(Product $product, ?string $channelCode): ?object;
 

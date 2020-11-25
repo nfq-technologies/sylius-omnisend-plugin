@@ -104,7 +104,7 @@ class OmnisendClient implements LoggerAwareInterface, OmnisendClientInterface
         return $this->parseResponse($response, CategorySuccess::class);
     }
 
-    public function getCategory(string $categoryId, ?string $channelCode): ?object
+    public function getCategory(?string $categoryId, ?string $channelCode): ?object
     {
         $response = $this->sendRequest(
             $this->messageFactory->create(
@@ -241,7 +241,7 @@ class OmnisendClient implements LoggerAwareInterface, OmnisendClientInterface
         return $this->parseResponse($response, CategorySuccess::class);
     }
 
-    public function getProduct(string $productId, ?string $channelCode): ?object
+    public function getProduct(?string $productId, ?string $channelCode): ?object
     {
         $response = $this->sendRequest(
             $this->messageFactory->create(
@@ -351,7 +351,7 @@ class OmnisendClient implements LoggerAwareInterface, OmnisendClientInterface
         return $this->parseResponse($response, ContactSuccess::class);
     }
 
-    public function getContactByEmail(string $email, ?string $channelCode): ?object
+    public function getContactByEmail(?string $email, ?string $channelCode): ?object
     {
         $response = $this->sendRequest(
             $this->messageFactory->create(
@@ -396,6 +396,8 @@ class OmnisendClient implements LoggerAwareInterface, OmnisendClientInterface
                 );
             }
         }
+
+        return null;
     }
 
     private function parseResponse(?ResponseInterface $response, ?string $type = null)

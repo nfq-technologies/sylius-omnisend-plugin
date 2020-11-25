@@ -68,7 +68,7 @@ class UpdateProductHandler
             try {
                 if (
                     $product->isPushedToOmnisend()
-                    || $this->omnisendClient->getProduct($product->getCode(), $message->getChannelCode())
+                    || null !== $this->omnisendClient->getProduct($product->getCode(), $message->getChannelCode())
                 ) {
                     $response = $this->omnisendClient->putProduct(
                         $this->productBuilderDirector->build($product, $channel, $message->getLocaleCode()),

@@ -36,7 +36,7 @@ class ProductAdditionalDataResolverTest extends TestCase
         $this->resolver = new ProductAdditionalDataResolver(
             [
                 'type' => 'omnisend_type',
-                'tags' => ['tag_1', 'tag_2'],
+                'custom_fields' => ['tag_1', 'tag_2'],
                 'vendor' => 'omnisend_vendor',
             ]
         );
@@ -108,11 +108,11 @@ class ProductAdditionalDataResolverTest extends TestCase
             ],
             'bool' => [
                 $attributeValue4,
-                false
+                ''
             ],
             'float' => [
                 $attributeValue3,
-                3.3
+                '3.3'
             ],
         ];
     }
@@ -143,7 +143,6 @@ class ProductAdditionalDataResolverTest extends TestCase
         $product->addAttribute($attributeValue2);
 
         $result = $this->resolver->getCustomFields($product);
-
         $this->assertEquals(
             $result,
             [

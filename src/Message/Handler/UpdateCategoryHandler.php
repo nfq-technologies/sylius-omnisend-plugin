@@ -59,7 +59,7 @@ class UpdateCategoryHandler implements MessageHandlerInterface
 
         if (
             $taxon->isPushedToOmnisend()
-            || $this->omnisendClient->getCategory($taxon->getCode(), $message->getChannelCode())
+            || null !== $this->omnisendClient->getCategory($taxon->getCode(), $message->getChannelCode())
         ) {
             $response = $this->omnisendClient->putCategory(
                 $this->categoryFactory->create($taxon),

@@ -54,6 +54,7 @@ class ContactManager implements ContactManagerInterface
         $contactId = $this->getCurrentContactId($customer, $channelCode);
 
         if (null !== $contactId) {
+            /** @var ContactSuccess|null $response */
             $response = $this->omnisendClient->patchContact(
                 $customer->getOmnisendContactId(),
                 $this->contactBuilderDirector->build($customer),
@@ -75,7 +76,8 @@ class ContactManager implements ContactManagerInterface
         return $response;
     }
 
-    private function getCurrentContactId(ContactAwareInterface $customer, ?string $channelCode): ?string
+    /** @var CustomerInterface&ContactAwareInterface $customer */
+    private function getCurrentContactId(CustomerInterface $customer, ?string $channelCode): ?string
     {
         if (null !== $customer->getOmnisendContactId()) {
             return $customer->getOmnisendContactId();
@@ -85,7 +87,10 @@ class ContactManager implements ContactManagerInterface
         $contacts = $this->omnisendClient->getContactByEmail($customer->getEmail(), $channelCode);
 
         if (null !== $contacts && count($contacts->getContacts()) > 0) {
-            return $contacts->getContacts()[0]->getContactId();
+            /** @var ContactSuccess $contact */
+            $contact = $contacts->getContacts()[0];
+
+            return $contact->getContactID();
         }
 
         return null;

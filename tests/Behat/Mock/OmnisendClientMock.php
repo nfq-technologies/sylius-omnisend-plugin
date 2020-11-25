@@ -56,12 +56,12 @@ class OmnisendClientMock implements OmnisendClientInterface
         return (new ContactSuccess())->setContactID('testId');
     }
 
-    public function patchContact(string $contactId, Contact $contact, ?string $channelCode): void
+    public function patchContact(string $contactId, Contact $contact, ?string $channelCode): ?object
     {
         $this->client->patchContact($contactId, $contact, $channelCode);
     }
 
-    public function getCategory(string $category, ?string $channelCode): ?object
+    public function getCategory(?string $category, ?string $channelCode): ?object
     {
         $this->client->getCategory($category, $channelCode);
 
@@ -166,7 +166,7 @@ class OmnisendClientMock implements OmnisendClientInterface
         return (new ProductSuccess())->setProductID('1111');
     }
 
-    public function getProduct(string $productId, ?string $channelCode): ?object
+    public function getProduct(?string $productId, ?string $channelCode): ?object
     {
         $this->client->getProduct($productId, $channelCode);
 
@@ -177,6 +177,13 @@ class OmnisendClientMock implements OmnisendClientInterface
     {
         $this->client->postEvent($event, $channelCode);
         return (new EventSuccess());
+    }
+
+    public function getContactByEmail(?string $email, ?string $channelCode): ?object
+    {
+        $this->client->getContactByEmail($email, $channelCode);
+
+        return null;
     }
 
     public function getEvents(?string $channelCode): ?array

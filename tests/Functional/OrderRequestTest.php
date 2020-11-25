@@ -204,6 +204,7 @@ class OrderRequestTest extends WebTestCase
                       "discount": "@integer@",
                       "imageUrl": "@string@",
                       "productUrl": "@string@",
+                      "tags": "@array@",
                       "categoryIDs": "@array@"
                     }
                   ],
