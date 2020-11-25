@@ -11,6 +11,8 @@ services:
     arguments:
       - '@messenger.routable_message_bus'
       - '@sylius.context.channel.composite'
+      - '@nfq_sylius_omnisend_plugin.manager.contact'
+      - '@nfq_sylius_omnisend_plugin.setter.contact_cookie'
     tags:
       - { name: kernel.event_subscriber }
 
@@ -54,3 +56,10 @@ services:
     class: NFQ\SyliusOmnisendPlugin\EventListener\AdminMenuListener
     tags:
       - { name: kernel.event_listener, event: sylius.menu.admin.main, method: addAdminMenuItems }
+
+  nfq_sylius_omnisend_plugin.event_listener.customer_login:
+    class: NFQ\SyliusOmnisendPlugin\EventListener\CustomerLoginListener
+    arguments:
+      - '@nfq_sylius_omnisend_plugin.setter.contact_cookie'
+    tags:
+      - { name: kernel.event_listener, event: security.interactive_login, method: onInteractiveLogin }

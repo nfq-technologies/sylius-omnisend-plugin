@@ -83,6 +83,10 @@ final class NFQSyliusOmnisendExtension extends AbstractResourceExtension
             'nfq_sylius_omnisend_plugin.resolver.product_variant_stock',
             $config['product_variant_stock_resolver']
         );
+        $container->setAlias(
+            'nfq_sylius_omnisend_plugin.resolver.customer_additional_data',
+            $config['customer_additional_data']
+        );
 
         if (isset($config['client_logger']) && $config['client_logger']) {
             $container->setAlias(

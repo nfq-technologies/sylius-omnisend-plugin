@@ -27,3 +27,8 @@ services:
     arguments:
       - '@sylius.repository.channel'
     tags: [sylius_fixtures.fixture]
+
+  nfq_sylius_omnisend_plugin.setter.contact_cookie:
+    class: NFQ\SyliusOmnisendPlugin\Setter\ContactCookieSetter
+    arguments:
+      - '@sylius.storage.cookie'

@@ -17,23 +17,13 @@
 
 declare(strict_types=1);
 
-namespace NFQ\SyliusOmnisendPlugin\Message\Command;
+namespace NFQ\SyliusOmnisendPlugin\Resolver;
 
-class CreateContact implements CommandInterface
+use Sylius\Component\Core\Model\CustomerInterface;
+
+interface CustomerAdditionalDataResolverInterface
 {
-    use CommandTrait;
+    public function geCustomProperties(CustomerInterface $customer): ?array;
 
-    /** @var int */
-    private $customerId;
-
-    public function __construct(int $customerId, ?string $channelCode)
-    {
-        $this->customerId = $customerId;
-        $this->channelCode = $channelCode;
-    }
-
-    public function getCustomerId(): int
-    {
-        return $this->customerId;
-    }
+    public function getTags(CustomerInterface $customer): ?array;
 }

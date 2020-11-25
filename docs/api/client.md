@@ -6,6 +6,9 @@ Endpoints:
 
 - [categories](categories.md)
 - [products](categories.md)
+- [contacts](contacts.md)
+- [carts](categories.md)
+- [products](categories.md)
 - [events](events.md)
 
 Plugin uses mocked Omnisend client for behat tests. Last request data is logged in file.

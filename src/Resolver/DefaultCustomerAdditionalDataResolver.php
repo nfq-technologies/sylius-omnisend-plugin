@@ -17,12 +17,19 @@
 
 declare(strict_types=1);
 
-namespace NFQ\SyliusOmnisendPlugin\Manager;
+namespace NFQ\SyliusOmnisendPlugin\Resolver;
 
-use NFQ\SyliusOmnisendPlugin\Client\Response\Model\ContactSuccess;
 use Sylius\Component\Core\Model\CustomerInterface;
 
-interface ContactManagerInterface
+class DefaultCustomerAdditionalDataResolver implements CustomerAdditionalDataResolverInterface
 {
-    public function pushToOmnisend(CustomerInterface $customer, ?string $channelCode): ?ContactSuccess;
+    public function geCustomProperties(CustomerInterface $customer): ?array
+    {
+        return null;
+    }
+
+    public function getTags(CustomerInterface $customer): ?array
+    {
+        return null;
+    }
 }

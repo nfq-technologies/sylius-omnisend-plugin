@@ -40,7 +40,7 @@ trait ContactAwareTrait
         $this->omnisendContactId = $omnisendContactId;
     }
 
-    public function getOmnisendCustomProperties(): ?stdClass
+    public function getOmnisendCustomProperties(): ?array
     {
         return null;
     }

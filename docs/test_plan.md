@@ -379,3 +379,44 @@ And endpoint `/v3/products` should return all products:
 }
 ```
 
+##CONTACT
+
+On user register action:
+- data should be send to OMNISEND. 
+- Omnisend contact id should be added to the database
+- omnisendContactID cookie should be added to the browser. 
+
+```json
+{
+  "identifiers": [
+    {
+      "type": "email",
+      "id": "aurimas@nfq.lt",
+      "channels": {
+        "email": {
+          "status": "subscribed",
+          "statusDate": "2020-11-25T15:45:31+00:00"
+        }
+      },
+      "sendWelcomeMessage": true
+    },
+    {
+      "type": "phone",
+      "id": "034534534533",
+      "channels": {
+        "sms": {
+          "status": "nonSubscribed",
+          "statusDate": "2020-11-25T15:45:31+00:00"
+        }
+      },
+      "sendWelcomeMessage": false
+    }
+  ],
+  "firstName": "dedd",
+  "lastName": "TESTAS",
+  "createdAt": "2020-11-25T15:45:29+00:00"
+}
+```
+- On user data change in user account and admin area, customer data should be synced with Omnisend:
+
+

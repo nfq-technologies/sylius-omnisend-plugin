@@ -1,11 +1,4 @@
 services:
-  nfq_sylius_omnisend_plugin.message.handler.create_contact:
-    class: NFQ\SyliusOmnisendPlugin\Message\Handler\CreateContactHandler
-    arguments:
-      - '@nfq_sylius_omnisend_plugin.manager.contact'
-      - '@sylius.repository.customer'
-    tags: [messenger.message_handler]
-
   nfq_sylius_omnisend_plugin.message.handler.update_contact:
     class: NFQ\SyliusOmnisendPlugin\Message\Handler\UpdateContactHandler
     arguments:

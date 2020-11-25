@@ -17,6 +17,7 @@
 
 namespace NFQ\SyliusOmnisendPlugin\Controller;
 
+use NFQ\SyliusOmnisendPlugin\Setter\ContactCookieSetter;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Repository\OrderRepositoryInterface;
@@ -36,14 +37,19 @@ class CartRecoverAction
     /** @var OrderRepositoryInterface */
     private $orderRepository;
 
+    /** @var ContactCookieSetter */
+    private $contactCookieSetter;
+
     public function __construct(
         CartStorageInterface $sessionStorage,
         RouterInterface $router,
-        OrderRepositoryInterface $orderRepository
+        OrderRepositoryInterface $orderRepository,
+        ContactCookieSetter $contactCookieSetter
     ) {
         $this->cartStorage = $sessionStorage;
         $this->router = $router;
         $this->orderRepository = $orderRepository;
+        $this->contactCookieSetter = $contactCookieSetter;
     }
 
     public function __invoke(Request $request): RedirectResponse
@@ -53,6 +59,11 @@ class CartRecoverAction
         if (null === $cartId) {
             return new RedirectResponse('sylius_shop_homepage');
         }
+
+        if ($request->get(ContactCookieSetter::COOKIE_NAME)) {
+            $this->contactCookieSetter->set($request->get(ContactCookieSetter::COOKIE_NAME));
+        }
+
         /** @var OrderInterface|null $cart */
         $cart = $this->orderRepository->findOneBy(['omnisendCartId' => $cartId]);
 

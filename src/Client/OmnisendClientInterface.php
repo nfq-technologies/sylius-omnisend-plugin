@@ -31,7 +31,9 @@ interface OmnisendClientInterface
 {
     public function postContact(Contact $contact, ?string $channelCode): ?object;
 
-    public function patchContact(string $contactId, Contact $contact, ?string $channelCode): void;
+    public function getContactByEmail(string $email, ?string $channelCode): ?object;
+
+    public function patchContact(string $contactId, Contact $contact, ?string $channelCode): ?object;
 
     public function postCategory(Category $category, ?string $channelCode): ?object;
 
