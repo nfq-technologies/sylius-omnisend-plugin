@@ -42,14 +42,6 @@ services:
     calls:
       - ['setLogger', ['@monolog.logger']]
 
-  nfq_sylius_omnisend_plugin.message.handler.create_category:
-    class: NFQ\SyliusOmnisendPlugin\Message\Handler\CreateCategoryHandler
-    arguments:
-      - '@nfq_sylius_omnisend_plugin.client.omnisend'
-      - '@sylius.repository.taxon'
-      - '@nfq_sylius_omnisend_plugin.factory.request.category'
-    tags: [ messenger.message_handler ]
-
   nfq_sylius_omnisend_plugin.message.handler.delete_category:
     class: NFQ\SyliusOmnisendPlugin\Message\Handler\DeleteCategoryHandler
     arguments:

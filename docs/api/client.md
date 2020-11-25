@@ -11,4 +11,4 @@ Endpoints:
 - [products](categories.md)
 - [events](events.md)
 
-Plugin uses mocked Omnisend client for behat tests. Last request data is logged in file.
+Plugin uses mocked Omnisend client for behat tests. Last request data is logged in the file.
