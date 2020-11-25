@@ -448,3 +448,7 @@ Data with Omnisend is also should be synced then sylius remove expired carts com
 - On order cancel Order canceledAt date should be saved to database. And order data should be sent to Omnisend.
  
 #Events
+- Try to create new event without fields. Error should be displayed.
+- Try to create new event with same fields. Error should be displayed.
+- Try to create event with different fields. Event should be saved.
+- Try to sync events with Omnisend. Missing data as event name and event id should be prefiled in edit form.
