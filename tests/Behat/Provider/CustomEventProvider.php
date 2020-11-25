@@ -21,6 +21,7 @@ namespace Tests\NFQ\SyliusOmnisendPlugin\Behat\Provider;
 
 use NFQ\SyliusOmnisendPlugin\Model\Event;
 use NFQ\SyliusOmnisendPlugin\Model\EventField;
+use Sylius\Component\Channel\Context\ChannelContextInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 
 class CustomEventProvider
@@ -28,8 +29,14 @@ class CustomEventProvider
     /** @var RepositoryInterface */
     private $eventRepository;
 
-    public function __construct(RepositoryInterface $eventRepository)
-    {
+    /** @var ChannelContextInterface */
+    private $channelContext;
+
+    public function __construct(
+        RepositoryInterface $eventRepository,
+        ChannelContextInterface $channelContext
+    ) {
+        $this->channelContext = $channelContext;
         $this->eventRepository = $eventRepository;
     }
 
@@ -37,7 +44,7 @@ class CustomEventProvider
     {
         $event = new Event();
         $event->setSystemName($systemName);
-
+        $event->setChannel($this->channelContext->getChannel());
         foreach ($fields as $key => $type) {
             $eventField = new EventField();
             $eventField->setSystemName($key);
