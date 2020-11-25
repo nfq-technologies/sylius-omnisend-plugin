@@ -28,3 +28,4 @@ parameters:
         - '/Call to an undefined method Symfony\\Component\\HttpFoundation\\Session\\SessionInterface::getFlashBag\(\)./'
         - '/Method NFQ\\SyliusOmnisendPlugin\\Mapper\\EventFieldTypeDefaultValueMapper::map\(\) has no return typehint specified/'
         - '/Method NFQ\\SyliusOmnisendPlugin\\Resolver\\ProductAdditionalDataResolver::resolveAttributeValue\(\) has no return typehint specified/'
+        - '/Call to an undefined method Sylius\\Component\\Core\\Model\\CustomerInterface::isSubscribedToSMS()./'

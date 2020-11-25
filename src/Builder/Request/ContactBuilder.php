@@ -61,7 +61,6 @@ class ContactBuilder implements ContactBuilderInterface
             );
         }
 
-        /** @var ContactAwareInterface&CustomerInterface $customer */
         if (null !== $customer->getPhoneNumber()) {
             $this->contact->addIdentifier(
                 $this->contactIdentifierFactory->create(
