@@ -42,7 +42,7 @@ class ProductImageFactory implements ProductImageFactoryInterface
         $variants = $productImage->getProductVariants()->isEmpty() ? $product->getEnabledVariants() : $productImage->getProductVariants();
 
         return (new ProductImage())
-            ->setImageID((string)$productImage->getId())
+            ->setImageID((string) $productImage->getId())
             ->setIsDefault($default)
             ->setUrl(null !== $productImage->getPath() ? $this->cache->generateUrl($productImage->getPath(), $this->imageFilter) : null)
             ->setVariantIDs(

@@ -13,8 +13,6 @@ declare(strict_types=1);
 
 namespace NFQ\SyliusOmnisendPlugin\Model;
 
-use stdClass;
-
 trait ContactAwareTrait
 {
     /**

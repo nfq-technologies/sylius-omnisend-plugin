@@ -22,4 +22,3 @@ class SyncEvents implements CommandInterface
         $this->channelCode = $channelCode;
     }
 }
-

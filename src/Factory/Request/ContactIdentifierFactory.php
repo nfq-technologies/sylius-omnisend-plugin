@@ -13,13 +13,13 @@ declare(strict_types=1);
 
 namespace NFQ\SyliusOmnisendPlugin\Factory\Request;
 
+use function method_exists;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\ContactIdentifier;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\ContactIdentifierChannel;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\ContactIdentifierChannelValue;
 use NFQ\SyliusOmnisendPlugin\Utils\DatetimeHelper;
 use NFQ\SyliusOmnisendPlugin\Utils\DatetimeProvider;
 use function ucfirst;
-use function method_exists;
 
 class ContactIdentifierFactory implements ContactIdentifierFactoryInterface
 {

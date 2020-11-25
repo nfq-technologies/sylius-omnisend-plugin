@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace NFQ\SyliusOmnisendPlugin\Resolver;
 
-use NFQ\SyliusOmnisendPlugin\Client\Request\Model\OrderCoupon;
 use Sylius\Component\Core\Model\OrderInterface;
 
 interface OrderCourierDataResolverInterface

@@ -13,9 +13,7 @@ declare(strict_types=1);
 
 namespace NFQ\SyliusOmnisendPlugin\Resolver;
 
-use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Core\Model\ProductVariantInterface;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 interface ProductVariantStockResolverInterface
 {

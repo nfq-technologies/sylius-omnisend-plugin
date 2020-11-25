@@ -23,7 +23,6 @@ class EventBuilderDirector implements EventBuilderDirectorInterface
 
     /**
      * EventBuilder constructor.
-     * @param EventBuilderInterface $builder
      */
     public function __construct(EventBuilderInterface $builder)
     {

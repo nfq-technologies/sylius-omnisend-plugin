@@ -14,12 +14,11 @@ declare(strict_types=1);
 namespace NFQ\SyliusOmnisendPlugin\Client;
 
 use Http\Discovery\MessageFactoryDiscovery;
-use NFQ\SyliusOmnisendPlugin\Model\ChannelOmnisendTrackingAwareInterface;
+use Http\Message\MessageFactory as BaseFactory;
 use Psr\Http\Message\RequestInterface;
 use Sylius\Component\Channel\Context\ChannelContextInterface;
 use Symfony\Component\Serializer\Normalizer\AbstractObjectNormalizer;
 use Symfony\Component\Serializer\SerializerInterface;
-use \Http\Message\MessageFactory as BaseFactory;
 
 class MessageFactory
 {

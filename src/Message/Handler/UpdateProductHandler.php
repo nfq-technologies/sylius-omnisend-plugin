@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace NFQ\SyliusOmnisendPlugin\Message\Handler;
 
+use DateTime;
 use NFQ\SyliusOmnisendPlugin\Builder\Request\ProductBuilderDirectorInterface;
 use NFQ\SyliusOmnisendPlugin\Client\OmnisendClientInterface;
 use NFQ\SyliusOmnisendPlugin\Message\Command\UpdateProduct;
@@ -21,7 +22,6 @@ use Psr\Log\LoggerAwareTrait;
 use Sylius\Component\Channel\Repository\ChannelRepositoryInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Repository\ProductRepositoryInterface;
-use DateTime;
 
 class UpdateProductHandler
 {
@@ -59,6 +59,7 @@ class UpdateProductHandler
         if (null !== $product) {
             /** @var ChannelInterface $channel */
             $channel = $this->channelRepository->findOneBy(['code' => $message->getChannelCode()]);
+
             try {
                 if (
                     $product->isPushedToOmnisend()

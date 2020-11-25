@@ -49,4 +49,3 @@ class PushCustomEvent implements CommandInterface
         return $this->fields;
     }
 }
-

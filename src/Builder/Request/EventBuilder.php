@@ -20,7 +20,7 @@ use NFQ\SyliusOmnisendPlugin\Model\EventField;
 
 class EventBuilder implements EventBuilderInterface
 {
-    const DEFAULT_EMAIL = 'sylius@example.com';
+    public const DEFAULT_EMAIL = 'sylius@example.com';
 
     /** @var CreateEvent */
     private $event;

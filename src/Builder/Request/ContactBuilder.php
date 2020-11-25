@@ -21,7 +21,6 @@ use NFQ\SyliusOmnisendPlugin\Model\ContactAwareInterface;
 use NFQ\SyliusOmnisendPlugin\Resolver\CustomerAdditionalDataResolverInterface;
 use NFQ\SyliusOmnisendPlugin\Utils\DatetimeHelper;
 use NFQ\SyliusOmnisendPlugin\Utils\GenderHelper;
-use Sylius\Component\Core\Model\AddressInterface;
 use Sylius\Component\Core\Model\CustomerInterface;
 use Symfony\Component\Intl\Countries;
 use Symfony\Component\Intl\Exception\MissingResourceException;
@@ -40,8 +39,7 @@ class ContactBuilder implements ContactBuilderInterface
     public function __construct(
         ContactIdentifierFactoryInterface $contactIdentifierFactory,
         CustomerAdditionalDataResolverInterface $customerAdditionalDataResolverInterface
-    )
-    {
+    ) {
         $this->contactIdentifierFactory = $contactIdentifierFactory;
         $this->customerAdditionalDataResolverInterface = $customerAdditionalDataResolverInterface;
     }

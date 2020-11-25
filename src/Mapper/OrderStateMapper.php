@@ -22,7 +22,7 @@ class OrderStateMapper
         OrderInterface::STATE_CART => OrderFulfillmentStatus::UNFULFILL,
         OrderInterface::STATE_NEW => OrderFulfillmentStatus::NEW,
         OrderInterface::STATE_CANCELLED => OrderFulfillmentStatus::UNFULFILL,
-        OrderInterface::STATE_FULFILLED => OrderFulfillmentStatus::FULFILL
+        OrderInterface::STATE_FULFILLED => OrderFulfillmentStatus::FULFILL,
     ];
 
     /** @var array */

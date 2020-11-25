@@ -54,7 +54,7 @@ class ClientFactory implements ClientFactoryInterface
         $plugins = [
             new BaseUriPlugin(UriFactoryDiscovery::find()->createUri(self::ENDPOINT), ['replace' => true]),
             new ErrorPlugin(),
-            $headersPlugin
+            $headersPlugin,
         ];
 
         return new PluginClient($client, $plugins);

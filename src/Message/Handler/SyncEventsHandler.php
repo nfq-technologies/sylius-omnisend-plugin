@@ -60,7 +60,7 @@ class SyncEventsHandler implements MessageHandlerInterface
                 if (null !== $systemEvent) {
                     $systemEvent->setEventID($event->getEventID());
                     $systemEvent->setName($event->getName());
-                    $systemEvent->setEnabled((bool)$event->isEnabled());
+                    $systemEvent->setEnabled((bool) $event->isEnabled());
                     $systemEvent->removeFields();
                     foreach ($event->getFields() as $field) {
                         $systemEvent->addField($field);

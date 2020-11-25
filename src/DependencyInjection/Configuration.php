@@ -17,10 +17,10 @@ use NFQ\SyliusOmnisendPlugin\Form\Type\EventFieldType;
 use NFQ\SyliusOmnisendPlugin\Form\Type\EventType;
 use NFQ\SyliusOmnisendPlugin\Model\Event;
 use NFQ\SyliusOmnisendPlugin\Model\EventField;
-use Sylius\Bundle\ResourceBundle\Controller\ResourceController;
-use Sylius\Component\Resource\Factory\Factory;
 use NFQ\SyliusOmnisendPlugin\Model\OrderDetails;
+use Sylius\Bundle\ResourceBundle\Controller\ResourceController;
 use Sylius\Bundle\ResourceBundle\SyliusResourceBundle;
+use Sylius\Component\Resource\Factory\Factory;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -35,7 +35,7 @@ final class Configuration implements ConfigurationInterface
             ->addDefaultsIfNotSet()
                 ->children()
                     ->scalarNode('driver')
-                    	->defaultValue(SyliusResourceBundle::DRIVER_DOCTRINE_ORM)
+                        ->defaultValue(SyliusResourceBundle::DRIVER_DOCTRINE_ORM)
                     ->end()
                     ->scalarNode('client_logger')
                         ->defaultNull()

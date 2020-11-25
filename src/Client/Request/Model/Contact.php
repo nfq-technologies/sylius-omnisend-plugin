@@ -13,12 +13,12 @@ declare(strict_types=1);
 
 namespace NFQ\SyliusOmnisendPlugin\Client\Request\Model;
 
-use stdClass;
-
 class Contact
 {
     public const STATUS_SUBSCRIBED = 'subscribed';
+
     public const STATUS_UNSUBSCRIBED = 'unsubscribed';
+
     public const STATUS_REMOVED = 'removed';
 
     /** @var ContactIdentifier[]|array */

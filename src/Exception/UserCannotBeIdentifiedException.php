@@ -19,6 +19,6 @@ class UserCannotBeIdentifiedException extends Exception
 {
     public function __construct()
     {
-        parent::__construct("Omnisend. User cannot be identified");
+        parent::__construct('Omnisend. User cannot be identified');
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the NFQ package.
  *
@@ -11,7 +13,6 @@
 
 namespace NFQ\SyliusOmnisendPlugin\Model;
 
-use stdClass;
 use Sylius\Component\Core\Model\CustomerInterface as BaseCustomerInterface;
 
 interface ContactAwareInterface extends BaseCustomerInterface

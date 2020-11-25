@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 namespace NFQ\SyliusOmnisendPlugin\Model;
 
-use DateTimeInterface;
 use DateTime;
+use DateTimeInterface;
 
 trait PushedToOmnisendAwareTrait
 {

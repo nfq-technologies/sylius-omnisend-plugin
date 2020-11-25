@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace NFQ\SyliusOmnisendPlugin\EventSubscriber;
 
+use DateTime;
 use NFQ\SyliusOmnisendPlugin\Message\Command\CancelOrder;
 use NFQ\SyliusOmnisendPlugin\Message\Command\CreateOrder;
 use NFQ\SyliusOmnisendPlugin\Message\Command\UpdateOrder;
@@ -28,7 +29,6 @@ use Sylius\Component\Order\OrderTransitions;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\MessageBusInterface;
-use DateTime;
 
 class OrderSubscriber implements EventSubscriberInterface
 {
@@ -49,7 +49,7 @@ class OrderSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            'sylius.order.post_update' => 'onUpdate'
+            'sylius.order.post_update' => 'onUpdate',
         ];
     }
 
@@ -87,6 +87,7 @@ class OrderSubscriber implements EventSubscriberInterface
                         (new CreateOrder($order->getId(), $channel->getCode()))
                     )
                 );
+
                 break;
             case OrderTransitions::TRANSITION_CANCEL:
                 $order->getOmnisendOrderDetails()->setCancelledAt(new DateTime());
@@ -97,6 +98,7 @@ class OrderSubscriber implements EventSubscriberInterface
                         new CancelOrder($order->getId(), $channel->getCode())
                     )
                 );
+
                 break;
             case OrderTransitions::TRANSITION_FULFILL:
                 $this->messageBus->dispatch(
@@ -104,6 +106,7 @@ class OrderSubscriber implements EventSubscriberInterface
                         (new UpdateOrderState($order->getId(), $channel->getCode()))
                     )
                 );
+
                 break;
             default:
                 return;

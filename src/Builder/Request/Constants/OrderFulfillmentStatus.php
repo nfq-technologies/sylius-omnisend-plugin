@@ -16,9 +16,13 @@ namespace NFQ\SyliusOmnisendPlugin\Builder\Request\Constants;
 class OrderFulfillmentStatus
 {
     public const UNFULFILL = 'unfulfilled';
+
     public const PROGRESS = 'inProgress';
+
     public const FULFILL = 'fulfilled';
+
     public const DELIVER = 'delivered';
+
     public const RESTOCK = 'restocked';
 
     public const NEW = self::UNFULFILL;

@@ -13,15 +13,7 @@ declare(strict_types=1);
 
 namespace NFQ\SyliusOmnisendPlugin\HttpClient;
 
-use Http\Client\Common\Plugin\BaseUriPlugin;
-use Http\Client\Common\Plugin\ErrorPlugin;
-use Http\Client\Common\Plugin\HeaderDefaultsPlugin;
-use Http\Client\Common\PluginClient;
 use Http\Client\HttpClient;
-use Http\Discovery\HttpClientDiscovery;
-use Http\Discovery\UriFactoryDiscovery;
-use NFQ\SyliusOmnisendPlugin\Model\ChannelOmnisendTrackingAwareInterface;
-use Sylius\Component\Channel\Repository\ChannelRepositoryInterface;
 
 interface ClientFactoryInterface
 {

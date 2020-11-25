@@ -17,7 +17,7 @@ class CreateBatch implements CommandInterface
 {
     use CommandTrait;
 
-    const DEFAULT_BATCH_SIZE = 1000;
+    public const DEFAULT_BATCH_SIZE = 1000;
 
     /** @var string */
     private $localeCode;

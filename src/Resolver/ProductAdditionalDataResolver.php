@@ -41,7 +41,7 @@ class ProductAdditionalDataResolver implements ProductAdditionalDataResolverInte
                     null !== $attributeValue
                     && null !== $attributeValue->getAttribute()
                 ) {
-                    $attributes[$tagAttrKey] = (string)$this->resolveAttributeValue($attributeValue);
+                    $attributes[$tagAttrKey] = (string) $this->resolveAttributeValue($attributeValue);
                 }
             }
         }
@@ -57,7 +57,7 @@ class ProductAdditionalDataResolver implements ProductAdditionalDataResolverInte
     public function getTags(ProductInterface $product, string $localeCode = null): array
     {
         $attributeKey = 'tags';
-        $attributeKeyName = isset($this->attributes[$attributeKey]) ? $this->attributes[$attributeKey] : null;
+        $attributeKeyName = $this->attributes[$attributeKey] ?? null;
 
         if (null === $attributeKeyName) {
             return [];
@@ -82,7 +82,8 @@ class ProductAdditionalDataResolver implements ProductAdditionalDataResolverInte
 
                 return $choices;
             }
-            return [(string)$this->resolveAttributeValue($attributeValue)];
+
+            return [(string) $this->resolveAttributeValue($attributeValue)];
         }
 
         return [];
@@ -97,9 +98,8 @@ class ProductAdditionalDataResolver implements ProductAdditionalDataResolverInte
         string $attributeKey,
         ProductInterface $product,
         string $localeCode = null
-    ): ?string
-    {
-        $attributeKeyName = isset($this->attributes[$attributeKey]) ? $this->attributes[$attributeKey] : null;
+    ): ?string {
+        $attributeKeyName = $this->attributes[$attributeKey] ?? null;
 
         if (null === $attributeKeyName) {
             return null;
@@ -112,7 +112,7 @@ class ProductAdditionalDataResolver implements ProductAdditionalDataResolverInte
             null !== $attribute
             && null !== $attribute->getAttribute()
         ) {
-            return (string)$this->resolveAttributeValue($attribute);
+            return (string) $this->resolveAttributeValue($attribute);
         }
 
         return null;
@@ -133,16 +133,19 @@ class ProductAdditionalDataResolver implements ProductAdditionalDataResolverInte
                 if (null !== $attributeValue->getValue()) {
                     return DatetimeHelper::format($attributeValue->getValue());
                 }
+
                 break;
             case AttributeValueInterface::STORAGE_DATE:
                 if (null !== $attributeValue->getValue()) {
                     return $attributeValue->getValue()->format('Y-m-d');
                 }
+
                 break;
             case AttributeValueInterface::STORAGE_JSON:
                 if (null !== $attributeValue->getValue()) {
                     return implode(', ', $attributeValue->getValue());
                 }
+
                 break;
         }
 

@@ -18,7 +18,7 @@ use Sylius\Component\Core\Model\OrderInterface;
 
 class DefaultOrderCouponResolver implements OrderCouponResolverInterface
 {
-    const DEFAULT_TYPE = 'fixedAmount';
+    public const DEFAULT_TYPE = 'fixedAmount';
 
     public function resolve(OrderInterface $order): ?OrderCoupon
     {

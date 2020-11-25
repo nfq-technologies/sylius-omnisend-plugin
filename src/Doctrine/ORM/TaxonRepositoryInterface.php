@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace NFQ\SyliusOmnisendPlugin\Doctrine\ORM;
 
-use Doctrine\ORM\QueryBuilder;
 use Sylius\Component\Taxonomy\Repository\TaxonRepositoryInterface as BaseTaxonRepositoryInterface;
 
 interface TaxonRepositoryInterface extends BaseTaxonRepositoryInterface, PushedToOmnisendAwareRepositoryInterface

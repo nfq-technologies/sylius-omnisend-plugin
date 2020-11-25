@@ -108,6 +108,5 @@ class EventType extends AbstractResourceType
                 }
             }
         );
-
     }
 }

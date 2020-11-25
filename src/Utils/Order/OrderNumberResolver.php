@@ -18,7 +18,7 @@ class OrderNumberResolver
     public static function resolve(?string $orderNumber): ?int
     {
         if (null !== $orderNumber) {
-            return (int)preg_replace('/\D/', '', $orderNumber);
+            return (int) preg_replace('/\D/', '', $orderNumber);
         }
 
         return null;

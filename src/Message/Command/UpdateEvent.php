@@ -31,4 +31,3 @@ class UpdateEvent implements CommandInterface
         return $this->code;
     }
 }
-

@@ -191,7 +191,7 @@ class OrderAddress
     public function setPostalCode(?string $postalCode): self
     {
         $this->postalCode = $postalCode;
-        
+
         return $this;
     }
 }

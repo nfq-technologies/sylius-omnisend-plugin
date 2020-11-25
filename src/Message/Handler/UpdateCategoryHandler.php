@@ -13,13 +13,13 @@ declare(strict_types=1);
 
 namespace NFQ\SyliusOmnisendPlugin\Message\Handler;
 
+use DateTime;
 use NFQ\SyliusOmnisendPlugin\Client\OmnisendClientInterface;
 use NFQ\SyliusOmnisendPlugin\Factory\Request\CategoryFactoryInterface;
 use NFQ\SyliusOmnisendPlugin\Message\Command\UpdateCategory;
 use NFQ\SyliusOmnisendPlugin\Model\TaxonInterface;
 use Sylius\Component\Taxonomy\Repository\TaxonRepositoryInterface;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
-use DateTime;
 
 class UpdateCategoryHandler implements MessageHandlerInterface
 {

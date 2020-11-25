@@ -19,7 +19,7 @@ use Sylius\Component\Core\Model\ProductInterface;
 
 class ProductImageListBuilder implements ProductImageListBuilderInterface
 {
-    const MAX_IMAGE_COUNT = 10;
+    public const MAX_IMAGE_COUNT = 10;
 
     /** @var ProductImageFactoryInterface */
     private $productImageFactory;
@@ -45,7 +45,7 @@ class ProductImageListBuilder implements ProductImageListBuilderInterface
                 break;
             }
             $images[] = $this->productImageFactory->create($image, $count === 0);
-            $count++;
+            ++$count;
         }
 
         return $images;

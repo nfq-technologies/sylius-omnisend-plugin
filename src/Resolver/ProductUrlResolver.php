@@ -38,7 +38,7 @@ class ProductUrlResolver implements ProductUrlResolverInterface
             self::PRODUCT_ROUTE_NAME,
             [
                 'slug' => $translation->getSlug(),
-                '_locale' => $localeCode
+                '_locale' => $localeCode,
             ],
             UrlGeneratorInterface::ABSOLUTE_URL
         );

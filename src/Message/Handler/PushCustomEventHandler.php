@@ -57,6 +57,7 @@ class PushCustomEventHandler
             if (null !== $this->logger) {
                 $this->logger->error('Omnisend custom event cannot be pushed.', ['errors' => $violations]);
             }
+
             return;
         }
         /** @var BaseEvent|null $event */

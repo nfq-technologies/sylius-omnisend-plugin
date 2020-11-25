@@ -16,9 +16,14 @@ namespace NFQ\SyliusOmnisendPlugin\Builder\Request\Constants;
 class OrderPaymentStatus
 {
     public const AWAITING = 'awaitingPayment';
+
     public const PARTIALLY_PAY = 'partiallyPaid';
+
     public const PAY = 'paid';
+
     public const PARTIALLY_REFUND = 'partiallyRefunded';
+
     public const REFUND = 'refunded';
+
     public const VOID = 'voided';
 }

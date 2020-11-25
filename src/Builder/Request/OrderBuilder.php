@@ -129,7 +129,7 @@ class OrderBuilder implements OrderBuilderInterface
         $this->order->setCourierUrl($this->orderCourierResolver->getCourierUrl($order));
     }
 
-    /** @var \NFQ\SyliusOmnisendPlugin\Model\OrderInterface $order */
+    /** @var \NFQ\SyliusOmnisendPlugin\Model\OrderInterface */
     public function addCartData(OrderInterface $order): void
     {
         /** @var OrderDetails $details */
@@ -150,7 +150,7 @@ class OrderBuilder implements OrderBuilderInterface
         }
     }
 
-    /** @var \NFQ\SyliusOmnisendPlugin\Model\OrderInterface $order */
+    /** @var \NFQ\SyliusOmnisendPlugin\Model\OrderInterface */
     public function addOrderData(OrderInterface $order): void
     {
         /** @var ShipmentInterface|null $shipping */
@@ -174,7 +174,7 @@ class OrderBuilder implements OrderBuilderInterface
             'sylius_shop_order_show',
             [
                 '_locale' => $order->getLocaleCode(),
-                'tokenValue' => $order->getTokenValue()
+                'tokenValue' => $order->getTokenValue(),
             ],
             UrlGeneratorInterface::ABSOLUTE_URL
             )
@@ -197,7 +197,7 @@ class OrderBuilder implements OrderBuilderInterface
         return $this->order;
     }
 
-    /** @var \NFQ\SyliusOmnisendPlugin\Model\OrderInterface $order */
+    /** @var \NFQ\SyliusOmnisendPlugin\Model\OrderInterface */
     public function addCancelData(OrderInterface $order): void
     {
         $this->order->setCanceledDate(DatetimeHelper::format($order->getOmnisendOrderDetails()->getCancelledAt()));

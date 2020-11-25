@@ -35,7 +35,8 @@ class ContactIdResolver implements ContactIdResolverInterface
 
         if (null !== $customer && null !== $customer->getOmnisendContactId()) {
             return $customer->getOmnisendContactId();
-        } elseif (
+        }
+        if (
             null !== $this->request &&
             null !== $this->request->cookies &&
             $this->request->cookies->has('omnisendContactID')

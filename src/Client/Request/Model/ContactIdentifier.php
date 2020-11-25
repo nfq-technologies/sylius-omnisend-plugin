@@ -16,6 +16,7 @@ namespace NFQ\SyliusOmnisendPlugin\Client\Request\Model;
 class ContactIdentifier
 {
     public const TYPE_EMAIL = 'email';
+
     public const TYPE_PHONE = 'phone';
 
     /** @var string */

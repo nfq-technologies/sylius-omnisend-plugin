@@ -16,13 +16,13 @@ namespace NFQ\SyliusOmnisendPlugin\Builder\Request;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Cart;
 use NFQ\SyliusOmnisendPlugin\Exception\UserCannotBeIdentifiedException;
 use NFQ\SyliusOmnisendPlugin\Factory\Request\CartProductFactory;
+use NFQ\SyliusOmnisendPlugin\Model\OrderInterface;
 use NFQ\SyliusOmnisendPlugin\Utils\DatetimeHelper;
 use Sylius\Component\Resource\Generator\RandomnessGeneratorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
-use NFQ\SyliusOmnisendPlugin\Model\OrderInterface;
 
 class CartBuilder implements CartBuilderInterface
 {

@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace NFQ\SyliusOmnisendPlugin\Message\Handler\Batch;
 
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use NFQ\SyliusOmnisendPlugin\Builder\Request\ProductBuilderDirectorInterface;
 use NFQ\SyliusOmnisendPlugin\Client\OmnisendClient;
@@ -22,7 +23,6 @@ use NFQ\SyliusOmnisendPlugin\Factory\Request\BatchFactoryInterface;
 use NFQ\SyliusOmnisendPlugin\Message\Command\CreateBatch;
 use Sylius\Component\Channel\Repository\ChannelRepositoryInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
-use DateTime;
 
 class ProductBatchHandleStrategy implements BatchHandlerStrategyInterface
 {
@@ -92,7 +92,7 @@ class ProductBatchHandleStrategy implements BatchHandlerStrategyInterface
 
         foreach ($rawData as $row) {
             $item = $row[0];
-            $resources[] = $this->productBuilderDirectory->build($item, $channel, $message->getLocaleCode());;
+            $resources[] = $this->productBuilderDirectory->build($item, $channel, $message->getLocaleCode());
             $item->setPushedToOmnisend(new DateTime());
             $this->entityManager->persist($item);
 
@@ -100,7 +100,7 @@ class ProductBatchHandleStrategy implements BatchHandlerStrategyInterface
                 $this->postData($resources, $message, $method);
                 $resources = [];
             }
-            $iteration++;
+            ++$iteration;
         }
 
         if (count($resources) !== 0) {

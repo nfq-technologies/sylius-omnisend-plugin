@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace NFQ\SyliusOmnisendPlugin\Message\Handler\Batch;
 
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use NFQ\SyliusOmnisendPlugin\Client\OmnisendClient;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Batch;
@@ -20,7 +21,6 @@ use NFQ\SyliusOmnisendPlugin\Doctrine\ORM\TaxonRepositoryInterface;
 use NFQ\SyliusOmnisendPlugin\Factory\Request\BatchFactoryInterface;
 use NFQ\SyliusOmnisendPlugin\Factory\Request\CategoryFactoryInterface;
 use NFQ\SyliusOmnisendPlugin\Message\Command\CreateBatch;
-use DateTime;
 
 class CategoryBatchHandleStrategy implements BatchHandlerStrategyInterface
 {
@@ -74,7 +74,7 @@ class CategoryBatchHandleStrategy implements BatchHandlerStrategyInterface
                 $this->postData($categories, $message);
                 $categories = [];
             }
-            $iteration++;
+            ++$iteration;
         }
 
         if (count($categories) !== 0) {

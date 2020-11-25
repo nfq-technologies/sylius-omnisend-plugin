@@ -28,9 +28,6 @@ class CustomerLoginListener
         $this->contactCookieSetter = $omnisendClient;
     }
 
-    /**
-     * @param InteractiveLoginEvent $interactiveLoginEvent
-     */
     public function onInteractiveLogin(InteractiveLoginEvent $interactiveLoginEvent): void
     {
         $user = $interactiveLoginEvent->getAuthenticationToken()->getUser();

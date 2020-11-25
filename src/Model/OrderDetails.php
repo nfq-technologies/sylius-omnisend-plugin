@@ -14,8 +14,8 @@ declare(strict_types=1);
 namespace NFQ\SyliusOmnisendPlugin\Model;
 
 use DateTimeInterface;
-use Sylius\Component\Resource\Model\ResourceInterface;
 use Sylius\Component\Order\Model\OrderInterface;
+use Sylius\Component\Resource\Model\ResourceInterface;
 
 class OrderDetails implements ResourceInterface
 {

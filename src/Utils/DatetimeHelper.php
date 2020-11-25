@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 namespace NFQ\SyliusOmnisendPlugin\Utils;
 
-use DateTimeInterface;
 use DateTime;
+use DateTimeInterface;
 
 class DatetimeHelper
 {

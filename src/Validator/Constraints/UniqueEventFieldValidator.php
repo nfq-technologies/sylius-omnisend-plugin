@@ -21,7 +21,7 @@ use Webmozart\Assert\Assert;
 
 class UniqueEventFieldValidator extends ConstraintValidator
 {
-    /** @var Collection $value */
+    /** @var Collection */
     public function validate($value, Constraint $constraint): void
     {
         Assert::isInstanceOf($constraint, UniqueEventField::class);
@@ -41,7 +41,7 @@ class UniqueEventFieldValidator extends ConstraintValidator
             } else {
                 $codes[$code] = $field;
             }
-            $iteration++;
+            ++$iteration;
         }
     }
 }

@@ -57,9 +57,9 @@ class OrderProductFactory implements OrderProductFactoryInterface
         /** @var ProductInterface $product */
         $product = $variant->getProduct();
 
-        $cartItem->setProductID((string)$product->getId());
-        $cartItem->setSku((string)$product->getCode());
-        $cartItem->setVariantID((string)$variant->getCode());
+        $cartItem->setProductID((string) $product->getId());
+        $cartItem->setSku((string) $product->getCode());
+        $cartItem->setVariantID((string) $variant->getCode());
         $cartItem->setVariantTitle($orderItem->getVariantName());
         $cartItem->setTitle($orderItem->getProductName());
         $cartItem->setQuantity($orderItem->getQuantity());
@@ -88,7 +88,7 @@ class OrderProductFactory implements OrderProductFactoryInterface
         /** @var Product $product */
         $product = $orderItem->getProduct();
 
-        $result =  array_map(
+        $result = array_map(
             function (TaxonInterface $productTaxon): ?string {
                 return $productTaxon->getCode();
             },

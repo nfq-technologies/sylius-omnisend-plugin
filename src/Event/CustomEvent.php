@@ -29,7 +29,7 @@ class CustomEvent extends Event
     /** @var string */
     private $channelCode;
 
-    public function __construct(string $email, string $systemName,  string $channelCode, array $fields)
+    public function __construct(string $email, string $systemName, string $channelCode, array $fields)
     {
         $this->email = $email;
         $this->systemName = $systemName;

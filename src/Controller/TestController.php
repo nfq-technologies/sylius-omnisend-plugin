@@ -38,12 +38,12 @@ class TestController
                 [
                     'integer' => 1,
                     'bool' => true,
-                    'datetime' => "2010-12-12T12:12:12+00:00",
-                    'date' => "2019-02-10",
-                    'string' => "asdfasdfasd",
+                    'datetime' => '2010-12-12T12:12:12+00:00',
+                    'date' => '2019-02-10',
+                    'string' => 'asdfasdfasd',
                     'float' => 10.2,
-                    'email' => "email@email.lt",
-                    'url' => "http://asdasd.lt",
+                    'email' => 'email@email.lt',
+                    'url' => 'http://asdasd.lt',
                 ]
             )
         );

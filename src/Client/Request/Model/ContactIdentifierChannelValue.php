@@ -16,6 +16,7 @@ namespace NFQ\SyliusOmnisendPlugin\Client\Request\Model;
 class ContactIdentifierChannelValue
 {
     public const SUBSCRIBED = 'subscribed';
+
     public const NON_SUBSCRIBED = 'nonSubscribed';
 
     /** @var string */

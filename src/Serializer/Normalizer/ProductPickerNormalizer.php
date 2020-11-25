@@ -15,7 +15,6 @@ namespace NFQ\SyliusOmnisendPlugin\Serializer\Normalizer;
 
 use NFQ\SyliusOmnisendPlugin\Model\ProductPicker;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
 class ProductPickerNormalizer implements NormalizerInterface
 {

@@ -31,7 +31,8 @@ class ProductVariantStockResolver implements ProductVariantStockResolverInterfac
     {
         if (!$product->isEnabled()) {
             return ProductStatus::STATUS_NOT_AVAILABLE;
-        } elseif ($this->availabilityChecker->isStockAvailable($product)) {
+        }
+        if ($this->availabilityChecker->isStockAvailable($product)) {
             return ProductStatus::STATUS_IN_STOCK;
         }
 

@@ -56,7 +56,7 @@ class Order
     /** @var array|null */
     private $tags;
 
-    /**  @var string|null */
+    /** @var string|null */
     private $discountCode;
 
     /** @var int|null */
@@ -518,7 +518,7 @@ class Order
     public function setCustomTags(?stdClass $customTags): self
     {
         $this->customTags = $customTags;
-        
+
         return $this;
     }
 

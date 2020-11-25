@@ -24,9 +24,6 @@ class OrderSuccess
     /** @var string|null */
     private $orderID;
 
-    /**
-     * @return string|null
-     */
     public function getEmail(): ?string
     {
         return $this->email;

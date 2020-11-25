@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace NFQ\SyliusOmnisendPlugin\Client;
 
+use Http\Client\Exception\HttpException;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Batch;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Cart;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Category;
@@ -36,19 +37,25 @@ use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use Symfony\Component\Serializer\SerializerInterface;
 use Throwable;
-use Http\Client\Exception\HttpException;
 
 class OmnisendClient implements LoggerAwareInterface, OmnisendClientInterface
 {
     use LoggerAwareTrait;
 
     private const API_VERSION = 'v3';
+
     private const URL_PATH_CONTACTS = '/contacts';
+
     private const URL_PATH_CATEGORIES = '/categories';
+
     private const URL_PATH_CARTS = '/carts';
+
     private const URL_PATH_ORDERS = '/orders';
+
     private const URL_PATH_BATCHES = '/batches';
+
     private const URL_PATH_PRODUCTS = '/products';
+
     private const URL_PATH_EVENTS = '/events';
 
     /** @var ClientFactoryInterface */
@@ -420,4 +427,3 @@ class OmnisendClient implements LoggerAwareInterface, OmnisendClientInterface
         return null;
     }
 }
-

@@ -18,13 +18,21 @@ use Sylius\Component\Resource\Model\ResourceInterface;
 class EventField implements ResourceInterface
 {
     public const TYPE_INT = 'int';
+
     public const TYPE_FLOAT = 'float';
+
     public const TYPE_BOOL = 'bool';
+
     public const TYPE_STRING = 'string';
+
     public const TYPE_EMAIL = 'email';
+
     public const TYPE_URL = 'url';
+
     public const TYPE_DATE = 'date';
+
     public const TYPE_DATETIME = 'dateTime';
+
     public const TYPES = [
         self::TYPE_INT,
         self::TYPE_FLOAT,

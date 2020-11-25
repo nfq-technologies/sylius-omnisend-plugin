@@ -14,11 +14,8 @@ declare(strict_types=1);
 namespace NFQ\SyliusOmnisendPlugin\Message\Handler;
 
 use NFQ\SyliusOmnisendPlugin\Client\OmnisendClientInterface;
-use NFQ\SyliusOmnisendPlugin\Message\Command\DeleteCategory;
 use NFQ\SyliusOmnisendPlugin\Message\Command\DeleteProduct;
-use NFQ\SyliusOmnisendPlugin\Model\TaxonInterface;
 use Sylius\Component\Core\Repository\ProductRepositoryInterface;
-use Sylius\Component\Taxonomy\Repository\TaxonRepositoryInterface;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
 class DeleteProductHandler implements MessageHandlerInterface

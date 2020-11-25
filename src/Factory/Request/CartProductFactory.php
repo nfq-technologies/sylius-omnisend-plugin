@@ -50,10 +50,10 @@ class CartProductFactory implements CartProductFactoryInterface
         $localeCode = $order->getLocaleCode();
         $discount = $this->getDiscount($orderItem);
 
-        $cartItem->setCartProductID((string)$orderItem->getId());
-        $cartItem->setProductID((string)$product->getCode());
-        $cartItem->setSku((string)$product->getCode());
-        $cartItem->setVariantID((string)$variant->getCode());
+        $cartItem->setCartProductID((string) $orderItem->getId());
+        $cartItem->setProductID((string) $product->getCode());
+        $cartItem->setSku((string) $product->getCode());
+        $cartItem->setVariantID((string) $variant->getCode());
         $cartItem->setTitle($orderItem->getProductName());
         $cartItem->setQuantity($orderItem->getQuantity());
         $cartItem->setPrice($orderItem->getTotal());

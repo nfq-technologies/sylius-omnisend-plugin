@@ -25,6 +25,7 @@ class OrderAddressFactory implements OrderAddressFactoryInterface
         if (null === $address) {
             return null;
         }
+
         return (new OrderAddress())
             ->setFirstName($address->getFirstName())
             ->setLastName($address->getLastName())

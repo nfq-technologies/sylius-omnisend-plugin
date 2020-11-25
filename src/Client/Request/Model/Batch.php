@@ -16,12 +16,17 @@ namespace NFQ\SyliusOmnisendPlugin\Client\Request\Model;
 class Batch
 {
     public const ENDPOINTS_CONTACT = 'contacts';
+
     public const ENDPOINTS_ORDER = 'orders';
+
     public const ENDPOINTS_PRODUCT = 'products';
+
     public const ENDPOINTS_EVENT = 'events';
+
     public const ENDPOINTS_CATEGORIES = 'categories';
 
     public const METHODS_POST = 'POST';
+
     public const METHODS_PUT = 'PUT';
 
     /** @var string */

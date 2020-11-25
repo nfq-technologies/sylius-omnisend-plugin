@@ -15,9 +15,6 @@ namespace NFQ\SyliusOmnisendPlugin\Message\Handler;
 
 use NFQ\SyliusOmnisendPlugin\Client\OmnisendClientInterface;
 use NFQ\SyliusOmnisendPlugin\Message\Command\DeleteCart;
-use NFQ\SyliusOmnisendPlugin\Model\OrderInterface;
-use Psr\Log\LoggerAwareTrait;
-use Sylius\Component\Core\Repository\OrderRepositoryInterface;
 
 class DeleteCartHandler
 {
