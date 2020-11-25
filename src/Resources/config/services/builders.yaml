@@ -52,6 +52,8 @@ services:
       - '@nfq_sylius_omnisend_plugin.mapper.order_state'
       - '@nfq_sylius_omnisend_plugin.mapper.order_payment_state'
       - '@nfq_sylius_omnisend_plugin.resolver.default_order_coupon'
+      - '@nfq_sylius_omnisend_plugin.resolver.courier_data_resolver'
+      - '@router'
 
   nfq_sylius_omnisend_plugin.builder.request.product_image_list:
     class: NFQ\SyliusOmnisendPlugin\Builder\Request\ProductImageListBuilder

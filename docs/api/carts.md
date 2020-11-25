@@ -1,4 +1,4 @@
-##Categories API
+##Carts API
 
 On all cart actions data should be pushed to Omnisend.
 - on product add
@@ -89,4 +89,4 @@ use NFQ\SyliusOmnisendPlugin\Message\Command\DeleteCart;
 ###Sync
 
 Sync with Omnisend is only executed then user is logged in or omnisendContactID cookie is added in the browser.
-If user is not logged in sync process stars after successfully fulfilled address form.
+If user is not logged in, sync process will start after successfully fulfilled address form.

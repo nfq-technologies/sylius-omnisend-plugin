@@ -72,6 +72,10 @@ final class NFQSyliusOmnisendExtension extends AbstractResourceExtension
             $config['order_coupon_resolver']
         );
         $container->setAlias(
+            'nfq_sylius_omnisend_plugin.resolver.courier_data_resolver',
+            $config['courier_data_resolver']
+        );
+        $container->setAlias(
             'nfq_sylius_omnisend_plugin.resolver.product_additional_data',
             $config['product_additional_data_resolver']
         );
