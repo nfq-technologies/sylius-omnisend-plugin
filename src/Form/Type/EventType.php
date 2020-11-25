@@ -28,6 +28,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Validator\Constraints\Count;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 class EventType extends AbstractResourceType
@@ -44,9 +45,6 @@ class EventType extends AbstractResourceType
                 [
                     'label' => 'nfq_sylius_omnisend_plugin.ui.event.event_id',
                     'disabled' => true,
-                    'attr' => [
-                        'readonly' => 'readonly',
-                    ],
                     'required' => false,
                 ]
             )
@@ -56,9 +54,6 @@ class EventType extends AbstractResourceType
                 [
                     'label' => 'nfq_sylius_omnisend_plugin.ui.event.name',
                     'disabled' => true,
-                    'attr' => [
-                        'readonly' => 'readonly',
-                    ],
                     'required' => false,
                 ]
             )->add(
@@ -67,9 +62,6 @@ class EventType extends AbstractResourceType
                 [
                     'label' => 'sylius.ui.enable',
                     'disabled' => true,
-                    'attr' => [
-                        'readonly' => 'readonly',
-                    ],
                     'required' => false,
                 ]
             )->add(
@@ -97,6 +89,12 @@ class EventType extends AbstractResourceType
                     'label' => 'nfq_sylius_omnisend_plugin.ui.event.fields',
                     'constraints' => [
                         new UniqueEventField(['groups' => 'sylius']),
+                        new Count(
+                            [
+                                'min' => 1,
+                                'groups' => 'sylius'
+                            ]
+                        )
                     ],
                 ]
             );
@@ -111,6 +109,22 @@ class EventType extends AbstractResourceType
                     $form->remove('eventID');
                     $form->remove('name');
                     $form->remove('enabled');
+                } else {
+                    $form->add(
+                        'systemName',
+                        TextType::class,
+                        [
+                            'disabled' => true,
+                            'label' => 'nfq_sylius_omnisend_plugin.ui.event.system_name',
+                        ]
+                    )->add(
+                        'channel',
+                        ChannelChoiceType::class,
+                        [
+                            'disabled' => true,
+                            'label' => 'nfq_sylius_omnisend_plugin.ui.event.channel',
+                        ]
+                    );
                 }
             }
         );

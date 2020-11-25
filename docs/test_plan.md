@@ -441,3 +441,10 @@ Data with Omnisend is also should be synced then sylius remove expired carts com
 ```
 
 #ORDER
+- On checkout complete action order should be sent to omnisend.
+- All provided data should match data in order admin.
+- On order address data change All order data should be send to Omnisend
+- On order payment or shipment state change order data should be sent to Omnisend
+- On order cancel Order canceledAt date should be saved to database. And order data should be sent to Omnisend.
+ 
+#Events
