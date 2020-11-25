@@ -7,7 +7,7 @@ Endpoints:
 - [categories](categories.md)
 - [products](categories.md)
 - [contacts](contacts.md)
-- [carts](categories.md)
+- [carts](carts.md)
 - [products](categories.md)
 - [events](events.md)
 

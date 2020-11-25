@@ -110,7 +110,7 @@ class OmnisendClientMock implements OmnisendClientInterface
         return (new CartSuccess())->setCartID('1111');
     }
 
-    public function deleteCart(string $cartId, ?string $channelCode): ?object
+    public function deleteCart(?string $cartId, ?string $channelCode): ?object
     {
         $this->client->deleteCart($cartId, $channelCode);
 

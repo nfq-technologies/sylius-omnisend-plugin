@@ -29,27 +29,20 @@ class UpdateCart implements CommandInterface
     /** @var string|null */
     private $contactId;
 
+    public function __construct(?int $orderId, ?string $contactId, ?string $channelCode)
+    {
+        $this->orderId = $orderId;
+        $this->contactId = $contactId;
+        $this->channelCode = $channelCode;
+    }
+
     public function getOrderId(): ?int
     {
         return $this->orderId;
     }
 
-    public function setOrderId(?int $orderId): self
-    {
-        $this->orderId = $orderId;
-
-        return $this;
-    }
-
     public function getContactId(): ?string
     {
         return $this->contactId;
-    }
-
-    public function setContactId(?string $contactId): self
-    {
-        $this->contactId = $contactId;
-
-        return $this;
     }
 }

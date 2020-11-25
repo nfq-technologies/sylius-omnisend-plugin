@@ -382,7 +382,7 @@ And endpoint `/v3/products` should return all products:
 ##CONTACT
 
 On user register action:
-- data should be send to OMNISEND. 
+- data should be sent to Omnisend. 
 - Omnisend contact id should be added to the database
 - omnisendContactID cookie should be added to the browser. 
 
@@ -417,6 +417,27 @@ On user register action:
   "createdAt": "2020-11-25T15:45:29+00:00"
 }
 ```
-- On user data change in user account and admin area, customer data should be synced with Omnisend:
+- On user data change in user account and admin area, customer data should be synced with Omnisend.
+
+#CART
+
+if User is logged in or `omnisendContactID` cookie is added to the browser.
+On all cart actions data should be pushed to Omnisend.
+- on product add
+- on product remove
+- on coupon add
+- on item count change
+- on item remove
+- on checkout step change
 
 
+if User is not logged in or `omnisendContactID` cookie is not set.
+Cart with Omnisend should be synced after addressing step.
+
+
+Data with Omnisend is also should be synced then sylius remove expired carts command is executed:
+```
+ php tests/Application/bin/console sylius:remove-expired-carts
+```
+
+#ORDER

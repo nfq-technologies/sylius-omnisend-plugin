@@ -145,7 +145,7 @@ class OmnisendClient implements LoggerAwareInterface, OmnisendClientInterface
         return $this->parseResponse($response, CartSuccess::class);
     }
 
-    public function deleteCart(string $cartId, ?string $channelCode): ?object
+    public function deleteCart(?string $cartId, ?string $channelCode): ?object
     {
         $response = $this->sendRequest(
             $this->messageFactory->create(

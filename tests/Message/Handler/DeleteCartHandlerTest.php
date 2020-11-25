@@ -67,9 +67,7 @@ class DeleteCartHandlerTest extends TestCase
             ->willReturn((new CartSuccess())->setCartID('444'));
 
         $this->handler->__invoke(
-            (new DeleteCart())
-                ->setOmnisendCartId("1")
-                ->setChannelCode('a')
+            new DeleteCart("1", 'a')
         );
     }
 }
