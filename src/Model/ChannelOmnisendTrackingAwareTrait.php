@@ -40,7 +40,7 @@ trait ChannelOmnisendTrackingAwareTrait
         return $this->omnisendTrackingKey;
     }
 
-    public function setOmnisendTrackingKey(string $omnisendTrackingKey): void
+    public function setOmnisendTrackingKey(?string $omnisendTrackingKey): void
     {
         $this->omnisendTrackingKey = $omnisendTrackingKey;
     }

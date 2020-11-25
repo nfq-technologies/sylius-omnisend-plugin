@@ -19,6 +19,7 @@ declare(strict_types=1);
 
 namespace NFQ\SyliusOmnisendPlugin\Resolver;
 
+use NFQ\SyliusOmnisendPlugin\Utils\DatetimeHelper;
 use Sylius\Component\Attribute\Model\AttributeValueInterface;
 use Sylius\Component\Core\Model\ProductInterface;
 
@@ -44,9 +45,8 @@ class ProductAdditionalDataResolver implements ProductAdditionalDataResolverInte
                 if (
                     null !== $attributeValue
                     && null !== $attributeValue->getAttribute()
-                    && $attributeValue->getAttribute()->getStorageType() === 'text'
                 ) {
-                    $attributes[$tagAttrKey] = $attributeValue->getValue();
+                    $attributes[$tagAttrKey] = $this->resolveAttributeValue($attributeValue);
                 }
             }
         }
@@ -64,11 +64,12 @@ class ProductAdditionalDataResolver implements ProductAdditionalDataResolverInte
         return $this->getAttributeValue('type', $product, $localeCode);
     }
 
-    private function getAttributeValue(
+    protected function getAttributeValue(
         string $attributeKey,
         ProductInterface $product,
         string $localeCode = null
-    ): ?string {
+    ): ?string
+    {
         $attributeKeyName = isset($this->attributes[$attributeKey]) ? $this->attributes[$attributeKey] : null;
 
         if (null === $attributeKeyName) {
@@ -81,9 +82,37 @@ class ProductAdditionalDataResolver implements ProductAdditionalDataResolverInte
         if (
             null !== $attribute
             && null !== $attribute->getAttribute()
-            && $attribute->getAttribute()->getStorageType() === 'text'
         ) {
-            return $attribute->getValue();
+            return $this->resolveAttributeValue($attribute);
+        }
+
+        return null;
+    }
+
+    protected function resolveAttributeValue(AttributeValueInterface $attributeValue): ?string
+    {
+        switch ($attributeValue->getAttribute()->getStorageType()) {
+            case AttributeValueInterface::STORAGE_BOOLEAN:
+                return (string)(int)$attributeValue->getValue();
+            case AttributeValueInterface::STORAGE_FLOAT:
+            case AttributeValueInterface::STORAGE_INTEGER:
+            case AttributeValueInterface::STORAGE_TEXT:
+                return (string)$attributeValue->getValue();
+            case AttributeValueInterface::STORAGE_DATETIME:
+                if (null !== $attributeValue->getValue()) {
+                    return DatetimeHelper::format($attributeValue->getValue());
+                }
+                break;
+            case AttributeValueInterface::STORAGE_DATE:
+                if (null !== $attributeValue->getValue()) {
+                    return $attributeValue->getValue()->format('Y-m-d');
+                }
+                break;
+            case AttributeValueInterface::STORAGE_JSON:
+                if (null !== $attributeValue->getValue()) {
+                    return implode(', ', $attributeValue->getValue());
+                }
+                break;
         }
 
         return null;
