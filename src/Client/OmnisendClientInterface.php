@@ -35,6 +35,8 @@ interface OmnisendClientInterface
 
     public function postCategory(Category $category, ?string $channelCode): ?object;
 
+    public function getCategory(string $category, ?string $channelCode): ?object;
+
     public function putCategory(Category $category, ?string $channelCode): ?object;
 
     public function deleteCategory(string $categoryId, ?string $channelCode): ?object;

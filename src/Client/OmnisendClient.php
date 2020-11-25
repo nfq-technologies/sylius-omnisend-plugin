@@ -103,6 +103,19 @@ class OmnisendClient implements LoggerAwareInterface, OmnisendClientInterface
         return $this->parseResponse($response, CategorySuccess::class);
     }
 
+    public function getCategory(string $categoryId, ?string $channelCode): ?object
+    {
+        $response = $this->sendRequest(
+            $this->messageFactory->create(
+                'GET',
+                self::API_VERSION . self::URL_PATH_CATEGORIES . '/' . $categoryId
+            ),
+            $channelCode
+        );
+
+        return $this->parseResponse($response, CategorySuccess::class);
+    }
+
     public function postCart(Cart $cart, ?string $channelCode): ?object
     {
         $response = $this->sendRequest(

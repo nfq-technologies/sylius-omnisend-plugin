@@ -61,6 +61,13 @@ class OmnisendClientMock implements OmnisendClientInterface
         $this->client->patchContact($contactId, $contact, $channelCode);
     }
 
+    public function getCategory(string $category, ?string $channelCode): ?object
+    {
+        $this->client->getCategory($category, $channelCode);
+
+        return null;
+    }
+
     public function postCategory(Category $category, ?string $channelCode): ?object
     {
         $this->client->postCategory($category, $channelCode);

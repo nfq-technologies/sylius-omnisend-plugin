@@ -62,26 +62,22 @@ class UpdateProductHandler
         if (null !== $product) {
             /** @var ChannelInterface $channel */
             $channel = $this->channelRepository->findOneBy(['code' => $message->getChannelCode()]);
+
             if ($product->isPushedToOmnisend()) {
                 $response = $this->omnisendClient->putProduct(
                     $this->productBuilderDirector->build($product, $channel, $message->getLocaleCode()),
                     $message->getChannelCode()
                 );
-
-                if (null !== $response) {
-                    $product->setPushedToOmnisend(new DateTime());
-                    $this->productRepository->add($product);
-                }
             } else {
                 $response = $this->omnisendClient->postProduct(
                     $this->productBuilderDirector->build($product, $channel, $message->getLocaleCode()),
                     $message->getChannelCode()
                 );
+            }
 
-                if (null !== $response) {
-                    $product->setPushedToOmnisend(new DateTime());
-                    $this->productRepository->add($product);
-                }
+            if (null !== $response) {
+                $product->setPushedToOmnisend(new DateTime());
+                $this->productRepository->add($product);
             }
         }
     }
