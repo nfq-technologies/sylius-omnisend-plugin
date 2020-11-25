@@ -1,6 +1,6 @@
 ##Orders API
 
-On each taxon action taxon data is pushed to omnisend.
+On each order action order data is pushed to Omnisend.
 - Order create event is fired after successful checkout.
 - Order update events are fired in admin are after order data change.
 
@@ -114,3 +114,108 @@ use NFQ\SyliusOmnisendPlugin\Message\Command\CancelOrder;
         'channelCode'
     );
 ```
+
+####Order coupon resolver:
+
+If current coupon resolver `DefaultOrderCouponResolver` does not meet your requirements, you can add your own by implementing interface : `OrderCouponResolverInterface` and changing plugin config value.
+
+For example:
+```yaml
+nfq_sylius_omnisend:
+    order_coupon_resolver: custom_id
+```
+
+```php
+use NFQ\SyliusOmnisendPlugin\Client\Request\Model\OrderCoupon;
+use Sylius\Component\Core\Model\OrderInterface;
+use NFQ\SyliusOmnisendPlugin\Resolver\OrderCouponResolverInterface;
+
+class CustomOrderCouponResolver implements OrderCouponResolverInterface
+{
+    public function resolve(OrderInterface $order): ?OrderCoupon
+    {
+        //TODO
+    }
+}
+```
+
+####Order tracking resolver:
+
+If current coupon resolver `DefaultOrderCourierDataResolver` does not meet your requirements, you can add your own by implementing interface : `OrderCouponResolverInterface` and changing plugin config value.
+
+For example:
+```yaml
+nfq_sylius_omnisend:
+    courier_data_resolver: cusotom_id
+```
+
+```php
+use Sylius\Component\Core\Model\OrderInterface;
+use NFQ\SyliusOmnisendPlugin\Resolver\OrderCourierDataResolverInterface;
+
+class CustomOrderCourierDataResolver implements OrderCourierDataResolverInterface
+{
+    public function getCourierUrl(OrderInterface $order): ?string
+    {
+        //TODO
+    }
+
+    public function getCourierTitle(OrderInterface $order): ?string
+    {
+        //TODO
+    }
+}
+```
+
+
+####States mapper:
+
+#####Order
+
+Default order states mapped in file ```OrderStateMapper.php```
+```php
+use Sylius\Component\Core\Model\OrderInterface;
+use NFQ\SyliusOmnisendPlugin\Builder\Request\Constants\OrderFulfillmentStatus;
+
+    const DEFAULT_MAP = [
+        OrderInterface::STATE_CART => OrderFulfillmentStatus::UNFULFILL,
+        OrderInterface::STATE_NEW => OrderFulfillmentStatus::NEW,
+        OrderInterface::STATE_CANCELLED => OrderFulfillmentStatus::UNFULFILL,
+        OrderInterface::STATE_FULFILLED => OrderFulfillmentStatus::FULFILL
+    ];
+```
+
+If this mapping does not meet your requirements, it can be changed in plugin config:
+
+```yaml
+nfq_sylius_omnisend:
+  order_states:
+    customOrderState: omnisendState
+```
+
+#####Payment
+
+Default order payment states mapped in file `OrderPaymentStateMapper.php`
+```php
+use Sylius\Component\Core\OrderPaymentStates;
+use NFQ\SyliusOmnisendPlugin\Builder\Request\Constants\OrderPaymentStatus;
+
+    const DEFAULT_MAP = [
+        OrderPaymentStates::STATE_CART => OrderPaymentStatus::AWAITING,
+        OrderPaymentStates::STATE_CANCELLED => OrderPaymentStatus::VOID,
+        OrderPaymentStates::STATE_AWAITING_PAYMENT => OrderPaymentStatus::AWAITING,
+        OrderPaymentStates::STATE_PARTIALLY_PAID => OrderPaymentStatus::PARTIALLY_PAY,
+        OrderPaymentStates::STATE_PAID => OrderPaymentStatus::PAY,
+        OrderPaymentStates::STATE_AUTHORIZED => OrderPaymentStatus::AWAITING,
+        OrderPaymentStates::STATE_PARTIALLY_AUTHORIZED => OrderPaymentStatus::AWAITING,
+        OrderPaymentStates::STATE_PARTIALLY_REFUNDED => OrderPaymentStatus::PARTIALLY_REFUND,
+        OrderPaymentStates::STATE_REFUNDED => OrderPaymentStatus::REFUND,
+    ];
+```
+
+If this mapping does not meet your requirements, it can be changed in plugin config:
+
+```yaml
+nfq_sylius_omnisend:
+  payment_states:
+    customPaymentState: omnisendState

@@ -8,9 +8,11 @@ nfq_sylius_omnisend:
     client_logger: null
     product_image_resolver: nfq_sylius_omnisend_plugin.resolver.default_product_image
     order_coupon_resolver: nfq_sylius_omnisend_plugin.resolver.default_order_coupon
+    courier_data_resolver: nfq_sylius_omnisend_plugin.resolver.default_courier_data_resolver
     product_additional_data_resolver: nfq_sylius_omnisend_plugin.resolver.default_product_additional_data
     product_url_resolver: nfq_sylius_omnisend_plugin.resolver.default_product_url
     product_variant_stock_resolver: nfq_sylius_omnisend_plugin.resolver.default_product_variant_stock
+    customer_additional_data: nfq_sylius_omnisend_plugin.resolver.default_customer_additional_data
     order_states: {  }
     payment_states: {  }
     product_image:
@@ -20,9 +22,10 @@ nfq_sylius_omnisend:
     product_attributes:
         vendor: omnisend_vendor
         type: omnisend_type
-        tags:
-            - omnisend_tag_1
-            - omnisend_tag_2
+        tags: omnisend_tags
+        custom_fields:
+            - omnisend_custom_field_1
+            - omnisend_custom_field_2
     send_welcome_message:
         email: true
         phone: false
