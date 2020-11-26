@@ -51,7 +51,7 @@ class ProductAdditionalDataResolverTest extends TestCase
         $attributeValue->setProduct($product);
         $product->addAttribute($attributeValue);
 
-        $result = $this->resolver->getVendor($product);
+        $result = $this->resolver->getVendor($product, 'en');
 
         $this->assertEquals($result, $attribute);
     }
@@ -59,6 +59,7 @@ class ProductAdditionalDataResolverTest extends TestCase
     public function attributeData()
     {
         $attribute1 = new ProductAttribute();
+        $attribute1->setConfiguration(['choices' => ['value' => ['en' => 'value33'], 'value2' => ['en' => 'value22']]]);
         $attributeValue1 = new ProductAttributeValue();
         $attributeValue1->setLocaleCode('en');
         $attributeValue1->setAttribute($attribute1);
@@ -96,7 +97,7 @@ class ProductAdditionalDataResolverTest extends TestCase
         return [
             'json' => [
                 $attributeValue1,
-                'value, value2'
+                'value33, value22'
             ],
             'datetime' => [
                 $attributeValue2,

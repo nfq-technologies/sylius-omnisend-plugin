@@ -147,7 +147,9 @@ class ProductAdditionalDataResolver implements ProductAdditionalDataResolverInte
                 break;
             case AttributeValueInterface::STORAGE_JSON:
                 if (null !== $attributeValue->getValue()) {
-                    $config = $attributeValue->getAttribute()->getConfiguration();
+                    /** @var AttributeInterface $attribute */
+                    $attribute = $attributeValue->getAttribute();
+                    $config = $attribute->getConfiguration();
 
                     $choices = [];
                     foreach ($attributeValue->getValue() as $value) {
