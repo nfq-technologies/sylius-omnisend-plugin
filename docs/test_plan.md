@@ -66,7 +66,7 @@ Value should be visible in script:
 {"$vendor":"VENDRO OMNISEND TEST"}
 ```
 
-- custom tags attributes with code `omnisend_tag_1` and `omnisend_tag_2` should be added in admin: 
+- custom tags attributes with code `omnisend_tags` should be added in admin: 
 
 Values should be visible in script :
 
@@ -102,7 +102,7 @@ Response body:
   "categoryID": "Taxon"
 }
 ```
-- On taxon update in amdin area, data should be send to Omnisend
+- On taxon update in admin area, data should be send to Omnisend
 
 /v3/categories/Taxon
 
@@ -124,7 +124,7 @@ Response body:
 }
 ```
 
-- On taxon delete in amdin area, data should be send to Omnisend
+- On taxon delete in admin area, data should be send to Omnisend
 
 `DELETE	/v3/categories/Taxon`
 
@@ -297,7 +297,7 @@ Response body:
   "productID": "000F_office_grey_jeans"
 }
 ```
-- On product update in amdin area, data should be send to Omnisend
+- On product update in admin area, data should be send to Omnisend
 
 `/v3/products/000F_office_grey_jeans`
 
@@ -319,7 +319,7 @@ Response body:
 }
 ```
 
-- On product delete in amdin area, data should be send to Omnisend
+- On product delete in admin area, data should be send to Omnisend
 
 `DELETE	/v3/products/000F_office_grey_jeans`
 
@@ -435,7 +435,7 @@ if User is not logged in or `omnisendContactID` cookie is not set.
 Cart with Omnisend should be synced after addressing step.
 
 
-Data with Omnisend is also should be synced then sylius remove expired carts command is executed:
+Data with Omnisend also should be synced then sylius "remove expired carts" command is executed:
 ```
  php tests/Application/bin/console sylius:remove-expired-carts
 ```
@@ -445,10 +445,11 @@ Data with Omnisend is also should be synced then sylius remove expired carts com
 - All provided data should match data in order admin.
 - On order address data change All order data should be send to Omnisend
 - On order payment or shipment state change order data should be sent to Omnisend
-- On order cancel Order canceledAt date should be saved to database. And order data should be sent to Omnisend.
+- On tracking code add action order data should be sent to Omnisend
+- On order cancel canceledAt date should be saved to database and order data should be sent to Omnisend.
  
 #Events
-- Try to create new event without fields. Error should be displayed.
-- Try to create new event with same fields. Error should be displayed.
-- Try to create event with different fields. Event should be saved.
-- Try to sync events with Omnisend. Missing data as event name and event id should be prefiled in edit form.
+- Try to create a new event without fields. Error should be displayed.
+- Try to create a new event with same fields. Error should be displayed.
+- Try to create a new event with different fields. Event should be saved.
+- Try to sync events with Omnisend. Missing data like event name and event id should be filled in edit form.
