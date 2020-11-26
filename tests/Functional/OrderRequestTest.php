@@ -164,6 +164,7 @@ class OrderRequestTest extends WebTestCase
                   "email": "@string@",
                   "orderNumber": "@integer@",
                   "shippingMethod": "@string@",
+                  "orderUrl": "@string@",
                   "currency": "@string@",
                   "orderSum": "@integer@",
                   "subTotalSum": "@integer@",
@@ -204,6 +205,7 @@ class OrderRequestTest extends WebTestCase
                       "discount": "@integer@",
                       "imageUrl": "@string@",
                       "productUrl": "@string@",
+                      "tags": "@array@",
                       "categoryIDs": "@array@"
                     }
                   ],

@@ -17,23 +17,14 @@
 
 declare(strict_types=1);
 
-namespace NFQ\SyliusOmnisendPlugin\Message\Command;
+namespace NFQ\SyliusOmnisendPlugin\Resolver;
 
-class CreateContact implements CommandInterface
+use NFQ\SyliusOmnisendPlugin\Client\Request\Model\OrderCoupon;
+use Sylius\Component\Core\Model\OrderInterface;
+
+interface OrderCourierDataResolverInterface
 {
-    use CommandTrait;
+    public function getCourierUrl(OrderInterface $order): ?string;
 
-    /** @var int */
-    private $customerId;
-
-    public function __construct(int $customerId, ?string $channelCode)
-    {
-        $this->customerId = $customerId;
-        $this->channelCode = $channelCode;
-    }
-
-    public function getCustomerId(): int
-    {
-        return $this->customerId;
-    }
+    public function getCourierTitle(OrderInterface $order): ?string;
 }

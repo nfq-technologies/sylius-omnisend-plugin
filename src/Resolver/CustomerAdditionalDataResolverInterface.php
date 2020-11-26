@@ -17,14 +17,13 @@
 
 declare(strict_types=1);
 
-namespace NFQ\SyliusOmnisendPlugin\Model;
+namespace NFQ\SyliusOmnisendPlugin\Resolver;
 
-use stdClass;
+use Sylius\Component\Core\Model\CustomerInterface;
 
-trait CustomTagsAwareTrait
+interface CustomerAdditionalDataResolverInterface
 {
-    public function getOmnisendCustomTags(): ?stdClass
-    {
-        return null;
-    }
+    public function geCustomProperties(CustomerInterface $customer): ?array;
+
+    public function getTags(CustomerInterface $customer): ?array;
 }

@@ -4,7 +4,8 @@ services:
     arguments:
       - '@sylius.storage.cart_session'
       - '@router'
-      - '@sylius.repository.order'
+      - '@nfq_sylius_omnisend_plugin.repository.order_details'
+      - '@nfq_sylius_omnisend_plugin.setter.contact_cookie'
     public: true
 
   nfq_sylius_omnisend_plugin.controller.events_sync:

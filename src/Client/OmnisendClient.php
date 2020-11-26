@@ -30,6 +30,7 @@ use NFQ\SyliusOmnisendPlugin\Client\Response\Model\BatchSuccess;
 use NFQ\SyliusOmnisendPlugin\Client\Response\Model\CartSuccess;
 use NFQ\SyliusOmnisendPlugin\Client\Response\Model\CategorySuccess;
 use NFQ\SyliusOmnisendPlugin\Client\Response\Model\ContactSuccess;
+use NFQ\SyliusOmnisendPlugin\Client\Response\Model\ContactSuccessList;
 use NFQ\SyliusOmnisendPlugin\Client\Response\Model\EventSuccess;
 use NFQ\SyliusOmnisendPlugin\Client\Response\Model\OrderSuccess;
 use NFQ\SyliusOmnisendPlugin\Client\Response\Model\ProductSuccess;
@@ -103,6 +104,19 @@ class OmnisendClient implements LoggerAwareInterface, OmnisendClientInterface
         return $this->parseResponse($response, CategorySuccess::class);
     }
 
+    public function getCategory(?string $categoryId, ?string $channelCode): ?object
+    {
+        $response = $this->sendRequest(
+            $this->messageFactory->create(
+                'GET',
+                self::API_VERSION . self::URL_PATH_CATEGORIES . '/' . $categoryId
+            ),
+            $channelCode
+        );
+
+        return $this->parseResponse($response, CategorySuccess::class);
+    }
+
     public function postCart(Cart $cart, ?string $channelCode): ?object
     {
         $response = $this->sendRequest(
@@ -131,7 +145,7 @@ class OmnisendClient implements LoggerAwareInterface, OmnisendClientInterface
         return $this->parseResponse($response, CartSuccess::class);
     }
 
-    public function deleteCart(string $cartId, ?string $channelCode): ?object
+    public function deleteCart(?string $cartId, ?string $channelCode): ?object
     {
         $response = $this->sendRequest(
             $this->messageFactory->create(
@@ -227,6 +241,19 @@ class OmnisendClient implements LoggerAwareInterface, OmnisendClientInterface
         return $this->parseResponse($response, CategorySuccess::class);
     }
 
+    public function getProduct(?string $productId, ?string $channelCode): ?object
+    {
+        $response = $this->sendRequest(
+            $this->messageFactory->create(
+                'GET',
+                self::API_VERSION . self::URL_PATH_PRODUCTS . '/' . $productId
+            ),
+            $channelCode
+        );
+
+        return $this->parseResponse($response, ProductSuccess::class);
+    }
+
     public function postProduct(Product $product, ?string $channelCode): ?object
     {
         $response = $this->sendRequest(
@@ -238,7 +265,7 @@ class OmnisendClient implements LoggerAwareInterface, OmnisendClientInterface
             $channelCode
         );
 
-        return $this->parseResponse($response, CategorySuccess::class);
+        return $this->parseResponse($response, ProductSuccess::class);
     }
 
     public function putProduct(Product $product, ?string $channelCode): ?object
@@ -252,7 +279,7 @@ class OmnisendClient implements LoggerAwareInterface, OmnisendClientInterface
             $channelCode
         );
 
-        return $this->parseResponse($response, CategorySuccess::class);
+        return $this->parseResponse($response, ProductSuccess::class);
     }
 
     public function deleteProduct(string $productId, ?string $channelCode): ?object
@@ -310,9 +337,9 @@ class OmnisendClient implements LoggerAwareInterface, OmnisendClientInterface
         return $this->parseResponse($response, Event::class . '[]');
     }
 
-    public function patchContact(string $contactId, Contact $contact, ?string $channelCode): void
+    public function patchContact(string $contactId, Contact $contact, ?string $channelCode): ?object
     {
-        $this->sendRequest(
+        $response = $this->sendRequest(
             $this->messageFactory->create(
                 'PATCH',
                 self::API_VERSION . self::URL_PATH_CONTACTS . '/' . $contactId,
@@ -320,6 +347,21 @@ class OmnisendClient implements LoggerAwareInterface, OmnisendClientInterface
             ),
             $channelCode
         );
+
+        return $this->parseResponse($response, ContactSuccess::class);
+    }
+
+    public function getContactByEmail(?string $email, ?string $channelCode): ?object
+    {
+        $response = $this->sendRequest(
+            $this->messageFactory->create(
+                'GET',
+                self::API_VERSION . self::URL_PATH_CONTACTS . '?email=' . $email
+            ),
+            $channelCode
+        );
+
+        return $this->parseResponse($response, ContactSuccessList::class);
     }
 
     private function sendRequest(RequestInterface $request, ?string $channelCode): ?ResponseInterface
@@ -344,7 +386,18 @@ class OmnisendClient implements LoggerAwareInterface, OmnisendClientInterface
             }
 
             return null;
+        } catch (Throwable $exception) {
+            if ($this->logger !== null) {
+                $this->logger->critical(
+                    'Request to Omnisend API failed.',
+                    [
+                        'error' => $exception->getMessage(),
+                    ]
+                );
+            }
         }
+
+        return null;
     }
 
     private function parseResponse(?ResponseInterface $response, ?string $type = null)

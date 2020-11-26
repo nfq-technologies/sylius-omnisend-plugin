@@ -1,11 +1,4 @@
 services:
-  nfq_sylius_omnisend_plugin.message.handler.create_contact:
-    class: NFQ\SyliusOmnisendPlugin\Message\Handler\CreateContactHandler
-    arguments:
-      - '@nfq_sylius_omnisend_plugin.manager.contact'
-      - '@sylius.repository.customer'
-    tags: [messenger.message_handler]
-
   nfq_sylius_omnisend_plugin.message.handler.update_contact:
     class: NFQ\SyliusOmnisendPlugin\Message\Handler\UpdateContactHandler
     arguments:
@@ -48,14 +41,6 @@ services:
     tags: [ messenger.message_handler ]
     calls:
       - ['setLogger', ['@monolog.logger']]
-
-  nfq_sylius_omnisend_plugin.message.handler.create_category:
-    class: NFQ\SyliusOmnisendPlugin\Message\Handler\CreateCategoryHandler
-    arguments:
-      - '@nfq_sylius_omnisend_plugin.client.omnisend'
-      - '@sylius.repository.taxon'
-      - '@nfq_sylius_omnisend_plugin.factory.request.category'
-    tags: [ messenger.message_handler ]
 
   nfq_sylius_omnisend_plugin.message.handler.delete_category:
     class: NFQ\SyliusOmnisendPlugin\Message\Handler\DeleteCategoryHandler
@@ -118,6 +103,8 @@ services:
       - '@sylius.repository.channel'
       - '@nfq_sylius_omnisend_plugin.builder.request.product_director'
     tags: [ messenger.message_handler ]
+    calls:
+      - ['setLogger', ['@nfq_sylius_omnisend_plugin.client.logger']]
 
   nfq_sylius_omnisend_plugin.message.handler.delete_product:
     class: NFQ\SyliusOmnisendPlugin\Message\Handler\DeleteProductHandler

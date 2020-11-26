@@ -88,7 +88,7 @@ class ProductBatchHandleStrategy implements BatchHandlerStrategyInterface
     private function updateProducts(ChannelInterface $channel, CreateBatch $message): void
     {
         $rawData = $this->repository->findSyncedToOmnisend($channel);
-        $this->pushData($rawData, $message, $channel, Batch::METHODS_POST);
+        $this->pushData($rawData, $message, $channel, Batch::METHODS_PUT);
     }
 
     public function pushData(iterable $rawData, CreateBatch $message, ChannelInterface $channel, string $method): void

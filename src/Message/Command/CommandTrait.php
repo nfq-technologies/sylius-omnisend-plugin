@@ -28,11 +28,4 @@ trait CommandTrait
     {
         return $this->channelCode;
     }
-
-    public function setChannelCode(?string $channel): self
-    {
-        $this->channelCode = $channel;
-
-        return $this;
-    }
 }

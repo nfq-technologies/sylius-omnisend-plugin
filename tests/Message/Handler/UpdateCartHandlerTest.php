@@ -69,7 +69,11 @@ class UpdateCartHandlerTest extends TestCase
             ->expects($this->never())
             ->method('postCart');
 
-        $this->handler->__invoke((new UpdateCart())->setOrderId(1)->setContactId('55')->setChannelCode('a'));
+        $this->handler->__invoke(
+            new UpdateCart(
+                1, '55', 'a'
+            )
+        );
     }
 
     public function testIfCallCreateActionIfDoesNotExits()
@@ -104,12 +108,7 @@ class UpdateCartHandlerTest extends TestCase
                 $this->assertEquals($order->getOmnisendOrderDetails()->getCartId(), '444');
             });
 
-        $this->handler->__invoke(
-            (new UpdateCart())
-                ->setOrderId(1)
-                ->setContactId('55')
-                ->setChannelCode('a')
-        );
+        $this->handler->__invoke(new UpdateCart(1, '55', 'a'));
     }
 
     public function testIfCallPatchActionIfCartExists()
@@ -142,11 +141,6 @@ class UpdateCartHandlerTest extends TestCase
             ->expects($this->never())
             ->method('postCart');
 
-        $this->handler->__invoke(
-            (new UpdateCart())
-                ->setOrderId(1)
-                ->setContactId('55')
-                ->setChannelCode('a')
-        );
+        $this->handler->__invoke(new UpdateCart(1, '55', 'a'));
     }
 }

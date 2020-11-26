@@ -61,9 +61,7 @@ class UpdateCategoryHandlerTest extends TestCase
 
     public function testIfAddOmnisendFlagIfTaxonDoesNotExists()
     {
-        $message = (new UpdateCategory())
-            ->setChannelCode('en')
-            ->setTaxonCode('aa');
+        $message = new UpdateCategory('aa', 'en');
 
         $this->taxonRepository
             ->expects($this->exactly(1))
@@ -81,10 +79,9 @@ class UpdateCategoryHandlerTest extends TestCase
 
     public function testIfAddOmnisendFlagWithIfResponseIsInvalid()
     {
-        $message = (new UpdateCategory())
-            ->setChannelCode('en')
-            ->setTaxonCode('aa');
+        $message = new UpdateCategory('aa', 'en');
         $taxon = new Taxon();
+        $taxon->setCode('code');
 
         $this->taxonRepository
             ->expects($this->exactly(1))
@@ -93,6 +90,10 @@ class UpdateCategoryHandlerTest extends TestCase
         $this->omnisendClient
             ->expects($this->exactly(1))
             ->method('postCategory')
+            ->willReturn(null);
+        $this->omnisendClient
+            ->expects($this->exactly(1))
+            ->method('getCategory')
             ->willReturn(null);
         $this->categoryFactory
             ->expects($this->exactly(1))
@@ -105,10 +106,9 @@ class UpdateCategoryHandlerTest extends TestCase
 
     public function testIfAddOmnisendFlag()
     {
-        $message = (new UpdateCategory())
-            ->setChannelCode('en')
-            ->setTaxonCode('aa');
+        $message = new UpdateCategory('aa', 'en');
         $taxon = new Taxon();
+        $taxon->setCode('code');
 
         $this->taxonRepository
             ->expects($this->exactly(1))
@@ -118,6 +118,10 @@ class UpdateCategoryHandlerTest extends TestCase
             ->expects($this->exactly(1))
             ->method('postCategory')
             ->willReturn(new CategorySuccess());
+        $this->omnisendClient
+            ->expects($this->exactly(1))
+            ->method('getCategory')
+            ->willReturn(null);
         $this->categoryFactory
             ->expects($this->exactly(1))
             ->method('create')
@@ -130,9 +134,7 @@ class UpdateCategoryHandlerTest extends TestCase
 
     public function testIfSendUpdateRequestIfOmnisendFlagIsAlreadySet()
     {
-        $message = (new UpdateCategory())
-            ->setChannelCode('en')
-            ->setTaxonCode('aa');
+        $message = new UpdateCategory('aa', 'en');
         $taxon = new Taxon();
         $taxon->setPushedToOmnisend(new \DateTime('2012-12-12'));
 

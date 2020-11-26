@@ -18,6 +18,7 @@ services:
     class: NFQ\SyliusOmnisendPlugin\Builder\Request\ContactBuilder
     arguments:
       - '@nfq_sylius_omnisend_plugin.factory.request.contact_identifier'
+      - '@nfq_sylius_omnisend_plugin.resolver.customer_additional_data'
 
   nfq_sylius_omnisend_plugin.builder.request.contact_director:
     class: NFQ\SyliusOmnisendPlugin\Builder\Request\ContactBuilderDirector
@@ -51,6 +52,8 @@ services:
       - '@nfq_sylius_omnisend_plugin.mapper.order_state'
       - '@nfq_sylius_omnisend_plugin.mapper.order_payment_state'
       - '@nfq_sylius_omnisend_plugin.resolver.default_order_coupon'
+      - '@nfq_sylius_omnisend_plugin.resolver.courier_data_resolver'
+      - '@router'
 
   nfq_sylius_omnisend_plugin.builder.request.product_image_list:
     class: NFQ\SyliusOmnisendPlugin\Builder\Request\ProductImageListBuilder

@@ -59,7 +59,9 @@ class CartSubscriber implements EventSubscriberInterface
             'sylius.order_item.post_add' => 'onOrderItemChange',
             'sylius.order_item.post_remove' => 'onOrderItemChange',
             'sylius.order.post_update' => 'onUpdate',
+            'sylius.cart_change' => 'onCartChange',
             'sylius.carts.post_remove' => 'onCartsRemove',
+            'sylius.order.pre_delete' => 'onCartRemove',
         ];
     }
 
@@ -72,10 +74,11 @@ class CartSubscriber implements EventSubscriberInterface
 
         $this->messageBus->dispatch(
             new Envelope(
-                (new UpdateCart())
-                    ->setOrderId($cart->getId())
-                    ->setChannelCode($channel->getCode())
-                    ->setContactId($this->contactIdResolver->resolve($cart))
+                new UpdateCart(
+                    $cart->getId(),
+                    $this->contactIdResolver->resolve($cart),
+                    $channel->getCode()
+                )
             )
         );
     }
@@ -88,10 +91,11 @@ class CartSubscriber implements EventSubscriberInterface
         if ($order->getId()) {
             $this->messageBus->dispatch(
                 new Envelope(
-                    (new UpdateCart())
-                        ->setOrderId($order->getId())
-                        ->setChannelCode($channel->getCode())
-                        ->setContactId($this->contactIdResolver->resolve($order))
+                    new UpdateCart(
+                        $order->getId(),
+                        $this->contactIdResolver->resolve($order),
+                        $channel->getCode()
+                    )
                 )
             );
         }
@@ -107,10 +111,11 @@ class CartSubscriber implements EventSubscriberInterface
         if ($order->getState() === OrderInterface::STATE_CART) {
             $this->messageBus->dispatch(
                 new Envelope(
-                    (new UpdateCart())
-                        ->setOrderId($order->getId())
-                        ->setChannelCode($channel->getCode())
-                        ->setContactId($this->contactIdResolver->resolve($order))
+                    new UpdateCart(
+                        $order->getId(),
+                        $this->contactIdResolver->resolve($order),
+                        $channel->getCode()
+                    )
                 )
             );
         }
@@ -130,9 +135,51 @@ class CartSubscriber implements EventSubscriberInterface
             if (null !== $details->getCartId()) {
                 $this->messageBus->dispatch(
                     new Envelope(
-                        (new DeleteCart())
-                            ->setOmnisendCartId($details->getCartId())
-                            ->setChannelCode($channel->getCode())
+                        new DeleteCart(
+                            $details->getCartId(),
+                            $channel->getCode()
+                        )
+                    )
+                );
+            }
+        }
+    }
+
+    public function onCartChange(GenericEvent $event): void
+    {
+        /** @var \NFQ\SyliusOmnisendPlugin\Model\OrderInterface $order */
+        $order = $event->getSubject();
+        /** @var ChannelInterface $channel */
+        $channel = $order->getChannel();
+
+        $this->messageBus->dispatch(
+            new Envelope(
+                new UpdateCart(
+                    $order->getId(),
+                    $this->contactIdResolver->resolve($order),
+                    $channel->getCode()
+                )
+            )
+        );
+    }
+
+    public function onCartRemove(ResourceControllerEvent $event): void
+    {
+        /** @var OrderInterface $cart */
+        $cart = $event->getSubject();
+        /** @var ChannelInterface $channel */
+        $channel = $cart->getChannel();
+        /** @var OrderDetails $details */
+        $details = $cart->getOmnisendOrderDetails();
+
+        if ($cart->getState() === OrderInterface::STATE_CART) {
+            if (null !== $details->getCartId()) {
+                $this->messageBus->dispatch(
+                    new Envelope(
+                        new DeleteCart(
+                            $details->getCartId(),
+                            $channel->getCode()
+                        )
                     )
                 );
             }

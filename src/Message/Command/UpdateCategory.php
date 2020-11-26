@@ -26,15 +26,14 @@ class UpdateCategory implements CommandInterface
     /** @var string|null */
     private $taxonCode;
 
+    public function __construct(?string $taxonCode, ?string $channelCode)
+    {
+        $this->taxonCode = $taxonCode;
+        $this->channelCode = $channelCode;
+    }
+
     public function getTaxonCode(): ?string
     {
         return $this->taxonCode;
-    }
-
-    public function setTaxonCode(?string $taxonCode): self
-    {
-        $this->taxonCode = $taxonCode;
-
-        return $this;
     }
 }

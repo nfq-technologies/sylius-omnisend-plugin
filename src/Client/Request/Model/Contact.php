@@ -66,7 +66,7 @@ class Contact
     /** @var string|null */
     private $birthday;
 
-    /** @var stdClass|null */
+    /** @var array|null */
     private $customProperties;
 
     public function __construct()
@@ -225,12 +225,12 @@ class Contact
         return $this;
     }
 
-    public function getCustomProperties(): ?stdClass
+    public function getCustomProperties(): ?array
     {
         return $this->customProperties;
     }
 
-    public function setCustomProperties(?stdClass $customProperties): self
+    public function setCustomProperties(?array $customProperties): self
     {
         $this->customProperties = $customProperties;
 

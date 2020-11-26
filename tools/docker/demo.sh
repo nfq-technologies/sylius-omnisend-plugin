@@ -19,3 +19,4 @@ echo -e '\n## Setting up permissions ... '
 setPerms "${PROJECT_ROOT}/tests/Application/var"
 setPerms "${PROJECT_ROOT}/tests/Application/var/cache"
 setPerms "${PROJECT_ROOT}/tests/Application/var/logs"
+setPerms "${PROJECT_ROOT}/tests/Application/public/media"

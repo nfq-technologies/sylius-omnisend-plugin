@@ -89,7 +89,7 @@ class ProductPickerBuilder implements ProductPickerBuilderInterface
 
         $this->productPicker
             ->setTitle(null !== $translation->getName() ? htmlspecialchars($translation->getName()) : null)
-            ->setProductUrl($this->productUrlResolver->resolve($product))
+            ->setProductUrl($this->productUrlResolver->resolve($product, $localeCode))
             ->setDescription(null !== $translation->getDescription() ? htmlspecialchars($translation->getDescription()) : null);
     }
 

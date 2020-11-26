@@ -6,5 +6,5 @@ sylius_fixtures:
           options:
             custom:
               - channel_code: "FASHION_WEB"
-                api_key: '5c5af4578653ed7d78a067e5-EgZ7yp8GF0TV49JBSo7a0xRv2hjP2vmZkbTEi5xq327uK4pnxj'
+                api_key: '5fad524c8a48f77c3d1c8964-FcNxWghHYEUSdu5kFPHq5f1GZtKs6IgtEWlK3pSJC7SpH1MuEv'
                 tracking_key: '5fad524c8a48f77c3d1c8964'

@@ -17,10 +17,12 @@
 
 namespace NFQ\SyliusOmnisendPlugin\Controller;
 
+use NFQ\SyliusOmnisendPlugin\Model\OrderDetails;
+use NFQ\SyliusOmnisendPlugin\Setter\ContactCookieSetter;
 use Sylius\Component\Core\Model\ChannelInterface;
-use Sylius\Component\Core\Model\OrderInterface;
-use Sylius\Component\Core\Repository\OrderRepositoryInterface;
+use Sylius\Component\Core\Model\Order;
 use Sylius\Component\Core\Storage\CartStorageInterface;
+use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RouterInterface;
@@ -33,17 +35,22 @@ class CartRecoverAction
     /** @var RouterInterface */
     private $router;
 
-    /** @var OrderRepositoryInterface */
-    private $orderRepository;
+    /** @var RepositoryInterface */
+    private $repository;
+
+    /** @var ContactCookieSetter */
+    private $contactCookieSetter;
 
     public function __construct(
         CartStorageInterface $sessionStorage,
         RouterInterface $router,
-        OrderRepositoryInterface $orderRepository
+        RepositoryInterface $orderRepository,
+        ContactCookieSetter $contactCookieSetter
     ) {
         $this->cartStorage = $sessionStorage;
         $this->router = $router;
-        $this->orderRepository = $orderRepository;
+        $this->repository = $orderRepository;
+        $this->contactCookieSetter = $contactCookieSetter;
     }
 
     public function __invoke(Request $request): RedirectResponse
@@ -53,12 +60,19 @@ class CartRecoverAction
         if (null === $cartId) {
             return new RedirectResponse('sylius_shop_homepage');
         }
-        /** @var OrderInterface|null $cart */
-        $cart = $this->orderRepository->findOneBy(['omnisendCartId' => $cartId]);
 
-        if (null === $cart) {
+        if (null !== $request->get(ContactCookieSetter::COOKIE_NAME)) {
+            $this->contactCookieSetter->set($request->get(ContactCookieSetter::COOKIE_NAME));
+        }
+
+        /** @var OrderDetails|null $details */
+        $details = $this->repository->findOneBy(['cartId' => $cartId]);
+
+        if (null === $details) {
             return new RedirectResponse('sylius_shop_homepage');
         }
+        /** @var Order $cart */
+        $cart = $details->getOrder();
         /** @var ChannelInterface $channel */
         $channel = $cart->getChannel();
 

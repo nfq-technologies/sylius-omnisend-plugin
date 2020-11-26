@@ -87,7 +87,7 @@ class ProductVariantFactory implements ProductVariantFactoryInterface
             ->setProductUrl($this->productUrlResolver->resolve($product, $localeCode))
             ->setStatus($this->productStockResolver->resolve($productVariant))
             ->setPrice($price)
-            ->setCustomFields($this->productAdditionalDataResolver->getTags($product))
+            ->setCustomFields($this->productAdditionalDataResolver->getCustomFields($product))
             ->setOldPrice($oldPrice > $price ? $oldPrice : null)
             ->setSku($productVariant->getCode());
     }

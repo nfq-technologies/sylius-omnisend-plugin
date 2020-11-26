@@ -34,7 +34,7 @@ final class Configuration implements ConfigurationInterface
 {
     public function getConfigTreeBuilder(): TreeBuilder
     {
-        $treeBuilder = new TreeBuilder('nfq_sylius_omnisend_plugin');
+        $treeBuilder = new TreeBuilder('nfq_sylius_omnisend');
         $rootNode = $treeBuilder->getRootNode();
 
         $rootNode
@@ -52,6 +52,9 @@ final class Configuration implements ConfigurationInterface
                     ->scalarNode('order_coupon_resolver')
                         ->defaultValue('nfq_sylius_omnisend_plugin.resolver.default_order_coupon')
                     ->end()
+                    ->scalarNode('courier_data_resolver')
+                        ->defaultValue('nfq_sylius_omnisend_plugin.resolver.default_courier_data_resolver')
+                    ->end()
                     ->scalarNode('product_additional_data_resolver')
                         ->defaultValue('nfq_sylius_omnisend_plugin.resolver.default_product_additional_data')
                     ->end()
@@ -60,6 +63,9 @@ final class Configuration implements ConfigurationInterface
                     ->end()
                     ->scalarNode('product_variant_stock_resolver')
                         ->defaultValue('nfq_sylius_omnisend_plugin.resolver.default_product_variant_stock')
+                    ->end()
+                    ->scalarNode('customer_additional_data')
+                        ->defaultValue('nfq_sylius_omnisend_plugin.resolver.default_customer_additional_data')
                     ->end()
                     ->arrayNode('order_states')
                         ->useAttributeAsKey('code')
@@ -84,9 +90,10 @@ final class Configuration implements ConfigurationInterface
                         ->children()
                             ->scalarNode('vendor')->defaultValue('omnisend_vendor')->end()
                             ->scalarNode('type')->defaultValue('omnisend_type')->end()
-                            ->arrayNode('tags')
+                            ->scalarNode('tags')->defaultValue('omnisend_tags')->end()
+                            ->arrayNode('custom_fields')
                                 ->prototype('scalar')->end()
-                                ->defaultValue(['omnisend_tag_1', 'omnisend_tag_2'])
+                                ->defaultValue(['omnisend_custom_field_1', 'omnisend_custom_field_2'])
                             ->end()
                         ->end()
                     ->end()

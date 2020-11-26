@@ -26,12 +26,15 @@ use NFQ\SyliusOmnisendPlugin\Mapper\OrderPaymentStateMapper;
 use NFQ\SyliusOmnisendPlugin\Mapper\OrderStateMapper;
 use NFQ\SyliusOmnisendPlugin\Model\OrderDetails;
 use NFQ\SyliusOmnisendPlugin\Resolver\OrderCouponResolverInterface;
+use NFQ\SyliusOmnisendPlugin\Resolver\OrderCourierDataResolverInterface;
 use NFQ\SyliusOmnisendPlugin\Utils\DatetimeHelper;
 use NFQ\SyliusOmnisendPlugin\Utils\Order\OrderNumberResolver;
 use Sylius\Bundle\ShopBundle\Calculator\OrderItemsSubtotalCalculatorInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\PaymentInterface;
 use Sylius\Component\Core\Model\ShipmentInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Routing\RouterInterface;
 
 class OrderBuilder implements OrderBuilderInterface
 {
@@ -56,13 +59,21 @@ class OrderBuilder implements OrderBuilderInterface
     /** @var OrderCouponResolverInterface */
     private $orderCouponResolver;
 
+    /** @var OrderCourierDataResolverInterface */
+    private $orderCourierResolver;
+
+    /** @var RouterInterface */
+    private $router;
+
     public function __construct(
         OrderAddressFactoryInterface $addressFactory,
         OrderProductFactoryInterface $orderProductFactory,
         OrderItemsSubtotalCalculatorInterface $subtotalCalculator,
         OrderStateMapper $orderStateMapper,
         OrderPaymentStateMapper $orderPaymentStateMapper,
-        OrderCouponResolverInterface $orderCouponResolver
+        OrderCouponResolverInterface $orderCouponResolver,
+        OrderCourierDataResolverInterface $orderCourierResolver,
+        RouterInterface $router
     ) {
         $this->addressFactory = $addressFactory;
         $this->orderProductFactory = $orderProductFactory;
@@ -70,6 +81,8 @@ class OrderBuilder implements OrderBuilderInterface
         $this->stateMapper = $orderStateMapper;
         $this->paymentStateMapper = $orderPaymentStateMapper;
         $this->orderCouponResolver = $orderCouponResolver;
+        $this->orderCourierResolver = $orderCourierResolver;
+        $this->router = $router;
     }
 
     public function createOrder(): void
@@ -117,6 +130,9 @@ class OrderBuilder implements OrderBuilderInterface
         if (null !== $shipping) {
             $this->order->setTrackingCode($shipping->getTracking());
         }
+
+        $this->order->setCourierTitle($this->orderCourierResolver->getCourierTitle($order));
+        $this->order->setCourierUrl($this->orderCourierResolver->getCourierUrl($order));
     }
 
     /** @var \NFQ\SyliusOmnisendPlugin\Model\OrderInterface $order */
@@ -159,6 +175,16 @@ class OrderBuilder implements OrderBuilderInterface
             $this->order->setPaymentMethod($payment->getMethod()->getTranslation($order->getLocaleCode())->getName());
         }
         $this->order->setContactNote($order->getNotes());
+        $this->order->setOrderUrl(
+            $this->router->generate(
+            'sylius_shop_order_show',
+            [
+                '_locale' => $order->getLocaleCode(),
+                'tokenValue' => $order->getTokenValue()
+            ],
+            UrlGeneratorInterface::ABSOLUTE_URL
+            )
+        );
         $this->order->setCreatedAt(DatetimeHelper::format($order->getCreatedAt()));
     }
 

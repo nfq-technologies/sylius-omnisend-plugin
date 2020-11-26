@@ -22,6 +22,7 @@ namespace Tests\NFQ\SyliusOmnisendPlugin\Builder\Request;
 use NFQ\SyliusOmnisendPlugin\Builder\Request\ContactBuilder;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\ContactIdentifier;
 use NFQ\SyliusOmnisendPlugin\Factory\Request\ContactIdentifierFactory;
+use NFQ\SyliusOmnisendPlugin\Resolver\DefaultCustomerAdditionalDataResolver;
 use PHPUnit\Framework\TestCase;
 use Sylius\Component\Core\Model\Address;
 use Tests\NFQ\SyliusOmnisendPlugin\Application\Entity\Customer;
@@ -38,7 +39,7 @@ class ContactBuilderTest extends TestCase
     protected function setUp(): void
     {
         $this->factory = $this->createMock(ContactIdentifierFactory::class);
-        $this->builder = new ContactBuilder($this->factory);
+        $this->builder = new ContactBuilder($this->factory, new DefaultCustomerAdditionalDataResolver());
     }
 
     public function testIfAddsCustomProperties()

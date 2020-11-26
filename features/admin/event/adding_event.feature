@@ -37,3 +37,10 @@ Feature: Adding a new custom event to Omnisend
     And I add it
     Then I should be notified that form contains errors
 
+  @ui @javascript
+  Scenario: Adding only custom event without any fields
+    Given I want to create a new custom event
+    When I specify its system name as "Test System name"
+    And I add it
+    Then I should be notified that form contains errors
+

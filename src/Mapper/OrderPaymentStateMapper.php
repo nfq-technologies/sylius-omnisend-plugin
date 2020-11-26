@@ -19,7 +19,6 @@ declare(strict_types=1);
 
 namespace NFQ\SyliusOmnisendPlugin\Mapper;
 
-use NFQ\SyliusOmnisendPlugin\Builder\Request\Constants\OrderFulfillmentStatus;
 use NFQ\SyliusOmnisendPlugin\Builder\Request\Constants\OrderPaymentStatus;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\OrderPaymentStates;

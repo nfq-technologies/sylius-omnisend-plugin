@@ -27,3 +27,4 @@ parameters:
         - '/Method NFQ\\SyliusOmnisendPlugin\\Client\\OmnisendClient::parseResponse\(\) has no return typehint specified./'
         - '/Call to an undefined method Symfony\\Component\\HttpFoundation\\Session\\SessionInterface::getFlashBag\(\)./'
         - '/Method NFQ\\SyliusOmnisendPlugin\\Mapper\\EventFieldTypeDefaultValueMapper::map\(\) has no return typehint specified/'
+        - '/Method NFQ\\SyliusOmnisendPlugin\\Resolver\\ProductAdditionalDataResolver::resolveAttributeValue\(\) has no return typehint specified/'

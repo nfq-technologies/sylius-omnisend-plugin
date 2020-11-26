@@ -44,9 +44,6 @@ class EventFieldType extends AbstractResourceType
                     'label' => 'nfq_sylius_omnisend_plugin.ui.event_field.required',
                     'disabled' => true,
                     'required' => false,
-                    'attr' => [
-                        'readonly' => 'readonly',
-                    ],
                 ]
             )
             ->add(
@@ -56,9 +53,6 @@ class EventFieldType extends AbstractResourceType
                     'label' => 'nfq_sylius_omnisend_plugin.ui.event_field.name',
                     'disabled' => true,
                     'required' => false,
-                    'attr' => [
-                        'readonly' => 'readonly',
-                    ],
                 ]
             )->add(
                 'systemName',
@@ -73,9 +67,6 @@ class EventFieldType extends AbstractResourceType
                 [
                     'choices' => array_combine(EventField::TYPES, EventField::TYPES),
                     'label' => 'nfq_sylius_omnisend_plugin.ui.event_field.type',
-                    'attr' => [
-                        'readonly' => 'readonly',
-                    ],
                 ]
             );
 
@@ -88,6 +79,23 @@ class EventFieldType extends AbstractResourceType
                 if (null === $object || null === $object->getId()) {
                     $form->remove('required');
                     $form->remove('name');
+                } else {
+                    $form->add(
+                        'systemName',
+                        TextType::class,
+                        [
+                            'label' => 'nfq_sylius_omnisend_plugin.ui.event_field.system_name',
+                            'disabled' => true,
+                        ]
+                    );
+                    $form->add(
+                        'type',
+                        TextType::class,
+                        [
+                            'label' => 'nfq_sylius_omnisend_plugin.ui.event_field.type',
+                            'disabled' => true,
+                        ]
+                    );
                 }
             }
         );

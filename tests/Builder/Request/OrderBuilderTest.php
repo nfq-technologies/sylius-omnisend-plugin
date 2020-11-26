@@ -25,6 +25,7 @@ use NFQ\SyliusOmnisendPlugin\Factory\Request\OrderAddressFactoryInterface;
 use NFQ\SyliusOmnisendPlugin\Factory\Request\OrderProductFactoryInterface;
 use NFQ\SyliusOmnisendPlugin\Mapper\OrderPaymentStateMapper;
 use NFQ\SyliusOmnisendPlugin\Mapper\OrderStateMapper;
+use NFQ\SyliusOmnisendPlugin\Resolver\DefaultOrderCourierDataResolver;
 use NFQ\SyliusOmnisendPlugin\Resolver\OrderCouponResolverInterface;
 use PHPUnit\Framework\TestCase;
 use Sylius\Bundle\ShopBundle\Calculator\OrderItemsSubtotalCalculator;
@@ -41,6 +42,7 @@ use Sylius\Component\Core\Model\ShippingMethod;
 use Sylius\Component\Order\Model\Adjustment;
 use Sylius\Component\Payment\Model\PaymentMethodTranslation;
 use Sylius\Component\Shipping\Model\ShippingMethodTranslation;
+use Symfony\Component\Routing\RouterInterface;
 use Tests\NFQ\SyliusOmnisendPlugin\Mock\OrderMock;
 
 class OrderBuilderTest extends TestCase
@@ -66,6 +68,9 @@ class OrderBuilderTest extends TestCase
     /** @var OrderCouponResolverInterface */
     private $orderCouponResolver;
 
+    /** @var RouterInterface */
+    private $router;
+
     protected function setUp(): void
     {
         $this->addressFactory = $this->createMock(OrderAddressFactoryInterface::class);
@@ -74,6 +79,8 @@ class OrderBuilderTest extends TestCase
         $this->stateMapper = $this->createMock(OrderStateMapper::class);
         $this->paymentStateMapper = $this->createMock(OrderPaymentStateMapper::class);
         $this->orderCouponResolver = $this->createMock(OrderCouponResolverInterface::class);
+        $this->orderCouponResolver = $this->createMock(OrderCouponResolverInterface::class);
+        $this->router = $this->createMock(RouterInterface::class);
         $this->builder = new OrderBuilder(
             $this->addressFactory,
             $this->orderProductFactory,
@@ -81,6 +88,8 @@ class OrderBuilderTest extends TestCase
             $this->stateMapper,
             $this->paymentStateMapper,
             $this->orderCouponResolver,
+            new DefaultOrderCourierDataResolver(),
+            $this->router
         );
     }
 

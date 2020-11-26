@@ -20,6 +20,12 @@ services:
   nfq_sylius_omnisend_plugin.resolver.default_order_coupon:
     class: NFQ\SyliusOmnisendPlugin\Resolver\DefaultOrderCouponResolver
 
+  nfq_sylius_omnisend_plugin.resolver.default_courier_data_resolver:
+    class: NFQ\SyliusOmnisendPlugin\Resolver\DefaultOrderCourierDataResolver
+
+  nfq_sylius_omnisend_plugin.resolver.default_customer_additional_data:
+    class: NFQ\SyliusOmnisendPlugin\Resolver\DefaultCustomerAdditionalDataResolver
+
   nfq_sylius_omnisend_plugin.resolver.default_product_url:
     class: NFQ\SyliusOmnisendPlugin\Resolver\ProductUrlResolver
     arguments:

@@ -9,7 +9,8 @@ Feature: Display Omnisend product picker script in product view
     And the store has a product "Test product" priced at "$20"
 
   @ui
-  Scenario: I see omnisend product picker script in product view
+  Scenario: I see omnisend product picker script in product view if channel has tracking key
+    Given the channel "default" has omnisend tracking key with a value "tracking_key"
     When I view product "Test product"
     Then I see omnisend product picker script with values:
       | key      | value        |

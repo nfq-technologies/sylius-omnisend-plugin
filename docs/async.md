@@ -11,5 +11,5 @@ framework:
             # Route all command messages to the async transport
             # This presumes that you have already set up an 'async' transport
             # See docs on how to setup a transport like that: https://symfony.com/doc/current/messenger.html#transports-async-queued-messages
-            'NFQ\SyliusOmnisendPlugin\Message\Command\CommandInterface': async
+            NFQ\SyliusOmnisendPlugin\Message\Command\CommandInterface': async
 ```

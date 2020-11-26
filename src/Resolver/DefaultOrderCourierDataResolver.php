@@ -17,24 +17,19 @@
 
 declare(strict_types=1);
 
-namespace NFQ\SyliusOmnisendPlugin\Message\Command;
+namespace NFQ\SyliusOmnisendPlugin\Resolver;
 
-class CreateCategory implements CommandInterface
+use Sylius\Component\Core\Model\OrderInterface;
+
+class DefaultOrderCourierDataResolver implements OrderCourierDataResolverInterface
 {
-    use CommandTrait;
-
-    /** @var string|null */
-    private $taxonCode;
-
-    public function getTaxonCode(): ?string
+    public function getCourierUrl(OrderInterface $order): ?string
     {
-        return $this->taxonCode;
+        return null;
     }
 
-    public function setTaxonCode(?string $taxonCode): self
+    public function getCourierTitle(OrderInterface $order): ?string
     {
-        $this->taxonCode = $taxonCode;
-
-        return $this;
+        return null;
     }
 }
