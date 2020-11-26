@@ -439,7 +439,7 @@ Data with Omnisend is also should be synced then sylius remove expired carts com
 ```
  php tests/Application/bin/console sylius:remove-expired-carts
 ```
-
+- Cart recovery url. Take cart recovery url and open in new browser should load previous order.
 #ORDER
 - On checkout complete action order should be sent to omnisend.
 - All provided data should match data in order admin.
