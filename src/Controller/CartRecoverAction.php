@@ -20,6 +20,7 @@ namespace NFQ\SyliusOmnisendPlugin\Controller;
 use NFQ\SyliusOmnisendPlugin\Model\OrderDetails;
 use NFQ\SyliusOmnisendPlugin\Setter\ContactCookieSetter;
 use Sylius\Component\Core\Model\ChannelInterface;
+use Sylius\Component\Core\Model\Order;
 use Sylius\Component\Core\Storage\CartStorageInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -67,9 +68,10 @@ class CartRecoverAction
         /** @var OrderDetails|null $details */
         $details = $this->repository->findOneBy(['cartId' => $cartId]);
 
-        if (null === $details || null === $details->getOrder()) {
+        if (null === $details) {
             return new RedirectResponse('sylius_shop_homepage');
         }
+        /** @var Order $cart */
         $cart = $details->getOrder();
         /** @var ChannelInterface $channel */
         $channel = $cart->getChannel();
