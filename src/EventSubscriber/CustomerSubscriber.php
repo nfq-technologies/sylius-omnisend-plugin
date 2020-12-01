@@ -19,14 +19,14 @@ declare(strict_types=1);
 
 namespace NFQ\SyliusOmnisendPlugin\EventSubscriber;
 
-use NFQ\SyliusOmnisendPlugin\Message\Command\CreateContact;
+use NFQ\SyliusOmnisendPlugin\Manager\ContactManagerInterface;
 use NFQ\SyliusOmnisendPlugin\Message\Command\UpdateContact;
+use NFQ\SyliusOmnisendPlugin\Setter\ContactCookieSetter;
 use Sylius\Bundle\ResourceBundle\Event\ResourceControllerEvent;
 use Sylius\Component\Channel\Context\ChannelContextInterface;
 use Sylius\Component\Core\Model\AddressInterface;
 use Sylius\Component\Core\Model\Customer;
 use Sylius\Component\Core\Model\CustomerInterface;
-use Sylius\Component\Core\Model\Order;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\MessageBusInterface;
@@ -39,38 +39,44 @@ class CustomerSubscriber implements EventSubscriberInterface
     /** @var ChannelContextInterface */
     private $channelContext;
 
+    /** @var ContactManagerInterface */
+    private $contactManager;
+
+    /** @var ContactCookieSetter */
+    private $contactCookieSetter;
+
     public function __construct(
         MessageBusInterface $messageBus,
-        ChannelContextInterface $channelContext
+        ChannelContextInterface $channelContext,
+        ContactManagerInterface $contactManager,
+        ContactCookieSetter $contactCookieSetter
     ) {
         $this->channelContext = $channelContext;
         $this->messageBus = $messageBus;
+        $this->contactManager = $contactManager;
+        $this->contactCookieSetter = $contactCookieSetter;
     }
 
     public static function getSubscribedEvents(): array
     {
         return [
-            'sylius.customer.post_create' => 'onCreate',
-            'sylius.customer.post_register' => 'onCreate',
+            'sylius.customer.post_create' => 'onUpdate',
+            'sylius.customer.post_register' => 'onRegister',
             'sylius.customer.post_update' => 'onUpdate',
             'sylius.address.post_update' => 'onAddressUpdate',
             'sylius.address.post_create' => 'onAddressUpdate',
         ];
     }
 
-    public function onCreate(ResourceControllerEvent $event): void
+    public function onRegister(ResourceControllerEvent $event): void
     {
         /** @var CustomerInterface $customer */
         $customer = $event->getSubject();
 
-        $this->messageBus->dispatch(
-            new Envelope(
-                new CreateContact(
-                    $customer->getId(),
-                    $this->channelContext->getChannel()->getCode()
-                )
-            )
-        );
+        $response = $this->contactManager->pushToOmnisend($customer, $this->channelContext->getChannel()->getCode());
+        if (null !== $response) {
+            $this->contactCookieSetter->set($response->getContactID());
+        }
     }
 
     public function onUpdate(ResourceControllerEvent $event): void

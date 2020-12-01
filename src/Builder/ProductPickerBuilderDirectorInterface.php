@@ -24,5 +24,5 @@ use Sylius\Component\Core\Model\ProductInterface;
 
 interface ProductPickerBuilderDirectorInterface
 {
-    public function build(ProductInterface $product, string $locale): ?ProductPicker;
+    public function build(ProductInterface $product, string $localeCode): ?ProductPicker;
 }

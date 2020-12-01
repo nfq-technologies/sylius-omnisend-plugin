@@ -59,6 +59,7 @@ class ContactManagerTest extends TestCase
     public function testIfAddOmnisendContactID()
     {
         $customer = new Customer();
+        $customer->setEmail('emai@sylius.com');
         $this->contactBuilderDirector
             ->expects($this->exactly(1))
             ->method('build')
@@ -67,11 +68,15 @@ class ContactManagerTest extends TestCase
             ->expects($this->exactly(1))
             ->method('postContact')
             ->willReturn((new ContactSuccess())->setContactID('ID'));
+        $this->omnisendClient
+            ->expects($this->exactly(1))
+            ->method('getContactByEmail')
+            ->willReturn(null);
         $this->customerRepository
             ->expects($this->exactly(1))
             ->method('add');
 
-        $this->manager->create($customer, 'default');
+        $this->manager->pushToOmnisend($customer, 'default');
 
         $this->assertEquals($customer->getOmnisendContactId(), 'ID');
     }
@@ -79,6 +84,7 @@ class ContactManagerTest extends TestCase
     public function testIfDoNotAddOmnisendContactIDOnInvalidResponse()
     {
         $customer = new Customer();
+        $customer->setEmail('emai@sylius.com');
         $this->contactBuilderDirector
             ->expects($this->exactly(1))
             ->method('build')
@@ -90,8 +96,12 @@ class ContactManagerTest extends TestCase
         $this->customerRepository
             ->expects($this->never())
             ->method('add');
+        $this->omnisendClient
+            ->expects($this->exactly(1))
+            ->method('getContactByEmail')
+            ->willReturn(null);
 
-        $this->manager->create($customer, 'default');
+        $this->manager->pushToOmnisend($customer, 'default');
 
         $this->assertEquals($customer->getOmnisendContactId(), null);
     }

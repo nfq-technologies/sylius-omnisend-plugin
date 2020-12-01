@@ -25,7 +25,7 @@ interface ChannelOmnisendTrackingAwareInterface extends BaseChannelInterface
 {
     public function getOmnisendTrackingKey(): ?string;
 
-    public function setOmnisendTrackingKey(string $omnisendTrackingKey): void;
+    public function setOmnisendTrackingKey(?string $omnisendTrackingKey): void;
 
     public function getOmnisendApiKey(): ?string;
 

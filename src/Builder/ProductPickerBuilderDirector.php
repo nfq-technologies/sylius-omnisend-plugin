@@ -41,7 +41,7 @@ class ProductPickerBuilderDirector implements ProductPickerBuilderDirectorInterf
         $this->productPickerBuilder = $productPickerBuilder;
     }
 
-    public function build(ProductInterface $product, string $locale): ?ProductPicker
+    public function build(ProductInterface $product, string $localeCode): ?ProductPicker
     {
         /** @var ProductVariant|null $variant */
         $variant = $this->productVariantResolver->getVariant($product);
@@ -54,10 +54,10 @@ class ProductPickerBuilderDirector implements ProductPickerBuilderDirectorInterf
 
         try {
             $this->productPickerBuilder->addIds($product, $variant);
-            $this->productPickerBuilder->addContent($product, $locale);
+            $this->productPickerBuilder->addContent($product, $localeCode);
             $this->productPickerBuilder->addPrices($variant);
             $this->productPickerBuilder->addImage($product);
-            $this->productPickerBuilder->addAdditionalData($product);
+            $this->productPickerBuilder->addAdditionalData($product, $localeCode);
 
             return $this->productPickerBuilder->getProductPicker();
         } catch (Throwable $exception) {

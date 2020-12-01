@@ -12,6 +12,9 @@ imports:
 parameters:
     sylius_core.public_dir: '%kernel.project_dir%/public'
 
+nfq_sylius_omnisend:
+    product_image_resolver: nfq_sylius_omnisend_plugin.resolver.default_product_image
+
 sylius_shop:
     product_grid:
         include_all_descendants: true
@@ -34,3 +37,16 @@ sylius_taxonomy:
             classes:
                 model: Tests\NFQ\SyliusOmnisendPlugin\Application\Entity\Taxon
                 repository: Tests\NFQ\SyliusOmnisendPlugin\Application\Repository\TaxonRepository
+
+sylius_order:
+    resources:
+        order:
+            classes:
+                model: Tests\NFQ\SyliusOmnisendPlugin\Application\Entity\Order
+
+sylius_product:
+    resources:
+        product:
+            classes:
+                model: Tests\NFQ\SyliusOmnisendPlugin\Application\Entity\Product
+                repository: Tests\NFQ\SyliusOmnisendPlugin\Application\Repository\ProductRepository

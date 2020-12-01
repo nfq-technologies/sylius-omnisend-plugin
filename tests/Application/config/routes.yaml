@@ -3,3 +3,6 @@ nfq_sylius_omnisend:
     prefix: /{_locale}
     requirements:
         _locale: ^[a-z]{2}(?:_[A-Z]{2})?$
+
+nfq_sylius_omnisend_admin:
+    resource: "@NFQSyliusOmnisendPlugin/Resources/config/admin_routing.yml"

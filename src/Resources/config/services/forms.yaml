@@ -1,0 +1,12 @@
+services:
+  nfq_sylius_omnisend_plugin.form.event:
+    class: NFQ\SyliusOmnisendPlugin\Form\Type\EventType
+    tags:
+      - { name: form.type }
+    arguments: [ '%nfq_sylius_omnisend_plugin.model.event.class%', [ 'sylius' ] ]
+
+  nfq_sylius_omnisend_plugin.form.event_field:
+    class: NFQ\SyliusOmnisendPlugin\Form\Type\EventFieldType
+    tags:
+      - { name: form.type }
+    arguments: [ '%nfq_sylius_omnisend_plugin.model.event_field.class%', [ 'sylius' ] ]

@@ -26,9 +26,5 @@ interface ContactAwareInterface extends BaseCustomerInterface
 
     public function setOmnisendContactId(string $omnisendTrackingKey): void;
 
-    public function getOmnisendCustomProperties(): ?stdClass;
-
-    public function getOmnisendTags(): ?array;
-
     public function isSubscribedToSMS(): bool;
 }

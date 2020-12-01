@@ -1,29 +1,15 @@
 imports:
-  - { resource: services/form_type_extensions.yaml }
-  - { resource: services/factories.yaml }
-  - { resource: services/builders.yaml }
-  - { resource: services/handlers.yaml }
-  - { resource: services/serialiazers.yaml }
-  - { resource: services/subscribers.yaml }
-  - { resource: services/managers.yaml }
-  - { resource: services/twig.yaml }
-  - { resource: services/commands.yaml }
+  - { resource: services/ }
 
 services:
-  nfq_sylius_omnisend_plugin.resolver.product_image:
-    class: NFQ\SyliusOmnisendPlugin\Resolver\ProductImageResolver
-    arguments:
-      - '@liip_imagine.cache.manager'
-      - '%nfq_sylius_omnisend_plugin.product_image.type%'
-      - '%nfq_sylius_omnisend_plugin.product_image.filter%'
-      - '%nfq_sylius_omnisend_plugin.product_image.default_image%'
-
   nfq_sylius_omnisend_plugin.client.omnisend:
     class: NFQ\SyliusOmnisendPlugin\Client\OmnisendClient
     arguments:
       - '@nfq_sylius_omnisend_plugin.http_client.factory'
       - '@serializer'
       - '@nfq_sylius_omnisend_plugin.client.message_factory'
+    calls:
+      - ['setLogger', ['@nfq_sylius_omnisend_plugin.client.logger']]
 
   nfq_sylius_omnisend_plugin.http_client.factory:
     class: NFQ\SyliusOmnisendPlugin\HttpClient\ClientFactory
@@ -41,3 +27,8 @@ services:
     arguments:
       - '@sylius.repository.channel'
     tags: [sylius_fixtures.fixture]
+
+  nfq_sylius_omnisend_plugin.setter.contact_cookie:
+    class: NFQ\SyliusOmnisendPlugin\Setter\ContactCookieSetter
+    arguments:
+      - '@sylius.storage.cookie'
