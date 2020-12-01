@@ -6,3 +6,4 @@ nfq_sylius_omnisend:
 
 nfq_sylius_omnisend_admin:
     resource: "@NFQSyliusOmnisendPlugin/Resources/config/admin_routing.yml"
+    prefix: /admin

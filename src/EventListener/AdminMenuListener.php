@@ -31,5 +31,12 @@ class AdminMenuListener
                 ['route' => 'nfq_sylius_omnisend_plugin_admin_event_index']
             )
             ->setLabel('nfq_sylius_omnisend_plugin.menu.admin.main.events');
+
+        $submenu
+            ->addChild(
+                'nfq_sylius_omnisend_sync',
+                ['route' => 'nfq_sylius_omnisend_sync_batch_index']
+            )
+            ->setLabel('nfq_sylius_omnisend_plugin.menu.admin.main.sync');
     }
 }
