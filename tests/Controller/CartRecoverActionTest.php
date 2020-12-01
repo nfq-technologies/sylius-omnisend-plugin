@@ -14,11 +14,13 @@ declare(strict_types=1);
 namespace Tests\NFQ\SyliusOmnisendPlugin\Controller;
 
 use NFQ\SyliusOmnisendPlugin\Controller\CartRecoverAction;
+use NFQ\SyliusOmnisendPlugin\Model\OrderDetails;
 use NFQ\SyliusOmnisendPlugin\Setter\ContactCookieSetter;
 use PHPUnit\Framework\TestCase;
 use Sylius\Component\Core\Model\Channel;
 use Sylius\Component\Core\Repository\OrderRepositoryInterface;
 use Sylius\Component\Core\Storage\CartStorageInterface;
+use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RouterInterface;
@@ -35,7 +37,7 @@ class CartRecoverActionTest extends TestCase
     /** @var RouterInterface */
     private $router;
 
-    /** @var OrderRepositoryInterface */
+    /** @var RepositoryInterface */
     private $orderRepository;
 
     /** @var ContactCookieSetter */
@@ -45,8 +47,7 @@ class CartRecoverActionTest extends TestCase
     {
         $this->sessionStorage = $this->createMock(CartStorageInterface::class);
         $this->router = $this->createMock(RouterInterface::class);
-        $this->orderRepository = $this->createMock(OrderRepositoryInterface::class);
-        $this->orderRepository = $this->createMock(OrderRepositoryInterface::class);
+        $this->orderRepository = $this->createMock(RepositoryInterface::class);
         $this->contactCookieSetter = $this->createMock(ContactCookieSetter::class);
 
         $this->controller = new CartRecoverAction(
@@ -82,15 +83,17 @@ class CartRecoverActionTest extends TestCase
     public function testIfRedirectsCorrectlyIfOrderExists(): void
     {
         $order = new OrderMock();
+        $details = new OrderDetails();
         $channel = new Channel();
         $channel->setCode('a');
         $order->setChannel($channel);
         $order->getOmnisendOrderDetails()->setCartId('111');
         $order->setTokenValue('TOKEN');
+        $details->setOrder($order);
         $this->orderRepository
             ->expects($this->once())
             ->method('findOneBy')
-            ->willReturn($order);
+            ->willReturn($details);
         $this->router
             ->expects($this->once())
             ->method('generate')

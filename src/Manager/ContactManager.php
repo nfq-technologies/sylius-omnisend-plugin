@@ -73,10 +73,6 @@ class ContactManager implements ContactManagerInterface
     /** @var CustomerInterface&ContactAwareInterface */
     private function getCurrentContactId(CustomerInterface $customer, ?string $channelCode): ?string
     {
-        if (null !== $customer->getOmnisendContactId()) {
-            return $customer->getOmnisendContactId();
-        }
-
         /** @var ContactSuccessList|null $contacts */
         $contacts = $this->omnisendClient->getContactByEmail($customer->getEmail(), $channelCode);
 

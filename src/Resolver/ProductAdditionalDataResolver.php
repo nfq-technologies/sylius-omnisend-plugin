@@ -28,7 +28,7 @@ class ProductAdditionalDataResolver implements ProductAdditionalDataResolverInte
         $this->attributes = $attributes;
     }
 
-    public function getCustomFields(ProductInterface $product, string $localeCode = null): ?array
+    public function getCustomFields(ProductInterface $product, ?string $localeCode = null): ?array
     {
         $attributes = [];
 
@@ -41,7 +41,7 @@ class ProductAdditionalDataResolver implements ProductAdditionalDataResolverInte
                     null !== $attributeValue
                     && null !== $attributeValue->getAttribute()
                 ) {
-                    $attributes[$tagAttrKey] = (string) $this->resolveAttributeValue($attributeValue);
+                    $attributes[$tagAttrKey] = (string) $this->resolveAttributeValue($attributeValue, $localeCode);
                 }
             }
         }
@@ -49,12 +49,12 @@ class ProductAdditionalDataResolver implements ProductAdditionalDataResolverInte
         return count($attributes) > 0 ? $attributes : null;
     }
 
-    public function getVendor(ProductInterface $product, string $localeCode = null): ?string
+    public function getVendor(ProductInterface $product, ?string $localeCode = null): ?string
     {
         return $this->getAttributeValue('vendor', $product, $localeCode);
     }
 
-    public function getTags(ProductInterface $product, string $localeCode = null): array
+    public function getTags(ProductInterface $product, ?string $localeCode = null): array
     {
         $attributeKey = 'tags';
         $attributeKeyName = $this->attributes[$attributeKey] ?? null;
@@ -83,13 +83,13 @@ class ProductAdditionalDataResolver implements ProductAdditionalDataResolverInte
                 return $choices;
             }
 
-            return [(string) $this->resolveAttributeValue($attributeValue)];
+            return [(string)$this->resolveAttributeValue($attributeValue, $localeCode)];
         }
 
         return [];
     }
 
-    public function getType(ProductInterface $product, string $localeCode = null): ?string
+    public function getType(ProductInterface $product, ?string $localeCode = null): ?string
     {
         return $this->getAttributeValue('type', $product, $localeCode);
     }
@@ -112,13 +112,13 @@ class ProductAdditionalDataResolver implements ProductAdditionalDataResolverInte
             null !== $attribute
             && null !== $attribute->getAttribute()
         ) {
-            return (string) $this->resolveAttributeValue($attribute);
+            return (string) $this->resolveAttributeValue($attribute, $localeCode);
         }
 
         return null;
     }
 
-    protected function resolveAttributeValue(AttributeValueInterface $attributeValue)
+    protected function resolveAttributeValue(AttributeValueInterface $attributeValue, ?string $localeCode = null)
     {
         /** @var AttributeInterface $attribute */
         $attribute = $attributeValue->getAttribute();
@@ -143,7 +143,18 @@ class ProductAdditionalDataResolver implements ProductAdditionalDataResolverInte
                 break;
             case AttributeValueInterface::STORAGE_JSON:
                 if (null !== $attributeValue->getValue()) {
-                    return implode(', ', $attributeValue->getValue());
+                    /** @var AttributeInterface $attribute */
+                    $attribute = $attributeValue->getAttribute();
+                    $config = $attribute->getConfiguration();
+
+                    $choices = [];
+                    foreach ($attributeValue->getValue() as $value) {
+                        if (isset($config['choices'][$value][$localeCode])) {
+                            $choices[] = $config['choices'][$value][$localeCode];
+                        }
+                    }
+
+                    return implode(', ', $choices);
                 }
 
                 break;
