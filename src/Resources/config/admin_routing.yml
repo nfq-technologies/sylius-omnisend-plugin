@@ -8,11 +8,21 @@ nfq_sylius_omnisend_event:
     grid: nfq_sylius_omnisend_event
     form: NFQ\SyliusOmnisendPlugin\Form\Type\EventType
   type: sylius.resource
-  prefix: admin
 
 nfq_sylius_omnisend_sync_events_action:
   path: /events/sync
   methods: [GET]
-  prefix: admin
   defaults:
     _controller: nfq_sylius_omnisend_plugin.controller.events_sync
+
+nfq_sylius_omnisend_sync_batch_type:
+  path: /omnisend/batch/sync/{type}
+  methods: [POST]
+  defaults:
+    _controller: nfq_sylius_omnisend_plugin.controller.sync::sync
+
+nfq_sylius_omnisend_sync_batch_index:
+  path: /omnisend/batch/sync
+  methods: [GET]
+  defaults:
+    _controller: nfq_sylius_omnisend_plugin.controller.sync::index

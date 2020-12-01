@@ -7,6 +7,9 @@ nfq_sylius_omnisend_plugin:
     new_event: New event
     edit_event: Update event
     sync_events: Sync events from Omnisend
+    sync:
+      products: Sync products
+      categories: Sync categories
     event:
       event_id: Event Id
       name: Name
@@ -23,3 +26,4 @@ nfq_sylius_omnisend_plugin:
       main:
         omnisend: Omnisend
         events: Events
+        sync: Sync
