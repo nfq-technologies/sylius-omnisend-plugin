@@ -1,0 +1,32 @@
+NFQ\SyliusOmnisendPlugin\Model\EventField:
+  type: mappedSuperclass
+  table: nfq_omnisend_plugin_event_fields
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    type:
+      type: string
+      nullable: true
+      length: 32
+    name:
+      type: string
+      nullable: true
+    systemName:
+      type: string
+      nullable: true
+    required:
+      type: boolean
+      options:
+        default: 1
+  manyToOne:
+    event:
+      targetEntity: NFQ\SyliusOmnisendPlugin\Model\Event
+      inversedBy: fields
+      joinColumn:
+        name: event_id
+        referencedColumnName: id
+        nullable: false
+        onDelete: CASCADE

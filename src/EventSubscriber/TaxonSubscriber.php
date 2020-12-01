@@ -19,7 +19,6 @@ declare(strict_types=1);
 
 namespace NFQ\SyliusOmnisendPlugin\EventSubscriber;
 
-use NFQ\SyliusOmnisendPlugin\Message\Command\CreateCategory;
 use NFQ\SyliusOmnisendPlugin\Message\Command\DeleteCategory;
 use NFQ\SyliusOmnisendPlugin\Message\Command\UpdateCategory;
 use Sylius\Bundle\ResourceBundle\Event\ResourceControllerEvent;
@@ -48,24 +47,10 @@ class TaxonSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            'sylius.taxon.post_create' => 'onCreate',
+            'sylius.taxon.post_create' => 'onUpdate',
             'sylius.taxon.post_update' => 'onUpdate',
             'sylius.taxon.pre_delete' => 'onDelete',
         ];
-    }
-
-    public function onCreate(ResourceControllerEvent $event): void
-    {
-        /** @var TaxonInterface $taxon */
-        $taxon = $event->getSubject();
-
-        $this->messageBus->dispatch(
-            new Envelope(
-                (new CreateCategory())
-                    ->setTaxonCode($taxon->getCode())
-                    ->setChannelCode($this->channelContext->getChannel()->getCode())
-            )
-        );
     }
 
     public function onUpdate(ResourceControllerEvent $event): void
@@ -75,9 +60,10 @@ class TaxonSubscriber implements EventSubscriberInterface
 
         $this->messageBus->dispatch(
             new Envelope(
-                (new UpdateCategory())
-                    ->setTaxonCode($taxon->getCode())
-                    ->setChannelCode($this->channelContext->getChannel()->getCode())
+                new UpdateCategory(
+                    $taxon->getCode(),
+                    $this->channelContext->getChannel()->getCode()
+                )
             )
         );
     }
@@ -89,9 +75,10 @@ class TaxonSubscriber implements EventSubscriberInterface
 
         $this->messageBus->dispatch(
             new Envelope(
-                (new DeleteCategory())
-                    ->setTaxonCode($taxon->getCode())
-                    ->setChannelCode($this->channelContext->getChannel()->getCode())
+                new DeleteCategory(
+                    $taxon->getCode(),
+                    $this->channelContext->getChannel()->getCode()
+                )
             )
         );
     }

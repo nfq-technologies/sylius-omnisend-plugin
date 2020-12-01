@@ -66,7 +66,7 @@ class ProductImageResolverTest extends TestCase
     public function testIfReturnsCorrectImageAndAppliesFilter()
     {
         $this->resolver = new ProductImageResolver($this->cacheManager, 'test', 'filter');
-        $this->cacheManager->expects($this->exactly(2))->method('resolve')->willReturnCallback(
+        $this->cacheManager->expects($this->exactly(2))->method('generateUrl')->willReturnCallback(
             function ($image, $filter) {
                 $this->assertEquals($filter, 'filter');
 

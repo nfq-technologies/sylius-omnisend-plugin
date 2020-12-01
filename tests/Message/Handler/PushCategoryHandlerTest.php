@@ -19,16 +19,14 @@ declare(strict_types=1);
 
 namespace Tests\NFQ\SyliusOmnisendPlugin\Message\Handler;
 
+use Doctrine\ORM\EntityManagerInterface;
 use NFQ\SyliusOmnisendPlugin\Client\OmnisendClient;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Category;
 use NFQ\SyliusOmnisendPlugin\Client\Response\Model\BatchSuccess;
-use NFQ\SyliusOmnisendPlugin\Client\Response\Model\CategorySuccess;
-use NFQ\SyliusOmnisendPlugin\Factory\Request\BatchFactory;
 use NFQ\SyliusOmnisendPlugin\Factory\Request\BatchFactoryInterface;
 use NFQ\SyliusOmnisendPlugin\Factory\Request\CategoryFactoryInterface;
-use NFQ\SyliusOmnisendPlugin\Message\Command\PushCategories;
-use NFQ\SyliusOmnisendPlugin\Message\Command\UpdateCategory;
-use NFQ\SyliusOmnisendPlugin\Message\Handler\PushCategoriesHandler;
+use NFQ\SyliusOmnisendPlugin\Message\Command\CreateBatch;
+use NFQ\SyliusOmnisendPlugin\Message\Handler\Batch\CategoryBatchHandleStrategy;
 use PHPUnit\Framework\TestCase;
 use NFQ\SyliusOmnisendPlugin\Doctrine\ORM\TaxonRepositoryInterface;
 use Tests\NFQ\SyliusOmnisendPlugin\Application\Entity\Taxon;
@@ -47,7 +45,10 @@ class PushCategoryHandlerTest extends TestCase
     /** @var TaxonRepositoryInterface */
     private $repository;
 
-    /** @var PushCategoriesHandler */
+    /** @var EntityManagerInterface */
+    private $entityManager;
+
+    /** @var CategoryBatchHandleStrategy */
     private $handler;
 
     protected function setUp(): void
@@ -56,96 +57,76 @@ class PushCategoryHandlerTest extends TestCase
         $this->omnisendClient = $this->createMock(OmnisendClient::class);
         $this->repository = $this->createMock(TaxonRepositoryInterface::class);
         $this->batchFactory = $this->createMock(BatchFactoryInterface::class);
+        $this->entityManager = $this->createMock(EntityManagerInterface::class);
 
-        $this->handler = new PushCategoriesHandler(
+        $this->handler = new CategoryBatchHandleStrategy(
             $this->omnisendClient,
             $this->repository,
             $this->categoryFactory,
-            $this->batchFactory
+            $this->batchFactory,
+            $this->entityManager,
         );
     }
 
     /** @dataProvider data */
-    public function testIfSplitsWell(int $count, int $batchSizes)
+    public function testIfSplitsWell(int $productCount, int $iterationCount)
     {
-        $message = (new PushCategories())
-            ->setChannelCode('en');
+        $message = new CreateBatch('category', 'en', 'en', 2);
+
+        $taxons = [];
+
+        for ($i = 0; $i < $productCount; $i++) {
+            $taxons[] = [new Taxon()];
+        }
 
         $this->repository
             ->expects($this->exactly(1))
-            ->method('getNotSyncedToOmnisendCount')
-            ->willReturn($count);
-        $this->repository
-            ->expects($this->exactly($batchSizes))
             ->method('findNotSyncedToOmnisend')
-            ->willReturn([]);
+            ->willReturn($taxons);
 
-        $this->handler->__invoke($message);
+        $this->omnisendClient
+            ->expects($this->exactly($iterationCount))
+            ->method('postBatch')
+            ->willReturn(new BatchSuccess());
+
+        $this->categoryFactory
+            ->expects($this->exactly($productCount))
+            ->method('create')
+            ->willReturn(new Category());
+
+        $this->entityManager
+            ->expects($this->exactly($productCount))
+            ->method('persist');
+        $this->entityManager
+            ->expects($this->exactly($iterationCount))
+            ->method('flush');
+
+        $this->handler->handle($message);
     }
 
     public function data()
     {
         return [
-            'zero' => [
+            '0' => [
                 0,
                 0
             ],
-            'one' => [
+            '1' => [
                 1,
                 1
             ],
-            '999' => [
-                999,
+            '2' => [
+                2,
                 1
             ],
-            '1000' => [
-                1000,
-                1
-            ],
-            '1001' => [
-                1001,
+            '3' => [
+                3,
                 2
             ],
-            '1999' => [
-                1999,
-                2
-            ],
-            '2000' => [
-                2000,
-                2
-            ],
-            '2001' => [
-                2001,
+            '5' => [
+                5,
                 3
             ]
         ];
-    }
-
-    public function testIfSendUpdateRequestIfOmnisendFlagIsAlreadySet()
-    {
-        $taxon = new Taxon();
-
-        $message = (new PushCategories())
-            ->setChannelCode('en');
-
-        $this->repository
-            ->expects($this->exactly(1))
-            ->method('getNotSyncedToOmnisendCount')
-            ->willReturn(1);
-        $this->repository
-            ->expects($this->exactly(1))
-            ->method('findNotSyncedToOmnisend')
-            ->willReturn([$taxon]);
-        $this->repository
-            ->expects($this->exactly(1))
-            ->method('add');
-        $this->omnisendClient
-            ->expects($this->exactly(1))
-            ->method('postBatch')
-            ->willReturn(new BatchSuccess());
-
-        $this->handler->__invoke($message);
-
-        $this->assertTrue($taxon->isPushedToOmnisend());
     }
 }

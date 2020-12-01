@@ -1,11 +1,4 @@
 services:
-  nfq_sylius_omnisend_plugin.message.handler.create_contact:
-    class: NFQ\SyliusOmnisendPlugin\Message\Handler\CreateContactHandler
-    arguments:
-      - '@nfq_sylius_omnisend_plugin.manager.contact'
-      - '@sylius.repository.customer'
-    tags: [messenger.message_handler]
-
   nfq_sylius_omnisend_plugin.message.handler.update_contact:
     class: NFQ\SyliusOmnisendPlugin\Message\Handler\UpdateContactHandler
     arguments:
@@ -21,13 +14,33 @@ services:
       - '@nfq_sylius_omnisend_plugin.factory.request.category'
     tags: [ messenger.message_handler ]
 
-  nfq_sylius_omnisend_plugin.message.handler.create_category:
-    class: NFQ\SyliusOmnisendPlugin\Message\Handler\CreateCategoryHandler
+  nfq_sylius_omnisend_plugin.message.handler.update_event:
+    class: NFQ\SyliusOmnisendPlugin\Message\Handler\UpdateEventHandler
     arguments:
+      - '@nfq_sylius_omnisend_plugin.repository.event'
+      - '@nfq_sylius_omnisend_plugin.builder.request.event_director'
       - '@nfq_sylius_omnisend_plugin.client.omnisend'
-      - '@sylius.repository.taxon'
-      - '@nfq_sylius_omnisend_plugin.factory.request.category'
     tags: [ messenger.message_handler ]
+
+  nfq_sylius_omnisend_plugin.message.handler.sync_events:
+    class: NFQ\SyliusOmnisendPlugin\Message\Handler\SyncEventsHandler
+    arguments:
+      - '@nfq_sylius_omnisend_plugin.repository.event'
+      - '@doctrine.orm.entity_manager'
+      - '@nfq_sylius_omnisend_plugin.client.omnisend'
+      - '@sylius.repository.channel'
+    tags: [ messenger.message_handler ]
+
+  nfq_sylius_omnisend_plugin.message.handler.push_custom_event:
+    class: NFQ\SyliusOmnisendPlugin\Message\Handler\PushCustomEventHandler
+    arguments:
+      - '@nfq_sylius_omnisend_plugin.repository.event'
+      - '@nfq_sylius_omnisend_plugin.builder.request.event_director'
+      - '@nfq_sylius_omnisend_plugin.client.omnisend'
+      - '@validator'
+    tags: [ messenger.message_handler ]
+    calls:
+      - ['setLogger', ['@monolog.logger']]
 
   nfq_sylius_omnisend_plugin.message.handler.delete_category:
     class: NFQ\SyliusOmnisendPlugin\Message\Handler\DeleteCategoryHandler
@@ -36,11 +49,93 @@ services:
       - '@sylius.repository.taxon'
     tags: [ messenger.message_handler ]
 
-  nfq_sylius_omnisend_plugin.message.handler.push_category:
-    class: NFQ\SyliusOmnisendPlugin\Message\Handler\PushCategoriesHandler
+  nfq_sylius_omnisend_plugin.message.handler.update_cart:
+    class: NFQ\SyliusOmnisendPlugin\Message\Handler\UpdateCartHandler
+    arguments:
+      - '@sylius.repository.order'
+      - '@nfq_sylius_omnisend_plugin.builder.request.cart_director'
+      - '@nfq_sylius_omnisend_plugin.client.omnisend'
+    tags: [ messenger.message_handler ]
+
+  nfq_sylius_omnisend_plugin.message.handler.delete_cart:
+    class: NFQ\SyliusOmnisendPlugin\Message\Handler\DeleteCartHandler
+    arguments:
+      - '@nfq_sylius_omnisend_plugin.client.omnisend'
+    tags: [ messenger.message_handler ]
+
+  nfq_sylius_omnisend_plugin.message.handler.create_order:
+    class: NFQ\SyliusOmnisendPlugin\Message\Handler\CreateOrderHandler
+    arguments:
+      - '@nfq_sylius_omnisend_plugin.client.omnisend'
+      - '@sylius.repository.order'
+      - '@nfq_sylius_omnisend_plugin.builder.request.order_director'
+    tags: [ messenger.message_handler ]
+
+  nfq_sylius_omnisend_plugin.message.handler.cancel_order:
+    class: NFQ\SyliusOmnisendPlugin\Message\Handler\CancelOrderHandler
+    arguments:
+      - '@nfq_sylius_omnisend_plugin.client.omnisend'
+      - '@sylius.repository.order'
+      - '@nfq_sylius_omnisend_plugin.builder.request.order_director'
+    tags: [ messenger.message_handler ]
+
+  nfq_sylius_omnisend_plugin.message.handler.update_order:
+    class: NFQ\SyliusOmnisendPlugin\Message\Handler\UpdateOrderHandler
+    arguments:
+      - '@nfq_sylius_omnisend_plugin.client.omnisend'
+      - '@sylius.repository.order'
+      - '@nfq_sylius_omnisend_plugin.builder.request.order_director'
+    tags: [ messenger.message_handler ]
+
+  nfq_sylius_omnisend_plugin.message.handler.update_order_state:
+    class: NFQ\SyliusOmnisendPlugin\Message\Handler\UpdateOrderStateHandler
+    arguments:
+      - '@nfq_sylius_omnisend_plugin.client.omnisend'
+      - '@sylius.repository.order'
+      - '@nfq_sylius_omnisend_plugin.builder.request.order_director'
+    tags: [ messenger.message_handler ]
+
+  nfq_sylius_omnisend_plugin.message.handler.update_product:
+    class: NFQ\SyliusOmnisendPlugin\Message\Handler\UpdateProductHandler
+    arguments:
+      - '@nfq_sylius_omnisend_plugin.client.omnisend'
+      - '@sylius.repository.product'
+      - '@sylius.repository.channel'
+      - '@nfq_sylius_omnisend_plugin.builder.request.product_director'
+    tags: [ messenger.message_handler ]
+    calls:
+      - ['setLogger', ['@nfq_sylius_omnisend_plugin.client.logger']]
+
+  nfq_sylius_omnisend_plugin.message.handler.delete_product:
+    class: NFQ\SyliusOmnisendPlugin\Message\Handler\DeleteProductHandler
+    arguments:
+      - '@nfq_sylius_omnisend_plugin.client.omnisend'
+      - '@sylius.repository.product'
+    tags: [ messenger.message_handler ]
+
+  nfq_sylius_omnisend_plugin.message.handler.batch_context:
+    class: NFQ\SyliusOmnisendPlugin\Message\Handler\Batch\BatchHandlerContext
+    arguments:
+      - !tagged 'nfq_sylius_omnisend_plugin.message.handler.batch_strategy'
+    tags: [ messenger.message_handler ]
+
+  nfq_sylius_omnisend_plugin.message.handler.batch.product:
+    class: NFQ\SyliusOmnisendPlugin\Message\Handler\Batch\ProductBatchHandleStrategy
+    arguments:
+      - '@nfq_sylius_omnisend_plugin.client.omnisend'
+      - '@nfq_sylius_omnisend_plugin.builder.request.product_director'
+      - '@nfq_sylius_omnisend_plugin.factory.request.batch'
+      - '@sylius.repository.product'
+      - '@doctrine.orm.entity_manager'
+      - '@sylius.repository.channel'
+    tags: [ nfq_sylius_omnisend_plugin.message.handler.batch_strategy ]
+
+  nfq_sylius_omnisend_plugin.message.handler.batch.category:
+    class: NFQ\SyliusOmnisendPlugin\Message\Handler\Batch\CategoryBatchHandleStrategy
     arguments:
       - '@nfq_sylius_omnisend_plugin.client.omnisend'
       - '@sylius.repository.taxon'
       - '@nfq_sylius_omnisend_plugin.factory.request.category'
       - '@nfq_sylius_omnisend_plugin.factory.request.batch'
-    tags: [ messenger.message_handler ]
+      - '@doctrine.orm.entity_manager'
+    tags: [ nfq_sylius_omnisend_plugin.message.handler.batch_strategy ]

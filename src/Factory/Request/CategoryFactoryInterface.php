@@ -24,5 +24,5 @@ use Sylius\Component\Core\Model\TaxonInterface;
 
 interface CategoryFactoryInterface
 {
-    public function create(TaxonInterface $taxon): Category;
+    public function create(TaxonInterface $taxon, ?string $localeCode = null): Category;
 }

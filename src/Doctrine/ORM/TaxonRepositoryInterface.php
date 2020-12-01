@@ -22,17 +22,6 @@ namespace NFQ\SyliusOmnisendPlugin\Doctrine\ORM;
 use Doctrine\ORM\QueryBuilder;
 use Sylius\Component\Taxonomy\Repository\TaxonRepositoryInterface as BaseTaxonRepositoryInterface;
 
-interface TaxonRepositoryInterface extends BaseTaxonRepositoryInterface
+interface TaxonRepositoryInterface extends BaseTaxonRepositoryInterface, PushedToOmnisendAwareRepositoryInterface
 {
-    public function getSyncedToOmnisendCount(): int;
-
-    public function findSyncedToOmnisend(int $offset, int $limit): array;
-
-    public function getNotSyncedToOmnisendCount(): int;
-
-    public function findNotSyncedToOmnisend(int $offset, int $limit): array;
-
-    public function getNotSyncedToOmnisendQueryBuilder(string $alias = 't'): QueryBuilder;
-
-    public function getSyncedToOmnisendQueryBuilder(string $alias = 't'): QueryBuilder;
 }

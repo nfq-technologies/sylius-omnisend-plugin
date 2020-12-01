@@ -19,6 +19,8 @@ echo -e '\n## Setting up permissions ... '
 setPerms "${PROJECT_ROOT}/tests/Application/var"
 setPerms "${PROJECT_ROOT}/tests/Application/var/cache"
 setPerms "${PROJECT_ROOT}/tests/Application/var/logs"
+setPerms "${PROJECT_ROOT}/tests/Application/public"
+setPerms "${PROJECT_ROOT}/tests/Application/public/media"
 
 time composer --no-interaction install
 
@@ -32,11 +34,11 @@ fi
 
 (
 	bin/console doctrine:database:create --if-not-exists -n
-	bin/console doctrine:migrations:migrate -n
+	bin/console doctrine:schema:update --force
 ) &
 (
 	bin/console doctrine:database:create --env=test --if-not-exists -n
-	bin/console doctrine:migrations:migrate --env=test -n
+	bin/console doctrine:schema:update --force --env=test -n
 ) &
 
 wait

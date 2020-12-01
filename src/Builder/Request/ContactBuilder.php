@@ -24,9 +24,13 @@ use NFQ\SyliusOmnisendPlugin\Client\Request\Model\ContactIdentifier;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\ContactIdentifierChannelValue;
 use NFQ\SyliusOmnisendPlugin\Factory\Request\ContactIdentifierFactoryInterface;
 use NFQ\SyliusOmnisendPlugin\Model\ContactAwareInterface;
+use NFQ\SyliusOmnisendPlugin\Resolver\CustomerAdditionalDataResolverInterface;
 use NFQ\SyliusOmnisendPlugin\Utils\DatetimeHelper;
 use NFQ\SyliusOmnisendPlugin\Utils\GenderHelper;
+use Sylius\Component\Core\Model\AddressInterface;
 use Sylius\Component\Core\Model\CustomerInterface;
+use Symfony\Component\Intl\Countries;
+use Symfony\Component\Intl\Exception\MissingResourceException;
 
 class ContactBuilder implements ContactBuilderInterface
 {
@@ -36,9 +40,16 @@ class ContactBuilder implements ContactBuilderInterface
     /** @var ContactIdentifierFactoryInterface */
     private $contactIdentifierFactory;
 
-    public function __construct(ContactIdentifierFactoryInterface $contactIdentifierFactory)
+    /** @var CustomerAdditionalDataResolverInterface */
+    private $customerAdditionalDataResolverInterface;
+
+    public function __construct(
+        ContactIdentifierFactoryInterface $contactIdentifierFactory,
+        CustomerAdditionalDataResolverInterface $customerAdditionalDataResolverInterface
+    )
     {
         $this->contactIdentifierFactory = $contactIdentifierFactory;
+        $this->customerAdditionalDataResolverInterface = $customerAdditionalDataResolverInterface;
     }
 
     public function createContact(): void
@@ -85,6 +96,7 @@ class ContactBuilder implements ContactBuilderInterface
         if (null !== $customer->getDefaultAddress()) {
             $this->contact
                 ->setCountryCode($customer->getDefaultAddress()->getCountryCode())
+                ->setCountry($this->getCountryName($customer->getDefaultAddress()->getCountryCode()))
                 ->setState($customer->getDefaultAddress()->getProvinceName())
                 ->setCity($customer->getDefaultAddress()->getCity())
                 ->setPostalCode($customer->getDefaultAddress()->getPostcode())
@@ -94,15 +106,27 @@ class ContactBuilder implements ContactBuilderInterface
 
     public function addCustomProperties(CustomerInterface $customer): void
     {
-        if ($customer instanceof ContactAwareInterface) {
-            $this->contact
-                ->setTags($customer->getOmnisendTags())
-                ->setCustomProperties($customer->getOmnisendCustomProperties());
-        }
+        $this->contact
+            ->setTags($this->customerAdditionalDataResolverInterface->getTags($customer))
+            ->setCustomProperties($this->customerAdditionalDataResolverInterface->geCustomProperties($customer));
     }
 
     public function getContact(): Contact
     {
         return $this->contact;
+    }
+
+    private function getCountryName(?string $countryCode): ?string
+    {
+        if ($countryCode === null) {
+            return null;
+        }
+
+        try {
+            return Countries::getName($countryCode);
+        } catch (MissingResourceException $exception) {
+        }
+
+        return null;
     }
 }
