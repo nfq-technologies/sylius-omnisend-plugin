@@ -16,6 +16,13 @@ services:
       - '@session'
     public: true
 
+  nfq_sylius_omnisend_plugin.controller.sync:
+    class: NFQ\SyliusOmnisendPlugin\Controller\SyncController
+    arguments:
+      - '@sylius.context.channel.composite'
+      - '@messenger.routable_message_bus'
+    public: true
+
   nfq_sylius_omnisend_plugin.controller.test:
     class: NFQ\SyliusOmnisendPlugin\Controller\TestController
     arguments:
