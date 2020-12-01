@@ -1,18 +1,12 @@
 <?php
 
 /*
- * @copyright C UAB NFQ Technologies
+ * This file is part of the NFQ package.
  *
- * This Software is the property of NFQ Technologies
- * and is protected by copyright law – it is NOT Freeware.
+ * (c) Nfq Technologies UAB <info@nfq.com>
  *
- * Any unauthorized use of this software without a valid license key
- * is a violation of the license agreement and will be prosecuted by
- * civil and criminal law.
- *
- * Contact UAB NFQ Technologies:
- * E-mail: info@nfq.lt
- * http://www.nfq.lt
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 declare(strict_types=1);
@@ -41,7 +35,7 @@ class CustomEventFieldsValidator extends ConstraintValidator
         $this->eventRepository = $eventRepository;
     }
 
-    /** @var PushCustomEvent $value */
+    /** @var PushCustomEvent */
     public function validate($value, Constraint $constraint): void
     {
         /** @var Event|null $baseEvent */
@@ -75,14 +69,14 @@ class CustomEventFieldsValidator extends ConstraintValidator
                     $this->context->buildViolation(CustomEventFields::INVALID_FIELD_VALUE)
                         ->setParameter('%field%', $fieldName)
                         ->setParameter('%value%', $fieldValue)
-                        ->setParameter('%type%', (string)$field->getType())
+                        ->setParameter('%type%', (string) $field->getType())
                         ->addViolation();
                 }
             } else {
                 $this->context
                     ->buildViolation(CustomEventFields::INVALID_FIELD_TYPE)
                     ->setParameter('%field%', $fieldName)
-                    ->setParameter('%type%', (string)$field->getType())
+                    ->setParameter('%type%', (string) $field->getType())
                     ->addViolation();
             }
         }
@@ -95,27 +89,35 @@ class CustomEventFieldsValidator extends ConstraintValidator
         switch ($field->getType()) {
             case EventField::TYPE_BOOL:
                 $fieldConstraint = new Type(['type' => 'bool']);
+
                 break;
             case EventField::TYPE_INT:
                 $fieldConstraint = new Type(['type' => 'integer']);
+
                 break;
             case EventField::TYPE_FLOAT:
                 $fieldConstraint = new Type(['type' => 'float']);
+
                 break;
             case EventField::TYPE_STRING:
                 $fieldConstraint = new Type(['type' => 'string']);
+
                 break;
             case EventField::TYPE_EMAIL:
                 $fieldConstraint = new Email();
+
                 break;
             case EventField::TYPE_URL:
                 $fieldConstraint = new Url();
+
                 break;
             case EventField::TYPE_DATE:
                 $fieldConstraint = new Date();
+
                 break;
             case EventField::TYPE_DATETIME:
                 $fieldConstraint = new DateTime(['format' => \DateTime::ISO8601]);
+
                 break;
         }
 

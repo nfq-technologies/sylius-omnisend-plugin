@@ -1,24 +1,19 @@
 <?php
 
 /*
- * @copyright C UAB NFQ Technologies
+ * This file is part of the NFQ package.
  *
- * This Software is the property of NFQ Technologies
- * and is protected by copyright law – it is NOT Freeware.
+ * (c) Nfq Technologies UAB <info@nfq.com>
  *
- * Any unauthorized use of this software without a valid license key
- * is a violation of the license agreement and will be prosecuted by
- * civil and criminal law.
- *
- * Contact UAB NFQ Technologies:
- * E-mail: info@nfq.lt
- * http://www.nfq.lt
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 declare(strict_types=1);
 
 namespace NFQ\SyliusOmnisendPlugin\Client;
 
+use Http\Client\Exception\HttpException;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Batch;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Cart;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Category;
@@ -42,19 +37,25 @@ use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use Symfony\Component\Serializer\SerializerInterface;
 use Throwable;
-use Http\Client\Exception\HttpException;
 
 class OmnisendClient implements LoggerAwareInterface, OmnisendClientInterface
 {
     use LoggerAwareTrait;
 
     private const API_VERSION = 'v3';
+
     private const URL_PATH_CONTACTS = '/contacts';
+
     private const URL_PATH_CATEGORIES = '/categories';
+
     private const URL_PATH_CARTS = '/carts';
+
     private const URL_PATH_ORDERS = '/orders';
+
     private const URL_PATH_BATCHES = '/batches';
+
     private const URL_PATH_PRODUCTS = '/products';
+
     private const URL_PATH_EVENTS = '/events';
 
     /** @var ClientFactoryInterface */
@@ -426,4 +427,3 @@ class OmnisendClient implements LoggerAwareInterface, OmnisendClientInterface
         return null;
     }
 }
-

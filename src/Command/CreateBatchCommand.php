@@ -1,18 +1,12 @@
 <?php
 
 /*
- * @copyright C UAB NFQ Technologies
+ * This file is part of the NFQ package.
  *
- * This Software is the property of NFQ Technologies
- * and is protected by copyright law – it is NOT Freeware.
+ * (c) Nfq Technologies UAB <info@nfq.com>
  *
- * Any unauthorized use of this software without a valid license key
- * is a violation of the license agreement and will be prosecuted by
- * civil and criminal law.
- *
- * Contact UAB NFQ Technologies:
- * E-mail: info@nfq.lt
- * http://www.nfq.lt
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 declare(strict_types=1);
@@ -70,9 +64,9 @@ class CreateBatchCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $channelCode = (string)$input->getArgument('channelCode');
-        $localeCode = (string)$input->getArgument('localeCode');
-        $type = (string)$input->getArgument('type');
+        $channelCode = (string) $input->getArgument('channelCode');
+        $localeCode = (string) $input->getArgument('localeCode');
+        $type = (string) $input->getArgument('type');
         $batchSize = CreateBatch::DEFAULT_BATCH_SIZE;
         if (!in_array($type, self::AVAILABLE_TYPES, true)) {
             $output->writeln('Invalid type provided');
@@ -81,7 +75,7 @@ class CreateBatchCommand extends Command
         }
 
         if (null !== $input->getOption('batchSize')) {
-            $batchSize = (int)$input->getOption('batchSize');
+            $batchSize = (int) $input->getOption('batchSize');
 
             if ($batchSize <= 0 || $batchSize > CreateBatch::DEFAULT_BATCH_SIZE) {
                 $output->writeln('Invalid batch size provided. Size should be between 1 and 1000');

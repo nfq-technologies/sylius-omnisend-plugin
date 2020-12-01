@@ -1,18 +1,12 @@
 <?php
 
 /*
- * @copyright C UAB NFQ Technologies
+ * This file is part of the NFQ package.
  *
- * This Software is the property of NFQ Technologies
- * and is protected by copyright law – it is NOT Freeware.
+ * (c) Nfq Technologies UAB <info@nfq.com>
  *
- * Any unauthorized use of this software without a valid license key
- * is a violation of the license agreement and will be prosecuted by
- * civil and criminal law.
- *
- * Contact UAB NFQ Technologies:
- * E-mail: info@nfq.lt
- * http://www.nfq.lt
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 declare(strict_types=1);
@@ -48,7 +42,7 @@ class ProductImageFactory implements ProductImageFactoryInterface
         $variants = $productImage->getProductVariants()->isEmpty() ? $product->getEnabledVariants() : $productImage->getProductVariants();
 
         return (new ProductImage())
-            ->setImageID((string)$productImage->getId())
+            ->setImageID((string) $productImage->getId())
             ->setIsDefault($default)
             ->setUrl(null !== $productImage->getPath() ? $this->cache->generateUrl($productImage->getPath(), $this->imageFilter) : null)
             ->setVariantIDs(

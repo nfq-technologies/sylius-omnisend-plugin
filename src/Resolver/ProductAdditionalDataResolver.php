@@ -1,18 +1,12 @@
 <?php
 
 /*
- * @copyright C UAB NFQ Technologies
+ * This file is part of the NFQ package.
  *
- * This Software is the property of NFQ Technologies
- * and is protected by copyright law – it is NOT Freeware.
+ * (c) Nfq Technologies UAB <info@nfq.com>
  *
- * Any unauthorized use of this software without a valid license key
- * is a violation of the license agreement and will be prosecuted by
- * civil and criminal law.
- *
- * Contact UAB NFQ Technologies:
- * E-mail: info@nfq.lt
- * http://www.nfq.lt
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 declare(strict_types=1);
@@ -47,7 +41,7 @@ class ProductAdditionalDataResolver implements ProductAdditionalDataResolverInte
                     null !== $attributeValue
                     && null !== $attributeValue->getAttribute()
                 ) {
-                    $attributes[$tagAttrKey] = (string)$this->resolveAttributeValue($attributeValue, $localeCode);
+                    $attributes[$tagAttrKey] = (string) $this->resolveAttributeValue($attributeValue, $localeCode);
                 }
             }
         }
@@ -63,7 +57,7 @@ class ProductAdditionalDataResolver implements ProductAdditionalDataResolverInte
     public function getTags(ProductInterface $product, ?string $localeCode = null): array
     {
         $attributeKey = 'tags';
-        $attributeKeyName = isset($this->attributes[$attributeKey]) ? $this->attributes[$attributeKey] : null;
+        $attributeKeyName = $this->attributes[$attributeKey] ?? null;
 
         if (null === $attributeKeyName) {
             return [];
@@ -88,6 +82,7 @@ class ProductAdditionalDataResolver implements ProductAdditionalDataResolverInte
 
                 return $choices;
             }
+
             return [(string)$this->resolveAttributeValue($attributeValue, $localeCode)];
         }
 
@@ -103,9 +98,8 @@ class ProductAdditionalDataResolver implements ProductAdditionalDataResolverInte
         string $attributeKey,
         ProductInterface $product,
         string $localeCode = null
-    ): ?string
-    {
-        $attributeKeyName = isset($this->attributes[$attributeKey]) ? $this->attributes[$attributeKey] : null;
+    ): ?string {
+        $attributeKeyName = $this->attributes[$attributeKey] ?? null;
 
         if (null === $attributeKeyName) {
             return null;
@@ -118,7 +112,7 @@ class ProductAdditionalDataResolver implements ProductAdditionalDataResolverInte
             null !== $attribute
             && null !== $attribute->getAttribute()
         ) {
-            return (string)$this->resolveAttributeValue($attribute, $localeCode);
+            return (string) $this->resolveAttributeValue($attribute, $localeCode);
         }
 
         return null;
@@ -139,11 +133,13 @@ class ProductAdditionalDataResolver implements ProductAdditionalDataResolverInte
                 if (null !== $attributeValue->getValue()) {
                     return DatetimeHelper::format($attributeValue->getValue());
                 }
+
                 break;
             case AttributeValueInterface::STORAGE_DATE:
                 if (null !== $attributeValue->getValue()) {
                     return $attributeValue->getValue()->format('Y-m-d');
                 }
+
                 break;
             case AttributeValueInterface::STORAGE_JSON:
                 if (null !== $attributeValue->getValue()) {
@@ -160,6 +156,7 @@ class ProductAdditionalDataResolver implements ProductAdditionalDataResolverInte
 
                     return implode(', ', $choices);
                 }
+
                 break;
         }
 

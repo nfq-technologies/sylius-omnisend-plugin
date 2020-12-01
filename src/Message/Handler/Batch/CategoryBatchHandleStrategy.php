@@ -1,24 +1,19 @@
 <?php
 
 /*
- * @copyright C UAB NFQ Technologies
+ * This file is part of the NFQ package.
  *
- * This Software is the property of NFQ Technologies
- * and is protected by copyright law – it is NOT Freeware.
+ * (c) Nfq Technologies UAB <info@nfq.com>
  *
- * Any unauthorized use of this software without a valid license key
- * is a violation of the license agreement and will be prosecuted by
- * civil and criminal law.
- *
- * Contact UAB NFQ Technologies:
- * E-mail: info@nfq.lt
- * http://www.nfq.lt
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 declare(strict_types=1);
 
 namespace NFQ\SyliusOmnisendPlugin\Message\Handler\Batch;
 
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use NFQ\SyliusOmnisendPlugin\Client\OmnisendClient;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Batch;
@@ -26,7 +21,6 @@ use NFQ\SyliusOmnisendPlugin\Doctrine\ORM\TaxonRepositoryInterface;
 use NFQ\SyliusOmnisendPlugin\Factory\Request\BatchFactoryInterface;
 use NFQ\SyliusOmnisendPlugin\Factory\Request\CategoryFactoryInterface;
 use NFQ\SyliusOmnisendPlugin\Message\Command\CreateBatch;
-use DateTime;
 
 class CategoryBatchHandleStrategy implements BatchHandlerStrategyInterface
 {
@@ -80,7 +74,7 @@ class CategoryBatchHandleStrategy implements BatchHandlerStrategyInterface
                 $this->postData($categories, $message);
                 $categories = [];
             }
-            $iteration++;
+            ++$iteration;
         }
 
         if (count($categories) !== 0) {

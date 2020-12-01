@@ -1,18 +1,12 @@
 <?php
 
 /*
- * @copyright C UAB NFQ Technologies
+ * This file is part of the NFQ package.
  *
- * This Software is the property of NFQ Technologies
- * and is protected by copyright law – it is NOT Freeware.
+ * (c) Nfq Technologies UAB <info@nfq.com>
  *
- * Any unauthorized use of this software without a valid license key
- * is a violation of the license agreement and will be prosecuted by
- * civil and criminal law.
- *
- * Contact UAB NFQ Technologies:
- * E-mail: info@nfq.lt
- * http://www.nfq.lt
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 declare(strict_types=1);
@@ -22,12 +16,17 @@ namespace NFQ\SyliusOmnisendPlugin\Client\Request\Model;
 class Batch
 {
     public const ENDPOINTS_CONTACT = 'contacts';
+
     public const ENDPOINTS_ORDER = 'orders';
+
     public const ENDPOINTS_PRODUCT = 'products';
+
     public const ENDPOINTS_EVENT = 'events';
+
     public const ENDPOINTS_CATEGORIES = 'categories';
 
     public const METHODS_POST = 'POST';
+
     public const METHODS_PUT = 'PUT';
 
     /** @var string */

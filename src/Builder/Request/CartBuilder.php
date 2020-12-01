@@ -1,18 +1,12 @@
 <?php
 
 /*
- * @copyright C UAB NFQ Technologies
+ * This file is part of the NFQ package.
  *
- * This Software is the property of NFQ Technologies
- * and is protected by copyright law – it is NOT Freeware.
+ * (c) Nfq Technologies UAB <info@nfq.com>
  *
- * Any unauthorized use of this software without a valid license key
- * is a violation of the license agreement and will be prosecuted by
- * civil and criminal law.
- *
- * Contact UAB NFQ Technologies:
- * E-mail: info@nfq.lt
- * http://www.nfq.lt
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 declare(strict_types=1);
@@ -22,13 +16,13 @@ namespace NFQ\SyliusOmnisendPlugin\Builder\Request;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Cart;
 use NFQ\SyliusOmnisendPlugin\Exception\UserCannotBeIdentifiedException;
 use NFQ\SyliusOmnisendPlugin\Factory\Request\CartProductFactory;
+use NFQ\SyliusOmnisendPlugin\Model\OrderInterface;
 use NFQ\SyliusOmnisendPlugin\Utils\DatetimeHelper;
 use Sylius\Component\Resource\Generator\RandomnessGeneratorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
-use NFQ\SyliusOmnisendPlugin\Model\OrderInterface;
 
 class CartBuilder implements CartBuilderInterface
 {
