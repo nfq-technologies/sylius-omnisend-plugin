@@ -66,15 +66,27 @@ class CartSubscriber implements EventSubscriberInterface
         /** @var ChannelInterface $channel */
         $channel = $cart->getChannel();
 
-        $this->messageBus->dispatch(
-            new Envelope(
-                new UpdateCart(
-                    $cart->getId(),
-                    $this->contactIdResolver->resolve($cart),
-                    $channel->getCode()
+        if ($cart->getItems()->isEmpty()) {
+            $this->messageBus->dispatch(
+                new Envelope(
+                    new DeleteCart(
+                        $cart->getId(),
+                        $cart->getOmnisendOrderDetails()->getCartId(),
+                        $channel->getCode()
+                    )
                 )
-            )
-        );
+            );
+        } else {
+            $this->messageBus->dispatch(
+                new Envelope(
+                    new UpdateCart(
+                        $cart->getId(),
+                        $this->contactIdResolver->resolve($cart),
+                        $channel->getCode()
+                    )
+                )
+            );
+        }
     }
 
     public function updateOrder(OrderInterface $order): void
@@ -130,6 +142,7 @@ class CartSubscriber implements EventSubscriberInterface
                 $this->messageBus->dispatch(
                     new Envelope(
                         new DeleteCart(
+                            $cart->getId(),
                             $details->getCartId(),
                             $channel->getCode()
                         )
@@ -171,6 +184,7 @@ class CartSubscriber implements EventSubscriberInterface
                 $this->messageBus->dispatch(
                     new Envelope(
                         new DeleteCart(
+                            $cart->getId(),
                             $details->getCartId(),
                             $channel->getCode()
                         )
