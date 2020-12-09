@@ -1,0 +1,29 @@
+nfq_sylius_omnisend_plugin:
+  ui:
+    omnisend: Omnisend
+    tracking_key: Omnisend tracking key
+    api_key: Omnisend Api key
+    events: Omnisend events
+    new_event: New event
+    edit_event: Update event
+    sync_events: Sync events from Omnisend
+    sync:
+      products: Sync products
+      categories: Sync categories
+    event:
+      event_id: Event Id
+      name: Name
+      fields: Fields
+      system_name: System Name
+      channel: Channel
+    event_field:
+      name: Name
+      type: Type
+      system_name: System Name
+      required: Required
+  menu:
+    admin:
+      main:
+        omnisend: Omnisend
+        events: Events
+        sync: Sync

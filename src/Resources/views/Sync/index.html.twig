@@ -1,0 +1,14 @@
+{% extends '@SyliusAdmin/layout.html.twig' %}
+
+{% block content %}
+    {% for type in types %}
+        <div class="ui segment">
+            <form action="{{ path('nfq_sylius_omnisend_sync_batch_type', { type: type }) }}" method="post">
+                <button class="ui labeled icon button sylius-grid-nav__bulk" type="submit">
+                    <i class="icon refresh"></i>{{ ('nfq_sylius_omnisend_plugin.ui.sync.' ~ type)|trans }}
+                </button>
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('sync' ~ type) }}"/>
+            </form>
+        </div>
+    {% endfor %}
+{% endblock %}

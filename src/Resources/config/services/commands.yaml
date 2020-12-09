@@ -1,0 +1,7 @@
+services:
+  nfq_sylius_omnisend_plugin.command.push_categories:
+    class: NFQ\SyliusOmnisendPlugin\Command\CreateBatchCommand
+    arguments:
+      - '@messenger.routable_message_bus'
+    tags:
+      - console.command

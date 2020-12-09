@@ -1,0 +1,7 @@
+services:
+  nfq_sylius_omnisend_plugin.manager.contact:
+    class: NFQ\SyliusOmnisendPlugin\Manager\ContactManager
+    arguments:
+      - '@nfq_sylius_omnisend_plugin.builder.request.contact_director'
+      - '@nfq_sylius_omnisend_plugin.client.omnisend'
+      - '@sylius.repository.customer'

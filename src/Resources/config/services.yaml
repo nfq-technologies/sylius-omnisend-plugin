@@ -1,0 +1,34 @@
+imports:
+  - { resource: services/ }
+
+services:
+  nfq_sylius_omnisend_plugin.client.omnisend:
+    class: NFQ\SyliusOmnisendPlugin\Client\OmnisendClient
+    arguments:
+      - '@nfq_sylius_omnisend_plugin.http_client.factory'
+      - '@serializer'
+      - '@nfq_sylius_omnisend_plugin.client.message_factory'
+    calls:
+      - ['setLogger', ['@nfq_sylius_omnisend_plugin.client.logger']]
+
+  nfq_sylius_omnisend_plugin.http_client.factory:
+    class: NFQ\SyliusOmnisendPlugin\HttpClient\ClientFactory
+    arguments:
+      - '@sylius.repository.channel'
+
+  nfq_sylius_omnisend_plugin.client.message_factory:
+    class: NFQ\SyliusOmnisendPlugin\Client\MessageFactory
+    arguments:
+      - '@sylius.context.channel.composite'
+      - '@serializer'
+
+  nfq_sylius_omnisend_plugin.fixture.channel:
+    class: NFQ\SyliusOmnisendPlugin\Fixture\ChannelFixture
+    arguments:
+      - '@sylius.repository.channel'
+    tags: [sylius_fixtures.fixture]
+
+  nfq_sylius_omnisend_plugin.setter.contact_cookie:
+    class: NFQ\SyliusOmnisendPlugin\Setter\ContactCookieSetter
+    arguments:
+      - '@sylius.storage.cookie'

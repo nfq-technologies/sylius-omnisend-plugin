@@ -1,0 +1,5 @@
+services:
+  nfq_sylius_omnisend_plugin.form.extension.type.channel:
+    class: NFQ\SyliusOmnisendPlugin\Form\Extension\ChannelFormTypeExtension
+    tags:
+      - { name: form.type_extension, extended_type: Sylius\Bundle\ChannelBundle\Form\Type\ChannelType }

@@ -1,0 +1,10 @@
+sylius_fixtures:
+  suites:
+    default:
+      fixtures:
+        omnisend_channel:
+          options:
+            custom:
+              - channel_code: "FASHION_WEB"
+                api_key: '5fad524c8a48f77c3d1c8964-FcNxWghHYEUSdu5kFPHq5f1GZtKs6IgtEWlK3pSJC7SpH1MuEv'
+                tracking_key: '5fad524c8a48f77c3d1c8964'
