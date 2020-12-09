@@ -15,12 +15,9 @@ namespace Tests\NFQ\SyliusOmnisendPlugin\Message\Handler;
 
 use NFQ\SyliusOmnisendPlugin\Client\OmnisendClient;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Category;
-use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Contact;
 use NFQ\SyliusOmnisendPlugin\Client\Response\Model\CategorySuccess;
 use NFQ\SyliusOmnisendPlugin\Factory\Request\CategoryFactoryInterface;
-use NFQ\SyliusOmnisendPlugin\Message\Command\CreateCategory;
 use NFQ\SyliusOmnisendPlugin\Message\Command\UpdateCategory;
-use NFQ\SyliusOmnisendPlugin\Message\Handler\CreateCategoryHandler;
 use NFQ\SyliusOmnisendPlugin\Message\Handler\UpdateCategoryHandler;
 use PHPUnit\Framework\TestCase;
 use Sylius\Component\Taxonomy\Repository\TaxonRepositoryInterface;
