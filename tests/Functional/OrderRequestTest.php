@@ -22,6 +22,7 @@ use Sylius\Component\Core\Model\OrderItemUnit;
 use Sylius\Component\Core\Model\Payment;
 use Sylius\Component\Core\Model\PaymentMethod;
 use Sylius\Component\Core\Model\Product;
+use Sylius\Component\Core\Model\ProductTaxon;
 use Sylius\Component\Core\Model\ProductTranslation;
 use Sylius\Component\Core\Model\ProductVariant;
 use Sylius\Component\Core\Model\Shipment;
@@ -29,9 +30,11 @@ use Sylius\Component\Core\Model\ShippingMethod;
 use Sylius\Component\Order\Model\Adjustment;
 use Sylius\Component\Payment\Model\PaymentMethodTranslation;
 use Sylius\Component\Shipping\Model\ShippingMethodTranslation;
+use Sylius\Component\Taxonomy\Model\TaxonTranslation;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Serializer\Normalizer\AbstractObjectNormalizer;
 use Symfony\Component\Serializer\SerializerInterface;
+use Tests\NFQ\SyliusOmnisendPlugin\Application\Entity\Taxon;
 use Tests\NFQ\SyliusOmnisendPlugin\Mock\OrderMock;
 
 class OrderRequestTest extends WebTestCase
@@ -116,6 +119,29 @@ class OrderRequestTest extends WebTestCase
         $variant->setCurrentLocale('en');
         $product->setCode('product_code');
         $variant->setCode('variant_code');
+        $taxon = new Taxon();
+        $taxonTranslation = new TaxonTranslation();
+        $taxonTranslation->setLocale('en');
+        $taxonTranslation->setName('TEST');
+        $taxon->setCode('code');
+        $taxon->setCurrentLocale('en');
+        $taxon->addTranslation($taxonTranslation);
+        $productTaxon = new ProductTaxon();
+        $productTaxon->setTaxon($taxon);
+        $productTaxon->setProduct($product);
+        $product->addProductTaxon($productTaxon);
+        $taxon1 = new Taxon();
+        $taxonTranslation1 = new TaxonTranslation();
+        $taxonTranslation1->setLocale('en');
+        $taxonTranslation1->setName('TEST');
+        $taxon1->setCode('code2');
+        $taxon1->setCurrentLocale('en');
+        $taxon1->addTranslation($taxonTranslation1);
+        $productTaxon1 = new ProductTaxon();
+        $productTaxon1->setTaxon($taxon1);
+        $productTaxon1->setProduct($product);
+        $product->addProductTaxon($productTaxon1);
+
 
         $orderItem = new OrderItem();
         $orderItem->setVariant($variant);

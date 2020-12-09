@@ -61,6 +61,7 @@ services:
     class: NFQ\SyliusOmnisendPlugin\Message\Handler\DeleteCartHandler
     arguments:
       - '@nfq_sylius_omnisend_plugin.client.omnisend'
+      - '@sylius.repository.order'
     tags: [ messenger.message_handler ]
 
   nfq_sylius_omnisend_plugin.message.handler.create_order:

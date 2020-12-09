@@ -15,16 +15,23 @@ namespace NFQ\SyliusOmnisendPlugin\Message\Handler;
 
 use NFQ\SyliusOmnisendPlugin\Client\OmnisendClientInterface;
 use NFQ\SyliusOmnisendPlugin\Message\Command\DeleteCart;
+use NFQ\SyliusOmnisendPlugin\Model\OrderInterface;
+use Sylius\Component\Core\Repository\OrderRepositoryInterface;
 
 class DeleteCartHandler
 {
     /** @var OmnisendClientInterface */
     private $omnisendClient;
 
+    /** @var OrderRepositoryInterface */
+    private $orderRepository;
+
     public function __construct(
-        OmnisendClientInterface $omnisendClient
+        OmnisendClientInterface $omnisendClient,
+        OrderRepositoryInterface $orderRepository
     ) {
         $this->omnisendClient = $omnisendClient;
+        $this->orderRepository = $orderRepository;
     }
 
     public function __invoke(DeleteCart $message): void
@@ -33,5 +40,13 @@ class DeleteCartHandler
             $message->getOmnisendCartId(),
             $message->getChannelCode()
         );
+
+        /** @var OrderInterface|null $cart */
+        $cart = $this->orderRepository->find($message->getCartId());
+
+        if (null !== $cart) {
+            $cart->getOmnisendOrderDetails()->setCartId(null);
+            $this->orderRepository->add($cart);
+        }
     }
 }

@@ -95,6 +95,6 @@ class OrderProductFactory implements OrderProductFactoryInterface
             $product->getTaxons()->toArray()
         );
 
-        return count($result) === 0 ? $result : null;
+        return count($result) !== 0 ? $result : null;
     }
 }

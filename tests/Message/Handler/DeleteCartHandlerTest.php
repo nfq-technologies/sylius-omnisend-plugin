@@ -13,25 +13,13 @@ declare(strict_types=1);
 
 namespace Tests\NFQ\SyliusOmnisendPlugin\Message\Handler;
 
-use FOS\RestBundle\Controller\Annotations\Delete;
-use NFQ\SyliusOmnisendPlugin\Builder\Request\CartBuilderDirectorInterface;
-use NFQ\SyliusOmnisendPlugin\Client\OmnisendClient;
 use NFQ\SyliusOmnisendPlugin\Client\OmnisendClientInterface;
-use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Cart;
 use NFQ\SyliusOmnisendPlugin\Client\Response\Model\CartSuccess;
-use NFQ\SyliusOmnisendPlugin\Doctrine\ORM\TaxonRepositoryInterface;
-use NFQ\SyliusOmnisendPlugin\Factory\Request\BatchFactoryInterface;
-use NFQ\SyliusOmnisendPlugin\Factory\Request\CategoryFactoryInterface;
 use NFQ\SyliusOmnisendPlugin\Message\Command\DeleteCart;
-use NFQ\SyliusOmnisendPlugin\Message\Command\UpdateCart;
 use NFQ\SyliusOmnisendPlugin\Message\Handler\DeleteCartHandler;
-use NFQ\SyliusOmnisendPlugin\Message\Handler\PushCategoriesHandler;
-use NFQ\SyliusOmnisendPlugin\Message\Handler\UpdateCartHandler;
-use NFQ\SyliusOmnisendPlugin\Model\OrderInterface;
 use PHPUnit\Framework\TestCase;
 use Sylius\Component\Core\Repository\OrderRepositoryInterface;
 use Tests\NFQ\SyliusOmnisendPlugin\Mock\OrderMock;
-use function Clue\StreamFilter\fun;
 
 class DeleteCartHandlerTest extends TestCase
 {
@@ -41,12 +29,17 @@ class DeleteCartHandlerTest extends TestCase
     /** @var OmnisendClientInterface */
     private $omnisendClient;
 
+    /** @var OrderRepositoryInterface */
+    private $orderRepository;
+
     protected function setUp(): void
     {
         $this->omnisendClient = $this->createMock(OmnisendClientInterface::class);
+        $this->orderRepository = $this->createMock(OrderRepositoryInterface::class);
 
         $this->handler = new DeleteCartHandler(
-            $this->omnisendClient
+            $this->omnisendClient,
+            $this->orderRepository
         );
     }
 
@@ -60,8 +53,15 @@ class DeleteCartHandlerTest extends TestCase
             ->method('deleteCart')
             ->willReturn((new CartSuccess())->setCartID('444'));
 
+        $this->orderRepository
+            ->expects($this->once())
+            ->method('find')
+            ->willReturn($order);
+
         $this->handler->__invoke(
-            new DeleteCart("1", 'a')
+            new DeleteCart(1, 'a', 'channel')
         );
+
+        $this->assertEquals($order->getOmnisendOrderDetails()->getCartId(), null);
     }
 }

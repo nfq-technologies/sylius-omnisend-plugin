@@ -38,3 +38,8 @@ Feature: Adding a simple product to the cart
     And there should be one item in my cart
     And this item should have name "Oathkeeper"
     And Cart should be synced with Omnisend
+    When I remove product "Oathkeeper" from the cart
+    Then my cart should be empty
+    And Request type "DELETE" to Omnisend endpoint "carts" should be sent
+    When I add product "Oathkeeper" to the cart
+    And Request type "POST" to Omnisend endpoint "carts" should be sent
