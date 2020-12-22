@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace NFQ\SyliusOmnisendPlugin\Factory\Request;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Liip\ImagineBundle\Imagine\Cache\CacheManager;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\ProductImage;
 use Sylius\Component\Core\Model\ProductImageInterface;
@@ -39,7 +40,7 @@ class ProductImageFactory implements ProductImageFactoryInterface
     {
         /** @var ProductInterface|null $product */
         $product = $productImage->getOwner();
-        $productVariants = [];
+        $productVariants = new ArrayCollection();
         if ($product !== null) {
             $productVariants = method_exists($product, 'getEnabledVariants') ? $product->getEnabledVariants() : $product->getVariants();
         }
