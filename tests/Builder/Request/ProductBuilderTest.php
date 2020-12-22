@@ -76,7 +76,7 @@ class ProductBuilderTest extends TestCase
         }
         $productVariantDisabled = new ProductVariant();
         if (method_exists($productVariantDisabled, 'setEnabled')) {
-            $productVariantDisabled->setEnabled(true);
+            $productVariantDisabled->setEnabled(false);
         }
         $product->addVariant($productVariant);
         $product->addVariant($productVariantDisabled);
