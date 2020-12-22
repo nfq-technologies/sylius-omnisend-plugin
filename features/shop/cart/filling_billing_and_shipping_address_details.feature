@@ -9,13 +9,13 @@ Feature: Addressing an order
         And the store ships everywhere for free
         And the store has a product "PHP T-Shirt" priced at "$19.99"
 
-    @ui @api
+    @ui
     Scenario: Address an order without different shipping address
         Given I have product "PHP T-Shirt" in the cart
         And Cart should not be synced with Omnisend
         And I am at the checkout addressing step
         When I specify the email as "jon.snow@example.com"
-        And I specify the billing address as "Ankh Morpork", "Frost Alley", "90210", "United States" for "Jon Snow"
+        And I specify the shipping address as "Ankh Morpork", "Frost Alley", "90210", "United States" for "Jon Snow"
         And I complete the addressing step
-        And Cart should be synced with Omnisend
         Then I should be on the checkout shipping step
+        And Cart should be synced with Omnisend
