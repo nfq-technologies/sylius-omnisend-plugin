@@ -7,6 +7,7 @@ services:
       - '@sylius.context.channel.composite'
       - '@nfq_sylius_omnisend_plugin.resolver.product_url'
       - '@nfq_sylius_omnisend_plugin.resolver.product_additional_data'
+      - '@nfq_sylius_omnisend_plugin.resolver.product_original_price_resolver'
 
   nfq_sylius_omnisend_plugin.builder.product_picker_director:
     class: NFQ\SyliusOmnisendPlugin\Builder\ProductPickerBuilderDirector

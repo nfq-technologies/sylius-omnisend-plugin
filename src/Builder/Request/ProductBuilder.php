@@ -79,9 +79,10 @@ class ProductBuilder implements ProductBuilderInterface
     public function addVariants(ProductInterface $product, ChannelInterface $channel, ?string $localeCode = null): void
     {
         $variants = [];
+        $productVariants = method_exists($product, 'getEnabledVariants') ? $product->getEnabledVariants() : $product->getVariants();
 
         /** @var ProductVariant $variant */
-        foreach ($product->getEnabledVariants() as $variant) {
+        foreach ($productVariants as $variant) {
             $variants[] = $this->productVariantFactory->create($variant, $channel, $localeCode);
         }
 
@@ -123,14 +124,16 @@ class ProductBuilder implements ProductBuilderInterface
 
     public function addStockStatus(ProductInterface $product): void
     {
-        if ($product->getEnabledVariants()->count() === 0) {
+        $productVariants = method_exists($product, 'getEnabledVariants') ? $product->getEnabledVariants() : $product->getVariants();
+
+        if ($productVariants->count() === 0) {
             $this->product->setStatus(ProductStatus::STATUS_NOT_AVAILABLE);
 
             return;
         }
 
         /** @var ProductVariantInterface $variant */
-        foreach ($product->getEnabledVariants() as $variant) {
+        foreach ($productVariants as $variant) {
             $status = $this->productVariantStockResolver->resolve($variant);
 
             if ($status === ProductStatus::STATUS_IN_STOCK) {

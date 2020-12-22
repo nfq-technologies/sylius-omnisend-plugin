@@ -16,9 +16,10 @@ namespace NFQ\SyliusOmnisendPlugin\Builder;
 use NFQ\SyliusOmnisendPlugin\Model\ProductPicker;
 use NFQ\SyliusOmnisendPlugin\Resolver\ProductAdditionalDataResolverInterface;
 use NFQ\SyliusOmnisendPlugin\Resolver\ProductImageResolverInterface;
+use NFQ\SyliusOmnisendPlugin\Resolver\ProductOriginalPriceResolver;
 use NFQ\SyliusOmnisendPlugin\Resolver\ProductUrlResolverInterface;
 use Sylius\Component\Channel\Context\ChannelContextInterface;
-use Sylius\Component\Core\Calculator\ProductVariantPricesCalculatorInterface;
+use Sylius\Component\Core\Calculator\ProductVariantPriceCalculatorInterface;
 use Sylius\Component\Core\Model\Channel;
 use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Core\Model\ProductTranslationInterface;
@@ -33,7 +34,7 @@ class ProductPickerBuilder implements ProductPickerBuilderInterface
     /** @var ProductImageResolverInterface */
     private $productImageResolver;
 
-    /** @var ProductVariantPricesCalculatorInterface */
+    /** @var ProductVariantPriceCalculatorInterface */
     private $productVariantPricesCalculator;
 
     /** @var ChannelContextInterface */
@@ -45,18 +46,23 @@ class ProductPickerBuilder implements ProductPickerBuilderInterface
     /** @var ProductAdditionalDataResolverInterface */
     private $productAdditionalDataResolver;
 
+    /** @var ProductOriginalPriceResolver */
+    private $productOriginalPriceResolver;
+
     public function __construct(
         ProductImageResolverInterface $productImageResolver,
-        ProductVariantPricesCalculatorInterface $productVariantPricesCalculator,
+        ProductVariantPriceCalculatorInterface $productVariantPricesCalculator,
         ChannelContextInterface $channelContext,
         ProductUrlResolverInterface $productUrlResolver,
-        ProductAdditionalDataResolverInterface $productAdditionalDataResolver
+        ProductAdditionalDataResolverInterface $productAdditionalDataResolver,
+        ProductOriginalPriceResolver $productOriginalPriceResolver
     ) {
         $this->productImageResolver = $productImageResolver;
         $this->productVariantPricesCalculator = $productVariantPricesCalculator;
         $this->channelContext = $channelContext;
         $this->productUrlResolver = $productUrlResolver;
         $this->productAdditionalDataResolver = $productAdditionalDataResolver;
+        $this->productOriginalPriceResolver = $productOriginalPriceResolver;
     }
 
     public function createProductPicker(): void
@@ -101,12 +107,21 @@ class ProductPickerBuilder implements ProductPickerBuilderInterface
             ]
         );
 
-        $oldPrice = $this->productVariantPricesCalculator->calculateOriginal(
-            $productVariant,
-            [
-                'channel' => $channel,
-            ]
-        );
+        if (method_exists($this->productVariantPricesCalculator, 'calculateOriginal')) {
+            $oldPrice = $this->productVariantPricesCalculator->calculateOriginal(
+                $productVariant,
+                [
+                    'channel' => $channel,
+                ]
+            );
+        } else {
+            $oldPrice = $this->productOriginalPriceResolver->calculateOriginal(
+                $productVariant,
+                [
+                    'channel' => $channel,
+                ]
+            );
+        }
 
         $this->productPicker
             ->setPrice($price)
