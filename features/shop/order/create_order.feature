@@ -11,7 +11,10 @@ Feature: Omnisend should be notified about created order in checkout
   @ui
   Scenario: Successfully placing an order
     Given I have product "PHP T-Shirt" in the cart
-    When I complete addressing step with email "john@example.com" and "United States" based billing address
+    And I am at the checkout addressing step
+    When I specify the email as "jon.snow@example.com"
+    And I specify the shipping address as "Ankh Morpork", "Frost Alley", "90210", "United States" for "Jon Snow"
+    And I complete the addressing step
     And I select "Free" shipping method
     And I complete the shipping step
     And I choose "Offline" payment method
