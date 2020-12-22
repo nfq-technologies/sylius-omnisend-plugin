@@ -46,3 +46,17 @@ services:
       - '@@NFQSyliusOmnisendPlugin/Shop/Product/_product_picker.html.twig'
     tags:
       - { name: kernel.event_listener, event: sonata.block.event.sylius.shop.product.show.after_description, method: onBlockEvent }
+
+  nfq_sylius_omnisend_plugin.block_event_listener.sylius.admin.channel.update.form:
+    class: Sylius\Bundle\UiBundle\Block\BlockEventListener
+    arguments:
+      - '@@NFQSyliusOmnisendPlugin/Channel/Admin/_channel_omnisend_key.html.twig'
+    tags:
+      - { name: kernel.event_listener, event: sonata.block.event.sylius.admin.channel.update.form, method: onBlockEvent }
+
+  nfq_sylius_omnisend_plugin.block_event_listener.sylius.admin.channel.create.form:
+    class: Sylius\Bundle\UiBundle\Block\BlockEventListener
+    arguments:
+      - '@@NFQSyliusOmnisendPlugin/Channel/Admin/_channel_omnisend_key.html.twig'
+    tags:
+      - { name: kernel.event_listener, event: sonata.block.event.sylius.admin.channel.create.form, method: onBlockEvent }
