@@ -69,18 +69,29 @@ class ProductBuilderTest extends TestCase
 
     public function testIfAddsEnabledVariants()
     {
-        $product = new Product();
         $productVariant = new ProductVariant();
-        $productVariant->setEnabled(true);
+        $product = new Product();
+        if (method_exists($productVariant, 'setEnabled')) {
+            $productVariant->setEnabled(true);
+        }
         $productVariantDisabled = new ProductVariant();
-        $productVariantDisabled->setEnabled(false);
+        if (method_exists($productVariantDisabled, 'setEnabled')) {
+            $productVariantDisabled->setEnabled(false);
+        }
         $product->addVariant($productVariant);
         $product->addVariant($productVariantDisabled);
 
-        $this->productVariantFactory
-            ->expects($this->once())
-            ->method('create')
-            ->willReturn(new OmnisendProductVariant());
+        if (method_exists($productVariant, 'setEnabled')) {
+            $this->productVariantFactory
+                ->expects($this->once())
+                ->method('create')
+                ->willReturn(new OmnisendProductVariant());
+        } else {
+            $this->productVariantFactory
+                ->expects($this->exactly(2))
+                ->method('create')
+                ->willReturn(new OmnisendProductVariant());
+        }
         $this->productBuilder->createProduct();
         $this->productBuilder->addVariants($product, new Channel());
         $result = $this->productBuilder->getProduct();
@@ -104,7 +115,9 @@ class ProductBuilderTest extends TestCase
     {
         $product = new Product();
         $productVariant = new ProductVariant();
-        $productVariant->setEnabled(true);
+        if (method_exists($productVariant, 'setEnabled')) {
+            $productVariant->setEnabled(true);
+        }
         $product->addVariant($productVariant);
         $this->productVariantStockResolver
             ->expects($this->once())
@@ -122,7 +135,9 @@ class ProductBuilderTest extends TestCase
     {
         $product = new Product();
         $productVariant = new ProductVariant();
-        $productVariant->setEnabled(true);
+        if (method_exists($productVariant, 'setEnabled')) {
+            $productVariant->setEnabled(true);
+        }
         $product->addVariant($productVariant);
         $this->productVariantStockResolver
             ->expects($this->once())

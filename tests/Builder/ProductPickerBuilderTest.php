@@ -192,10 +192,17 @@ class ProductPickerBuilderTest extends TestCase
             ->method('calculate')
             ->willReturn(1000);
 
-        $this->productVariantPricesCalculator
-            ->expects($this->once())
-            ->method('calculateOriginal')
-            ->willReturn(1200);
+        if (method_exists($this->productVariantPricesCalculator, 'calculateOriginal')) {
+            $this->productVariantPricesCalculator
+                ->expects($this->once())
+                ->method('calculateOriginal')
+                ->willReturn(1200);
+        } else {
+            $this->productOriginalPriceResolver
+                ->expects($this->once())
+                ->method('calculateOriginal')
+                ->willReturn(1200);
+        }
 
         $this->builder->createProductPicker();
         $this->builder->addPrices($productVariant);
@@ -225,10 +232,18 @@ class ProductPickerBuilderTest extends TestCase
             ->method('calculate')
             ->willReturn(1000);
 
-        $this->productVariantPricesCalculator
-            ->expects($this->once())
-            ->method('calculateOriginal')
-            ->willReturn(1000);
+
+        if (method_exists($this->productVariantPricesCalculator, 'calculateOriginal')) {
+            $this->productVariantPricesCalculator
+                ->expects($this->once())
+                ->method('calculateOriginal')
+                ->willReturn(1000);
+        } else {
+            $this->productOriginalPriceResolver
+                ->expects($this->once())
+                ->method('calculateOriginal')
+                ->willReturn(1000);
+        }
 
         $this->builder->createProductPicker();
         $this->builder->addPrices($productVariant);

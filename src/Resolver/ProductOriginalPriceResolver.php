@@ -19,7 +19,7 @@ use Webmozart\Assert\Assert;
 
 class ProductOriginalPriceResolver
 {
-    public function calculateOriginal(ProductVariantInterface $productVariant, array $context): int
+    public function calculateOriginal(ProductVariantInterface $productVariant, array $context): ?int
     {
         Assert::keyExists($context, 'channel');
 
