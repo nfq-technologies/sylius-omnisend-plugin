@@ -37,15 +37,21 @@ class ProductVariantStockResolverTest extends TestCase
     public function testIfReturnNotActive()
     {
         $productVariant = new ProductVariant();
-        $productVariant->setEnabled(false);
 
-        $this->assertEquals($this->resolver->resolve($productVariant), ProductStatus::STATUS_NOT_AVAILABLE);
+        if (method_exists($productVariant, 'setEnabled')) {
+            $productVariant->setEnabled(false);
+            $this->assertEquals($this->resolver->resolve($productVariant), ProductStatus::STATUS_NOT_AVAILABLE);
+        } else {
+            $this->assertEquals($this->resolver->resolve($productVariant), ProductStatus::STATUS_IN_STOCK);
+        }
     }
 
     public function testIfReturnsInStock()
     {
         $productVariant = new ProductVariant();
-        $productVariant->setEnabled(true);
+        if (method_exists($productVariant, 'setEnabled')) {
+            $productVariant->setEnabled(true);
+        }
         $productVariant->setOnHand(5);
         $productVariant->setTracked(true);
 
@@ -55,7 +61,9 @@ class ProductVariantStockResolverTest extends TestCase
     public function testIfReturnsOutStock()
     {
         $productVariant = new ProductVariant();
-        $productVariant->setEnabled(true);
+        if (method_exists($productVariant, 'setEnabled')) {
+            $productVariant->setEnabled(true);
+        }
         $productVariant->setOnHand(0);
         $productVariant->setTracked(true);
 

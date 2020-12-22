@@ -22,8 +22,6 @@ use NFQ\SyliusOmnisendPlugin\Mapper\OrderStateMapper;
 use NFQ\SyliusOmnisendPlugin\Resolver\DefaultOrderCourierDataResolver;
 use NFQ\SyliusOmnisendPlugin\Resolver\OrderCouponResolverInterface;
 use PHPUnit\Framework\TestCase;
-use Sylius\Bundle\ShopBundle\Calculator\OrderItemsSubtotalCalculator;
-use Sylius\Bundle\ShopBundle\Calculator\OrderItemsSubtotalCalculatorInterface;
 use Sylius\Component\Core\Model\AdjustmentInterface;
 use Sylius\Component\Core\Model\Customer;
 use Sylius\Component\Core\Model\Order;
@@ -50,9 +48,6 @@ class OrderBuilderTest extends TestCase
     /** @var OrderProductFactoryInterface */
     private $orderProductFactory;
 
-    /** @var OrderItemsSubtotalCalculatorInterface */
-    private $subtotalCalculator;
-
     /** @var OrderStateMapper */
     private $stateMapper;
 
@@ -69,7 +64,6 @@ class OrderBuilderTest extends TestCase
     {
         $this->addressFactory = $this->createMock(OrderAddressFactoryInterface::class);
         $this->orderProductFactory = $this->createMock(OrderProductFactoryInterface::class);
-        $this->subtotalCalculator = new OrderItemsSubtotalCalculator();
         $this->stateMapper = $this->createMock(OrderStateMapper::class);
         $this->paymentStateMapper = $this->createMock(OrderPaymentStateMapper::class);
         $this->orderCouponResolver = $this->createMock(OrderCouponResolverInterface::class);
@@ -78,7 +72,6 @@ class OrderBuilderTest extends TestCase
         $this->builder = new OrderBuilder(
             $this->addressFactory,
             $this->orderProductFactory,
-            $this->subtotalCalculator,
             $this->stateMapper,
             $this->paymentStateMapper,
             $this->orderCouponResolver,

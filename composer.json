@@ -11,7 +11,7 @@
         "php-http/guzzle6-adapter": "^2.0",
         "php-http/httplug": "^2.0",
         "php-http/httplug-bundle": "^1.19",
-        "sylius/sylius": "^1.7",
+        "sylius/sylius": "1.7",
         "symfony/property-info": "^4.4|^5.0",
         "symfony/serializer": "^4.4|^5.0",
         "symfony/lock": "^4.4|^5.0",

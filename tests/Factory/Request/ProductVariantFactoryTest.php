@@ -98,10 +98,17 @@ class ProductVariantFactoryTest extends TestCase
             ->method('calculate')
             ->willReturn(10);
 
-        $this->productVariantPricesCalculator
-            ->expects($this->once())
-            ->method('calculateOriginal')
-            ->willReturn(20);
+        if (method_exists($this->productVariantPricesCalculator, 'calculateOriginal')) {
+            $this->productVariantPricesCalculator
+                ->expects($this->once())
+                ->method('calculateOriginal')
+                ->willReturn(20);
+        } else {
+            $this->productOriginalPriceResolver
+                ->expects($this->once())
+                ->method('calculateOriginal')
+                ->willReturn(20);
+        }
 
         $result = $this->factory->create($baseVariant, new Channel(), 'en');
 
@@ -143,10 +150,17 @@ class ProductVariantFactoryTest extends TestCase
             ->method('calculate')
             ->willReturn(10);
 
-        $this->productVariantPricesCalculator
-            ->expects($this->once())
-            ->method('calculateOriginal')
-            ->willReturn(10);
+        if (method_exists($this->productVariantPricesCalculator, 'calculateOriginal')) {
+            $this->productVariantPricesCalculator
+                ->expects($this->once())
+                ->method('calculateOriginal')
+                ->willReturn(10);
+        } else {
+            $this->productOriginalPriceResolver
+                ->expects($this->once())
+                ->method('calculateOriginal')
+                ->willReturn(10);
+        }
 
         $result = $this->factory->create($baseVariant, new Channel(), 'en');
 
