@@ -11,8 +11,7 @@
         "php-http/guzzle6-adapter": "^2.0",
         "php-http/httplug": "^2.0",
         "php-http/httplug-bundle": "^1.19",
-        "sylius/sylius": "^1.8",
-        "symfony/doctrine-bridge": "4.4.15",
+        "sylius/sylius": "^1.7",
         "symfony/lock": "^5.1",
         "symfony/messenger": "^4.4"
     },
