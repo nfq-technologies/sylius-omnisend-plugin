@@ -49,7 +49,6 @@ services:
     arguments:
       - '@nfq_sylius_omnisend_plugin.factory.request.order_address'
       - '@nfq_sylius_omnisend_plugin.factory.request.order_product'
-      - '@sylius.calculator.order_items_subtotal'
       - '@nfq_sylius_omnisend_plugin.mapper.order_state'
       - '@nfq_sylius_omnisend_plugin.mapper.order_payment_state'
       - '@nfq_sylius_omnisend_plugin.resolver.default_order_coupon'

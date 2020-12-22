@@ -8,14 +8,14 @@
         "php": "^7.3",
         "guzzlehttp/psr7": "^1.7",
         "http-interop/http-factory-guzzle": "^1.0",
-        "php-http/guzzle6-adapter": "^2.0",
-        "php-http/httplug": "^2.0",
+        "php-http/guzzle6-adapter": "^1.1|^2.0",
+        "php-http/httplug": "^1.0|^2.0",
         "php-http/httplug-bundle": "^1.19",
-        "sylius/sylius": "^1.7",
-        "symfony/property-info": "^4.4|^5.0",
-        "symfony/serializer": "^4.4|^5.0",
+        "sylius/sylius": "1.6.6",
         "symfony/lock": "^4.4|^5.0",
-        "symfony/messenger": "^4.4|^5.0"
+        "symfony/messenger": "^4.4|^5.0",
+        "symfony/property-info": "^4.4|^5.0",
+        "symfony/serializer": "^4.4|^5.0"
     },
     "require-dev": {
         "behat/behat": "^3.6.1",
