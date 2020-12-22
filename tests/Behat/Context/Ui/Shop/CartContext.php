@@ -53,6 +53,6 @@ class CartContext implements Context
 
     private function getLatestCart()
     {
-        return $this->orderRepository->findLatestCart();
+        return $this->orderRepository->findOneBy(['state' => OrderInterface::STATE_CART]);
     }
 }
