@@ -1,0 +1,140 @@
+<?php
+
+/*
+ * This file is part of the NFQ package.
+ *
+ * (c) Nfq Technologies UAB <info@nfq.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+declare(strict_types=1);
+
+namespace Tests\NFQ\SyliusOmnisendPlugin\Message\Handler;
+
+use NFQ\SyliusOmnisendPlugin\Builder\Request\CartBuilderDirectorInterface;
+use NFQ\SyliusOmnisendPlugin\Client\OmnisendClientInterface;
+use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Cart;
+use NFQ\SyliusOmnisendPlugin\Client\Response\Model\CartSuccess;
+use NFQ\SyliusOmnisendPlugin\Message\Command\UpdateCart;
+use NFQ\SyliusOmnisendPlugin\Message\Handler\UpdateCartHandler;
+use NFQ\SyliusOmnisendPlugin\Model\OrderInterface;
+use PHPUnit\Framework\TestCase;
+use Sylius\Component\Core\Model\Channel;
+use Sylius\Component\Core\Repository\OrderRepositoryInterface;
+use Tests\NFQ\SyliusOmnisendPlugin\Mock\OrderMock;
+
+class UpdateCartHandlerTest extends TestCase
+{
+    /** @var UpdateCartHandler */
+    private $handler;
+
+    /** @var OrderRepositoryInterface */
+    private $orderRepository;
+
+    /** @var CartBuilderDirectorInterface */
+    private $cartBuilderDirector;
+
+    /** @var OmnisendClientInterface */
+    private $omnisendClient;
+
+    protected function setUp(): void
+    {
+        $this->orderRepository = $this->createMock(OrderRepositoryInterface::class);
+        $this->cartBuilderDirector = $this->createMock(CartBuilderDirectorInterface::class);
+        $this->omnisendClient = $this->createMock(OmnisendClientInterface::class);
+
+        $this->handler = new UpdateCartHandler(
+            $this->orderRepository,
+            $this->cartBuilderDirector,
+            $this->omnisendClient
+        );
+    }
+
+    public function testIfDoesNotApplyAnyActionIfOrderDoesNotExists()
+    {
+        $this->orderRepository
+            ->expects($this->once())
+            ->method('find')
+            ->willReturn(null);
+
+        $this->omnisendClient
+            ->expects($this->never())
+            ->method('postCart');
+
+        $this->handler->__invoke(
+            new UpdateCart(
+                1, '55', 'a'
+            )
+        );
+    }
+
+    public function testIfCallCreateActionIfDoesNotExits()
+    {
+        $order = new OrderMock();
+        $channel = new Channel();
+        $channel->setCode('a');
+        $order->setChannel($channel);
+        $this->orderRepository
+            ->expects($this->once())
+            ->method('find')
+            ->willReturn($order);
+
+        $this->omnisendClient
+            ->expects($this->once())
+            ->method('postCart')
+            ->willReturn((new CartSuccess())->setCartID('444'));
+
+        $this->cartBuilderDirector
+            ->expects($this->once())
+            ->method('build')
+            ->willReturn(new Cart());
+
+        $this->omnisendClient
+            ->expects($this->never())
+            ->method('patchCart');
+
+        $this->orderRepository
+            ->expects($this->once())
+            ->method('add')
+            ->willReturnCallback(function (OrderInterface $order) {
+                $this->assertEquals($order->getOmnisendOrderDetails()->getCartId(), '444');
+            });
+
+        $this->handler->__invoke(new UpdateCart(1, '55', 'a'));
+    }
+
+    public function testIfCallPatchActionIfCartExists()
+    {
+        $order = new OrderMock();
+        $channel = new Channel();
+        $channel->setCode('a');
+        $order->setChannel($channel);
+        $order->getOmnisendOrderDetails()->setCartId('2222');
+        $this->orderRepository
+            ->expects($this->once())
+            ->method('find')
+            ->willReturn($order);
+
+        $this->orderRepository
+            ->expects($this->never())
+            ->method('add');
+
+        $this->omnisendClient
+            ->expects($this->once())
+            ->method('patchCart')
+            ->willReturn((new CartSuccess())->setCartID('444'));
+
+        $this->cartBuilderDirector
+            ->expects($this->once())
+            ->method('build')
+            ->willReturn(new Cart());
+
+        $this->omnisendClient
+            ->expects($this->never())
+            ->method('postCart');
+
+        $this->handler->__invoke(new UpdateCart(1, '55', 'a'));
+    }
+}

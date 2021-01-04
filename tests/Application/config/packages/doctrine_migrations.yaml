@@ -1,0 +1,6 @@
+doctrine_migrations:
+    storage:
+        table_storage:
+            table_name: sylius_migrations
+    migrations_paths:
+        'Tests\NFQ\SyliusOmnisendPlugin\Application\Migrations': '%kernel.project_dir%/src/Migrations'

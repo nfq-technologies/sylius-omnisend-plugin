@@ -1,0 +1,23 @@
+services:
+  nfq_sylius_omnisend_plugin.product_picker_object_normalizer:
+    public: true
+    class: Symfony\Component\Serializer\Normalizer\ObjectNormalizer
+    autoconfigure: false
+    calls:
+      - ['setSerializer', ['@serializer']]
+    autowire: false
+    arguments:
+      - '@serializer.mapping.class_metadata_factory'
+      - '@nfq_sylius_omnisend_plugin.serializer.name_converter.product_picker'
+      - ~
+      - '@property_info.reflection_extractor'
+
+  nfq_sylius_omnisend_plugin.serializer.name_converter.product_picker:
+    class: NFQ\SyliusOmnisendPlugin\Serializer\NameConverter\ProductPickerNameConverter
+
+  nfq_sylius_omnisend_plugin.serializer.normalizer.product_picker:
+    class: NFQ\SyliusOmnisendPlugin\Serializer\Normalizer\ProductPickerNormalizer
+    arguments:
+      - '@nfq_sylius_omnisend_plugin.product_picker_object_normalizer'
+    tags:
+      - { name: 'serializer.normalizer' }

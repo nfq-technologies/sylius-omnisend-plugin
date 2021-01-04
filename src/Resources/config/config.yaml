@@ -1,0 +1,104 @@
+winzou_state_machine:
+  sylius_order:
+    callbacks:
+      after:
+        nfq_sylius_omnisend_after_order_state_change:
+          on: ["create", "cancel", "fulfill"]
+          do: ["@nfq_sylius_omnisend_plugin.event_subscriber.order", "onOrderStateChange"]
+          args: ["event", "object"]
+          priority: 255
+
+  sylius_order_checkout:
+    callbacks:
+      after:
+        nfq_sylius_omnisend_after_checkout_step_change:
+          on: ["address", "select_shipping", "select_payment"]
+          do: ['@nfq_sylius_omnisend_plugin.event_subscriber.cart', "updateOrder"]
+          args: ["object"]
+          priority: 255
+
+  sylius_payment:
+    callbacks:
+      after:
+        nfq_sylius_omnisend_after_payment_change:
+          on: ["create", "process", "authorize", "complete", "fail", "cancel", "refund"]
+          do: ["@nfq_sylius_omnisend_plugin.event_subscriber.order", "onPaymentStateChange"]
+          args: ["object"]
+          priority: 255
+
+  sylius_shipment:
+    callbacks:
+      after:
+        nfq_sylius_omnisend_after_shipment_change:
+          on: ["create", "ship", "cancel"]
+          do: ["@nfq_sylius_omnisend_plugin.event_subscriber.order", "onShipmentStateChange"]
+          args: ["object"]
+          priority: 255
+
+sylius_grid:
+  templates:
+    action:
+      nfq_sylius_omnisend_sync_events: "@NFQSyliusOmnisendPlugin/Event/Admin/_sync.html.twig"
+  grids:
+    nfq_sylius_omnisend_event:
+      driver:
+        name: doctrine/orm
+        options:
+          class: NFQ\SyliusOmnisendPlugin\Model\Event
+      fields:
+        channel:
+          type: twig
+          label: sylius.ui.channel
+          options:
+            template: "@SyliusAdmin/Order/Grid/Field/channel.html.twig"
+        name:
+          type: string
+          label: nfq_sylius_omnisend_plugin.ui.event.name
+        systemName:
+          type: string
+          label: nfq_sylius_omnisend_plugin.ui.event.system_name
+        enabled:
+          type: twig
+          label: sylius.ui.enabled
+          options:
+            template: SyliusUiBundle:Grid/Field:enabled.html.twig
+      actions:
+        main:
+          create:
+            type: create
+          sync:
+            type: nfq_sylius_omnisend_sync_events
+            label: nfq_sylius_omnisend_plugin.ui.sync_events
+            options:
+              link:
+                route: nfq_sylius_omnisend_sync_events_action
+        item:
+          update:
+            type: update
+      sorting:
+        name: asc
+      filters:
+        name:
+          type: string
+        systemName:
+          type: string
+        enabled:
+          type: boolean
+sylius_ui:
+  events:
+    sylius.admin.channel.update.form:
+      blocks:
+        omnisend: '@NFQSyliusOmnisendPlugin/Channel/Admin/_channel_omnisend_key.html.twig'
+
+    sylius.admin.channel.create.form:
+      blocks:
+        omnisend: '@NFQSyliusOmnisendPlugin/Channel/Admin/_channel_omnisend_key.html.twig'
+
+    sylius.shop.layout.javascripts:
+      blocks:
+        omnisend_script:
+          template: '@NFQSyliusOmnisendPlugin/Shop/Layout/_javascript.html.twig'
+
+    sylius.shop.product.show.content:
+      blocks:
+        omnisend_script: '@NFQSyliusOmnisendPlugin/Shop/Product/_product_picker.html.twig'
