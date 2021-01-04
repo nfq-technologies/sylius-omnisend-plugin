@@ -3,6 +3,5 @@
     "description": "Sylius application for plugin testing purposes (composer.json needed for project dir resolving)",
     "license": "MIT",
     "require": {
-        "symfony/doctrine-bridge": "4.4.15"
     }
 }

@@ -94,7 +94,7 @@ class CartSubscriber implements EventSubscriberInterface
         /** @var ChannelInterface $channel */
         $channel = $order->getChannel();
 
-        if ($order->getId()) {
+        if ($order->getId() && $order->getState() === OrderInterface::STATE_CART) {
             $this->messageBus->dispatch(
                 new Envelope(
                     new UpdateCart(

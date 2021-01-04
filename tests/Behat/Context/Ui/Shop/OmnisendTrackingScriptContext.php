@@ -15,10 +15,11 @@ namespace Tests\NFQ\SyliusOmnisendPlugin\Behat\Context\Ui\Shop;
 
 use Behat\Behat\Context\Context;
 use Behat\Gherkin\Node\TableNode;
+use Behat\MinkExtension\Context\MinkContext;
 use Sylius\Behat\Page\Shop\HomePage;
 use Webmozart\Assert\Assert;
 
-class OmnisendTrackingScriptContext implements Context
+class OmnisendTrackingScriptContext extends MinkContext
 {
     /** @var HomePage */
     private $homePage;
@@ -31,13 +32,13 @@ class OmnisendTrackingScriptContext implements Context
     /** @Then I see omnisend tracking script with a key :key */
     public function iSeeOmnisendTrackingScriptWithKey(string $key)
     {
-        Assert::contains($this->homePage->getContent(), 'omnisend.push(["accountID", "' . $key . '"])');
+        Assert::contains($this->getMink()->getSession()->getPage()->getContent(), 'omnisend.push(["accountID", "' . $key . '"])');
     }
 
     /** @Then I do not see omnisend tracking script */
     public function iDoNotSeeOmnisendTrackingScript()
     {
-        Assert::notContains($this->homePage->getContent(), 'window.omnisend');
+        Assert::notContains($this->getMink()->getSession()->getPage()->getContent(), 'window.omnisend');
     }
 
     /** @Then I see omnisend product picker script with values: */
@@ -45,7 +46,7 @@ class OmnisendTrackingScriptContext implements Context
     {
         foreach ($table as $rowKey => $row) {
             $value = is_numeric($row['value']) ? $row['value'] : '"' . $row['value'] . '"';
-            Assert::contains($this->homePage->getContent(), '"$' . $row['key'] .'":' . $value);
+            Assert::contains($this->getMink()->getSession()->getPage()->getContent(), '"$' . $row['key'] .'":' . $value);
         }
     }
 }

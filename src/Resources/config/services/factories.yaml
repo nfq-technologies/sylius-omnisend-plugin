@@ -39,3 +39,4 @@ services:
       - '@nfq_sylius_omnisend_plugin.resolver.product_variant_stock'
       - '@sylius.calculator.product_variant_price'
       - '@nfq_sylius_omnisend_plugin.resolver.product_additional_data'
+      - '@nfq_sylius_omnisend_plugin.resolver.product_original_price_resolver'

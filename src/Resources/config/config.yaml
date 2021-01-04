@@ -84,21 +84,3 @@ sylius_grid:
           type: string
         enabled:
           type: boolean
-sylius_ui:
-  events:
-    sylius.admin.channel.update.form:
-      blocks:
-        omnisend: '@NFQSyliusOmnisendPlugin/Channel/Admin/_channel_omnisend_key.html.twig'
-
-    sylius.admin.channel.create.form:
-      blocks:
-        omnisend: '@NFQSyliusOmnisendPlugin/Channel/Admin/_channel_omnisend_key.html.twig'
-
-    sylius.shop.layout.javascripts:
-      blocks:
-        omnisend_script:
-          template: '@NFQSyliusOmnisendPlugin/Shop/Layout/_javascript.html.twig'
-
-    sylius.shop.product.show.content:
-      blocks:
-        omnisend_script: '@NFQSyliusOmnisendPlugin/Shop/Product/_product_picker.html.twig'

@@ -17,25 +17,23 @@ use NFQ\SyliusOmnisendPlugin\Builder\ProductPickerBuilder;
 use NFQ\SyliusOmnisendPlugin\Model\ProductPicker;
 use NFQ\SyliusOmnisendPlugin\Resolver\ProductAdditionalDataResolverInterface;
 use NFQ\SyliusOmnisendPlugin\Resolver\ProductImageResolverInterface;
+use NFQ\SyliusOmnisendPlugin\Resolver\ProductOriginalPriceResolver;
 use NFQ\SyliusOmnisendPlugin\Resolver\ProductUrlResolverInterface;
 use PHPUnit\Framework\TestCase;
 use Sylius\Component\Channel\Context\ChannelContextInterface;
-use Sylius\Component\Core\Calculator\ProductVariantPricesCalculatorInterface;
+use Sylius\Component\Core\Calculator\ProductVariantPriceCalculatorInterface;
 use Sylius\Component\Core\Model\Channel;
 use Sylius\Component\Core\Model\Product;
 use Sylius\Component\Core\Model\ProductTranslation;
 use Sylius\Component\Core\Model\ProductVariant;
 use Sylius\Component\Currency\Model\Currency;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Component\Routing\RouterInterface;
-use Tests\NFQ\SyliusOmnisendPlugin\Mock\ProductAdditionalDataAwareMock;
 
 class ProductPickerBuilderTest extends TestCase
 {
     /** @var ProductImageResolverInterface */
     private $productImageResolver;
 
-    /** @var ProductVariantPricesCalculatorInterface */
+    /** @var ProductVariantPriceCalculatorInterface */
     private $productVariantPricesCalculator;
 
     /** @var ChannelContextInterface */
@@ -47,10 +45,11 @@ class ProductPickerBuilderTest extends TestCase
     /** @var ProductAdditionalDataResolverInterface */
     private $productAdditionalDataResolver;
 
-    /**
-     * @var ProductPickerBuilder
-     */
+    /** @var ProductPickerBuilder */
     private $builder;
+
+    /** @var ProductOriginalPriceResolver */
+    private $productOriginalPriceResolver;
 
     /**
      * @return void
@@ -58,17 +57,19 @@ class ProductPickerBuilderTest extends TestCase
     protected function setUp(): void
     {
         $this->productImageResolver = $this->createMock(ProductImageResolverInterface::class);
-        $this->productVariantPricesCalculator = $this->createMock(ProductVariantPricesCalculatorInterface::class);
+        $this->productVariantPricesCalculator = $this->createMock(ProductVariantPriceCalculatorInterface::class);
         $this->channelContext = $this->createMock(ChannelContextInterface::class);
         $this->productUrlResolver = $this->createMock(ProductUrlResolverInterface::class);
         $this->productAdditionalDataResolver = $this->createMock(ProductAdditionalDataResolverInterface::class);
+        $this->productOriginalPriceResolver = $this->createMock(ProductOriginalPriceResolver::class);
 
         $this->builder = new ProductPickerBuilder(
             $this->productImageResolver,
             $this->productVariantPricesCalculator,
             $this->channelContext,
             $this->productUrlResolver,
-            $this->productAdditionalDataResolver
+            $this->productAdditionalDataResolver,
+            $this->productOriginalPriceResolver
         );
     }
 
@@ -191,10 +192,17 @@ class ProductPickerBuilderTest extends TestCase
             ->method('calculate')
             ->willReturn(1000);
 
-        $this->productVariantPricesCalculator
-            ->expects($this->once())
-            ->method('calculateOriginal')
-            ->willReturn(1200);
+        if (method_exists($this->productVariantPricesCalculator, 'calculateOriginal')) {
+            $this->productVariantPricesCalculator
+                ->expects($this->once())
+                ->method('calculateOriginal')
+                ->willReturn(1200);
+        } else {
+            $this->productOriginalPriceResolver
+                ->expects($this->once())
+                ->method('calculateOriginal')
+                ->willReturn(1200);
+        }
 
         $this->builder->createProductPicker();
         $this->builder->addPrices($productVariant);
@@ -224,10 +232,18 @@ class ProductPickerBuilderTest extends TestCase
             ->method('calculate')
             ->willReturn(1000);
 
-        $this->productVariantPricesCalculator
-            ->expects($this->once())
-            ->method('calculateOriginal')
-            ->willReturn(1000);
+
+        if (method_exists($this->productVariantPricesCalculator, 'calculateOriginal')) {
+            $this->productVariantPricesCalculator
+                ->expects($this->once())
+                ->method('calculateOriginal')
+                ->willReturn(1000);
+        } else {
+            $this->productOriginalPriceResolver
+                ->expects($this->once())
+                ->method('calculateOriginal')
+                ->willReturn(1000);
+        }
 
         $this->builder->createProductPicker();
         $this->builder->addPrices($productVariant);

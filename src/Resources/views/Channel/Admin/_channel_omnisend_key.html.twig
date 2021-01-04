@@ -3,6 +3,11 @@
     {{ 'nfq_sylius_omnisend_plugin.ui.omnisend'|trans }}
 </h4>
 <div class="ui attached segment">
-    {{ form_row(form.omnisendTrackingKey) }}
-    {{ form_row(form.omnisendApiKey) }}
+    {% if form is defined %}
+        {{ form_row(form.omnisendTrackingKey) }}
+        {{ form_row(form.omnisendApiKey) }}
+    {% else %}
+        {{ form_row(settings.form.omnisendTrackingKey) }}
+        {{ form_row(settings.form.omnisendApiKey) }}
+    {% endif %}
 </div>
