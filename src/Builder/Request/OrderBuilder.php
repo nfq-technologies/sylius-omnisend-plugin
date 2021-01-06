@@ -23,8 +23,8 @@ use NFQ\SyliusOmnisendPlugin\Resolver\OrderCouponResolverInterface;
 use NFQ\SyliusOmnisendPlugin\Resolver\OrderCourierDataResolverInterface;
 use NFQ\SyliusOmnisendPlugin\Utils\DatetimeHelper;
 use NFQ\SyliusOmnisendPlugin\Utils\Order\OrderNumberResolver;
-use Sylius\Bundle\ShopBundle\Calculator\OrderItemsSubtotalCalculatorInterface;
 use Sylius\Component\Core\Model\OrderInterface;
+use Sylius\Component\Core\Model\OrderItemInterface;
 use Sylius\Component\Core\Model\PaymentInterface;
 use Sylius\Component\Core\Model\ShipmentInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -40,9 +40,6 @@ class OrderBuilder implements OrderBuilderInterface
 
     /** @var OrderProductFactoryInterface */
     private $orderProductFactory;
-
-    /** @var OrderItemsSubtotalCalculatorInterface */
-    private $subtotalCalculator;
 
     /** @var OrderStateMapper */
     private $stateMapper;
@@ -62,7 +59,6 @@ class OrderBuilder implements OrderBuilderInterface
     public function __construct(
         OrderAddressFactoryInterface $addressFactory,
         OrderProductFactoryInterface $orderProductFactory,
-        OrderItemsSubtotalCalculatorInterface $subtotalCalculator,
         OrderStateMapper $orderStateMapper,
         OrderPaymentStateMapper $orderPaymentStateMapper,
         OrderCouponResolverInterface $orderCouponResolver,
@@ -71,7 +67,6 @@ class OrderBuilder implements OrderBuilderInterface
     ) {
         $this->addressFactory = $addressFactory;
         $this->orderProductFactory = $orderProductFactory;
-        $this->subtotalCalculator = $subtotalCalculator;
         $this->stateMapper = $orderStateMapper;
         $this->paymentStateMapper = $orderPaymentStateMapper;
         $this->orderCouponResolver = $orderCouponResolver;
@@ -186,10 +181,21 @@ class OrderBuilder implements OrderBuilderInterface
     {
         $this->order->setCurrency($order->getCurrencyCode());
         $this->order->setOrderSum($order->getTotal());
-        $this->order->setSubTotalSum($this->subtotalCalculator->getSubtotal($order));
+        $this->order->setSubTotalSum($this->getOrderSubtotal($order));
         $this->order->setTaxSum($order->getTaxTotal());
         $this->order->setShippingSum($order->getShippingTotal());
         $this->order->setDiscountSum(abs($order->getOrderPromotionTotal()));
+    }
+
+    private function getOrderSubtotal(OrderInterface $order): int
+    {
+        return array_reduce(
+            $order->getItems()->toArray(),
+            static function (int $subtotal, OrderItemInterface $item): int {
+                return $subtotal + $item->getSubtotal();
+            },
+            0
+        );
     }
 
     public function getOrder(): Order

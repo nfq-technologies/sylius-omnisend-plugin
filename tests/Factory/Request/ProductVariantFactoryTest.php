@@ -16,10 +16,11 @@ namespace Tests\NFQ\SyliusOmnisendPlugin\Factory\Request;
 use NFQ\SyliusOmnisendPlugin\Builder\Request\Constants\ProductStatus;
 use NFQ\SyliusOmnisendPlugin\Factory\Request\ProductVariantFactory;
 use NFQ\SyliusOmnisendPlugin\Resolver\ProductAdditionalDataResolverInterface;
+use NFQ\SyliusOmnisendPlugin\Resolver\ProductOriginalPriceResolver;
 use NFQ\SyliusOmnisendPlugin\Resolver\ProductUrlResolverInterface;
 use NFQ\SyliusOmnisendPlugin\Resolver\ProductVariantStockResolverInterface;
 use PHPUnit\Framework\TestCase;
-use Sylius\Component\Core\Calculator\ProductVariantPricesCalculatorInterface;
+use Sylius\Component\Core\Calculator\ProductVariantPriceCalculatorInterface;
 use Sylius\Component\Core\Model\Channel;
 use Sylius\Component\Core\Model\Product;
 use Sylius\Component\Core\Model\ProductTranslation;
@@ -37,24 +38,29 @@ class ProductVariantFactoryTest extends TestCase
     /** @var ProductVariantStockResolverInterface */
     private $productStockResolver;
 
-    /** @var ProductVariantPricesCalculatorInterface */
+    /** @var ProductVariantPriceCalculatorInterface */
     private $productVariantPricesCalculator;
 
     /** @var ProductAdditionalDataResolverInterface */
     private $productAdditionalDataResolver;
 
+    /** @var ProductOriginalPriceResolver */
+    private $productOriginalPriceResolver;
+
     protected function setUp(): void
     {
         $this->productUrlResolver = $this->createMock(ProductUrlResolverInterface::class);
         $this->productStockResolver = $this->createMock(ProductVariantStockResolverInterface::class);
-        $this->productVariantPricesCalculator = $this->createMock(ProductVariantPricesCalculatorInterface::class);
+        $this->productVariantPricesCalculator = $this->createMock(ProductVariantPriceCalculatorInterface::class);
         $this->productAdditionalDataResolver = $this->createMock(ProductAdditionalDataResolverInterface::class);
+        $this->productOriginalPriceResolver = $this->createMock(ProductOriginalPriceResolver::class);
 
         $this->factory = new ProductVariantFactory(
             $this->productUrlResolver,
             $this->productStockResolver,
             $this->productVariantPricesCalculator,
-            $this->productAdditionalDataResolver
+            $this->productAdditionalDataResolver,
+            $this->productOriginalPriceResolver
         );
     }
 
@@ -92,10 +98,17 @@ class ProductVariantFactoryTest extends TestCase
             ->method('calculate')
             ->willReturn(10);
 
-        $this->productVariantPricesCalculator
-            ->expects($this->once())
-            ->method('calculateOriginal')
-            ->willReturn(20);
+        if (method_exists($this->productVariantPricesCalculator, 'calculateOriginal')) {
+            $this->productVariantPricesCalculator
+                ->expects($this->once())
+                ->method('calculateOriginal')
+                ->willReturn(20);
+        } else {
+            $this->productOriginalPriceResolver
+                ->expects($this->once())
+                ->method('calculateOriginal')
+                ->willReturn(20);
+        }
 
         $result = $this->factory->create($baseVariant, new Channel(), 'en');
 
@@ -137,10 +150,17 @@ class ProductVariantFactoryTest extends TestCase
             ->method('calculate')
             ->willReturn(10);
 
-        $this->productVariantPricesCalculator
-            ->expects($this->once())
-            ->method('calculateOriginal')
-            ->willReturn(10);
+        if (method_exists($this->productVariantPricesCalculator, 'calculateOriginal')) {
+            $this->productVariantPricesCalculator
+                ->expects($this->once())
+                ->method('calculateOriginal')
+                ->willReturn(10);
+        } else {
+            $this->productOriginalPriceResolver
+                ->expects($this->once())
+                ->method('calculateOriginal')
+                ->willReturn(10);
+        }
 
         $result = $this->factory->create($baseVariant, new Channel(), 'en');
 

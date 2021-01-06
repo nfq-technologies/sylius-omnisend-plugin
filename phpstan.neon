@@ -29,3 +29,4 @@ parameters:
         - '/Method NFQ\\SyliusOmnisendPlugin\\Mapper\\EventFieldTypeDefaultValueMapper::map\(\) has no return typehint specified/'
         - '/Method NFQ\\SyliusOmnisendPlugin\\Resolver\\ProductAdditionalDataResolver::resolveAttributeValue\(\) has no return typehint specified/'
         - '/Call to an undefined method Sylius\\Component\\Core\\Model\\CustomerInterface::isSubscribedToSMS()./'
+        - '/Call to function method_exists\(\) with */'
