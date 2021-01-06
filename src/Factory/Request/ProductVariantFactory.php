@@ -15,9 +15,10 @@ namespace NFQ\SyliusOmnisendPlugin\Factory\Request;
 
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\ProductVariant;
 use NFQ\SyliusOmnisendPlugin\Resolver\ProductAdditionalDataResolverInterface;
+use NFQ\SyliusOmnisendPlugin\Resolver\ProductOriginalPriceResolver;
 use NFQ\SyliusOmnisendPlugin\Resolver\ProductUrlResolverInterface;
 use NFQ\SyliusOmnisendPlugin\Resolver\ProductVariantStockResolverInterface;
-use Sylius\Component\Core\Calculator\ProductVariantPricesCalculatorInterface;
+use Sylius\Component\Core\Calculator\ProductVariantPriceCalculatorInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Core\Model\ProductVariantInterface;
@@ -31,22 +32,27 @@ class ProductVariantFactory implements ProductVariantFactoryInterface
     /** @var ProductVariantStockResolverInterface */
     private $productStockResolver;
 
-    /** @var ProductVariantPricesCalculatorInterface */
+    /** @var ProductVariantPriceCalculatorInterface */
     private $productVariantPricesCalculator;
 
     /** @var ProductAdditionalDataResolverInterface */
     private $productAdditionalDataResolver;
 
+    /** @var ProductOriginalPriceResolver */
+    private $productOriginalPriceResolver;
+
     public function __construct(
         ProductUrlResolverInterface $productUrlResolver,
         ProductVariantStockResolverInterface $productStockResolver,
-        ProductVariantPricesCalculatorInterface $productVariantPricesCalculator,
-        ProductAdditionalDataResolverInterface $productAdditionalDataResolver
+        ProductVariantPriceCalculatorInterface $productVariantPricesCalculator,
+        ProductAdditionalDataResolverInterface $productAdditionalDataResolver,
+        ProductOriginalPriceResolver $productOriginalPriceResolver
     ) {
         $this->productUrlResolver = $productUrlResolver;
         $this->productStockResolver = $productStockResolver;
         $this->productVariantPricesCalculator = $productVariantPricesCalculator;
         $this->productAdditionalDataResolver = $productAdditionalDataResolver;
+        $this->productOriginalPriceResolver = $productOriginalPriceResolver;
     }
 
     /** @param ProductVariantInterface $productVariant */
@@ -69,12 +75,22 @@ class ProductVariantFactory implements ProductVariantFactoryInterface
             ]
         );
 
-        $oldPrice = $this->productVariantPricesCalculator->calculateOriginal(
-            $productVariant,
-            [
-                'channel' => $channel,
-            ]
-        );
+
+        if (method_exists($this->productVariantPricesCalculator, 'calculateOriginal')) {
+            $oldPrice = $this->productVariantPricesCalculator->calculateOriginal(
+                $productVariant,
+                [
+                    'channel' => $channel,
+                ]
+            );
+        } else {
+            $oldPrice = $this->productOriginalPriceResolver->calculateOriginal(
+                $productVariant,
+                [
+                    'channel' => $channel,
+                ]
+            );
+        }
 
         return $variant->setVariantID($productVariant->getCode())
             ->setTitle($translation->getName() ?? $productTranslation->getName())

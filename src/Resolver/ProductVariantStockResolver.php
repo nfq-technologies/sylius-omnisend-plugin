@@ -29,7 +29,7 @@ class ProductVariantStockResolver implements ProductVariantStockResolverInterfac
 
     public function resolve(ProductVariantInterface $product): ?string
     {
-        if (!$product->isEnabled()) {
+        if (method_exists($product, 'isEnabled') && !$product->isEnabled()) {
             return ProductStatus::STATUS_NOT_AVAILABLE;
         }
         if ($this->availabilityChecker->isStockAvailable($product)) {
