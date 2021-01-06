@@ -11,10 +11,11 @@
         "php-http/guzzle6-adapter": "^2.0",
         "php-http/httplug": "^2.0",
         "php-http/httplug-bundle": "^1.19",
-        "sylius/sylius": "^1.8",
-        "symfony/doctrine-bridge": "4.4.15",
-        "symfony/lock": "^5.1",
-        "symfony/messenger": "^4.4"
+        "sylius/sylius": "^1.7",
+        "symfony/property-info": "^4.4|^5.0",
+        "symfony/serializer": "^4.4|^5.0",
+        "symfony/lock": "^4.4|^5.0",
+        "symfony/messenger": "^4.4|^5.0"
     },
     "require-dev": {
         "behat/behat": "^3.6.1",
@@ -65,6 +66,9 @@
     },
     "config": {
         "sort-packages": true
+    },
+    "conflict": {
+        "liip/imagine-bundle": "^2.4"
     },
     "scripts": {
         "post-install-cmd": [

@@ -32,3 +32,17 @@ services:
     class: NFQ\SyliusOmnisendPlugin\Setter\ContactCookieSetter
     arguments:
       - '@sylius.storage.cookie'
+
+  nfq_sylius_omnisend_plugin.block_event_listener.sylius.shop.layout.javascripts:
+    class: Sylius\Bundle\UiBundle\Block\BlockEventListener
+    arguments:
+      - '@@NFQSyliusOmnisendPlugin/Shop/Layout/_javascript.html.twig'
+    tags:
+      - { name: kernel.event_listener, event: sonata.block.event.sylius.shop.layout.javascripts, method: onBlockEvent }
+
+  nfq_sylius_omnisend_plugin.block_event_listener.sylius.product.show.content:
+    class: Sylius\Bundle\UiBundle\Block\BlockEventListener
+    arguments:
+      - '@@NFQSyliusOmnisendPlugin/Shop/Product/_product_picker.html.twig'
+    tags:
+      - { name: kernel.event_listener, event: sonata.block.event.sylius.shop.product.show.after_description, method: onBlockEvent }
