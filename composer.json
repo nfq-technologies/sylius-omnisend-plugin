@@ -67,9 +67,6 @@
     "config": {
         "sort-packages": true
     },
-    "conflict": {
-        "liip/imagine-bundle": "^2.4"
-    },
     "scripts": {
         "post-install-cmd": [
             "php bin/create_node_symlink.php"
