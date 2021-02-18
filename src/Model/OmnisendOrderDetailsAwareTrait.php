@@ -19,7 +19,7 @@ trait OmnisendOrderDetailsAwareTrait
 {
     /**
      * @var OrderDetails
-     * @ORM\OneToOne(targetEntity="NFQ\SyliusOmnisendPlugin\Model\OrderDetails", cascade={"all"})
+     * @ORM\OneToOne(targetEntity="NFQ\SyliusOmnisendPlugin\Model\OrderDetails", mappedBy="order", cascade={"all"})
      *
      * @ORM\JoinColumn(name="omnisend_order_details_id", onDelete="CASCADE")
      */
