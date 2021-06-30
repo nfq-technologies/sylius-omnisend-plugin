@@ -56,7 +56,7 @@ class ContactBuilder implements ContactBuilderInterface
                 $this->contactIdentifierFactory->create(
                     ContactIdentifier::TYPE_EMAIL,
                     $customer->getEmail(),
-                    $customer->isSubscribedToNewsletter() ? ContactIdentifierChannelValue::SUBSCRIBED : ContactIdentifierChannelValue::NON_SUBSCRIBED
+                    $this->getChannelStatus($customer->isSubscribedToNewsletter(), $customer)
                 )
             );
         }
@@ -66,7 +66,7 @@ class ContactBuilder implements ContactBuilderInterface
                 $this->contactIdentifierFactory->create(
                     ContactIdentifier::TYPE_PHONE,
                     $customer->getPhoneNumber(),
-                    $customer->isSubscribedToSMS() ? ContactIdentifierChannelValue::SUBSCRIBED : ContactIdentifierChannelValue::NON_SUBSCRIBED
+                    $this->getChannelStatus($customer->isSubscribedToSMS(), $customer)
                 )
             );
         }
@@ -119,5 +119,18 @@ class ContactBuilder implements ContactBuilderInterface
         }
 
         return null;
+    }
+
+    private function getChannelStatus(bool $subscribed, CustomerInterface $customer): string
+    {
+        if ($subscribed) {
+            return ContactIdentifierChannelValue::SUBSCRIBED;
+        }
+
+        $hasOmnisendId = $customer instanceof ContactAwareInterface && null !== $customer->getOmnisendContactId();
+
+        return $hasOmnisendId
+            ? ContactIdentifierChannelValue::UNSUBSCRIBED
+            : ContactIdentifierChannelValue::NON_SUBSCRIBED;
     }
 }
