@@ -17,6 +17,8 @@ class ContactIdentifierChannelValue
 {
     public const SUBSCRIBED = 'subscribed';
 
+    public const UNSUBSCRIBED = 'unsubscribed';
+
     public const NON_SUBSCRIBED = 'nonSubscribed';
 
     /** @var string */
