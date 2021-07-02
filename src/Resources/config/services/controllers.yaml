@@ -22,9 +22,3 @@ services:
       - '@sylius.context.channel.composite'
       - '@messenger.routable_message_bus'
     public: true
-
-  nfq_sylius_omnisend_plugin.controller.test:
-    class: NFQ\SyliusOmnisendPlugin\Controller\TestController
-    arguments:
-      - '@event_dispatcher'
-    public: true
