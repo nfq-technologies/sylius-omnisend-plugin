@@ -22,7 +22,7 @@ class ProductImageResolver implements ProductImageResolverInterface
     /** @var CacheManager */
     private $cache;
 
-    /** @var string */
+    /** @var string|null */
     private $imageType;
 
     /** @var string */
@@ -33,7 +33,7 @@ class ProductImageResolver implements ProductImageResolverInterface
 
     public function __construct(
         CacheManager $cache,
-        string $imageType,
+        ?string $imageType,
         string $imageFilter,
         ?string $defaultImage = null
     ) {
@@ -45,7 +45,7 @@ class ProductImageResolver implements ProductImageResolverInterface
 
     public function resolve(ProductInterface $product): ?string
     {
-        if ($product->getImagesByType($this->imageType)->count() > 0) {
+        if (null !== $this->imageType && $product->getImagesByType($this->imageType)->count() > 0) {
             $images = $product->getImagesByType($this->imageType);
             /** @var ProductImageInterface $image */
             $image = $images->first();
