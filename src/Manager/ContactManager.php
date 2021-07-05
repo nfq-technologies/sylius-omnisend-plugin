@@ -46,14 +46,11 @@ class ContactManager implements ContactManagerInterface
     public function pushToOmnisend(CustomerInterface $customer, ?string $channelCode): ?ContactSuccess
     {
         $contactId = $this->getCurrentContactId($customer, $channelCode);
-        if (null !== $contactId) {
-            $customer->setOmnisendContactId($contactId);
-        }
 
         if (null !== $contactId) {
             /** @var ContactSuccess|null $response */
             $response = $this->omnisendClient->patchContact(
-                $customer->getOmnisendContactId(),
+                $contactId,
                 $this->contactBuilderDirector->build($customer),
                 $channelCode
             );
