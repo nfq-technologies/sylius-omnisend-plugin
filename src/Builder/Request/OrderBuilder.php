@@ -21,6 +21,7 @@ use NFQ\SyliusOmnisendPlugin\Mapper\OrderStateMapper;
 use NFQ\SyliusOmnisendPlugin\Model\OrderDetails;
 use NFQ\SyliusOmnisendPlugin\Resolver\OrderCouponResolverInterface;
 use NFQ\SyliusOmnisendPlugin\Resolver\OrderCourierDataResolverInterface;
+use NFQ\SyliusOmnisendPlugin\Resolver\OrderCustomFieldsResolverInterface;
 use NFQ\SyliusOmnisendPlugin\Utils\DatetimeHelper;
 use NFQ\SyliusOmnisendPlugin\Utils\Order\OrderNumberResolver;
 use Sylius\Component\Core\Model\OrderInterface;
@@ -53,6 +54,9 @@ class OrderBuilder implements OrderBuilderInterface
     /** @var OrderCourierDataResolverInterface */
     private $orderCourierResolver;
 
+    /** @var OrderCustomFieldsResolverInterface */
+    private $orderCustomFieldsResolver;
+
     /** @var RouterInterface */
     private $router;
 
@@ -63,6 +67,7 @@ class OrderBuilder implements OrderBuilderInterface
         OrderPaymentStateMapper $orderPaymentStateMapper,
         OrderCouponResolverInterface $orderCouponResolver,
         OrderCourierDataResolverInterface $orderCourierResolver,
+        OrderCustomFieldsResolverInterface $orderCustomFieldsResolver,
         RouterInterface $router
     ) {
         $this->addressFactory = $addressFactory;
@@ -71,6 +76,7 @@ class OrderBuilder implements OrderBuilderInterface
         $this->paymentStateMapper = $orderPaymentStateMapper;
         $this->orderCouponResolver = $orderCouponResolver;
         $this->orderCourierResolver = $orderCourierResolver;
+        $this->orderCustomFieldsResolver = $orderCustomFieldsResolver;
         $this->router = $router;
     }
 
@@ -185,6 +191,11 @@ class OrderBuilder implements OrderBuilderInterface
         $this->order->setTaxSum($order->getTaxTotal());
         $this->order->setShippingSum($order->getShippingTotal());
         $this->order->setDiscountSum(abs($order->getOrderPromotionTotal()));
+    }
+
+    public function addCustomFields(OrderInterface $order): void
+    {
+        $this->order->setCustomFields($this->orderCustomFieldsResolver->getCustomFields($order));
     }
 
     private function getOrderSubtotal(OrderInterface $order): int

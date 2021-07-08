@@ -119,6 +119,9 @@ class Order
     /** @var stdClass|null */
     private $customTags;
 
+    /** @var array|null */
+    private $customFields;
+
     public function getOrderID(): ?string
     {
         return $this->orderID;
@@ -530,6 +533,18 @@ class Order
     public function setCartID(?string $cartID): self
     {
         $this->cartID = $cartID;
+
+        return $this;
+    }
+
+    public function getCustomFields(): ?array
+    {
+        return $this->customFields;
+    }
+
+    public function setCustomFields(?array $customFields): Order
+    {
+        $this->customFields = $customFields;
 
         return $this;
     }

@@ -26,6 +26,9 @@ services:
   nfq_sylius_omnisend_plugin.resolver.default_customer_additional_data:
     class: NFQ\SyliusOmnisendPlugin\Resolver\DefaultCustomerAdditionalDataResolver
 
+  nfq_sylius_omnisend_plugin.resolver.default_order_custom_fields_resolver:
+    class: NFQ\SyliusOmnisendPlugin\Resolver\DefaultOrderCustomFieldsResolver
+
   nfq_sylius_omnisend_plugin.resolver.product_original_price_resolver:
     class: NFQ\SyliusOmnisendPlugin\Resolver\ProductOriginalPriceResolver
 
