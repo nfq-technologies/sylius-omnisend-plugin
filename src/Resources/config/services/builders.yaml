@@ -53,7 +53,7 @@ services:
       - '@nfq_sylius_omnisend_plugin.mapper.order_payment_state'
       - '@nfq_sylius_omnisend_plugin.resolver.default_order_coupon'
       - '@nfq_sylius_omnisend_plugin.resolver.courier_data_resolver'
-      - '@nfq_sylius_omnisend_plugin.resolver.order_custom_fields'
+      - '@nfq_sylius_omnisend_plugin.resolver.order_additional_fields'
       - '@router'
 
   nfq_sylius_omnisend_plugin.builder.request.product_image_list:

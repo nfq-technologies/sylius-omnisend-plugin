@@ -39,7 +39,7 @@ class OrderBuilderDirector implements OrderBuilderDirectorInterface
         $this->builder->addAddresses($order);
         $this->builder->addCouponData($order);
         $this->builder->addUpdateAt($order);
-        $this->builder->addCustomFields($order);
+        $this->builder->addAdditionalData($order);
 
         return $this->builder->getOrder();
     }

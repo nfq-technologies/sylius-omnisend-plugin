@@ -66,8 +66,8 @@ final class NFQSyliusOmnisendExtension extends AbstractResourceExtension
             $config['order_coupon_resolver']
         );
         $container->setAlias(
-            'nfq_sylius_omnisend_plugin.resolver.order_custom_fields',
-            $config['order_custom_fields_resolver']
+            'nfq_sylius_omnisend_plugin.resolver.order_additional_fields',
+            $config['order_additional_data_resolver']
         );
         $container->setAlias(
             'nfq_sylius_omnisend_plugin.resolver.courier_data_resolver',

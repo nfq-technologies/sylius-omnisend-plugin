@@ -15,9 +15,9 @@ namespace NFQ\SyliusOmnisendPlugin\Resolver;
 
 use Sylius\Component\Core\Model\OrderInterface;
 
-class DefaultOrderCustomFieldsResolver implements OrderCustomFieldsResolverInterface
+class DefaultOrderAdditionalDataResolver implements OrderAdditionalDataResolverInterface
 {
-    public function getCustomFields(OrderInterface $order): ?array
+    public function getTags(OrderInterface $order): ?array
     {
         return null;
     }
