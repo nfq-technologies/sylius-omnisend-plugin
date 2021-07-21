@@ -6,7 +6,7 @@ services:
     class: NFQ\SyliusOmnisendPlugin\Client\OmnisendClient
     arguments:
       - '@nfq_sylius_omnisend_plugin.http_client.factory'
-      - '@serializer'
+      - '@jms_serializer.serializer'
       - '@nfq_sylius_omnisend_plugin.client.message_factory'
     calls:
       - ['setLogger', ['@nfq_sylius_omnisend_plugin.client.logger']]
@@ -20,7 +20,7 @@ services:
     class: NFQ\SyliusOmnisendPlugin\Client\MessageFactory
     arguments:
       - '@sylius.context.channel.composite'
-      - '@serializer'
+      - '@jms_serializer.serializer'
 
   nfq_sylius_omnisend_plugin.fixture.channel:
     class: NFQ\SyliusOmnisendPlugin\Fixture\ChannelFixture

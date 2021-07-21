@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace NFQ\SyliusOmnisendPlugin\Client;
 
 use Http\Client\Exception\HttpException;
+use JMS\Serializer\SerializerInterface;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Batch;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Cart;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Category;
@@ -35,7 +36,6 @@ use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
-use Symfony\Component\Serializer\SerializerInterface;
 use Throwable;
 
 class OmnisendClient implements LoggerAwareInterface, OmnisendClientInterface

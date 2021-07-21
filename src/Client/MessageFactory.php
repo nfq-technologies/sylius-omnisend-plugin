@@ -15,10 +15,10 @@ namespace NFQ\SyliusOmnisendPlugin\Client;
 
 use Http\Discovery\MessageFactoryDiscovery;
 use Http\Message\MessageFactory as BaseFactory;
+use JMS\Serializer\SerializationContext;
+use JMS\Serializer\SerializerInterface;
 use Psr\Http\Message\RequestInterface;
 use Sylius\Component\Channel\Context\ChannelContextInterface;
-use Symfony\Component\Serializer\Normalizer\AbstractObjectNormalizer;
-use Symfony\Component\Serializer\SerializerInterface;
 
 class MessageFactory
 {
@@ -57,9 +57,7 @@ class MessageFactory
                 $this->serializer->serialize(
                     $data,
                     'json',
-                    [
-                        AbstractObjectNormalizer::SKIP_NULL_VALUES => true,
-                    ]
+                    SerializationContext::create()->setSerializeNull(false)
                 ) :
                 null
         );
