@@ -13,15 +13,21 @@ declare(strict_types=1);
 
 namespace NFQ\SyliusOmnisendPlugin\HttpClient;
 
+use Http\Client\Common\Exception\ClientErrorException;
 use Http\Client\Common\Plugin\BaseUriPlugin;
 use Http\Client\Common\Plugin\ErrorPlugin;
 use Http\Client\Common\Plugin\HeaderDefaultsPlugin;
+use Http\Client\Common\Plugin\RetryPlugin;
 use Http\Client\Common\PluginClient;
+use Http\Client\Exception;
 use Http\Client\HttpClient;
 use Http\Discovery\HttpClientDiscovery;
 use Http\Discovery\UriFactoryDiscovery;
 use NFQ\SyliusOmnisendPlugin\Model\ChannelOmnisendTrackingAwareInterface;
+use Psr\Http\Message\RequestInterface;
 use Sylius\Component\Channel\Repository\ChannelRepositoryInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class ClientFactory implements ClientFactoryInterface
 {
@@ -51,8 +57,22 @@ class ClientFactory implements ClientFactoryInterface
             ]
         );
 
+        $retryPlugin = new RetryPlugin(
+            [
+                'retries' => 10,
+                'exception_decider' => static function (RequestInterface $request, Exception $e): bool {
+                    if (!$e instanceof ClientErrorException) {
+                        return false;
+                    }
+
+                    return $e->getResponse()->getStatusCode() === Response::HTTP_TOO_MANY_REQUESTS;
+                }
+            ]
+        );
+
         $plugins = [
             new BaseUriPlugin(UriFactoryDiscovery::find()->createUri(self::ENDPOINT), ['replace' => true]),
+            $retryPlugin,
             new ErrorPlugin(),
             $headersPlugin,
         ];
