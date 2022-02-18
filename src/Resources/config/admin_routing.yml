@@ -3,7 +3,7 @@ nfq_sylius_omnisend_event:
     alias: nfq_sylius_omnisend_plugin.event
     section: admin
     except: ['show']
-    templates: SyliusAdminBundle:Crud
+    templates: "@SyliusAdmin\\Crud"
     redirect: update
     grid: nfq_sylius_omnisend_event
     form: NFQ\SyliusOmnisendPlugin\Form\Type\EventType

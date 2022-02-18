@@ -57,7 +57,7 @@ default:
                 - nfq_sylius_omnisend.context.ui.shop.customer
 
             filters:
-                tags: "@contact_registration && @ui"
+                tags: "@contact_registration&&@ui"
 
         omnisend_managing_taxons:
             contexts:
@@ -234,7 +234,7 @@ default:
                 - sylius.behat.context.ui.shop.currency
 
             filters:
-                tags: "@omnisend_modifying_address && @ui"
+                tags: "@omnisend_modifying_address&&@ui"
 
         omnisend_modifying_products:
             contexts:
