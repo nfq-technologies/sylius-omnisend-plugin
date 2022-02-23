@@ -61,7 +61,7 @@ sylius_grid:
           type: twig
           label: sylius.ui.enabled
           options:
-            template: SyliusUiBundle:Grid/Field:enabled.html.twig
+            template: "@SyliusUi/Grid/Field/enabled.html.twig"
       actions:
         main:
           create:
