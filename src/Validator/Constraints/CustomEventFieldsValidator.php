@@ -67,15 +67,15 @@ class CustomEventFieldsValidator extends ConstraintValidator
                 $validations = $this->context->getValidator()->validate($fieldValue, $fieldConstraint);
                 if ($validations->count() > 0) {
                     $this->context->buildViolation(CustomEventFields::INVALID_FIELD_VALUE)
-                        ->setParameter('%field%', $fieldName)
-                        ->setParameter('%value%', $fieldValue)
+                        ->setParameter('%field%', (string) $fieldName)
+                        ->setParameter('%value%', (string) $fieldValue)
                         ->setParameter('%type%', (string) $field->getType())
                         ->addViolation();
                 }
             } else {
                 $this->context
                     ->buildViolation(CustomEventFields::INVALID_FIELD_TYPE)
-                    ->setParameter('%field%', $fieldName)
+                    ->setParameter('%field%', (string) $fieldName)
                     ->setParameter('%type%', (string) $field->getType())
                     ->addViolation();
             }
