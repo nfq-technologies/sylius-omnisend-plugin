@@ -15,7 +15,7 @@ namespace NFQ\SyliusOmnisendPlugin\Message\Handler\Batch;
 
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
-use NFQ\SyliusOmnisendPlugin\Client\OmnisendClient;
+use NFQ\SyliusOmnisendPlugin\Client\OmnisendClientInterface;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Batch;
 use NFQ\SyliusOmnisendPlugin\Doctrine\ORM\TaxonRepositoryInterface;
 use NFQ\SyliusOmnisendPlugin\Factory\Request\BatchFactoryInterface;
@@ -24,7 +24,7 @@ use NFQ\SyliusOmnisendPlugin\Message\Command\CreateBatch;
 
 class CategoryBatchHandleStrategy implements BatchHandlerStrategyInterface
 {
-    /** @var OmnisendClient */
+    /** @var OmnisendClientInterface */
     private $omnisendClient;
 
     /** @var CategoryFactoryInterface */
@@ -40,7 +40,7 @@ class CategoryBatchHandleStrategy implements BatchHandlerStrategyInterface
     private $repository;
 
     public function __construct(
-        OmnisendClient $omnisendClient,
+        OmnisendClientInterface $omnisendClient,
         TaxonRepositoryInterface $repository,
         CategoryFactoryInterface $factory,
         BatchFactoryInterface $batchFactory,
