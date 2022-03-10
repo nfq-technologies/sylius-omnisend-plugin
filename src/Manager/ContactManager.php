@@ -50,7 +50,7 @@ class ContactManager implements ContactManagerInterface
         if (null !== $contactId) {
             /** @var ContactSuccess|null $response */
             $response = $this->omnisendClient->patchContact(
-                $customer->getOmnisendContactId(),
+                $contactId,
                 $this->contactBuilderDirector->build($customer),
                 $channelCode
             );
