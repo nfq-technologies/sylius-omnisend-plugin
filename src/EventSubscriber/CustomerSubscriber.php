@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace NFQ\SyliusOmnisendPlugin\EventSubscriber;
 
+use NFQ\SyliusOmnisendPlugin\Exception\RetryableClientException;
 use NFQ\SyliusOmnisendPlugin\Manager\ContactManagerInterface;
 use NFQ\SyliusOmnisendPlugin\Message\Command\UpdateContact;
 use NFQ\SyliusOmnisendPlugin\Setter\ContactCookieSetter;
@@ -66,8 +67,16 @@ class CustomerSubscriber implements EventSubscriberInterface
     {
         /** @var CustomerInterface $customer */
         $customer = $event->getSubject();
+        $channelCode = $this->channelContext->getChannel()->getCode();
 
-        $response = $this->contactManager->pushToOmnisend($customer, $this->channelContext->getChannel()->getCode());
+        try {
+            $response = $this->contactManager->pushToOmnisend($customer, $channelCode);
+        } catch (RetryableClientException $e) {
+            $this->messageBus->dispatch(new UpdateContact($customer->getId(), $channelCode));
+
+            return;
+        }
+
         if (null !== $response) {
             $this->contactCookieSetter->set($response->getContactID());
         }

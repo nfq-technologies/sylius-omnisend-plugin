@@ -5,7 +5,7 @@
     "description": "Omnisend plugin for Sylius.",
     "license": "MIT",
     "require": {
-        "php": "^7.3",
+        "php": "^7.4",
         "guzzlehttp/psr7": "^1.7",
         "http-interop/http-factory-guzzle": "^1.0",
         "php-http/guzzle6-adapter": "^1.1|^2.0",

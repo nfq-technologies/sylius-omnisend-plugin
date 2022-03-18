@@ -29,6 +29,7 @@ use NFQ\SyliusOmnisendPlugin\Client\Response\Model\ContactSuccessList;
 use NFQ\SyliusOmnisendPlugin\Client\Response\Model\EventSuccess;
 use NFQ\SyliusOmnisendPlugin\Client\Response\Model\OrderSuccess;
 use NFQ\SyliusOmnisendPlugin\Client\Response\Model\ProductSuccess;
+use NFQ\SyliusOmnisendPlugin\Exception\RetryableClientException;
 use NFQ\SyliusOmnisendPlugin\HttpClient\ClientFactoryInterface;
 use NFQ\SyliusOmnisendPlugin\Model\Event;
 use Psr\Http\Message\RequestInterface;
@@ -368,8 +369,17 @@ class OmnisendClient implements LoggerAwareInterface, OmnisendClientInterface
     private function sendRequest(RequestInterface $request, ?string $channelCode): ?ResponseInterface
     {
         try {
-            return $this->clientFactory->create($channelCode)->sendRequest($request);
+            $response = $this->clientFactory->create($channelCode)->sendRequest($request);
+            if ($this->isRetryableError($response)) {
+                throw new RetryableClientException();
+            }
+
+            return $response;
         } catch (HttpException $requestException) {
+            if ($this->isRetryableError($requestException->getResponse())) {
+                throw new RetryableClientException($requestException);
+            }
+
             $response = [
                 'status' => $requestException->getResponse()->getStatusCode(),
                 'headers' => $requestException->getResponse()->getHeaders(),
@@ -385,8 +395,6 @@ class OmnisendClient implements LoggerAwareInterface, OmnisendClientInterface
                     ]
                 );
             }
-
-            return null;
         } catch (Throwable $exception) {
             if ($this->logger !== null) {
                 $this->logger->critical(
@@ -425,5 +433,12 @@ class OmnisendClient implements LoggerAwareInterface, OmnisendClientInterface
         }
 
         return null;
+    }
+
+    private function isRetryableError(ResponseInterface $response): bool
+    {
+        $statusCode = $response->getStatusCode();
+
+        return $statusCode > 405 && $statusCode < 600;
     }
 }
