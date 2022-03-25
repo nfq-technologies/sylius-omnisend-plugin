@@ -2,6 +2,10 @@ imports:
   - { resource: services/ }
 
 services:
+  nfq_sylius_omnisend_plugin.messenger_bus:
+    public: false
+    alias: messenger.default_bus
+
   nfq_sylius_omnisend_plugin.client.omnisend:
     class: NFQ\SyliusOmnisendPlugin\Client\OmnisendClient
     arguments:

@@ -12,7 +12,7 @@ services:
     class: NFQ\SyliusOmnisendPlugin\Controller\SyncEventsAction
     arguments:
       - '@sylius.context.channel.composite'
-      - '@messenger.routable_message_bus'
+      - '@nfq_sylius_omnisend_plugin.messenger_bus'
       - '@session'
     public: true
 
@@ -20,5 +20,5 @@ services:
     class: NFQ\SyliusOmnisendPlugin\Controller\SyncController
     arguments:
       - '@sylius.context.channel.composite'
-      - '@messenger.routable_message_bus'
+      - '@nfq_sylius_omnisend_plugin.messenger_bus'
     public: true
