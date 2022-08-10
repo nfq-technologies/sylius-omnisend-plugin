@@ -17,6 +17,7 @@ use NFQ\SyliusOmnisendPlugin\Factory\Request\OrderProductFactory;
 use NFQ\SyliusOmnisendPlugin\Resolver\ProductAdditionalDataResolverInterface;
 use NFQ\SyliusOmnisendPlugin\Resolver\ProductImageResolverInterface;
 use NFQ\SyliusOmnisendPlugin\Resolver\ProductUrlResolverInterface;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Sylius\Component\Core\Model\AdjustmentInterface;
 use Sylius\Component\Core\Model\OrderItem;
@@ -35,13 +36,13 @@ class OrderProductFactoryTest extends TestCase
     /** @var OrderProductFactory */
     private $factory;
 
-    /** @var ProductImageResolverInterface */
+    /** @var ProductImageResolverInterface|MockObject */
     private $productImageResolver;
 
-    /** @var ProductUrlResolverInterface */
+    /** @var ProductUrlResolverInterface|MockObject */
     private $productUrlResolver;
 
-    /** @var ProductAdditionalDataResolverInterface */
+    /** @var ProductAdditionalDataResolverInterface|MockObject */
     private $productAdditionalDataResolver;
 
     protected function setUp(): void
@@ -57,31 +58,39 @@ class OrderProductFactoryTest extends TestCase
         );
     }
 
-    public function testIfCreatesWell()
+    public function testIfCreatesWell(): void
     {
+        $productTranslation = new ProductTranslation();
+        $productTranslation->setLocale('en');
+        $productTranslation->setSlug('product');
+
+        $product = new Product();
+        $product->addTranslation($productTranslation);
+        $product->setCurrentLocale('en');
+        $product->setCode('product_code');
+        $product->addProductTaxon(self::createProductTaxon(self::createTaxon('code', 'TEST')));
+        $product->addProductTaxon(self::createProductTaxon(self::createTaxon('code2', 'TEST')));
+
+        $variant = new ProductVariant();
+        $variant->setCurrentLocale('en');
+        $variant->setProduct($product);
+        $variant->setCode('variant_code');
+
         $order = new Order();
         $order->setLocaleCode('en');
+
+        $adjustment = new Adjustment();
+        $adjustment->setAmount(-1000);
+        $adjustment->setType(AdjustmentInterface::ORDER_ITEM_PROMOTION_ADJUSTMENT);
+
         $orderItem = new OrderItem();
         $orderItem->setOrder($order);
         $orderItem->setUnitPrice(5000);
         $orderItem->addUnit(new OrderItemUnit($orderItem));
         $orderItem->setProductName('Name');
-        $adjustment1 = new Adjustment();
-        $adjustment1->setAmount(-1000);
-        $adjustment1->setType(AdjustmentInterface::ORDER_ITEM_PROMOTION_ADJUSTMENT);
-        $orderItem->addAdjustment($adjustment1);
-        $variant = new ProductVariant();
-        $product = new Product();
-        $productTranslation = new ProductTranslation();
-        $productTranslation->setLocale('en');
-        $productTranslation->setSlug('product');
-        $product->addTranslation($productTranslation);
-        $product->setCurrentLocale('en');
-        $variant->setCurrentLocale('en');
-        $variant->setProduct($product);
-        $product->setCode('product_code');
-        $variant->setCode('variant_code');
+        $orderItem->addAdjustment($adjustment);
         $orderItem->setVariant($variant);
+
         $this->productUrlResolver
             ->expects($this->once())
             ->method('resolve')
@@ -90,39 +99,39 @@ class OrderProductFactoryTest extends TestCase
             ->expects($this->once())
             ->method('resolve')
             ->willReturn('test.jpg');
-        $taxon = new Taxon();
-        $taxonTranslation = new TaxonTranslation();
-        $taxonTranslation->setLocale('en');
-        $taxonTranslation->setName('TEST');
-        $taxon->setCode('code');
-        $taxon->setCurrentLocale('en');
-        $taxon->addTranslation($taxonTranslation);
-        $productTaxon = new ProductTaxon();
-        $productTaxon->setTaxon($taxon);
-        $productTaxon->setProduct($product);
-        $product->addProductTaxon($productTaxon);
-        $taxon1 = new Taxon();
-        $taxonTranslation1 = new TaxonTranslation();
-        $taxonTranslation1->setLocale('en');
-        $taxonTranslation1->setName('TEST');
-        $taxon1->setCode('code2');
-        $taxon1->setCurrentLocale('en');
-        $taxon1->addTranslation($taxonTranslation1);
-        $productTaxon1 = new ProductTaxon();
-        $productTaxon1->setTaxon($taxon1);
-        $productTaxon1->setProduct($product);
-        $product->addProductTaxon($productTaxon1);
 
         $product = $this->factory->create($orderItem);
 
-        $this->assertEquals($product->getTitle(), 'Name');
-        $this->assertEquals($product->getProductUrl(), 'url');
-        $this->assertEquals($product->getImageUrl(), 'test.jpg');
-        $this->assertEquals($product->getPrice(), 4000);
-        $this->assertEquals($product->getQuantity(), 1);
-        $this->assertEquals($product->getDiscount(), 1000);
-        $this->assertEquals($product->getSku(), 'product_code');
-        $this->assertEquals($product->getVariantID(), 'variant_code');
-        $this->assertEquals($product->getCategoryIDs(), ['code', 'code2']);
+        $this->assertEquals('Name', $product->getTitle());
+        $this->assertEquals('url', $product->getProductUrl());
+        $this->assertEquals('test.jpg', $product->getImageUrl());
+        $this->assertEquals(5000, $product->getPrice());
+        $this->assertEquals(1, $product->getQuantity());
+        $this->assertEquals(1000, $product->getDiscount());
+        $this->assertEquals('product_code', $product->getSku());
+        $this->assertEquals('variant_code', $product->getVariantID());
+        $this->assertEquals(['code', 'code2'], $product->getCategoryIDs());
+    }
+
+    private static function createTaxon(string $code, string $name, string $locale = 'en'): Taxon
+    {
+        $taxonTranslation = new TaxonTranslation();
+        $taxonTranslation->setLocale($locale);
+        $taxonTranslation->setName($name);
+
+        $taxon = new Taxon();
+        $taxon->setCode($code);
+        $taxon->setCurrentLocale($locale);
+        $taxon->addTranslation($taxonTranslation);
+
+        return $taxon;
+    }
+
+    private static function createProductTaxon(Taxon $taxon): ProductTaxon
+    {
+        $productTaxon = new ProductTaxon();
+        $productTaxon->setTaxon($taxon);
+
+        return $productTaxon;
     }
 }

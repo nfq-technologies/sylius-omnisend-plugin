@@ -48,7 +48,7 @@ class OrderProductFactory implements OrderProductFactoryInterface
 
     public function create(OrderItemInterface $orderItem): OrderProduct
     {
-        $cartItem = new OrderProduct();
+        $orderProduct = new OrderProduct();
         /** @var OrderInterface $order */
         $order = $orderItem->getOrder();
         $localeCode = $order->getLocaleCode();
@@ -57,21 +57,24 @@ class OrderProductFactory implements OrderProductFactoryInterface
         /** @var ProductInterface $product */
         $product = $variant->getProduct();
 
-        $cartItem->setProductID((string) $product->getId());
-        $cartItem->setSku((string) $product->getCode());
-        $cartItem->setVariantID((string) $variant->getCode());
-        $cartItem->setVariantTitle($orderItem->getVariantName());
-        $cartItem->setTitle($orderItem->getProductName());
-        $cartItem->setQuantity($orderItem->getQuantity());
-        $cartItem->setPrice($orderItem->getTotal());
-        $cartItem->setImageUrl($this->productImageResolver->resolve($product));
-        $cartItem->setDiscount($this->getDiscount($orderItem));
-        $cartItem->setVendor($this->productAdditionalDataResolver->getVendor($product, $localeCode));
-        $cartItem->setTags($this->productAdditionalDataResolver->getTags($product, $localeCode));
-        $cartItem->setCategoryIDs($this->getCategoriesIds($orderItem));
-        $cartItem->setProductUrl($this->productUrlResolver->resolve($product, $localeCode));
 
-        return $cartItem;
+        $orderProduct->setProductID((string) $product->getId());
+        $orderProduct->setSku((string) $product->getCode());
+        $orderProduct->setVariantID((string) $variant->getCode());
+        $orderProduct->setVariantTitle($orderItem->getVariantName());
+        $orderProduct->setTitle($orderItem->getProductName());
+        $orderProduct->setQuantity($orderItem->getQuantity());
+        $orderProduct->setImageUrl($this->productImageResolver->resolve($product));
+        $orderProduct->setVendor($this->productAdditionalDataResolver->getVendor($product, $localeCode));
+        $orderProduct->setTags($this->productAdditionalDataResolver->getTags($product, $localeCode));
+        $orderProduct->setCategoryIDs($this->getCategoriesIds($orderItem));
+        $orderProduct->setProductUrl($this->productUrlResolver->resolve($product, $localeCode));
+
+        $discount = $this->getDiscount($orderItem);
+        $orderProduct->setPrice($orderItem->getTotal() + $discount);
+        $orderProduct->setDiscount($discount);
+
+        return $orderProduct;
     }
 
     private function getDiscount(OrderItemInterface $orderItem): int
