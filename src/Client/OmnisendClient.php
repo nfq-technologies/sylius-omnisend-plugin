@@ -357,7 +357,7 @@ class OmnisendClient implements LoggerAwareInterface, OmnisendClientInterface
         $response = $this->sendRequest(
             $this->messageFactory->create(
                 'GET',
-                self::API_VERSION . self::URL_PATH_CONTACTS . '?email=' . $email
+                self::API_VERSION . self::URL_PATH_CONTACTS . '?email=' . urlencode($email)
             ),
             $channelCode
         );

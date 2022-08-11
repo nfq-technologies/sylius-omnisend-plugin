@@ -16,7 +16,7 @@ namespace NFQ\SyliusOmnisendPlugin\Message\Handler\Batch;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use NFQ\SyliusOmnisendPlugin\Builder\Request\ProductBuilderDirectorInterface;
-use NFQ\SyliusOmnisendPlugin\Client\OmnisendClient;
+use NFQ\SyliusOmnisendPlugin\Client\OmnisendClientInterface;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Batch;
 use NFQ\SyliusOmnisendPlugin\Doctrine\ORM\ProductRepositoryInterface;
 use NFQ\SyliusOmnisendPlugin\Factory\Request\BatchFactoryInterface;
@@ -26,7 +26,7 @@ use Sylius\Component\Core\Model\ChannelInterface;
 
 class ProductBatchHandleStrategy implements BatchHandlerStrategyInterface
 {
-    /** @var OmnisendClient */
+    /** @var OmnisendClientInterface */
     private $omnisendClient;
 
     /** @var ProductBuilderDirectorInterface */
@@ -45,7 +45,7 @@ class ProductBatchHandleStrategy implements BatchHandlerStrategyInterface
     private $channelRepository;
 
     public function __construct(
-        OmnisendClient $omnisendClient,
+        OmnisendClientInterface $omnisendClient,
         ProductBuilderDirectorInterface $productBuilderDirectory,
         BatchFactoryInterface $batchFactory,
         ProductRepositoryInterface $repository,

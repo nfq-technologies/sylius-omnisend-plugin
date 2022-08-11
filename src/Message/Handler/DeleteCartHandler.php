@@ -41,6 +41,10 @@ class DeleteCartHandler
             $message->getChannelCode()
         );
 
+        if (null === $message->getCartId()) {
+            return;
+        }
+
         /** @var OrderInterface|null $cart */
         $cart = $this->orderRepository->find($message->getCartId());
 
