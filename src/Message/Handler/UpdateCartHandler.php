@@ -47,6 +47,10 @@ class UpdateCartHandler
 
     public function __invoke(UpdateCart $message): void
     {
+        if (null === $message->getOrderId()) {
+            return;
+        }
+
         /** @var OrderInterface|null $order */
         $order = $this->orderRepository->find($message->getOrderId());
 
