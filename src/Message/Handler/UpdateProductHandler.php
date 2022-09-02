@@ -53,6 +53,10 @@ class UpdateProductHandler
 
     public function __invoke(UpdateProduct $message): void
     {
+        if (null === $message->getProductId()) {
+            return;
+        }
+
         /** @var ProductInterface|null $product */
         $product = $this->productRepository->find($message->getProductId());
 
