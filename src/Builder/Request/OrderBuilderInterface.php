@@ -40,5 +40,7 @@ interface OrderBuilderInterface
 
     public function addCouponData(OrderInterface $order): void;
 
+    public function addAdditionalData(OrderInterface $order): void;
+
     public function getOrder(): Order;
 }

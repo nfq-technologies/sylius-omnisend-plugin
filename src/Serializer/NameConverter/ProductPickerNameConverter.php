@@ -22,7 +22,7 @@ class ProductPickerNameConverter implements NameConverterInterface
     /**
      * {@inheritdoc}
      */
-    public function normalize($propertyName)
+    public function normalize(string $propertyName): string
     {
         return self::PREFIX . $propertyName;
     }
@@ -30,7 +30,7 @@ class ProductPickerNameConverter implements NameConverterInterface
     /**
      * {@inheritdoc}
      */
-    public function denormalize($propertyName)
+    public function denormalize(string $propertyName): string
     {
         $propertyName = self::PREFIX === substr($propertyName, 0, strlen(self::PREFIX)) ?
             substr($propertyName, strlen(self::PREFIX)) :
