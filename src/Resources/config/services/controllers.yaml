@@ -13,7 +13,7 @@ services:
     arguments:
       - '@sylius.context.channel.composite'
       - '@messenger.routable_message_bus'
-      - '@request_stack'
+      - '@session'
     public: true
     calls:
       - ['setContainer', ['@service_container']]

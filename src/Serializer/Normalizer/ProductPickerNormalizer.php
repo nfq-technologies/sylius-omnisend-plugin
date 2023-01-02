@@ -29,7 +29,7 @@ class ProductPickerNormalizer implements NormalizerInterface
     /**
      * {@inheritdoc}
      */
-    public function normalize($object, string $format = null, array $context = [])
+    public function normalize($object, $format = null, array $context = [])
     {
         return $this->normalizer->normalize($object, $format, $context);
     }
@@ -37,7 +37,7 @@ class ProductPickerNormalizer implements NormalizerInterface
     /**
      * {@inheritdoc}
      */
-    public function supportsNormalization($data, string $format = null)
+    public function supportsNormalization($data, $format = null)
     {
         return is_object($data)
             && $data instanceof ProductPicker

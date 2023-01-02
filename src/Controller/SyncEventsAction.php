@@ -19,7 +19,6 @@ use Sylius\Component\Channel\Context\ChannelContextInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\MessageBusInterface;
@@ -38,9 +37,9 @@ class SyncEventsAction extends AbstractController
     public function __construct(
         ChannelContextInterface $channelContext,
         MessageBusInterface $messageBus,
-        RequestStack $requestStack
+        SessionInterface $session
     ) {
-        $this->session = $requestStack->getSession();
+        $this->session = $session;
         $this->channelContext = $channelContext;
         $this->messageBus = $messageBus;
     }
