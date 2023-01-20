@@ -23,7 +23,7 @@ final class NFQSyliusOmnisendPlugin extends AbstractResourceBundle
     use SyliusPluginTrait;
 
     /** @var string */
-    protected $mappingFormat = ResourceBundleInterface::MAPPING_YAML;
+    protected string $mappingFormat = ResourceBundleInterface::MAPPING_YAML;
 
     /**
      * {@inheritdoc}
