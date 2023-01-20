@@ -19,6 +19,7 @@ use NFQ\SyliusOmnisendPlugin\Factory\Request\OrderProductFactoryInterface;
 use NFQ\SyliusOmnisendPlugin\Mapper\OrderPaymentStateMapper;
 use NFQ\SyliusOmnisendPlugin\Mapper\OrderStateMapper;
 use NFQ\SyliusOmnisendPlugin\Model\OrderDetails;
+use NFQ\SyliusOmnisendPlugin\Resolver\OrderAdditionalDataResolverInterface;
 use NFQ\SyliusOmnisendPlugin\Resolver\OrderCouponResolverInterface;
 use NFQ\SyliusOmnisendPlugin\Resolver\OrderCourierDataResolverInterface;
 use NFQ\SyliusOmnisendPlugin\Utils\DatetimeHelper;
@@ -53,6 +54,9 @@ class OrderBuilder implements OrderBuilderInterface
     /** @var OrderCourierDataResolverInterface */
     private $orderCourierResolver;
 
+    /** @var OrderAdditionalDataResolverInterface */
+    private $orderAdditionalDataResolver;
+
     /** @var RouterInterface */
     private $router;
 
@@ -63,6 +67,7 @@ class OrderBuilder implements OrderBuilderInterface
         OrderPaymentStateMapper $orderPaymentStateMapper,
         OrderCouponResolverInterface $orderCouponResolver,
         OrderCourierDataResolverInterface $orderCourierResolver,
+        OrderAdditionalDataResolverInterface $orderAdditionalDataResolver,
         RouterInterface $router
     ) {
         $this->addressFactory = $addressFactory;
@@ -71,6 +76,7 @@ class OrderBuilder implements OrderBuilderInterface
         $this->paymentStateMapper = $orderPaymentStateMapper;
         $this->orderCouponResolver = $orderCouponResolver;
         $this->orderCourierResolver = $orderCourierResolver;
+        $this->orderAdditionalDataResolver = $orderAdditionalDataResolver;
         $this->router = $router;
     }
 
@@ -124,7 +130,7 @@ class OrderBuilder implements OrderBuilderInterface
         $this->order->setCourierUrl($this->orderCourierResolver->getCourierUrl($order));
     }
 
-    /** @var \NFQ\SyliusOmnisendPlugin\Model\OrderInterface */
+    /** @var \NFQ\SyliusOmnisendPlugin\Model\OrderInterface $order */
     public function addCartData(OrderInterface $order): void
     {
         /** @var OrderDetails $details */
@@ -143,6 +149,11 @@ class OrderBuilder implements OrderBuilderInterface
             $this->order->setDiscountType($orderCoupon->getType());
             $this->order->setDiscountValue($orderCoupon->getValue());
         }
+    }
+
+    public function addAdditionalData(OrderInterface $order): void
+    {
+        $this->order->setTags($this->orderAdditionalDataResolver->getTags($order));
     }
 
     /** @var \NFQ\SyliusOmnisendPlugin\Model\OrderInterface */
@@ -203,7 +214,7 @@ class OrderBuilder implements OrderBuilderInterface
         return $this->order;
     }
 
-    /** @var \NFQ\SyliusOmnisendPlugin\Model\OrderInterface */
+    /** @var \NFQ\SyliusOmnisendPlugin\Model\OrderInterface $order */
     public function addCancelData(OrderInterface $order): void
     {
         $this->order->setCanceledDate(DatetimeHelper::format($order->getOmnisendOrderDetails()->getCancelledAt()));
