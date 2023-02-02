@@ -67,7 +67,6 @@ class OrderBuilderTest extends TestCase
         $this->stateMapper = $this->createMock(OrderStateMapper::class);
         $this->paymentStateMapper = $this->createMock(OrderPaymentStateMapper::class);
         $this->orderCouponResolver = $this->createMock(OrderCouponResolverInterface::class);
-        $this->orderCouponResolver = $this->createMock(OrderCouponResolverInterface::class);
         $this->router = $this->createMock(RouterInterface::class);
         $this->builder = new OrderBuilder(
             $this->addressFactory,
