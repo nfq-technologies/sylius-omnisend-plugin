@@ -137,7 +137,7 @@ class OrderBuilder implements OrderBuilderInterface
         $details = $order->getOmnisendOrderDetails();
 
         $this->order->setCartID($details->getCartId());
-        $this->order->setOrderID($details->getCartId());
+        $this->order->setOrderID($details->getOrder()->getNumber());
     }
 
     public function addCouponData(OrderInterface $order): void
