@@ -19,6 +19,8 @@ declare(strict_types=1);
 
 namespace NFQ\SyliusOmnisendPlugin\Resolver;
 
+use Sylius\Component\Core\Model\OrderInterface;
+
 interface OrderAdditionalDataResolverInterface
 {
     public function getTags(OrderInterface $order): ?array;
