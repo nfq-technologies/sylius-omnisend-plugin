@@ -1,7 +1,7 @@
 {% if resource is defined %}
     {% set productPickerData = nfq_sylius_omnisend_product_picker(resource, sylius.localeCode) %}
 {% else %}
-    {% set productPickerData = nfq_sylius_omnisend_product_picker(settings.product, sylius.localeCode) %}
+    {% set productPickerData = nfq_sylius_omnisend_product_picker(product, sylius.localeCode) %}
 {% endif %}
 {% if productPickerData and sylius.channel.omnisendTrackingKey %}
     <script type="text/javascript">
