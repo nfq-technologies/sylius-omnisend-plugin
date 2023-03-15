@@ -71,7 +71,7 @@ class OrderProductFactory implements OrderProductFactoryInterface
         $orderProduct->setProductUrl($this->productUrlResolver->resolve($product, $localeCode));
 
         $discount = $this->getDiscount($orderItem);
-        $orderProduct->setPrice($orderItem->getTotal() + $discount);
+        $orderProduct->setPrice($orderItem->getFullDiscountedUnitPrice());
         $orderProduct->setDiscount($discount);
 
         return $orderProduct;
