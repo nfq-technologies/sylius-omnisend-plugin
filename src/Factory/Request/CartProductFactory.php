@@ -69,6 +69,6 @@ class CartProductFactory implements CartProductFactoryInterface
 
     private function getDiscount(OrderItemInterface $orderItem): int
     {
-        return $orderItem->getFullDiscountedUnitPrice() - $orderItem->getUnitPrice();
+        return $orderItem->getUnitPrice() - $orderItem->getFullDiscountedUnitPrice();
     }
 }
