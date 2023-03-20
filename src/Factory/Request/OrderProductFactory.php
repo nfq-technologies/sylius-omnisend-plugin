@@ -79,7 +79,7 @@ class OrderProductFactory implements OrderProductFactoryInterface
 
     private function getDiscount(OrderItemInterface $orderItem): int
     {
-        return $orderItem->getFullDiscountedUnitPrice() - $orderItem->getUnitPrice();
+        return $orderItem->getUnitPrice() - $orderItem->getFullDiscountedUnitPrice();
     }
 
     private function getCategoriesIds(OrderItemInterface $orderItem): ?array
