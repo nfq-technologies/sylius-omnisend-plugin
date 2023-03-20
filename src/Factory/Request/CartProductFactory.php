@@ -56,11 +56,11 @@ class CartProductFactory implements CartProductFactoryInterface
         $cartItem->setVariantID((string) $variant->getCode());
         $cartItem->setTitle($orderItem->getProductName());
         $cartItem->setQuantity($orderItem->getQuantity());
-        $cartItem->setPrice($orderItem->getTotal());
+        $cartItem->setPrice($orderItem->getFullDiscountedUnitPrice());
         $cartItem->setImageUrl($this->productImageResolver->resolve($product));
         if ($discount > 0) {
             $cartItem->setDiscount($this->getDiscount($orderItem));
-            $cartItem->setOldPrice($discount + $orderItem->getTotal());
+            $cartItem->setOldPrice($orderItem->getUnitPrice());
         }
         $cartItem->setProductUrl($this->productUrlResolver->resolve($product, $localeCode));
 
@@ -69,10 +69,6 @@ class CartProductFactory implements CartProductFactoryInterface
 
     private function getDiscount(OrderItemInterface $orderItem): int
     {
-        return abs(
-            $orderItem->getAdjustmentsTotalRecursively(AdjustmentInterface::ORDER_UNIT_PROMOTION_ADJUSTMENT)
-            + $orderItem->getAdjustmentsTotalRecursively(AdjustmentInterface::ORDER_ITEM_PROMOTION_ADJUSTMENT)
-            + $orderItem->getAdjustmentsTotalRecursively(AdjustmentInterface::ORDER_PROMOTION_ADJUSTMENT)
-        );
+        return $orderItem->getFullDiscountedUnitPrice() - $orderItem->getUnitPrice();
     }
 }
