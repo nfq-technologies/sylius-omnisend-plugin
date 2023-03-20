@@ -69,10 +69,6 @@ class CartProductFactory implements CartProductFactoryInterface
 
     private function getDiscount(OrderItemInterface $orderItem): int
     {
-        return abs(
-            $orderItem->getAdjustmentsTotalRecursively(AdjustmentInterface::ORDER_UNIT_PROMOTION_ADJUSTMENT)
-            + $orderItem->getAdjustmentsTotalRecursively(AdjustmentInterface::ORDER_ITEM_PROMOTION_ADJUSTMENT)
-            + $orderItem->getAdjustmentsTotalRecursively(AdjustmentInterface::ORDER_PROMOTION_ADJUSTMENT)
-        );
+        return $orderItem->getFullDiscountedUnitPrice() - $orderItem->getUnitPrice();
     }
 }

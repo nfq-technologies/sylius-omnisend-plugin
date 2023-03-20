@@ -71,7 +71,7 @@ class OrderProductFactory implements OrderProductFactoryInterface
         $orderProduct->setProductUrl($this->productUrlResolver->resolve($product, $localeCode));
 
         $discount = $this->getDiscount($orderItem);
-        $orderProduct->setPrice($orderItem->getFullDiscountedUnitPrice());
+        $orderProduct->setPrice($orderItem->getUnitPrice());
         $orderProduct->setDiscount($discount);
 
         return $orderProduct;
@@ -79,11 +79,7 @@ class OrderProductFactory implements OrderProductFactoryInterface
 
     private function getDiscount(OrderItemInterface $orderItem): int
     {
-        return abs(
-            $orderItem->getAdjustmentsTotalRecursively(AdjustmentInterface::ORDER_UNIT_PROMOTION_ADJUSTMENT)
-            + $orderItem->getAdjustmentsTotalRecursively(AdjustmentInterface::ORDER_ITEM_PROMOTION_ADJUSTMENT)
-            + $orderItem->getAdjustmentsTotalRecursively(AdjustmentInterface::ORDER_PROMOTION_ADJUSTMENT)
-        );
+        return $orderItem->getFullDiscountedUnitPrice() - $orderItem->getUnitPrice();
     }
 
     private function getCategoriesIds(OrderItemInterface $orderItem): ?array
