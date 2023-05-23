@@ -173,6 +173,13 @@ class OmnisendClientMock implements OmnisendClientInterface
         return (new EventSuccess());
     }
 
+    public function getContactByPhone(?string $phone, ?string $channelCode): ?object
+    {
+        $this->client->getContactByPhone($phone, $channelCode);
+
+        return null;
+    }
+    
     public function getContactByEmail(?string $email, ?string $channelCode): ?object
     {
         $this->client->getContactByEmail($email, $channelCode);
