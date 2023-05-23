@@ -364,6 +364,20 @@ class OmnisendClient implements LoggerAwareInterface, OmnisendClientInterface
 
         return $this->parseResponse($response, ContactSuccessList::class);
     }
+    
+    
+    public function getContactByPhone(?string $phone, ?string $channelCode): ?object
+    {
+        $response = $this->sendRequest(
+            $this->messageFactory->create(
+                'GET',
+                self::API_VERSION . self::URL_PATH_CONTACTS . '?phone=' . urlencode($phone)
+            ),
+            $channelCode
+        );
+
+        return $this->parseResponse($response, ContactSuccessList::class);
+    }
 
     private function sendRequest(RequestInterface $request, ?string $channelCode): ?ResponseInterface
     {
