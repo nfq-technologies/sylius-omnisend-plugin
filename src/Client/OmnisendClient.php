@@ -21,6 +21,7 @@ use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Contact;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\CreateEvent;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Order;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Product;
+use NFQ\SyliusOmnisendPlugin\Client\Response\Model\BatchDataSuccess;
 use NFQ\SyliusOmnisendPlugin\Client\Response\Model\BatchSuccess;
 use NFQ\SyliusOmnisendPlugin\Client\Response\Model\CartSuccess;
 use NFQ\SyliusOmnisendPlugin\Client\Response\Model\CategorySuccess;
@@ -309,6 +310,19 @@ class OmnisendClient implements LoggerAwareInterface, OmnisendClientInterface
         );
 
         return $this->parseResponse($response, BatchSuccess::class);
+    }
+    
+    public function getBatch(string $batchId, ?string $channelCode): ?object
+    {
+        $response = $this->sendRequest(
+            $this->messageFactory->create(
+                'GET',
+                self::API_VERSION . self::URL_PATH_BATCHES . '/' . $batchId
+            ),
+            $channelCode
+        );
+
+        return $this->parseResponse($response, BatchDataSuccess::class);
     }
 
     public function postEvent(CreateEvent $event, ?string $channelCode): ?object
