@@ -62,6 +62,8 @@ interface OmnisendClientInterface
     public function deleteOrder(string $orderId, ?string $channelCode): ?object;
 
     public function postBatch(Batch $batch, ?string $channelCode): ?object;
+    
+    public function getBatch(string $batchId, ?string $channelCode): ?object;
 
     public function postEvent(CreateEvent $event, ?string $channelCode): ?object;
 
