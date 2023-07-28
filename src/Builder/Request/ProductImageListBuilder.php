@@ -41,7 +41,7 @@ class ProductImageListBuilder implements ProductImageListBuilderInterface
 
         /** @var ProductImageInterface $image */
         foreach ($productImages as $image) {
-            if ($count > self::MAX_IMAGE_COUNT) {
+            if ($count === self::MAX_IMAGE_COUNT) {
                 break;
             }
             $images[] = $this->productImageFactory->create($image, $count === 0);
