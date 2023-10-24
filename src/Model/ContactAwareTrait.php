@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace NFQ\SyliusOmnisendPlugin\Model;
 
+use Doctrine\ORM\Mapping as ORM;
+
 trait ContactAwareTrait
 {
     /**
@@ -20,6 +22,7 @@ trait ContactAwareTrait
      *
      * @ORM\Column(type="string", name="omnisend_contact_id", length=32, nullable=true)
      */
+    #[ORM\Column(type: 'string', name: 'omnisend_contact_id', length: 32, nullable: true)]
     private $omnisendContactId;
 
     public function getOmnisendContactId(): ?string

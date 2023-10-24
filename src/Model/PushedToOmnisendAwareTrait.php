@@ -15,6 +15,7 @@ namespace NFQ\SyliusOmnisendPlugin\Model;
 
 use DateTime;
 use DateTimeInterface;
+use Doctrine\ORM\Mapping as ORM;
 
 trait PushedToOmnisendAwareTrait
 {
@@ -23,6 +24,7 @@ trait PushedToOmnisendAwareTrait
      *
      * @ORM\Column(name="pushed_to_omnisend", type="datetime", nullable=true)
      */
+    #[ORM\Column(name: 'pushed_to_omnisend', type: 'datetime', nullable: true)]
     protected $pushedToOmnisend;
 
     public function isPushedToOmnisend(): bool

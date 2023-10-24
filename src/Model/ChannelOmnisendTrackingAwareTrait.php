@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace NFQ\SyliusOmnisendPlugin\Model;
 
+use Doctrine\ORM\Mapping as ORM;
+
 trait ChannelOmnisendTrackingAwareTrait
 {
     /**
@@ -20,6 +22,7 @@ trait ChannelOmnisendTrackingAwareTrait
      *
      * @ORM\Column(type="string", name="omnisend_tracking_key", length=32, nullable=true)
      */
+    #[ORM\Column(type: 'string', name: 'omnisend_tracking_key', length: 32, nullable: true)]
     private $omnisendTrackingKey;
 
     /**
@@ -27,6 +30,7 @@ trait ChannelOmnisendTrackingAwareTrait
      *
      * @ORM\Column(type="string", name="omnisend_api_key", nullable=true)
      */
+    #[ORM\Column(type: 'string', name: 'omnisend_api_key', nullable: true)]
     private $omnisendApiKey;
 
     public function getOmnisendTrackingKey(): ?string
