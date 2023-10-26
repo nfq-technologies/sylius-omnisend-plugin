@@ -23,6 +23,8 @@ trait OmnisendOrderDetailsAwareTrait
      *
      * @ORM\JoinColumn(name="omnisend_order_details_id", onDelete="CASCADE")
      */
+    #[ORM\OneToOne(targetEntity: 'NFQ\SyliusOmnisendPlugin\Model\OrderDetails', mappedBy: 'order', cascade: ['all'])]
+    #[ORM\JoinColumn(name: 'omnisend_order_details_id', onDelete: 'CASCADE')]
     protected $omnisendOrderDetails;
 
     public function __construct()
