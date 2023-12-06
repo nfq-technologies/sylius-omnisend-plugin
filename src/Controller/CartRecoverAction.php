@@ -54,7 +54,7 @@ class CartRecoverAction
         $cartId = $request->get('cartId');
 
         if (null === $cartId) {
-            return new RedirectResponse('sylius_shop_homepage');
+            return new RedirectResponse($this->router->generate('sylius_shop_homepage'));
         }
 
         if (null !== $request->get(ContactCookieSetter::COOKIE_NAME)) {
@@ -65,7 +65,7 @@ class CartRecoverAction
         $details = $this->repository->findOneBy(['cartId' => $cartId]);
 
         if (null === $details) {
-            return new RedirectResponse('sylius_shop_homepage');
+            return new RedirectResponse($this->router->generate('sylius_shop_homepage'));
         }
         /** @var Order $cart */
         $cart = $details->getOrder();
