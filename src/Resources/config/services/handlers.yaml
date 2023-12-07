@@ -40,7 +40,7 @@ services:
       - '@validator'
     tags: [ messenger.message_handler ]
     calls:
-      - ['setLogger', ['@monolog.logger']]
+      - ['setLogger', ['@nfq_sylius_omnisend_plugin.client.logger']]
 
   nfq_sylius_omnisend_plugin.message.handler.delete_category:
     class: NFQ\SyliusOmnisendPlugin\Message\Handler\DeleteCategoryHandler
@@ -56,6 +56,8 @@ services:
       - '@nfq_sylius_omnisend_plugin.builder.request.cart_director'
       - '@nfq_sylius_omnisend_plugin.client.omnisend'
     tags: [ messenger.message_handler ]
+    calls:
+      - ['setLogger', ['@nfq_sylius_omnisend_plugin.client.logger']]
 
   nfq_sylius_omnisend_plugin.message.handler.delete_cart:
     class: NFQ\SyliusOmnisendPlugin\Message\Handler\DeleteCartHandler
