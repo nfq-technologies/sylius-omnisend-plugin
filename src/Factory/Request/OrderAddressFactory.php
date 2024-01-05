@@ -36,7 +36,7 @@ class OrderAddressFactory implements OrderAddressFactoryInterface
             ->setState($address->getProvinceName())
             ->setStateCode($address->getProvinceCode())
             ->setCity($address->getCity())
-            ->setAddress($address->getStreet())
+            ->setAddress($this->getFullStreetName($address))
             ->setPostalCode($address->getPostcode());
     }
 
@@ -51,5 +51,20 @@ class OrderAddressFactory implements OrderAddressFactoryInterface
         }
 
         return null;
+    }
+
+    private function getFullStreetName(AddressInterface $address): ?string
+    {
+        $fullStreetName = $address->getStreet();
+
+        if (method_exists($address, 'getHouseNumber') && $address->getHouseNumber() !== null) {
+            $fullStreetName .= ' ' . $address->getHouseNumber();
+        }
+
+        if (method_exists($address, 'getApartmentNumber') && $address->getApartmentNumber() !== null) {
+            $fullStreetName .= ' ' . $address->getApartmentNumber();
+        }
+
+        return $fullStreetName;
     }
 }
