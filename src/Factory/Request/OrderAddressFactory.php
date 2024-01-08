@@ -18,6 +18,8 @@ use Sylius\Component\Core\Model\AddressInterface;
 use Symfony\Component\Intl\Countries;
 use Symfony\Component\Intl\Exception\MissingResourceException;
 
+use function method_exists;
+
 class OrderAddressFactory implements OrderAddressFactoryInterface
 {
     public function create(?AddressInterface $address, ?string $localeCode = null): ?OrderAddress
@@ -36,7 +38,7 @@ class OrderAddressFactory implements OrderAddressFactoryInterface
             ->setState($address->getProvinceName())
             ->setStateCode($address->getProvinceCode())
             ->setCity($address->getCity())
-            ->setAddress($address->getStreet())
+            ->setAddress($this->getFullStreetName($address))
             ->setPostalCode($address->getPostcode());
     }
 
@@ -51,5 +53,26 @@ class OrderAddressFactory implements OrderAddressFactoryInterface
         }
 
         return null;
+    }
+
+    private function getFullStreetName(AddressInterface $address): ?string
+    {
+        $fullStreetName = $address->getStreet();
+        $houseNumber = method_exists($address, 'getHouseNumber') ? $address->getHouseNumber() : null;
+
+        if ($houseNumber === null) {
+            return $fullStreetName;
+        }
+
+        $fullStreetName .= ' ' . $houseNumber;
+        $apartmentNumber = method_exists($address, 'getApartmentNumber') ? $address->getApartmentNumber() : null;
+
+        if ($apartmentNumber === null) {
+            return $fullStreetName;
+        }
+
+        $fullStreetName .= '-' . $apartmentNumber;
+
+        return $fullStreetName;
     }
 }
