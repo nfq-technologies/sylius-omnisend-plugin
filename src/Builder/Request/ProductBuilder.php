@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace NFQ\SyliusOmnisendPlugin\Builder\Request;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use NFQ\SyliusOmnisendPlugin\Builder\Request\Constants\ProductStatus;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Product;
 use NFQ\SyliusOmnisendPlugin\Factory\Request\ProductVariantFactoryInterface;
@@ -82,7 +81,6 @@ class ProductBuilder implements ProductBuilderInterface
         $variants = [];
         if (
             method_exists($product, 'getEnabledVariants')
-            && $product->getEnabledVariants() instanceof ArrayCollection
             && $product->getEnabledVariants()->isEmpty() === false
         ) {
             $productVariants = $product->getEnabledVariants();
