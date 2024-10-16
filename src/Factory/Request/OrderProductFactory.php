@@ -58,7 +58,7 @@ class OrderProductFactory implements OrderProductFactoryInterface
         $product = $variant->getProduct();
 
 
-        $orderProduct->setProductID((string) $product->getId());
+        $orderProduct->setProductID((string) $product->getCode());
         $orderProduct->setSku((string) $product->getCode());
         $orderProduct->setVariantID((string) $variant->getCode());
         $orderProduct->setVariantTitle($orderItem->getVariantName());
