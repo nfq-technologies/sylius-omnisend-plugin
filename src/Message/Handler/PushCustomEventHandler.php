@@ -55,7 +55,10 @@ class PushCustomEventHandler
         $violations = $this->validator->validate($message, new CustomEventFields());
         if ($violations->count() > 0) {
             if (null !== $this->logger) {
-                $this->logger->error('Omnisend custom event cannot be pushed.', ['errors' => $violations]);
+                $this->logger->error(
+                    'Omnisend custom event {systemName} cannot be pushed.',
+                    ['errors' => $violations, 'systemName' => $message->getSystemName()],
+                );
             }
 
             return;

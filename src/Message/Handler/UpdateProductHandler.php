@@ -86,7 +86,10 @@ class UpdateProductHandler
                 }
             } catch (\Throwable $e) {
                 if (null !== $this->logger) {
-                    $this->logger->error('Error occurred while pushing product to Omnisend.', ['error' => $e->getMessage()]);
+                    $this->logger->error('Error occurred while pushing product {productId} to Omnisend.',
+                        ['error' => $e->getMessage(), 'productId' => $product->getId(
+                        ), 'productCode' => $product->getCode()],
+                    );
                 }
             }
         }
