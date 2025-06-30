@@ -170,7 +170,7 @@ class OmnisendClientMock implements OmnisendClientInterface
     public function postEvent(CreateEvent $event, ?string $channelCode): ?object
     {
         $this->client->postEvent($event, $channelCode);
-        return (new EventSuccess());
+        return new EventSuccess();
     }
 
     public function getContactByPhone(?string $phone, ?string $channelCode): ?object
@@ -202,5 +202,14 @@ class OmnisendClientMock implements OmnisendClientInterface
         return [
             $event
         ];
+    }
+
+    public function getBatch(string $batchId, ?string $channelCode): ?object
+    {
+        $this->client->getBatch($batchId, $channelCode);
+        $batch = new BatchSuccess();
+        $batch->setBatchID($batchId);
+
+        return $batch;
     }
 }

@@ -13,17 +13,16 @@ declare(strict_types=1);
 
 namespace Tests\NFQ\SyliusOmnisendPlugin\Behat\Mock;
 
-use GuzzleHttp\Psr7\Response;
-use Http\Client\HttpClient;
+use Http\Discovery\Psr17FactoryDiscovery;
+use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
-class LoggableClientMock implements HttpClient
+class LoggableClientMock implements ClientInterface
 {
     public const FILE = 'nfq_sylius_omnisend_last_request.json';
 
-    /** @var string */
-    private $cacheDir;
+    private string $cacheDir;
 
     public function __construct(string $cacheDir)
     {
@@ -35,12 +34,17 @@ class LoggableClientMock implements HttpClient
         $result = [
             'method' => $request->getMethod(),
             'url' => $request->getUri()->getPath(),
-            'body' => json_decode($request->getBody()->getContents())
+            'body' => json_decode($request->getBody()->getContents()),
         ];
 
         file_put_contents($this->getFile(), json_encode($result));
 
-        return new Response(200);
+        return Psr17FactoryDiscovery::findResponseFactory()->createResponse(200);
+    }
+
+    public function getFile(): string
+    {
+        return $this->cacheDir . '/' . self::FILE;
     }
 
     public function getLastRequestData(): ?array
@@ -51,10 +55,5 @@ class LoggableClientMock implements HttpClient
     public function getRawLastRequestData(): ?string
     {
         return file_exists($this->getFile()) ? file_get_contents($this->getFile()) : null;
-    }
-
-    public function getFile()
-    {
-        return $this->cacheDir . '/' . self::FILE;
     }
 }

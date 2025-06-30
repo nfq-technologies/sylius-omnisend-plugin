@@ -16,31 +16,33 @@ namespace Tests\NFQ\SyliusOmnisendPlugin\Controller;
 use NFQ\SyliusOmnisendPlugin\Controller\CartRecoverAction;
 use NFQ\SyliusOmnisendPlugin\Model\OrderDetails;
 use NFQ\SyliusOmnisendPlugin\Setter\ContactCookieSetter;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Sylius\Component\Core\Model\Channel;
-use Sylius\Component\Core\Repository\OrderRepositoryInterface;
 use Sylius\Component\Core\Storage\CartStorageInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RouterInterface;
 use Tests\NFQ\SyliusOmnisendPlugin\Mock\OrderMock;
 
 class CartRecoverActionTest extends TestCase
 {
-    /** @var CartRecoverAction */
-    private $controller;
+    private const SYLIUS_HOME_URL = 'https://sylius.com';
+    private const SYLIUS_CART_URL = 'https://sylius.com/cart';
+    private const SYLIUS_HOMEPAGE_ROUTE = 'sylius_shop_homepage';
 
-    /** @var CartStorageInterface */
+    private CartRecoverAction $controller;
+
+    /** @var CartStorageInterface & MockObject */
     private $sessionStorage;
 
-    /** @var RouterInterface */
+    /** @var RouterInterface & MockObject */
     private $router;
 
-    /** @var RepositoryInterface */
+    /** @var RepositoryInterface & MockObject */
     private $orderRepository;
 
-    /** @var ContactCookieSetter */
+    /** @var ContactCookieSetter & MockObject */
     private $contactCookieSetter;
 
     protected function setUp(): void
@@ -60,9 +62,16 @@ class CartRecoverActionTest extends TestCase
 
     public function testIfRedirectsCorrectly(): void
     {
+        $this->givenRouterGeneratesSyliusHomePageUrl();
         $redirect = $this->controller->__invoke(new Request());
-        $this->assertInstanceOf(RedirectResponse::class, $redirect);
-        $this->assertEquals('sylius_shop_homepage', $redirect->getTargetUrl());
+        $this->assertEquals(self::SYLIUS_HOME_URL, $redirect->getTargetUrl());
+    }
+
+    private function givenRouterGeneratesSyliusHomePageUrl(): void
+    {
+        $this->router->method('generate')
+            ->with(self::SYLIUS_HOMEPAGE_ROUTE)
+            ->willReturn(self::SYLIUS_HOME_URL);
     }
 
     public function testIfRedirectsCorrectlyIfIdExists(): void
@@ -73,11 +82,11 @@ class CartRecoverActionTest extends TestCase
             ->willReturn(null);
         $request = $this->createMock(Request::class);
         $request
-            ->expects($this->any())
             ->method('get')
             ->willReturn('111111');
+        $this->givenRouterGeneratesSyliusHomePageUrl();
         $redirect = $this->controller->__invoke($request);
-        $this->assertEquals('sylius_shop_homepage', $redirect->getTargetUrl());
+        $this->assertEquals(self::SYLIUS_HOME_URL, $redirect->getTargetUrl());
     }
 
     public function testIfRedirectsCorrectlyIfOrderExists(): void
@@ -97,12 +106,14 @@ class CartRecoverActionTest extends TestCase
         $this->router
             ->expects($this->once())
             ->method('generate')
-            ->willReturn('url');
-        $request = new Request(['cartId' => '11111', 'omnisendContactID' => '444'], ['cartId' => '11111', 'omnisendContactID' => '444']);
+            ->with('sylius_shop_cart_summary')
+            ->willReturn(self::SYLIUS_CART_URL);
+        $request = new Request(['cartId' => '11111', 'omnisendContactID' => '444'],
+            ['cartId' => '11111', 'omnisendContactID' => '444']);
         $this->contactCookieSetter
             ->expects($this->once())
             ->method('set');
         $redirect = $this->controller->__invoke($request);
-        $this->assertEquals('url', $redirect->getTargetUrl());
+        $this->assertEquals(self::SYLIUS_CART_URL, $redirect->getTargetUrl());
     }
 }

@@ -13,9 +13,9 @@ declare(strict_types=1);
 
 namespace NFQ\SyliusOmnisendPlugin\HttpClient;
 
-use Http\Client\HttpClient;
+use Psr\Http\Client\ClientInterface;
 
 interface ClientFactoryInterface
 {
-    public function create(?string $channelCode): HttpClient;
+    public function create(?string $channelCode): ClientInterface;
 }

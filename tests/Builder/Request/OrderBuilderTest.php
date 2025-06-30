@@ -20,7 +20,9 @@ use NFQ\SyliusOmnisendPlugin\Factory\Request\OrderProductFactoryInterface;
 use NFQ\SyliusOmnisendPlugin\Mapper\OrderPaymentStateMapper;
 use NFQ\SyliusOmnisendPlugin\Mapper\OrderStateMapper;
 use NFQ\SyliusOmnisendPlugin\Resolver\DefaultOrderCourierDataResolver;
+use NFQ\SyliusOmnisendPlugin\Resolver\OrderAdditionalDataResolverInterface;
 use NFQ\SyliusOmnisendPlugin\Resolver\OrderCouponResolverInterface;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Sylius\Component\Core\Model\AdjustmentInterface;
 use Sylius\Component\Core\Model\Customer;
@@ -39,26 +41,28 @@ use Tests\NFQ\SyliusOmnisendPlugin\Mock\OrderMock;
 
 class OrderBuilderTest extends TestCase
 {
-    /** @var OrderBuilderInterface */
-    private $builder;
+    private OrderBuilderInterface $builder;
 
-    /** @var OrderAddressFactoryInterface */
-    private $addressFactory;
+    /** @var OrderAddressFactoryInterface & MockObject */
+    private OrderAddressFactoryInterface $addressFactory;
 
-    /** @var OrderProductFactoryInterface */
-    private $orderProductFactory;
+    /** @var OrderProductFactoryInterface & MockObject */
+    private OrderProductFactoryInterface $orderProductFactory;
 
-    /** @var OrderStateMapper */
-    private $stateMapper;
+    /** @var OrderStateMapper & MockObject */
+    private OrderStateMapper $stateMapper;
 
-    /** @var OrderPaymentStateMapper */
-    private $paymentStateMapper;
+    /** @var OrderPaymentStateMapper & MockObject */
+    private OrderPaymentStateMapper $paymentStateMapper;
 
-    /** @var OrderCouponResolverInterface */
-    private $orderCouponResolver;
+    /** @var OrderCouponResolverInterface & MockObject */
+    private OrderCouponResolverInterface $orderCouponResolver;
 
-    /** @var RouterInterface */
-    private $router;
+    /** @var RouterInterface & MockObject */
+    private RouterInterface $router;
+
+    /** @var OrderAdditionalDataResolverInterface & MockObject */
+    private OrderAdditionalDataResolverInterface $orderAdditionalDataResolver;
 
     protected function setUp(): void
     {
@@ -68,6 +72,7 @@ class OrderBuilderTest extends TestCase
         $this->paymentStateMapper = $this->createMock(OrderPaymentStateMapper::class);
         $this->orderCouponResolver = $this->createMock(OrderCouponResolverInterface::class);
         $this->router = $this->createMock(RouterInterface::class);
+        $this->orderAdditionalDataResolver = $this->createMock(OrderAdditionalDataResolverInterface::class);
         $this->builder = new OrderBuilder(
             $this->addressFactory,
             $this->orderProductFactory,
@@ -75,11 +80,12 @@ class OrderBuilderTest extends TestCase
             $this->paymentStateMapper,
             $this->orderCouponResolver,
             new DefaultOrderCourierDataResolver(),
+            $this->orderAdditionalDataResolver,
             $this->router
         );
     }
 
-    public function testIfBuildsOrderData()
+    public function testIfBuildsOrderData(): void
     {
         $order = new Order();
         $order->setLocaleCode('en');
@@ -125,7 +131,7 @@ class OrderBuilderTest extends TestCase
         $this->assertEquals('shippingMethodTrans', $result->getShippingMethod());
     }
 
-    public function testIfBuildsOrderTotals()
+    public function testIfBuildsOrderTotals(): void
     {
         $order = new OrderMock();
         $order->setCurrencyCode('EUR');

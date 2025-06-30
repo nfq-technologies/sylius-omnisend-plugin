@@ -17,28 +17,27 @@ use Http\Client\Common\Plugin\BaseUriPlugin;
 use Http\Client\Common\Plugin\ErrorPlugin;
 use Http\Client\Common\Plugin\HeaderDefaultsPlugin;
 use Http\Client\Common\PluginClient;
-use Http\Client\HttpClient;
 use Http\Discovery\HttpClientDiscovery;
 use Http\Discovery\UriFactoryDiscovery;
 use NFQ\SyliusOmnisendPlugin\Model\ChannelOmnisendTrackingAwareInterface;
+use Psr\Http\Client\ClientInterface;
 use Sylius\Component\Channel\Repository\ChannelRepositoryInterface;
 
 class ClientFactory implements ClientFactoryInterface
 {
     public const ENDPOINT = 'https://api.omnisend.com/';
 
-    /** @var ChannelRepositoryInterface */
-    private $channelRepository;
+    private ChannelRepositoryInterface $channelRepository;
 
     public function __construct(ChannelRepositoryInterface $channelRepository)
     {
         $this->channelRepository = $channelRepository;
     }
 
-    public function create(?string $channelCode): HttpClient
+    public function create(?string $channelCode): ClientInterface
     {
         $channel = null;
-        if (null !== $channelCode) {
+        if ($channelCode !== null) {
             /** @var ChannelOmnisendTrackingAwareInterface $channel */
             $channel = $this->channelRepository->findOneByCode($channelCode);
         }
@@ -48,7 +47,7 @@ class ClientFactory implements ClientFactoryInterface
             [
                 'Content-Type' => 'application/json',
                 'X-API-KEY' => $channel !== null ? $channel->getOmnisendApiKey() : null,
-            ]
+            ],
         );
 
         $plugins = [

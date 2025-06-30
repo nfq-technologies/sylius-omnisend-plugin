@@ -13,20 +13,19 @@ declare(strict_types=1);
 
 namespace Tests\NFQ\SyliusOmnisendPlugin\Behat\Mock;
 
-use Http\Client\HttpClient;
 use NFQ\SyliusOmnisendPlugin\HttpClient\ClientFactoryInterface;
+use Psr\Http\Client\ClientInterface;
 
 class ClientFactoryMock implements ClientFactoryInterface
 {
-    /** @var LoggableClientMock */
-    private $loggableClientMock;
+    private LoggableClientMock $loggableClientMock;
 
     public function __construct(LoggableClientMock $loggableClientMock)
     {
         $this->loggableClientMock = $loggableClientMock;
     }
 
-    public function create(?string $channelCode): HttpClient
+    public function create(?string $channelCode): ClientInterface
     {
         return $this->loggableClientMock;
     }

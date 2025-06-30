@@ -14,9 +14,12 @@ declare(strict_types=1);
 namespace Tests\NFQ\SyliusOmnisendPlugin\Functional;
 
 use Coduo\PHPMatcher\PHPUnit\PHPMatcherAssertions;
+use DateTime;
 use NFQ\SyliusOmnisendPlugin\Builder\Request\OrderBuilderDirectorInterface;
+use NFQ\SyliusOmnisendPlugin\Model\OrderDetails;
 use Sylius\Component\Core\Model\Address;
 use Sylius\Component\Core\Model\AdjustmentInterface;
+use Sylius\Component\Core\Model\Customer;
 use Sylius\Component\Core\Model\OrderItem;
 use Sylius\Component\Core\Model\OrderItemUnit;
 use Sylius\Component\Core\Model\Payment;
@@ -50,8 +53,8 @@ class OrderRequestTest extends WebTestCase
     protected function setUp(): void
     {
         self::bootKernel();
-        $this->serializer = self::$container->get('serializer');
-        $this->director = self::$container->get('nfq_sylius_omnisend_plugin.builder.request.order_director');
+        $this->serializer = self::getContainer()->get('serializer');
+        $this->director = self::getContainer()->get('nfq_sylius_omnisend_plugin.builder.request.order_director');
     }
 
     /** @dataProvider data */
@@ -74,10 +77,12 @@ class OrderRequestTest extends WebTestCase
         $order = new OrderMock();
         $order->setLocaleCode('en');
         $order->setNumber('R0011');
-        $order->setCreatedAt(new \DateTime('2012-02-12 12:12:12'));
-        $order->setUpdatedAt(new \DateTime('2012-02-12 12:12:12'));
-        $order->getOmnisendOrderDetails()->setCartId('111');
-        $order->getOmnisendOrderDetails()->setCancelledAt(new \DateTime('2012-02-12 12:12:12'));
+        $order->setCreatedAt(new DateTime('2012-02-12 12:12:12'));
+        $order->setUpdatedAt(new DateTime('2012-02-12 12:12:12'));
+        $orderDetails = $order->getOmnisendOrderDetails();
+        $orderDetails->setCartId('111');
+        $orderDetails->setCancelledAt(new DateTime('2012-02-12 12:12:12'));
+        $orderDetails->setOrder($order);
         $payment = new Payment();
         $paymentMethod = new PaymentMethod();
         $paymentMethodTrans = new PaymentMethodTranslation();
@@ -98,7 +103,7 @@ class OrderRequestTest extends WebTestCase
         $shipping->setMethod($shippingMethod);
         $order->addShipment($shipping);
 
-        $customer = new \Sylius\Component\Core\Model\Customer();
+        $customer = new Customer();
         $customer->setEmail('test@nfq.lt');
 
         $order->setCustomer($customer);
