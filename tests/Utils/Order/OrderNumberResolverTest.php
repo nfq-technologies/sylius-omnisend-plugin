@@ -24,7 +24,7 @@ class OrderNumberResolverTest extends TestCase
         $this->assertEquals(OrderNumberResolver::resolve($data), $result);
     }
 
-    public function data()
+    public static function data()
     {
         return [
             'null' => [

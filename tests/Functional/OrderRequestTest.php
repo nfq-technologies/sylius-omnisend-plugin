@@ -72,7 +72,7 @@ class OrderRequestTest extends WebTestCase
         );
     }
 
-    public function data(): array
+    public static function data(): array
     {
         $order = new OrderMock();
         $order->setLocaleCode('en');
@@ -237,7 +237,7 @@ class OrderRequestTest extends WebTestCase
                   "cartID": "@string@"
                 }
             JSON,
-            ],
-        ];
-    }
+                    ],
+                ];
+            }
 }

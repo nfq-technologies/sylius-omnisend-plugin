@@ -177,7 +177,7 @@ class CustomEventFieldsValidatorTest extends WebTestCase
         $this->validator->validate($data, new CustomEventFields());
     }
 
-    public function invalidFieldValues()
+    public static function invalidFieldValues()
     {
         return [
             'correctFields' =>

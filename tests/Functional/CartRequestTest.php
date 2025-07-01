@@ -65,7 +65,7 @@ class CartRequestTest extends WebTestCase
         );
     }
 
-    public function data(): array
+    public static function data(): array
     {
         $order = new OrderMock();
         $order->setCurrencyCode('EUR');
@@ -124,7 +124,7 @@ class CartRequestTest extends WebTestCase
                   ]
                 }
             JSON,
-            ],
-        ];
-    }
+                    ],
+                ];
+            }
 }

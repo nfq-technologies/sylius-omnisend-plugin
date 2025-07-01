@@ -41,7 +41,7 @@ class DefaultOrderCouponResolverTest extends TestCase
         }
     }
 
-    public function data()
+    public static function data()
     {
         $order = new Order();
         $promotionCoupon = new PromotionCoupon();

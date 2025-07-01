@@ -45,7 +45,7 @@ class ContactIdentifierFactoryTest extends TestCase
         $this->assertEquals($identifier, $result);
     }
 
-    public function data()
+    public static function data()
     {
         $date = new DateTime('2012-12-12 12:12:12');
         DatetimeProvider::setDateTime($date);

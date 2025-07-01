@@ -36,7 +36,8 @@ default:
                 - nfq_sylius_omnisend.context.hook.doctrine
                 - nfq_sylius_omnisend.context.hook.client_request
                 - sylius.behat.context.hook.doctrine_orm
-                - sylius.behat.context.hook.email_spool
+                - sylius.behat.context.hook.mailer
+                - sylius.behat.context.hook.session
 
                 - sylius.behat.context.transform.customer
                 - sylius.behat.context.transform.locale
@@ -131,7 +132,8 @@ default:
                 - nfq_sylius_omnisend.context.client_request
                 - nfq_sylius_omnisend.context.ui.shop.cart
                 - sylius.behat.context.hook.doctrine_orm
-                - sylius.behat.context.hook.email_spool
+                - sylius.behat.context.hook.mailer
+                - sylius.behat.context.hook.session
 
                 - sylius.behat.context.transform.address
                 - sylius.behat.context.transform.country

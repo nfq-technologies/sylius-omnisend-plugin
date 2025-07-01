@@ -56,7 +56,7 @@ class CategoryRequestTest extends WebTestCase
         );
     }
 
-    public function data(): array
+    public static function data(): array
     {
         $taxon = new Taxon();
         $taxonTranslation = new TaxonTranslation();
@@ -77,7 +77,7 @@ class CategoryRequestTest extends WebTestCase
                   "createdAt": "@string@"
                 }
             JSON,
-            ],
-        ];
-    }
+                    ],
+                ];
+            }
 }

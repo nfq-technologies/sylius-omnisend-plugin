@@ -59,7 +59,7 @@ class UniqueEventFieldValidatorTest extends TestCase
         $this->validator->validate($field, new UniqueEventField());
     }
 
-    public function data(): array
+    public static function data(): array
     {
         $productAttribute1 = new EventField();
         $productAttribute2 = new EventField();

@@ -98,7 +98,7 @@ class PushCategoryHandlerTest extends TestCase
         $this->handler->handle($message);
     }
 
-    public function data()
+    public static function data()
     {
         return [
             '0' => [

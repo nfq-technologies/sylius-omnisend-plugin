@@ -50,7 +50,7 @@ class ProductAdditionalDataResolverTest extends TestCase
         $this->assertEquals($result, $attribute);
     }
 
-    public function attributeData()
+    public static function attributeData()
     {
         $attribute1 = new ProductAttribute();
         $attribute1->setConfiguration(['choices' => ['value' => ['en' => 'value33'], 'value2' => ['en' => 'value22']]]);

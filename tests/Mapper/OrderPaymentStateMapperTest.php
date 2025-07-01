@@ -36,7 +36,7 @@ class OrderPaymentStateMapperTest extends TestCase
         $this->assertEquals($mapper->getState($order), $toState);
     }
 
-    public function data()
+    public static function data()
     {
         return [
             'STATE_CART' => [

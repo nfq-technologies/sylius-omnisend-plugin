@@ -47,7 +47,7 @@ class ProductPickerNameConverterTest extends TestCase
         $this->assertEquals($this->converter->denormalize($result), $property);
     }
 
-    public function data(): array
+    public static function data(): array
     {
         return [
             'empty string' => [
