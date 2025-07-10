@@ -111,6 +111,11 @@ class CartSubscriber implements EventSubscriberInterface
     {
         /** @var \NFQ\SyliusOmnisendPlugin\Model\OrderInterface $order */
         $order = $event->getSubject();
+
+        if ($order->getItems()->isEmpty()) {
+            return;
+        }
+
         /** @var ChannelInterface $channel */
         $channel = $order->getChannel();
 
@@ -156,6 +161,11 @@ class CartSubscriber implements EventSubscriberInterface
     {
         /** @var \NFQ\SyliusOmnisendPlugin\Model\OrderInterface $order */
         $order = $event->getSubject();
+
+        if ($order->getItems()->isEmpty()) {
+            return;
+        }
+
         /** @var ChannelInterface $channel */
         $channel = $order->getChannel();
 
