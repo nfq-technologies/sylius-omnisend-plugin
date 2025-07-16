@@ -14,9 +14,10 @@ declare(strict_types=1);
 namespace NFQ\SyliusOmnisendPlugin\Manager;
 
 use NFQ\SyliusOmnisendPlugin\Client\Response\Model\ContactSuccess;
+use NFQ\SyliusOmnisendPlugin\Model\ContactAwareInterface;
 use Sylius\Component\Core\Model\CustomerInterface;
 
 interface ContactManagerInterface
 {
-    public function pushToOmnisend(CustomerInterface $customer, ?string $channelCode): ?ContactSuccess;
+    public function pushToOmnisend(CustomerInterface&ContactAwareInterface $customer, ?string $channelCode): ?ContactSuccess;
 }

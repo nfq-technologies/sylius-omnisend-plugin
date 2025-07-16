@@ -15,7 +15,7 @@ namespace NFQ\SyliusOmnisendPlugin\EventSubscriber;
 
 use NFQ\SyliusOmnisendPlugin\Message\Command\DeleteProduct;
 use NFQ\SyliusOmnisendPlugin\Message\Command\UpdateProduct;
-use Sylius\Bundle\ResourceBundle\Event\ResourceControllerEvent;
+use Sylius\Resource\Symfony\EventDispatcher\GenericEvent as ResourceControllerEvent;
 use Sylius\Component\Channel\Context\ChannelContextInterface;
 use Sylius\Component\Core\Model\Channel;
 use Sylius\Component\Core\Model\ProductInterface;

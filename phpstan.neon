@@ -1,6 +1,6 @@
 parameters:
-    phpVersion: 80100
-    reportUnmatchedIgnoredErrors: false
+    phpVersion: 80200
+    reportUnmatchedIgnoredErrors: true
 
     excludePaths:
         # Makes PHPStan crash
@@ -12,22 +12,9 @@ parameters:
         - 'tests/Application/src/**.php'
 
     ignoreErrors:
-        - identifier: missingType.iterableValue
-        - identifier: missingType.generics
-        - '/Parameter #1 \$configuration of method Symfony\\Component\\DependencyInjection\\Extension\\Extension::processConfiguration\(\) expects Symfony\\Component\\Config\\Definition\\ConfigurationInterface, Symfony\\Component\\Config\\Definition\\ConfigurationInterface\|null given\./'
-        - '/Parameter #1 \$path of method Liip\\ImagineBundle\\Imagine\\Cache\\CacheManager::resolve\(\) expects string, string\|null given/'
-        - '/Only booleans are allowed in an elseif condition, Sylius\\Component\\Core\\Model\\ImageInterface\|false given./'
-        - '/Method NFQ\\SyliusOmnisendPlugin\\Serializer\\NameConverter\\ProductPickerNameConverter::normalize\(\) has parameter \$propertyName with no typehint specified./'
-        - '/Method NFQ\\SyliusOmnisendPlugin\\Serializer\\NameConverter\\ProductPickerNameConverter::denormalize\(\) has parameter \$propertyName with no typehint specified./'
+        - identifier: trait.unused
         - '/Variable method call on NFQ\\SyliusOmnisendPlugin\\Client\\Request\\Model\\ContactIdentifierChannel./'
-        - '/Call to an undefined method Sylius\\Component\\Core\\Model\\CustomerInterface::setOmnisendContactId\(\)./'
-        - '/Call to an undefined method Sylius\\Component\\Core\\Model\\CustomerInterface::getOmnisendContactId\(\)./'
         - '/Call to an undefined method Sylius\\Component\\Core\\Model\\OrderInterface::getOmnisendOrderDetails\(\)./'
-        - '/Cannot cast array\<string\>\|string\|null to string./'
-        - '/Cannot cast array\<string\>\|bool\|string to int./'
-        - '/Method NFQ\\SyliusOmnisendPlugin\\Client\\OmnisendClient::parseResponse\(\) has no return typehint specified./'
         - '/Call to an undefined method Symfony\\Component\\HttpFoundation\\Session\\SessionInterface::getFlashBag\(\)./'
-        - '/Method NFQ\\SyliusOmnisendPlugin\\Mapper\\EventFieldTypeDefaultValueMapper::map\(\) has no return typehint specified/'
-        - '/Method NFQ\\SyliusOmnisendPlugin\\Resolver\\ProductAdditionalDataResolver::resolveAttributeValue\(\) has no return typehint specified/'
         - '/Call to an undefined method Sylius\\Component\\Core\\Model\\CustomerInterface::isSubscribedToSMS\(\)./'
         - '/Call to function method_exists\(\) with */'

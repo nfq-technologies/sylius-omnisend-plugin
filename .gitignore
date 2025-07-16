@@ -11,3 +11,5 @@
 /behat.yml
 /phpspec.yml
 /phpunit.xml
+composer.lock
+test_unit.xml

@@ -19,7 +19,7 @@ use NFQ\SyliusOmnisendPlugin\Message\Command\PushCustomEvent;
 use NFQ\SyliusOmnisendPlugin\Model\Event as BaseEvent;
 use NFQ\SyliusOmnisendPlugin\Validator\Constraints\CustomEventFields;
 use Psr\Log\LoggerAwareTrait;
-use Sylius\Component\Resource\Repository\RepositoryInterface;
+use Sylius\Resource\Doctrine\Persistence\RepositoryInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class PushCustomEventHandler

@@ -18,7 +18,7 @@ use NFQ\SyliusOmnisendPlugin\Setter\ContactCookieSetter;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\Order;
 use Sylius\Component\Core\Storage\CartStorageInterface;
-use Sylius\Component\Resource\Repository\RepositoryInterface;
+use Sylius\Resource\Doctrine\Persistence\RepositoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RouterInterface;

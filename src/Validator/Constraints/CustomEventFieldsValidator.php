@@ -13,10 +13,11 @@ declare(strict_types=1);
 
 namespace NFQ\SyliusOmnisendPlugin\Validator\Constraints;
 
+use DateTimeInterface;
 use NFQ\SyliusOmnisendPlugin\Message\Command\PushCustomEvent;
 use NFQ\SyliusOmnisendPlugin\Model\Event;
 use NFQ\SyliusOmnisendPlugin\Model\EventField;
-use Sylius\Component\Resource\Repository\RepositoryInterface;
+use Sylius\Resource\Doctrine\Persistence\RepositoryInterface;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Date;
 use Symfony\Component\Validator\Constraints\DateTime;
@@ -35,8 +36,8 @@ class CustomEventFieldsValidator extends ConstraintValidator
         $this->eventRepository = $eventRepository;
     }
 
-    /** @var PushCustomEvent */
-    public function validate($value, Constraint $constraint): void
+    /** @param PushCustomEvent $value */
+    public function validate(mixed $value, Constraint $constraint): void
     {
         /** @var Event|null $baseEvent */
         $baseEvent = $this->eventRepository->findOneBy(['systemName' => $value->getSystemName()]);
@@ -116,7 +117,7 @@ class CustomEventFieldsValidator extends ConstraintValidator
 
                 break;
             case EventField::TYPE_DATETIME:
-                $fieldConstraint = new DateTime(['format' => \DateTime::ISO8601]);
+                $fieldConstraint = new DateTime(['format' => DateTimeInterface::ISO8601]);
 
                 break;
         }

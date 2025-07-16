@@ -16,7 +16,7 @@ namespace NFQ\SyliusOmnisendPlugin\EventSubscriber;
 use NFQ\SyliusOmnisendPlugin\Manager\ContactManagerInterface;
 use NFQ\SyliusOmnisendPlugin\Message\Command\UpdateContact;
 use NFQ\SyliusOmnisendPlugin\Setter\ContactCookieSetter;
-use Sylius\Bundle\ResourceBundle\Event\ResourceControllerEvent;
+use Sylius\Resource\Symfony\EventDispatcher\GenericEvent as ResourceControllerEvent;
 use Sylius\Component\Channel\Context\ChannelContextInterface;
 use Sylius\Component\Core\Model\AddressInterface;
 use Sylius\Component\Core\Model\Customer;

@@ -38,7 +38,7 @@ final class NFQSyliusOmnisendPlugin extends AbstractResourceBundle
     /**
      * {@inheritdoc}
      */
-    protected function getModelNamespace(): ?string
+    protected function getModelNamespace(): string
     {
         return 'NFQ\SyliusOmnisendPlugin\Model';
     }

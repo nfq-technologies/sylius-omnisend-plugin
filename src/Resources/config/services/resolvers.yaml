@@ -40,4 +40,4 @@ services:
   nfq_sylius_omnisend_plugin.resolver.default_product_variant_stock:
     class: NFQ\SyliusOmnisendPlugin\Resolver\ProductVariantStockResolver
     arguments:
-      - '@sylius.availability_checker.default'
+      - '@sylius.checker.inventory.availability'

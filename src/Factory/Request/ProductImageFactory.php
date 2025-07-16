@@ -52,9 +52,7 @@ class ProductImageFactory implements ProductImageFactoryInterface
             ->setUrl(null !== $productImage->getPath() ? $this->cache->generateUrl($productImage->getPath(), $this->imageFilter) : null)
             ->setVariantIDs(
                 array_map(
-                    function (ProductVariantInterface $productVariant): ?string {
-                        return $productVariant->getCode();
-                    },
+                    static fn(ProductVariantInterface $productVariant): ?string => $productVariant->getCode(),
                     $variants->toArray()
                 )
             );

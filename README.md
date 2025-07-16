@@ -1,6 +1,6 @@
 <p align="center">
     <a href="https://sylius.com" target="_blank">
-        <img src="https://demo.sylius.com/assets/shop/img/logo.png" />
+        <img src="https://sylius.com/wp-content/uploads/2021/03/sylius-logo_sylius-logo-light-768x317.jpg" />
     </a>
 </p>
 
@@ -25,7 +25,7 @@ This plugin implements Omnisend API and all required tracking scripts.
   - PHPUnit
 
     ```bash
-    vendor/bin/phpunit
+    composer test
     ```
 
   - Behat (non-JS scenarios)
@@ -69,14 +69,8 @@ This plugin implements Omnisend API and all required tracking scripts.
     - PHPStan
     
       ```bash
-      vendor/bin/phpstan analyse -c phpstan.neon -l max src/  
+      composer phpstan  
       ```
-
-  - Coding Standard
-  
-    ```bash
-    vendor/bin/ecs check src
-    ```
 
 ### Opening Sylius with your plugin
 

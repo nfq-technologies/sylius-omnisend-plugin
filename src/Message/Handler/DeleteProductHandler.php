@@ -20,23 +20,14 @@ use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
 class DeleteProductHandler implements MessageHandlerInterface
 {
-    /** @var OmnisendClientInterface */
-    private $omnisendClient;
-
-    /** @var ProductRepositoryInterface */
-    private $productRepository;
-
     public function __construct(
-        OmnisendClientInterface $omnisendClient,
-        ProductRepositoryInterface $productRepository
+        private readonly OmnisendClientInterface $omnisendClient,
     ) {
-        $this->omnisendClient = $omnisendClient;
-        $this->productRepository = $productRepository;
     }
 
     public function __invoke(DeleteProduct $message): void
     {
-        if (null !== $message->getProductCode()) {
+        if ($message->getProductCode() !== null) {
             $this->omnisendClient->deleteProduct(
                 $message->getProductCode(),
                 $message->getChannelCode()

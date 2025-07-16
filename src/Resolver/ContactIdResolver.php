@@ -33,13 +33,11 @@ class ContactIdResolver implements ContactIdResolverInterface
         /** @var ContactAwareInterface|null $customer */
         $customer = $order->getCustomer();
 
-        if (null !== $customer && null !== $customer->getOmnisendContactId()) {
+        if ($customer?->getOmnisendContactId() !== null) {
             return $customer->getOmnisendContactId();
         }
         if (
-            null !== $this->request &&
-            null !== $this->request->cookies &&
-            $this->request->cookies->has('omnisendContactID')
+            $this->request?->cookies?->has('omnisendContactID')
         ) {
             return $this->request->cookies->get('omnisendContactID');
         }
