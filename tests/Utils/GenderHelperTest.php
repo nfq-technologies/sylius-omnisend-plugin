@@ -24,7 +24,7 @@ class GenderHelperTest extends TestCase
         $this->assertEquals(GenderHelper::resolve($data), $result);
     }
 
-    public function data(): array
+    public static function data(): array
     {
         return [
             'empty string' => [

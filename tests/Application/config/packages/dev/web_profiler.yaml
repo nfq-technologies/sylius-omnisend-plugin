@@ -1,3 +1,4 @@
 web_profiler:
+#    profiling: true
     toolbar: true
     intercept_redirects: false

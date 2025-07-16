@@ -55,7 +55,7 @@ class ProductPickerNormalizerTest extends TestCase
         $this->assertEquals($this->normalizer->supportsNormalization($normalizeData, $type), $isSupport);
     }
 
-    public function data(): array
+    public static function data(): array
     {
         return [
             'empty string' => [

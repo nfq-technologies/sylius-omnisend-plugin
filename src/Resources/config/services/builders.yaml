@@ -12,7 +12,7 @@ services:
   nfq_sylius_omnisend_plugin.builder.product_picker_director:
     class: NFQ\SyliusOmnisendPlugin\Builder\ProductPickerBuilderDirector
     arguments:
-      - '@sylius.product_variant_resolver.default'
+      - '@Sylius\Component\Product\Resolver\ProductVariantResolverInterface'
       - '@nfq_sylius_omnisend_plugin.builder.product_picker'
 
   nfq_sylius_omnisend_plugin.builder.request.contact:

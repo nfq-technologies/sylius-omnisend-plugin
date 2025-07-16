@@ -81,14 +81,15 @@ class OrderProductFactoryTest extends TestCase
 
         $adjustment = new Adjustment();
         $adjustment->setAmount(-1000);
-        $adjustment->setType(AdjustmentInterface::ORDER_ITEM_PROMOTION_ADJUSTMENT);
+        $adjustment->setType(AdjustmentInterface::ORDER_UNIT_PROMOTION_ADJUSTMENT);
 
         $orderItem = new OrderItem();
         $orderItem->setOrder($order);
         $orderItem->setUnitPrice(5000);
-        $orderItem->addUnit(new OrderItemUnit($orderItem));
+        $itemUnit = new OrderItemUnit($orderItem);
+        $itemUnit->addAdjustment($adjustment);
+        $orderItem->addUnit($itemUnit);
         $orderItem->setProductName('Name');
-        $orderItem->addAdjustment($adjustment);
         $orderItem->setVariant($variant);
 
         $this->productUrlResolver

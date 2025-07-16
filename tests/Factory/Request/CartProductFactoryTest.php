@@ -50,27 +50,32 @@ class CartProductFactoryTest extends TestCase
         );
     }
 
-    public function testIfCreatesWell()
+    public function testIfCreatesWell(): void
     {
         $order = new Order();
         $order->setLocaleCode('en');
         $orderItem = new OrderItem();
         $orderItem->setOrder($order);
         $orderItem->setUnitPrice(5000);
-        $orderItem->addUnit(new OrderItemUnit($orderItem));
+
+        $itemUnit = new OrderItemUnit($orderItem);
+        $orderItem->addUnit($itemUnit);
         $orderItem->setProductName('Name');
         $adjustment1 = new Adjustment();
         $adjustment1->setAmount(-1000);
-        $adjustment1->setType(AdjustmentInterface::ORDER_ITEM_PROMOTION_ADJUSTMENT);
-        $orderItem->addAdjustment($adjustment1);
-        $variant = new ProductVariant();
-        $product = new Product();
+        $adjustment1->setType(AdjustmentInterface::ORDER_UNIT_PROMOTION_ADJUSTMENT);
+        $itemUnit->addAdjustment($adjustment1);
+
         $productTranslation = new ProductTranslation();
         $productTranslation->setLocale('en');
         $productTranslation->setSlug('product');
+
+        $product = new Product();
         $product->addTranslation($productTranslation);
-        $variant->setProduct($product);
         $product->setCode('product_code');
+
+        $variant = new ProductVariant();
+        $variant->setProduct($product);
         $variant->setCode('variant_code');
         $orderItem->setVariant($variant);
         $this->productUrlResolver
@@ -85,14 +90,14 @@ class CartProductFactoryTest extends TestCase
 
         $product = $this->factory->create($orderItem);
 
-        $this->assertEquals($product->getTitle(), 'Name');
-        $this->assertEquals($product->getProductUrl(), 'url');
-        $this->assertEquals($product->getImageUrl(), 'test.jpg');
-        $this->assertEquals($product->getPrice(), 4000);
-        $this->assertEquals($product->getOldPrice(), 5000);
-        $this->assertEquals($product->getQuantity(), 1);
-        $this->assertEquals($product->getDiscount(), 1000);
-        $this->assertEquals($product->getSku(), 'product_code');
-        $this->assertEquals($product->getVariantID(), 'variant_code');
+        $this->assertEquals('Name', $product->getTitle());
+        $this->assertEquals('url', $product->getProductUrl());
+        $this->assertEquals('test.jpg', $product->getImageUrl());
+        $this->assertEquals(4000, $product->getPrice());
+        $this->assertEquals(5000, $product->getOldPrice());
+        $this->assertEquals(1, $product->getQuantity());
+        $this->assertEquals(1000, $product->getDiscount());
+        $this->assertEquals('product_code', $product->getSku());
+        $this->assertEquals('variant_code', $product->getVariantID());
     }
 }

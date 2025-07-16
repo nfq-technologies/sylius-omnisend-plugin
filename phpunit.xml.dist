@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/8.5/phpunit.xsd"
+         xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/10.5/phpunit.xsd"
          colors="true"
+         displayDetailsOnPhpunitDeprecations="true"
          bootstrap="tests/Application/config/bootstrap.php">
     <testsuites>
         <testsuite name="NFQSyliusOmnisendPlugin Test Suite">

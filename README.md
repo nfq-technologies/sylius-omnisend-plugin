@@ -47,6 +47,7 @@ This plugin implements Omnisend API and all required tracking scripts.
     3. Install SSL certificates (only once needed) and run test application's webserver on `127.0.0.1:8080`:
     
       ```bash
+      wget https://get.symfony.com/cli/installer -O - | bash
       symfony server:ca:install
       APP_ENV=test symfony server:start --port=8080 --dir=tests/Application/public --daemon
       ```

@@ -39,21 +39,19 @@ class CartRequestTest extends WebTestCase
 {
     use PHPMatcherAssertions;
 
-    /** @var SerializerInterface */
-    private $serializer;
+    private SerializerInterface $serializer;
 
-    /** @var CartBuilderDirectorInterface */
-    private $director;
+    private CartBuilderDirectorInterface $director;
 
     protected function setUp(): void
     {
         self::bootKernel();
-        $this->serializer = self::$container->get('serializer');
-        $this->director = self::$container->get('nfq_sylius_omnisend_plugin.builder.request.cart_director');
+        $this->serializer = self::getContainer()->get('serializer');
+        $this->director = self::getContainer()->get('nfq_sylius_omnisend_plugin.builder.request.cart_director');
     }
 
     /** @dataProvider data */
-    public function testIfFormatValidRequest(OrderMock $data, string $result)
+    public function testIfFormatValidRequest(OrderMock $data, string $result): void
     {
         $this->assertMatchesPattern(
             $result,
@@ -67,7 +65,7 @@ class CartRequestTest extends WebTestCase
         );
     }
 
-    public function data(): array
+    public static function data(): array
     {
         $order = new OrderMock();
         $order->setCurrencyCode('EUR');
@@ -75,12 +73,13 @@ class CartRequestTest extends WebTestCase
         $orderItem = new OrderItem();
         $orderItem->setOrder($order);
         $orderItem->setUnitPrice(5000);
-        $orderItem->addUnit(new OrderItemUnit($orderItem));
+        $itemUnit = new OrderItemUnit($orderItem);
+        $orderItem->addUnit($itemUnit);
         $orderItem->setProductName('Name');
         $adjustment1 = new Adjustment();
         $adjustment1->setAmount(-1000);
-        $adjustment1->setType(AdjustmentInterface::ORDER_ITEM_PROMOTION_ADJUSTMENT);
-        $orderItem->addAdjustment($adjustment1);
+        $adjustment1->setType(AdjustmentInterface::ORDER_UNIT_PROMOTION_ADJUSTMENT);
+        $itemUnit->addAdjustment($adjustment1);
         $variant = new ProductVariant();
         $product = new Product();
         $productTranslation = new ProductTranslation();
@@ -125,7 +124,7 @@ class CartRequestTest extends WebTestCase
                   ]
                 }
             JSON,
-            ],
-        ];
-    }
+                    ],
+                ];
+            }
 }

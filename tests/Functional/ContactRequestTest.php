@@ -53,7 +53,7 @@ class ContactRequestTest extends WebTestCase
         );
     }
 
-    public function data(): array
+    public static function data(): array
     {
         $customer1 = new Customer();
         $customer1->setEmail('test@nfq.lt');
@@ -98,10 +98,10 @@ class ContactRequestTest extends WebTestCase
                   "createdAt": "@string@"
                 }
             JSON,
-            ],
-            'onlyPhone' => [
-                $customer2,
-                <<<JSON
+                    ],
+                    'onlyPhone' => [
+                        $customer2,
+                        <<<JSON
                 {
                   "identifiers": [
                     {
@@ -120,9 +120,9 @@ class ContactRequestTest extends WebTestCase
                 }
             JSON
             ],
-            'full' => [
-                $customer3,
-                <<<JSON
+                    'full' => [
+                        $customer3,
+                        <<<JSON
                 {
                    "identifiers": [
                     {
@@ -161,6 +161,6 @@ class ContactRequestTest extends WebTestCase
                 }
             JSON
             ],
-        ];
-    }
+                ];
+            }
 }

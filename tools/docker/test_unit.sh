@@ -6,7 +6,7 @@ echo "PROJECT ROOT: ${PROJECT_ROOT}"
 cd "${PROJECT_ROOT}"
 
 echo "## Executing Unit Tests"
-
+rm -rf "$PROJECT_ROOT/tests/Application/var/cache/"
 ./vendor/bin/phpunit --log-junit test_unit.xml
 
 code=$?
