@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace NFQ\SyliusOmnisendPlugin\Resolver;
 
 use Sylius\Component\Core\Exception\MissingChannelConfigurationException;
+use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\ProductVariantInterface;
 use Webmozart\Assert\Assert;
 
@@ -22,6 +23,7 @@ class ProductOriginalPriceResolver
     public function calculateOriginal(ProductVariantInterface $productVariant, array $context): ?int
     {
         Assert::keyExists($context, 'channel');
+        Assert::isInstanceOf($context['channel'], ChannelInterface::class);
 
         $channelPricing = $productVariant->getChannelPricingForChannel($context['channel']);
 

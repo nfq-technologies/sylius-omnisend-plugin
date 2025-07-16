@@ -55,7 +55,7 @@ class CategoryBatchHandleStrategy implements BatchHandlerStrategyInterface
 
     public function support(CreateBatch $batch): bool
     {
-        return $batch->getType() == 'categories';
+        return $batch->getType() === 'categories';
     }
 
     public function handle(CreateBatch $message): void

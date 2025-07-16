@@ -18,7 +18,7 @@ use NFQ\SyliusOmnisendPlugin\Model\Event;
 use NFQ\SyliusOmnisendPlugin\Model\EventField;
 use NFQ\SyliusOmnisendPlugin\Validator\Constraints\CustomEventFields;
 use NFQ\SyliusOmnisendPlugin\Validator\Constraints\CustomEventFieldsValidator;
-use Sylius\Component\Resource\Repository\RepositoryInterface;
+use Sylius\Resource\Doctrine\Persistence\RepositoryInterface;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class CustomEventFieldsValidatorTest extends WebTestCase

@@ -125,8 +125,8 @@ class ProductPickerBuilder implements ProductPickerBuilderInterface
 
         $this->productPicker
             ->setPrice($price)
-            ->setOldPrice($oldPrice != $price ? $oldPrice : null)
-            ->setCurrency($currency !== null ? $currency->getCode() : null);
+            ->setOldPrice($oldPrice !== $price ? $oldPrice : null)
+            ->setCurrency($currency?->getCode());
     }
 
     public function addImage(ProductInterface $product): void

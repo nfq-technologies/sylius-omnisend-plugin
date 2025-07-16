@@ -16,7 +16,7 @@ namespace Tests\NFQ\SyliusOmnisendPlugin\Behat\Provider;
 use NFQ\SyliusOmnisendPlugin\Model\Event;
 use NFQ\SyliusOmnisendPlugin\Model\EventField;
 use Sylius\Component\Channel\Context\ChannelContextInterface;
-use Sylius\Component\Resource\Repository\RepositoryInterface;
+use Sylius\Resource\Doctrine\Persistence\RepositoryInterface;
 
 class CustomEventProvider
 {

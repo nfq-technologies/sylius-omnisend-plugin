@@ -17,7 +17,7 @@ use NFQ\SyliusOmnisendPlugin\Event\CustomEvent;
 use NFQ\SyliusOmnisendPlugin\Message\Command\PushCustomEvent;
 use NFQ\SyliusOmnisendPlugin\Message\Command\UpdateEvent;
 use NFQ\SyliusOmnisendPlugin\Model\Event;
-use Sylius\Bundle\ResourceBundle\Event\ResourceControllerEvent;
+use Sylius\Resource\Symfony\EventDispatcher\GenericEvent as ResourceControllerEvent;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Messenger\Envelope;

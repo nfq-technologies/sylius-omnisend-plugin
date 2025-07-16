@@ -21,8 +21,8 @@ use Webmozart\Assert\Assert;
 
 class UniqueEventFieldValidator extends ConstraintValidator
 {
-    /** @var Collection */
-    public function validate($value, Constraint $constraint): void
+    /** @param Collection $value */
+    public function validate(mixed $value, Constraint $constraint): void
     {
         Assert::isInstanceOf($constraint, UniqueEventField::class);
 
