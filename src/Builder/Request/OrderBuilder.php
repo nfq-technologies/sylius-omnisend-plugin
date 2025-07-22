@@ -119,10 +119,9 @@ class OrderBuilder implements OrderBuilderInterface
 
     public function addTrackingData(OrderInterface $order): void
     {
-        /** @var ShipmentInterface|null $shipping */
         $shipping = $order->getShipments()->last();
 
-        if (null !== $shipping) {
+        if ($shipping) {
             $this->order->setTrackingCode($shipping->getTracking());
         }
 
@@ -130,7 +129,6 @@ class OrderBuilder implements OrderBuilderInterface
         $this->order->setCourierUrl($this->orderCourierResolver->getCourierUrl($order));
     }
 
-    /** @var \NFQ\SyliusOmnisendPlugin\Model\OrderInterface $order */
     public function addCartData(OrderInterface $order): void
     {
         /** @var OrderDetails $details */
@@ -156,7 +154,6 @@ class OrderBuilder implements OrderBuilderInterface
         $this->order->setTags($this->orderAdditionalDataResolver->getTags($order));
     }
 
-    /** @var \NFQ\SyliusOmnisendPlugin\Model\OrderInterface */
     public function addOrderData(OrderInterface $order): void
     {
         /** @var ShipmentInterface|null $shipping */
@@ -214,7 +211,6 @@ class OrderBuilder implements OrderBuilderInterface
         return $this->order;
     }
 
-    /** @var \NFQ\SyliusOmnisendPlugin\Model\OrderInterface $order */
     public function addCancelData(OrderInterface $order): void
     {
         $this->order->setCanceledDate(DatetimeHelper::format($order->getOmnisendOrderDetails()->getCancelledAt()));

@@ -20,7 +20,7 @@ use NFQ\SyliusOmnisendPlugin\Message\Command\UpdateOrder;
 use NFQ\SyliusOmnisendPlugin\Message\Command\UpdateOrderState;
 use NFQ\SyliusOmnisendPlugin\Model\OrderInterface;
 use SM\Event\TransitionEvent;
-use Sylius\Bundle\ResourceBundle\Event\ResourceControllerEvent;
+use Sylius\Resource\Symfony\EventDispatcher\GenericEvent as ResourceControllerEvent;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\PaymentInterface;
 use Sylius\Component\Core\Model\ShipmentInterface;

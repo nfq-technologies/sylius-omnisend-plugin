@@ -1,4 +1,0 @@
-suites:
-    main:
-        namespace: NFQ\SyliusOmnisendPlugin
-        psr4_prefix: NFQ\SyliusOmnisendPlugin

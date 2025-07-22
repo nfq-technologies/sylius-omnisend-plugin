@@ -15,7 +15,7 @@ namespace Tests\NFQ\SyliusOmnisendPlugin\Behat\Context\Ui\Admin;
 
 use Behat\Behat\Context\Context;
 use Sylius\Behat\Service\SharedStorageInterface;
-use Sylius\Component\Resource\Repository\RepositoryInterface;
+use Sylius\Resource\Doctrine\Persistence\RepositoryInterface;
 use Tests\NFQ\SyliusOmnisendPlugin\Behat\Page\Admin\Event\CreatePage;
 use Tests\NFQ\SyliusOmnisendPlugin\Behat\Page\Admin\Event\IndexPage;
 use Tests\NFQ\SyliusOmnisendPlugin\Behat\Page\Admin\Event\UpdatePage;

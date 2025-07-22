@@ -16,8 +16,8 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.1'
-          extensions: ctype, curl, dom, exif, fileinfo, filter, gd, hash, iconv, intl, json, libxml, mbstring, openssl, pcre, phar, simplexml, sodium, spl, tokenizer, xml, xmlwriter
+          php-version: '8.2'
+          extensions: ctype, curl, date, dom, exif, fileinfo, filter, gd, hash, iconv, intl, json, libxml, mbstring, openssl, pcre, phar, simplexml, sodium, spl, tokenizer, xml, xmlwriter
 
       - name: Install dependencies
         run: composer install --no-interaction

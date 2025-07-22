@@ -17,7 +17,7 @@ use NFQ\SyliusOmnisendPlugin\Builder\Request\EventBuilderDirectorInterface;
 use NFQ\SyliusOmnisendPlugin\Client\OmnisendClientInterface;
 use NFQ\SyliusOmnisendPlugin\Message\Command\UpdateEvent;
 use NFQ\SyliusOmnisendPlugin\Model\Event as BaseEvent;
-use Sylius\Component\Resource\Repository\RepositoryInterface;
+use Sylius\Resource\Doctrine\Persistence\RepositoryInterface;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
 class UpdateEventHandler implements MessageHandlerInterface

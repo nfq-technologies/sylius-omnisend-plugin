@@ -13,16 +13,17 @@ declare(strict_types=1);
 
 namespace NFQ\SyliusOmnisendPlugin\Utils;
 
-use Datetime;
+use DateTime;
 
 class DatetimeProvider
 {
-    /** @var DateTime|null */
-    private static $datetime;
+    private static ?DateTime $datetime = null;
 
     public static function currentDateTime(): DateTime
     {
-        return self::$datetime !== null ? self::$datetime : new Datetime();
+        self::$datetime ??= new DateTime();
+
+        return self::$datetime;
     }
 
     public static function setDateTime(Datetime $datetime): void
