@@ -18,7 +18,7 @@ use NFQ\SyliusOmnisendPlugin\Exception\UserCannotBeIdentifiedException;
 use NFQ\SyliusOmnisendPlugin\Factory\Request\CartProductFactory;
 use NFQ\SyliusOmnisendPlugin\Model\OrderInterface;
 use NFQ\SyliusOmnisendPlugin\Utils\DatetimeHelper;
-use Sylius\Component\Resource\Generator\RandomnessGeneratorInterface;
+use Sylius\Resource\Generator\RandomnessGeneratorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;

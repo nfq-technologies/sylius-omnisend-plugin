@@ -42,8 +42,7 @@ class ContactManager implements ContactManagerInterface
         $this->customerRepository = $customerRepository;
     }
 
-    /** @var CustomerInterface&ContactAwareInterface */
-    public function pushToOmnisend(CustomerInterface $customer, ?string $channelCode): ?ContactSuccess
+    public function pushToOmnisend(ContactAwareInterface $customer, ?string $channelCode): ?ContactSuccess
     {
         $contactId = $this->getCurrentContactId($customer, $channelCode);
 
@@ -70,8 +69,7 @@ class ContactManager implements ContactManagerInterface
         return $response;
     }
 
-    /** @var CustomerInterface&ContactAwareInterface */
-    private function getCurrentContactId(CustomerInterface $customer, ?string $channelCode): ?string
+    private function getCurrentContactId(ContactAwareInterface $customer, ?string $channelCode): ?string
     {
         /** @var ContactSuccessList|null $contacts */
         $contacts = $this->omnisendClient->getContactByEmail($customer->getEmail(), $channelCode);

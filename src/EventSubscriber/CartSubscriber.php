@@ -17,7 +17,7 @@ use NFQ\SyliusOmnisendPlugin\Message\Command\DeleteCart;
 use NFQ\SyliusOmnisendPlugin\Message\Command\UpdateCart;
 use NFQ\SyliusOmnisendPlugin\Model\OrderDetails;
 use NFQ\SyliusOmnisendPlugin\Resolver\ContactIdResolverInterface;
-use Sylius\Bundle\ResourceBundle\Event\ResourceControllerEvent;
+use Sylius\Resource\Symfony\EventDispatcher\GenericEvent as ResourceControllerEvent;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Order\Context\CartContextInterface;

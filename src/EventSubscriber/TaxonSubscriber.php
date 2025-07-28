@@ -15,7 +15,7 @@ namespace NFQ\SyliusOmnisendPlugin\EventSubscriber;
 
 use NFQ\SyliusOmnisendPlugin\Message\Command\DeleteCategory;
 use NFQ\SyliusOmnisendPlugin\Message\Command\UpdateCategory;
-use Sylius\Bundle\ResourceBundle\Event\ResourceControllerEvent;
+use Sylius\Resource\Symfony\EventDispatcher\GenericEvent as ResourceControllerEvent;
 use Sylius\Component\Channel\Context\ChannelContextInterface;
 use Sylius\Component\Core\Model\TaxonInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;

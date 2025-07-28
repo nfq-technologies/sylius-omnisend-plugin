@@ -2,7 +2,7 @@ services:
   nfq_sylius_omnisend_plugin.controller.cart_recover:
     class: NFQ\SyliusOmnisendPlugin\Controller\CartRecoverAction
     arguments:
-      - '@sylius.storage.cart_session'
+      - '@sylius_shop.storage.cart_session'
       - '@router'
       - '@nfq_sylius_omnisend_plugin.repository.order_details'
       - '@nfq_sylius_omnisend_plugin.setter.contact_cookie'

@@ -19,13 +19,8 @@ use Doctrine\ORM\Mapping as ORM;
 
 trait PushedToOmnisendAwareTrait
 {
-    /**
-     * @var DateTimeInterface|null
-     *
-     * @ORM\Column(name="pushed_to_omnisend", type="datetime", nullable=true)
-     */
     #[ORM\Column(name: 'pushed_to_omnisend', type: 'datetime', nullable: true)]
-    protected $pushedToOmnisend;
+    protected ?DateTimeInterface $pushedToOmnisend = null;
 
     public function isPushedToOmnisend(): bool
     {
@@ -39,9 +34,7 @@ trait PushedToOmnisendAwareTrait
 
     public function setPushedToOmnisend(DateTimeInterface $dateTime = null): void
     {
-        if (null === $dateTime) {
-            $dateTime = new DateTime();
-        }
+        $dateTime ??= new DateTime();
 
         $this->pushedToOmnisend = $dateTime;
     }

@@ -22,14 +22,11 @@ use Symfony\Component\Serializer\SerializerInterface;
 
 class MessageFactory
 {
-    /** @var BaseFactory */
-    private $factory;
+    private ?BaseFactory $factory = null;
 
-    /** @var ChannelContextInterface */
-    private $channelContext;
+    private ChannelContextInterface $channelContext;
 
-    /** @var SerializerInterface */
-    private $serializer;
+    private SerializerInterface $serializer;
 
     public function __construct(ChannelContextInterface $channelContext, SerializerInterface $serializer)
     {
@@ -39,15 +36,12 @@ class MessageFactory
 
     private function getMessageFactory(): BaseFactory
     {
-        if ($this->factory === null) {
-            $this->factory = MessageFactoryDiscovery::find();
-        }
+        $this->factory ??= MessageFactoryDiscovery::find();
 
         return $this->factory;
     }
 
-    /** @param mixed $data */
-    public function create(string $type, string $url, $data = null): RequestInterface
+    public function create(string $type, string $url, mixed $data = null): RequestInterface
     {
         return $this->getMessageFactory()->createRequest(
             $type,
