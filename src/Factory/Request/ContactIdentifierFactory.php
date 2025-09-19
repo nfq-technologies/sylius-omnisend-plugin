@@ -23,15 +23,16 @@ use function ucfirst;
 
 class ContactIdentifierFactory implements ContactIdentifierFactoryInterface
 {
-    /** @var array */
-    private $sendWelcomeMessageConfig;
+    /** @var bool[] */
+    private array $sendWelcomeMessageConfig;
 
-    /** @var string[]|array */
-    private $typesMap = [
+    /** @var string[] */
+    private array $typesMap = [
         ContactIdentifier::TYPE_EMAIL => 'email',
         ContactIdentifier::TYPE_PHONE => 'sms',
     ];
 
+    /** @param bool[] $sendWelcomeMessageConfig */
     public function __construct(array $sendWelcomeMessageConfig)
     {
         $this->sendWelcomeMessageConfig = $sendWelcomeMessageConfig;

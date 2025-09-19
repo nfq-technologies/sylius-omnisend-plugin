@@ -29,7 +29,7 @@ class ContactManager implements ContactManagerInterface
     /** @var OmnisendClientInterface */
     private $omnisendClient;
 
-    /** @var CustomerRepositoryInterface */
+    /** @var CustomerRepositoryInterface<CustomerInterface> */
     private $customerRepository;
 
     public function __construct(
@@ -44,24 +44,22 @@ class ContactManager implements ContactManagerInterface
 
     public function pushToOmnisend(ContactAwareInterface $customer, ?string $channelCode): ?ContactSuccess
     {
-        $contactId = $this->getCurrentContactId($customer, $channelCode);
+        $contact = $this->getCurrentContact($customer, $channelCode);
 
-        if (null !== $contactId) {
-            /** @var ContactSuccess|null $response */
+        if ($contact !== null) {
             $response = $this->omnisendClient->patchContact(
-                $contactId,
+                $contact->getContactID(),
                 $this->contactBuilderDirector->build($customer),
                 $channelCode
             );
         } else {
-            /** @var ContactSuccess|null $response */
             $response = $this->omnisendClient->postContact(
                 $this->contactBuilderDirector->build($customer),
                 $channelCode
             );
         }
 
-        if (null !== $response) {
+        if ($response !== null) {
             $customer->setOmnisendContactId($response->getContactID());
             $this->customerRepository->add($customer);
         }
@@ -69,18 +67,39 @@ class ContactManager implements ContactManagerInterface
         return $response;
     }
 
-    private function getCurrentContactId(ContactAwareInterface $customer, ?string $channelCode): ?string
+    private function getCurrentContact(ContactAwareInterface $customer, ?string $channelCode): ?ContactSuccess
     {
-        /** @var ContactSuccessList|null $contacts */
-        $contacts = $this->omnisendClient->getContactByEmail($customer->getEmail(), $channelCode);
+        $contacts = empty($customer->getEmail()) ? null : $this->omnisendClient->getContactByEmail(
+            $customer->getEmail(),
+            $channelCode,
+        );
 
-        if (null !== $contacts && count($contacts->getContacts()) > 0) {
-            /** @var ContactSuccess $contact */
-            $contact = $contacts->getContacts()[0];
+        if (!$this->isEmpty($contacts)) {
+            return $this->getFirstContact($contacts);
+        }
 
-            return $contact->getContactID();
+        $contacts = empty($customer->getEmail()) ? null : $this->omnisendClient->getContactByPhone(
+            $customer->getPhoneNumber(),
+            $channelCode,
+        );
+
+        if (!$this->isEmpty($contacts)) {
+            return $this->getFirstContact($contacts);
         }
 
         return null;
+    }
+
+    /**
+     * @phpstan-assert-if-false ContactSuccessList $contacts
+     */
+    private function isEmpty(?ContactSuccessList $contacts): bool
+    {
+        return $contacts === null || $contacts->isEmpty();
+    }
+
+    private function getFirstContact(ContactSuccessList $contacts): ?ContactSuccess
+    {
+        return $contacts->getContacts()[0] ?? null;
     }
 }

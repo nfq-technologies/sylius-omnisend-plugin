@@ -20,4 +20,24 @@ use Sylius\Component\Core\Model\Customer;
 class CustomerMock extends Customer implements ContactAwareInterface
 {
     use ContactAwareTrait;
+
+    public function isSubscribedToSms(): bool
+    {
+        return false;
+    }
+
+    public function getSubscribedToEmail(): ?bool
+    {
+        return false;
+    }
+
+    public function getSubscribedToSms(): ?bool
+    {
+        return false;
+    }
+
+    public function isSubscribedToEmail(): bool
+    {
+        return false;
+    }
 }

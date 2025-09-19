@@ -27,6 +27,7 @@ use NFQ\SyliusOmnisendPlugin\Client\Response\Model\BatchSuccess;
 use NFQ\SyliusOmnisendPlugin\Client\Response\Model\CartSuccess;
 use NFQ\SyliusOmnisendPlugin\Client\Response\Model\CategorySuccess;
 use NFQ\SyliusOmnisendPlugin\Client\Response\Model\ContactSuccess;
+use NFQ\SyliusOmnisendPlugin\Client\Response\Model\ContactSuccessList;
 use NFQ\SyliusOmnisendPlugin\Client\Response\Model\EventSuccess;
 use NFQ\SyliusOmnisendPlugin\Client\Response\Model\OrderSuccess;
 use NFQ\SyliusOmnisendPlugin\Client\Response\Model\ProductSuccess;
@@ -43,16 +44,16 @@ class OmnisendClientMock implements OmnisendClientInterface
         $this->client = $client;
     }
 
-    public function postContact(Contact $contact, ?string $channelCode): ?object
+    public function postContact(Contact $contact, ?string $channelCode): ?ContactSuccess
     {
         $this->client->postContact($contact, $channelCode);
 
         return (new ContactSuccess())->setContactID('testId');
     }
 
-    public function patchContact(string $contactId, Contact $contact, ?string $channelCode): ?object
+    public function patchContact(string $contactId, Contact $contact, ?string $channelCode): ?ContactSuccess
     {
-        $this->client->patchContact($contactId, $contact, $channelCode);
+        return $this->client->patchContact($contactId, $contact, $channelCode);
     }
 
     public function getCategory(?string $category, ?string $channelCode): ?object
@@ -173,14 +174,14 @@ class OmnisendClientMock implements OmnisendClientInterface
         return new EventSuccess();
     }
 
-    public function getContactByPhone(?string $phone, ?string $channelCode): ?object
+    public function getContactByPhone(string $phone, ?string $channelCode): ?ContactSuccessList
     {
         $this->client->getContactByPhone($phone, $channelCode);
 
         return null;
     }
     
-    public function getContactByEmail(?string $email, ?string $channelCode): ?object
+    public function getContactByEmail(string $email, ?string $channelCode): ?ContactSuccessList
     {
         $this->client->getContactByEmail($email, $channelCode);
 

@@ -15,6 +15,7 @@ namespace NFQ\SyliusOmnisendPlugin\EventSubscriber;
 
 use NFQ\SyliusOmnisendPlugin\Manager\ContactManagerInterface;
 use NFQ\SyliusOmnisendPlugin\Message\Command\UpdateContact;
+use NFQ\SyliusOmnisendPlugin\Model\ContactAwareInterface;
 use NFQ\SyliusOmnisendPlugin\Setter\ContactCookieSetter;
 use Sylius\Resource\Symfony\EventDispatcher\GenericEvent as ResourceControllerEvent;
 use Sylius\Component\Channel\Context\ChannelContextInterface;
@@ -64,7 +65,7 @@ class CustomerSubscriber implements EventSubscriberInterface
 
     public function onRegister(ResourceControllerEvent $event): void
     {
-        /** @var CustomerInterface $customer */
+        /** @var ContactAwareInterface $customer */
         $customer = $event->getSubject();
 
         $response = $this->contactManager->pushToOmnisend($customer, $this->channelContext->getChannel()->getCode());

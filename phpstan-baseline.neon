@@ -1,0 +1,1435 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Parameter \#1 \$oldPrice of method NFQ\\SyliusOmnisendPlugin\\Model\\ProductPicker\:\:setOldPrice\(\) expects int\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Builder/ProductPickerBuilder.php
+
+		-
+			message: '#^Property NFQ\\SyliusOmnisendPlugin\\Builder\\Request\\CartBuilder\:\:\$request is never read, only written\.$#'
+			identifier: property.onlyWritten
+			count: 1
+			path: src/Builder/Request/CartBuilder.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Builder\\Request\\EventBuilder\:\:addFormattedFields\(\) has parameter \$fields with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Builder/Request/EventBuilder.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Builder\\Request\\EventBuilderDirector\:\:buildWithFormattedFields\(\) has parameter \$fields with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Builder/Request/EventBuilderDirector.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Builder\\Request\\EventBuilderDirectorInterface\:\:buildWithFormattedFields\(\) has parameter \$fields with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Builder/Request/EventBuilderDirectorInterface.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Builder\\Request\\EventBuilderInterface\:\:addFormattedFields\(\) has parameter \$fields with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Builder/Request/EventBuilderInterface.php
+
+		-
+			message: '#^Cannot call method getCancelledAt\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: src/Builder/Request/OrderBuilder.php
+
+		-
+			message: '#^Only booleans are allowed in an if condition, Sylius\\Component\\Core\\Model\\ShipmentInterface\|false given\.$#'
+			identifier: if.condNotBoolean
+			count: 1
+			path: src/Builder/Request/OrderBuilder.php
+
+		-
+			message: '#^PHPDoc tag @var with type Sylius\\Component\\Core\\Model\\ShipmentInterface\|null is not subtype of type Sylius\\Component\\Core\\Model\\ShipmentInterface\|false\.$#'
+			identifier: varTag.type
+			count: 1
+			path: src/Builder/Request/OrderBuilder.php
+
+		-
+			message: '#^Parameter \#1 \$dateTime of static method NFQ\\SyliusOmnisendPlugin\\Utils\\DatetimeHelper\:\:format\(\) expects DateTimeInterface\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Builder/Request/OrderBuilder.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Builder\\Request\\ProductImageListBuilder\:\:build\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Builder/Request/ProductImageListBuilder.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Builder\\Request\\ProductImageListBuilderInterface\:\:build\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Builder/Request/ProductImageListBuilderInterface.php
+
+		-
+			message: '#^Property NFQ\\SyliusOmnisendPlugin\\Client\\MessageFactory\:\:\$channelContext is never read, only written\.$#'
+			identifier: property.onlyWritten
+			count: 1
+			path: src/Client/MessageFactory.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Client\\OmnisendClient\:\:deleteCart\(\) should return object\|null but returns mixed\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Client/OmnisendClient.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Client\\OmnisendClient\:\:deleteCategory\(\) should return object\|null but returns mixed\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Client/OmnisendClient.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Client\\OmnisendClient\:\:deleteOrder\(\) should return object\|null but returns mixed\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Client/OmnisendClient.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Client\\OmnisendClient\:\:deleteProduct\(\) should return object\|null but returns mixed\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Client/OmnisendClient.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Client\\OmnisendClient\:\:getBatch\(\) should return object\|null but returns mixed\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Client/OmnisendClient.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Client\\OmnisendClient\:\:getCategory\(\) should return object\|null but returns mixed\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Client/OmnisendClient.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Client\\OmnisendClient\:\:getContactByEmail\(\) should return NFQ\\SyliusOmnisendPlugin\\Client\\Response\\Model\\ContactSuccessList\|null but returns mixed\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Client/OmnisendClient.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Client\\OmnisendClient\:\:getContactByPhone\(\) should return NFQ\\SyliusOmnisendPlugin\\Client\\Response\\Model\\ContactSuccessList\|null but returns mixed\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Client/OmnisendClient.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Client\\OmnisendClient\:\:getEvents\(\) should return array\<NFQ\\SyliusOmnisendPlugin\\Model\\Event\>\|null but returns mixed\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Client/OmnisendClient.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Client\\OmnisendClient\:\:getProduct\(\) should return object\|null but returns mixed\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Client/OmnisendClient.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Client\\OmnisendClient\:\:patchCart\(\) should return object\|null but returns mixed\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Client/OmnisendClient.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Client\\OmnisendClient\:\:patchContact\(\) should return NFQ\\SyliusOmnisendPlugin\\Client\\Response\\Model\\ContactSuccess\|null but returns mixed\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Client/OmnisendClient.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Client\\OmnisendClient\:\:patchOrder\(\) should return object\|null but returns mixed\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Client/OmnisendClient.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Client\\OmnisendClient\:\:postBatch\(\) should return object\|null but returns mixed\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Client/OmnisendClient.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Client\\OmnisendClient\:\:postCart\(\) should return object\|null but returns mixed\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Client/OmnisendClient.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Client\\OmnisendClient\:\:postCategory\(\) should return object\|null but returns mixed\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Client/OmnisendClient.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Client\\OmnisendClient\:\:postContact\(\) should return NFQ\\SyliusOmnisendPlugin\\Client\\Response\\Model\\ContactSuccess\|null but returns mixed\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Client/OmnisendClient.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Client\\OmnisendClient\:\:postEvent\(\) should return object\|null but returns mixed\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Client/OmnisendClient.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Client\\OmnisendClient\:\:postOrder\(\) should return object\|null but returns mixed\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Client/OmnisendClient.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Client\\OmnisendClient\:\:postProduct\(\) should return object\|null but returns mixed\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Client/OmnisendClient.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Client\\OmnisendClient\:\:putCategory\(\) should return object\|null but returns mixed\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Client/OmnisendClient.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Client\\OmnisendClient\:\:putOrder\(\) should return object\|null but returns mixed\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Client/OmnisendClient.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Client\\OmnisendClient\:\:putProduct\(\) should return object\|null but returns mixed\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Client/OmnisendClient.php
+
+		-
+			message: '#^PHPDoc tag @param for parameter \$type with type array\<class\-string\<T\>\>\|string\|null is not subtype of native type string\|null\.$#'
+			identifier: parameter.phpDocType
+			count: 1
+			path: src/Client/OmnisendClient.php
+
+		-
+			message: '#^Template type T of method NFQ\\SyliusOmnisendPlugin\\Client\\OmnisendClient\:\:parseResponse\(\) is not referenced in a parameter\.$#'
+			identifier: method.templateTypeNotInParameter
+			count: 1
+			path: src/Client/OmnisendClient.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Client\\OmnisendClientInterface\:\:getEvents\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Client/OmnisendClientInterface.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Client\\Request\\Model\\Batch\:\:getItems\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Client/Request/Model/Batch.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Client\\Request\\Model\\Batch\:\:setItems\(\) has parameter \$items with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Client/Request/Model/Batch.php
+
+		-
+			message: '#^Property NFQ\\SyliusOmnisendPlugin\\Client\\Request\\Model\\Batch\:\:\$items type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Client/Request/Model/Batch.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Client\\Request\\Model\\Cart\:\:getProducts\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Client/Request/Model/Cart.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Client\\Request\\Model\\Cart\:\:setProducts\(\) has parameter \$products with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Client/Request/Model/Cart.php
+
+		-
+			message: '#^Property NFQ\\SyliusOmnisendPlugin\\Client\\Request\\Model\\Cart\:\:\$products type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Client/Request/Model/Cart.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Client\\Request\\Model\\Contact\:\:getCustomProperties\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Client/Request/Model/Contact.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Client\\Request\\Model\\Contact\:\:getIdentifiers\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Client/Request/Model/Contact.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Client\\Request\\Model\\Contact\:\:getTags\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Client/Request/Model/Contact.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Client\\Request\\Model\\Contact\:\:setCustomProperties\(\) has parameter \$customProperties with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Client/Request/Model/Contact.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Client\\Request\\Model\\Contact\:\:setIdentifiers\(\) has parameter \$identifiers with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Client/Request/Model/Contact.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Client\\Request\\Model\\Contact\:\:setTags\(\) has parameter \$tags with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Client/Request/Model/Contact.php
+
+		-
+			message: '#^Property NFQ\\SyliusOmnisendPlugin\\Client\\Request\\Model\\Contact\:\:\$customProperties type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Client/Request/Model/Contact.php
+
+		-
+			message: '#^Property NFQ\\SyliusOmnisendPlugin\\Client\\Request\\Model\\Contact\:\:\$identifiers \(array\<NFQ\\SyliusOmnisendPlugin\\Client\\Request\\Model\\ContactIdentifier\>\) does not accept array\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: src/Client/Request/Model/Contact.php
+
+		-
+			message: '#^Property NFQ\\SyliusOmnisendPlugin\\Client\\Request\\Model\\Contact\:\:\$tags \(array\<string\>\|null\) does not accept array\|null\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: src/Client/Request/Model/Contact.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Client\\Request\\Model\\CreateEvent\:\:getFields\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Client/Request/Model/CreateEvent.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Client\\Request\\Model\\CreateEvent\:\:setFields\(\) has parameter \$fields with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Client/Request/Model/CreateEvent.php
+
+		-
+			message: '#^Property NFQ\\SyliusOmnisendPlugin\\Client\\Request\\Model\\CreateEvent\:\:\$fields type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Client/Request/Model/CreateEvent.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Client\\Request\\Model\\Order\:\:getProducts\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Client/Request/Model/Order.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Client\\Request\\Model\\Order\:\:getTags\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Client/Request/Model/Order.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Client\\Request\\Model\\Order\:\:setProducts\(\) has parameter \$products with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Client/Request/Model/Order.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Client\\Request\\Model\\Order\:\:setTags\(\) has parameter \$tags with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Client/Request/Model/Order.php
+
+		-
+			message: '#^Property NFQ\\SyliusOmnisendPlugin\\Client\\Request\\Model\\Order\:\:\$products \(array\<NFQ\\SyliusOmnisendPlugin\\Client\\Request\\Model\\OrderProduct\>\|null\) does not accept array\|null\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: src/Client/Request/Model/Order.php
+
+		-
+			message: '#^Property NFQ\\SyliusOmnisendPlugin\\Client\\Request\\Model\\Order\:\:\$tags type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Client/Request/Model/Order.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Client\\Request\\Model\\OrderProduct\:\:getCategoryIDs\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Client/Request/Model/OrderProduct.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Client\\Request\\Model\\OrderProduct\:\:getTags\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Client/Request/Model/OrderProduct.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Client\\Request\\Model\\OrderProduct\:\:setCategoryIDs\(\) has parameter \$categoryIDs with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Client/Request/Model/OrderProduct.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Client\\Request\\Model\\OrderProduct\:\:setTags\(\) has parameter \$tags with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Client/Request/Model/OrderProduct.php
+
+		-
+			message: '#^Property NFQ\\SyliusOmnisendPlugin\\Client\\Request\\Model\\OrderProduct\:\:\$categoryIDs \(array\<string\>\|null\) does not accept array\|null\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: src/Client/Request/Model/OrderProduct.php
+
+		-
+			message: '#^Property NFQ\\SyliusOmnisendPlugin\\Client\\Request\\Model\\OrderProduct\:\:\$tags \(array\<string\>\|null\) does not accept array\|null\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: src/Client/Request/Model/OrderProduct.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Client\\Request\\Model\\Product\:\:getCategoryIDs\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Client/Request/Model/Product.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Client\\Request\\Model\\Product\:\:getImages\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Client/Request/Model/Product.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Client\\Request\\Model\\Product\:\:getTags\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Client/Request/Model/Product.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Client\\Request\\Model\\Product\:\:getVariants\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Client/Request/Model/Product.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Client\\Request\\Model\\Product\:\:setCategoryIDs\(\) has parameter \$categoryIDs with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Client/Request/Model/Product.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Client\\Request\\Model\\Product\:\:setImages\(\) has parameter \$images with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Client/Request/Model/Product.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Client\\Request\\Model\\Product\:\:setTags\(\) has parameter \$tags with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Client/Request/Model/Product.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Client\\Request\\Model\\Product\:\:setVariants\(\) has parameter \$variants with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Client/Request/Model/Product.php
+
+		-
+			message: '#^Property NFQ\\SyliusOmnisendPlugin\\Client\\Request\\Model\\Product\:\:\$categoryIDs \(array\<string\>\|null\) does not accept array\|null\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: src/Client/Request/Model/Product.php
+
+		-
+			message: '#^Property NFQ\\SyliusOmnisendPlugin\\Client\\Request\\Model\\Product\:\:\$images \(array\<NFQ\\SyliusOmnisendPlugin\\Client\\Request\\Model\\ProductImage\>\|null\) does not accept array\|null\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: src/Client/Request/Model/Product.php
+
+		-
+			message: '#^Property NFQ\\SyliusOmnisendPlugin\\Client\\Request\\Model\\Product\:\:\$tags \(array\<string\>\|null\) does not accept array\|null\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: src/Client/Request/Model/Product.php
+
+		-
+			message: '#^Property NFQ\\SyliusOmnisendPlugin\\Client\\Request\\Model\\Product\:\:\$variants \(array\<NFQ\\SyliusOmnisendPlugin\\Client\\Request\\Model\\ProductVariant\>\|null\) does not accept array\|null\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: src/Client/Request/Model/Product.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Client\\Request\\Model\\ProductImage\:\:getVariantIDs\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Client/Request/Model/ProductImage.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Client\\Request\\Model\\ProductImage\:\:setVariantIDs\(\) has parameter \$variantIDs with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Client/Request/Model/ProductImage.php
+
+		-
+			message: '#^Property NFQ\\SyliusOmnisendPlugin\\Client\\Request\\Model\\ProductImage\:\:\$variantIDs type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Client/Request/Model/ProductImage.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Client\\Request\\Model\\ProductVariant\:\:getCustomFields\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Client/Request/Model/ProductVariant.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Client\\Request\\Model\\ProductVariant\:\:setCustomFields\(\) has parameter \$customFields with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Client/Request/Model/ProductVariant.php
+
+		-
+			message: '#^Property NFQ\\SyliusOmnisendPlugin\\Client\\Request\\Model\\ProductVariant\:\:\$customFields type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Client/Request/Model/ProductVariant.php
+
+		-
+			message: '#^Cannot cast mixed to int\.$#'
+			identifier: cast.int
+			count: 1
+			path: src/Command/CreateBatchCommand.php
+
+		-
+			message: '#^Cannot cast mixed to string\.$#'
+			identifier: cast.string
+			count: 3
+			path: src/Command/CreateBatchCommand.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Controller\\CartRecoverAction\:\:__construct\(\) has parameter \$orderRepository with generic interface Sylius\\Resource\\Doctrine\\Persistence\\RepositoryInterface but does not specify its types\: T$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Controller/CartRecoverAction.php
+
+		-
+			message: '#^Parameter \#1 \$contactId of method NFQ\\SyliusOmnisendPlugin\\Setter\\ContactCookieSetter\:\:set\(\) expects string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Controller/CartRecoverAction.php
+
+		-
+			message: '#^Parameter \#1 \$url of class Symfony\\Component\\HttpFoundation\\RedirectResponse constructor expects string, string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Controller/CartRecoverAction.php
+
+		-
+			message: '#^Property NFQ\\SyliusOmnisendPlugin\\Controller\\CartRecoverAction\:\:\$repository with generic interface Sylius\\Resource\\Doctrine\\Persistence\\RepositoryInterface does not specify its types\: T$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Controller/CartRecoverAction.php
+
+		-
+			message: '#^Cannot call method add\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 2
+			path: src/Controller/SyncEventsAction.php
+
+		-
+			message: '#^Cannot access offset ''default_image'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/DependencyInjection/NFQSyliusOmnisendExtension.php
+
+		-
+			message: '#^Cannot access offset ''filter'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/DependencyInjection/NFQSyliusOmnisendExtension.php
+
+		-
+			message: '#^Cannot access offset ''type'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/DependencyInjection/NFQSyliusOmnisendExtension.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\DependencyInjection\\NFQSyliusOmnisendExtension\:\:getConfiguration\(\) has parameter \$config with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/DependencyInjection/NFQSyliusOmnisendExtension.php
+
+		-
+			message: '#^Parameter \#2 \$driver of method Sylius\\Bundle\\ResourceBundle\\DependencyInjection\\Extension\\AbstractResourceExtension\:\:registerResources\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/DependencyInjection/NFQSyliusOmnisendExtension.php
+
+		-
+			message: '#^Parameter \#2 \$id of method Symfony\\Component\\DependencyInjection\\ContainerBuilder\:\:setAlias\(\) expects string\|Symfony\\Component\\DependencyInjection\\Alias, mixed given\.$#'
+			identifier: argument.type
+			count: 9
+			path: src/DependencyInjection/NFQSyliusOmnisendExtension.php
+
+		-
+			message: '#^Parameter \#2 \$value of method Symfony\\Component\\DependencyInjection\\Container\:\:setParameter\(\) expects array\|bool\|float\|int\|string\|UnitEnum\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 7
+			path: src/DependencyInjection/NFQSyliusOmnisendExtension.php
+
+		-
+			message: '#^Parameter \#3 \$registeredResources of method Sylius\\Bundle\\ResourceBundle\\DependencyInjection\\Extension\\AbstractResourceExtension\:\:registerResources\(\) expects array, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/DependencyInjection/NFQSyliusOmnisendExtension.php
+
+		-
+			message: '#^Interface NFQ\\SyliusOmnisendPlugin\\Doctrine\\ORM\\ProductRepositoryInterface extends generic interface Sylius\\Component\\Core\\Repository\\ProductRepositoryInterface but does not specify its types\: T$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Doctrine/ORM/ProductRepositoryInterface.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Doctrine\\ORM\\PushedToOmnisendAwareRepositoryInterface\:\:findNotSyncedToOmnisend\(\) return type has no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Doctrine/ORM/PushedToOmnisendAwareRepositoryInterface.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Doctrine\\ORM\\PushedToOmnisendAwareRepositoryInterface\:\:findSyncedToOmnisend\(\) return type has no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Doctrine/ORM/PushedToOmnisendAwareRepositoryInterface.php
+
+		-
+			message: '#^Interface NFQ\\SyliusOmnisendPlugin\\Doctrine\\ORM\\TaxonRepositoryInterface extends generic interface Sylius\\Component\\Taxonomy\\Repository\\TaxonRepositoryInterface but does not specify its types\: T$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Doctrine/ORM/TaxonRepositoryInterface.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Event\\CustomEvent\:\:__construct\(\) has parameter \$fields with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Event/CustomEvent.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Event\\CustomEvent\:\:getFields\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Event/CustomEvent.php
+
+		-
+			message: '#^Property NFQ\\SyliusOmnisendPlugin\\Event\\CustomEvent\:\:\$fields type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Event/CustomEvent.php
+
+		-
+			message: '#^Parameter \#1 \$cartId of class NFQ\\SyliusOmnisendPlugin\\Message\\Command\\DeleteCart constructor expects int\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 3
+			path: src/EventSubscriber/CartSubscriber.php
+
+		-
+			message: '#^Parameter \#1 \$orderId of class NFQ\\SyliusOmnisendPlugin\\Message\\Command\\UpdateCart constructor expects int\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 4
+			path: src/EventSubscriber/CartSubscriber.php
+
+		-
+			message: '#^Parameter \#1 \$customerId of class NFQ\\SyliusOmnisendPlugin\\Message\\Command\\UpdateContact constructor expects int, mixed given\.$#'
+			identifier: argument.type
+			count: 2
+			path: src/EventSubscriber/CustomerSubscriber.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\EventSubscriber\\OrderSubscriber\:\:__construct\(\) has parameter \$orderRepository with generic interface Sylius\\Component\\Core\\Repository\\OrderRepositoryInterface but does not specify its types\: T$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/EventSubscriber/OrderSubscriber.php
+
+		-
+			message: '#^Parameter \#1 \$orderId of class NFQ\\SyliusOmnisendPlugin\\Message\\Command\\CancelOrder constructor expects int, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/EventSubscriber/OrderSubscriber.php
+
+		-
+			message: '#^Parameter \#1 \$orderId of class NFQ\\SyliusOmnisendPlugin\\Message\\Command\\CreateOrder constructor expects int, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/EventSubscriber/OrderSubscriber.php
+
+		-
+			message: '#^Parameter \#1 \$orderId of class NFQ\\SyliusOmnisendPlugin\\Message\\Command\\UpdateOrder constructor expects int, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/EventSubscriber/OrderSubscriber.php
+
+		-
+			message: '#^Parameter \#1 \$orderId of class NFQ\\SyliusOmnisendPlugin\\Message\\Command\\UpdateOrderState constructor expects int, mixed given\.$#'
+			identifier: argument.type
+			count: 3
+			path: src/EventSubscriber/OrderSubscriber.php
+
+		-
+			message: '#^Property NFQ\\SyliusOmnisendPlugin\\EventSubscriber\\OrderSubscriber\:\:\$orderRepository with generic interface Sylius\\Component\\Core\\Repository\\OrderRepositoryInterface does not specify its types\: T$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/EventSubscriber/OrderSubscriber.php
+
+		-
+			message: '#^Parameter \#1 \$productId of class NFQ\\SyliusOmnisendPlugin\\Message\\Command\\UpdateProduct constructor expects int, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/EventSubscriber/ProductSubscriber.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Factory\\Request\\BatchFactory\:\:create\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Factory/Request/BatchFactory.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Factory\\Request\\BatchFactoryInterface\:\:create\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Factory/Request/BatchFactoryInterface.php
+
+		-
+			message: '#^Cannot cast mixed to string\.$#'
+			identifier: cast.string
+			count: 1
+			path: src/Factory/Request/CartProductFactory.php
+
+		-
+			message: '#^Binary operation "\." between '' '' and mixed results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: src/Factory/Request/OrderAddressFactory.php
+
+		-
+			message: '#^Binary operation "\." between ''\-'' and mixed results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: src/Factory/Request/OrderAddressFactory.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Factory\\Request\\OrderProductFactory\:\:getCategoriesIds\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Factory/Request/OrderProductFactory.php
+
+		-
+			message: '#^Cannot cast mixed to string\.$#'
+			identifier: cast.string
+			count: 1
+			path: src/Factory/Request/ProductImageFactory.php
+
+		-
+			message: '#^PHPDoc tag @var with type Sylius\\Component\\Core\\Model\\ProductInterface\|null is not subtype of type object\.$#'
+			identifier: varTag.type
+			count: 1
+			path: src/Factory/Request/ProductImageFactory.php
+
+		-
+			message: '#^Parameter \#1 \$callback of function array_map expects \(callable\(Sylius\\Component\\Product\\Model\\ProductVariantInterface\)\: mixed\)\|null, Closure\(Sylius\\Component\\Core\\Model\\ProductVariantInterface\)\: \(string\|null\) given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Factory/Request/ProductImageFactory.php
+
+		-
+			message: '#^Parameter \#1 \$oldPrice of method NFQ\\SyliusOmnisendPlugin\\Client\\Request\\Model\\ProductVariant\:\:setOldPrice\(\) expects int\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Factory/Request/ProductVariantFactory.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Form\\Extension\\ChannelFormTypeExtension\:\:buildForm\(\) has parameter \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Form/Extension/ChannelFormTypeExtension.php
+
+		-
+			message: '#^Cannot call method getId\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: src/Form/Type/EventFieldType.php
+
+		-
+			message: '#^Cannot call method getId\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: src/Form/Type/EventType.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\HttpClient\\ClientFactory\:\:__construct\(\) has parameter \$channelRepository with generic interface Sylius\\Component\\Channel\\Repository\\ChannelRepositoryInterface but does not specify its types\: T$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/HttpClient/ClientFactory.php
+
+		-
+			message: '#^Property NFQ\\SyliusOmnisendPlugin\\HttpClient\\ClientFactory\:\:\$channelRepository with generic interface Sylius\\Component\\Channel\\Repository\\ChannelRepositoryInterface does not specify its types\: T$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/HttpClient/ClientFactory.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Manager\\ContactManager\:\:__construct\(\) has parameter \$customerRepository with generic interface Sylius\\Component\\Core\\Repository\\CustomerRepositoryInterface but does not specify its types\: T$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Manager/ContactManager.php
+
+		-
+			message: '#^Parameter \#1 \$contactId of method NFQ\\SyliusOmnisendPlugin\\Client\\OmnisendClientInterface\:\:patchContact\(\) expects string, string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Manager/ContactManager.php
+
+		-
+			message: '#^Parameter \#1 \$omnisendTrackingKey of method NFQ\\SyliusOmnisendPlugin\\Model\\ContactAwareInterface\:\:setOmnisendContactId\(\) expects string, string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Manager/ContactManager.php
+
+		-
+			message: '#^Parameter \#1 \$phone of method NFQ\\SyliusOmnisendPlugin\\Client\\OmnisendClientInterface\:\:getContactByPhone\(\) expects string, string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Manager/ContactManager.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Mapper\\EventFieldTypeDefaultValueMapper\:\:map\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Mapper/EventFieldTypeDefaultValueMapper.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Mapper\\OrderPaymentStateMapper\:\:__construct\(\) has parameter \$configuredStates with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Mapper/OrderPaymentStateMapper.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Mapper\\OrderPaymentStateMapper\:\:getState\(\) should return string but returns mixed\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Mapper/OrderPaymentStateMapper.php
+
+		-
+			message: '#^Property NFQ\\SyliusOmnisendPlugin\\Mapper\\OrderPaymentStateMapper\:\:\$configuredStates type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Mapper/OrderPaymentStateMapper.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Mapper\\OrderStateMapper\:\:__construct\(\) has parameter \$configuredStates with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Mapper/OrderStateMapper.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Mapper\\OrderStateMapper\:\:getState\(\) should return string but returns mixed\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Mapper/OrderStateMapper.php
+
+		-
+			message: '#^Property NFQ\\SyliusOmnisendPlugin\\Mapper\\OrderStateMapper\:\:\$configuredStates type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Mapper/OrderStateMapper.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Message\\Command\\PushCustomEvent\:\:__construct\(\) has parameter \$fields with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Message/Command/PushCustomEvent.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Message\\Command\\PushCustomEvent\:\:getFields\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Message/Command/PushCustomEvent.php
+
+		-
+			message: '#^Property NFQ\\SyliusOmnisendPlugin\\Message\\Command\\PushCustomEvent\:\:\$fields type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Message/Command/PushCustomEvent.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Message\\Handler\\Batch\\BatchHandlerContext\:\:__construct\(\) has parameter \$strategies with no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Message/Handler/Batch/BatchHandlerContext.php
+
+		-
+			message: '#^Property NFQ\\SyliusOmnisendPlugin\\Message\\Handler\\Batch\\BatchHandlerContext\:\:\$strategies \(iterable\<NFQ\\SyliusOmnisendPlugin\\Message\\Handler\\Batch\\BatchHandlerStrategyInterface\>\) does not accept iterable\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: src/Message/Handler/Batch/BatchHandlerContext.php
+
+		-
+			message: '#^Cannot access offset 0 on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/Message/Handler/Batch/CategoryBatchHandleStrategy.php
+
+		-
+			message: '#^Cannot call method setPushedToOmnisend\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: src/Message/Handler/Batch/CategoryBatchHandleStrategy.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Message\\Handler\\Batch\\CategoryBatchHandleStrategy\:\:postData\(\) has parameter \$categories with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Message/Handler/Batch/CategoryBatchHandleStrategy.php
+
+		-
+			message: '#^Parameter \#1 \$object of method Doctrine\\Persistence\\ObjectManager\:\:persist\(\) expects object, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Message/Handler/Batch/CategoryBatchHandleStrategy.php
+
+		-
+			message: '#^Parameter \#1 \$taxon of method NFQ\\SyliusOmnisendPlugin\\Factory\\Request\\CategoryFactoryInterface\:\:create\(\) expects Sylius\\Component\\Core\\Model\\TaxonInterface, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Message/Handler/Batch/CategoryBatchHandleStrategy.php
+
+		-
+			message: '#^Cannot access offset 0 on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/Message/Handler/Batch/ProductBatchHandleStrategy.php
+
+		-
+			message: '#^Cannot call method setPushedToOmnisend\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: src/Message/Handler/Batch/ProductBatchHandleStrategy.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Message\\Handler\\Batch\\ProductBatchHandleStrategy\:\:__construct\(\) has parameter \$channelRepository with generic interface Sylius\\Component\\Channel\\Repository\\ChannelRepositoryInterface but does not specify its types\: T$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Message/Handler/Batch/ProductBatchHandleStrategy.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Message\\Handler\\Batch\\ProductBatchHandleStrategy\:\:postData\(\) has parameter \$resources with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Message/Handler/Batch/ProductBatchHandleStrategy.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Message\\Handler\\Batch\\ProductBatchHandleStrategy\:\:pushData\(\) has parameter \$rawData with no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Message/Handler/Batch/ProductBatchHandleStrategy.php
+
+		-
+			message: '#^Parameter \#1 \$object of method Doctrine\\Persistence\\ObjectManager\:\:persist\(\) expects object, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Message/Handler/Batch/ProductBatchHandleStrategy.php
+
+		-
+			message: '#^Parameter \#1 \$product of method NFQ\\SyliusOmnisendPlugin\\Builder\\Request\\ProductBuilderDirectorInterface\:\:build\(\) expects Sylius\\Component\\Core\\Model\\ProductInterface, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Message/Handler/Batch/ProductBatchHandleStrategy.php
+
+		-
+			message: '#^Property NFQ\\SyliusOmnisendPlugin\\Message\\Handler\\Batch\\ProductBatchHandleStrategy\:\:\$channelRepository with generic interface Sylius\\Component\\Channel\\Repository\\ChannelRepositoryInterface does not specify its types\: T$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Message/Handler/Batch/ProductBatchHandleStrategy.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Message\\Handler\\CancelOrderHandler\:\:__construct\(\) has parameter \$orderRepository with generic interface Sylius\\Component\\Core\\Repository\\OrderRepositoryInterface but does not specify its types\: T$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Message/Handler/CancelOrderHandler.php
+
+		-
+			message: '#^Property NFQ\\SyliusOmnisendPlugin\\Message\\Handler\\CancelOrderHandler\:\:\$orderRepository with generic interface Sylius\\Component\\Core\\Repository\\OrderRepositoryInterface does not specify its types\: T$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Message/Handler/CancelOrderHandler.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Message\\Handler\\CreateOrderHandler\:\:__construct\(\) has parameter \$orderRepository with generic interface Sylius\\Component\\Core\\Repository\\OrderRepositoryInterface but does not specify its types\: T$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Message/Handler/CreateOrderHandler.php
+
+		-
+			message: '#^Property NFQ\\SyliusOmnisendPlugin\\Message\\Handler\\CreateOrderHandler\:\:\$orderRepository with generic interface Sylius\\Component\\Core\\Repository\\OrderRepositoryInterface does not specify its types\: T$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Message/Handler/CreateOrderHandler.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Message\\Handler\\DeleteCartHandler\:\:__construct\(\) has parameter \$orderRepository with generic interface Sylius\\Component\\Core\\Repository\\OrderRepositoryInterface but does not specify its types\: T$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Message/Handler/DeleteCartHandler.php
+
+		-
+			message: '#^Property NFQ\\SyliusOmnisendPlugin\\Message\\Handler\\DeleteCartHandler\:\:\$orderRepository with generic interface Sylius\\Component\\Core\\Repository\\OrderRepositoryInterface does not specify its types\: T$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Message/Handler/DeleteCartHandler.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Message\\Handler\\DeleteCategoryHandler\:\:__construct\(\) has parameter \$taxonRepository with generic interface Sylius\\Component\\Taxonomy\\Repository\\TaxonRepositoryInterface but does not specify its types\: T$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Message/Handler/DeleteCategoryHandler.php
+
+		-
+			message: '#^Property NFQ\\SyliusOmnisendPlugin\\Message\\Handler\\DeleteCategoryHandler\:\:\$taxonRepository with generic interface Sylius\\Component\\Taxonomy\\Repository\\TaxonRepositoryInterface does not specify its types\: T$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Message/Handler/DeleteCategoryHandler.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Message\\Handler\\PushCustomEventHandler\:\:__construct\(\) has parameter \$eventRepository with generic interface Sylius\\Resource\\Doctrine\\Persistence\\RepositoryInterface but does not specify its types\: T$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Message/Handler/PushCustomEventHandler.php
+
+		-
+			message: '#^Property NFQ\\SyliusOmnisendPlugin\\Message\\Handler\\PushCustomEventHandler\:\:\$eventRepository with generic interface Sylius\\Resource\\Doctrine\\Persistence\\RepositoryInterface does not specify its types\: T$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Message/Handler/PushCustomEventHandler.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Message\\Handler\\SyncEventsHandler\:\:__construct\(\) has parameter \$channelRepository with generic interface Sylius\\Component\\Channel\\Repository\\ChannelRepositoryInterface but does not specify its types\: T$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Message/Handler/SyncEventsHandler.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Message\\Handler\\SyncEventsHandler\:\:__construct\(\) has parameter \$eventRepository with generic interface Sylius\\Resource\\Doctrine\\Persistence\\RepositoryInterface but does not specify its types\: T$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Message/Handler/SyncEventsHandler.php
+
+		-
+			message: '#^Parameter \#1 \$channel of method NFQ\\SyliusOmnisendPlugin\\Model\\Event\:\:setChannel\(\) expects Sylius\\Component\\Core\\Model\\ChannelInterface\|null, Sylius\\Resource\\Model\\ResourceInterface\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Message/Handler/SyncEventsHandler.php
+
+		-
+			message: '#^Parameter \#1 \$eventField of method NFQ\\SyliusOmnisendPlugin\\Model\\Event\:\:addField\(\) expects NFQ\\SyliusOmnisendPlugin\\Model\\EventField, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Message/Handler/SyncEventsHandler.php
+
+		-
+			message: '#^Property NFQ\\SyliusOmnisendPlugin\\Message\\Handler\\SyncEventsHandler\:\:\$channelRepository with generic interface Sylius\\Component\\Channel\\Repository\\ChannelRepositoryInterface does not specify its types\: T$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Message/Handler/SyncEventsHandler.php
+
+		-
+			message: '#^Property NFQ\\SyliusOmnisendPlugin\\Message\\Handler\\SyncEventsHandler\:\:\$eventRepository with generic interface Sylius\\Resource\\Doctrine\\Persistence\\RepositoryInterface does not specify its types\: T$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Message/Handler/SyncEventsHandler.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Message\\Handler\\UpdateCartHandler\:\:__construct\(\) has parameter \$orderRepository with generic interface Sylius\\Component\\Core\\Repository\\OrderRepositoryInterface but does not specify its types\: T$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Message/Handler/UpdateCartHandler.php
+
+		-
+			message: '#^Property NFQ\\SyliusOmnisendPlugin\\Message\\Handler\\UpdateCartHandler\:\:\$orderRepository with generic interface Sylius\\Component\\Core\\Repository\\OrderRepositoryInterface does not specify its types\: T$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Message/Handler/UpdateCartHandler.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Message\\Handler\\UpdateCategoryHandler\:\:__construct\(\) has parameter \$customerRepository with generic interface Sylius\\Component\\Taxonomy\\Repository\\TaxonRepositoryInterface but does not specify its types\: T$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Message/Handler/UpdateCategoryHandler.php
+
+		-
+			message: '#^Property NFQ\\SyliusOmnisendPlugin\\Message\\Handler\\UpdateCategoryHandler\:\:\$taxonRepository with generic interface Sylius\\Component\\Taxonomy\\Repository\\TaxonRepositoryInterface does not specify its types\: T$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Message/Handler/UpdateCategoryHandler.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Message\\Handler\\UpdateEventHandler\:\:__construct\(\) has parameter \$eventRepository with generic interface Sylius\\Resource\\Doctrine\\Persistence\\RepositoryInterface but does not specify its types\: T$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Message/Handler/UpdateEventHandler.php
+
+		-
+			message: '#^Property NFQ\\SyliusOmnisendPlugin\\Message\\Handler\\UpdateEventHandler\:\:\$eventRepository with generic interface Sylius\\Resource\\Doctrine\\Persistence\\RepositoryInterface does not specify its types\: T$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Message/Handler/UpdateEventHandler.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Message\\Handler\\UpdateOrderHandler\:\:__construct\(\) has parameter \$orderRepository with generic interface Sylius\\Component\\Core\\Repository\\OrderRepositoryInterface but does not specify its types\: T$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Message/Handler/UpdateOrderHandler.php
+
+		-
+			message: '#^Property NFQ\\SyliusOmnisendPlugin\\Message\\Handler\\UpdateOrderHandler\:\:\$orderRepository with generic interface Sylius\\Component\\Core\\Repository\\OrderRepositoryInterface does not specify its types\: T$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Message/Handler/UpdateOrderHandler.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Message\\Handler\\UpdateOrderStateHandler\:\:__construct\(\) has parameter \$orderRepository with generic interface Sylius\\Component\\Core\\Repository\\OrderRepositoryInterface but does not specify its types\: T$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Message/Handler/UpdateOrderStateHandler.php
+
+		-
+			message: '#^Property NFQ\\SyliusOmnisendPlugin\\Message\\Handler\\UpdateOrderStateHandler\:\:\$orderRepository with generic interface Sylius\\Component\\Core\\Repository\\OrderRepositoryInterface does not specify its types\: T$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Message/Handler/UpdateOrderStateHandler.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Message\\Handler\\UpdateProductHandler\:\:__construct\(\) has parameter \$channelRepository with generic interface Sylius\\Component\\Channel\\Repository\\ChannelRepositoryInterface but does not specify its types\: T$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Message/Handler/UpdateProductHandler.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Message\\Handler\\UpdateProductHandler\:\:__construct\(\) has parameter \$productRepository with generic interface Sylius\\Component\\Core\\Repository\\ProductRepositoryInterface but does not specify its types\: T$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Message/Handler/UpdateProductHandler.php
+
+		-
+			message: '#^Property NFQ\\SyliusOmnisendPlugin\\Message\\Handler\\UpdateProductHandler\:\:\$channelRepository with generic interface Sylius\\Component\\Channel\\Repository\\ChannelRepositoryInterface does not specify its types\: T$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Message/Handler/UpdateProductHandler.php
+
+		-
+			message: '#^Property NFQ\\SyliusOmnisendPlugin\\Message\\Handler\\UpdateProductHandler\:\:\$productRepository with generic interface Sylius\\Component\\Core\\Repository\\ProductRepositoryInterface does not specify its types\: T$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Message/Handler/UpdateProductHandler.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Model\\Event\:\:getFieldBySystemName\(\) should return NFQ\\SyliusOmnisendPlugin\\Model\\EventField\|null but returns mixed\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Model/Event.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Model\\Event\:\:getFields\(\) return type with generic interface Doctrine\\Common\\Collections\\Collection does not specify its types\: TKey, T$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Model/Event.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Model\\Event\:\:setFields\(\) has parameter \$fields with generic interface Doctrine\\Common\\Collections\\Collection but does not specify its types\: TKey, T$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Model/Event.php
+
+		-
+			message: '#^Only booleans are allowed in a ternary operator condition, mixed given\.$#'
+			identifier: ternary.condNotBoolean
+			count: 1
+			path: src/Model/Event.php
+
+		-
+			message: '#^Parameter \#1 \$eventField of method NFQ\\SyliusOmnisendPlugin\\Model\\Event\:\:addField\(\) expects NFQ\\SyliusOmnisendPlugin\\Model\\EventField, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Model/Event.php
+
+		-
+			message: '#^Parameter \#1 \$p of method Doctrine\\Common\\Collections\\Collection\<\(int\|string\),mixed\>\:\:filter\(\) expects Closure\(mixed, int\|string\)\: bool, Closure\(NFQ\\SyliusOmnisendPlugin\\Model\\EventField\)\: bool given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Model/Event.php
+
+		-
+			message: '#^Property NFQ\\SyliusOmnisendPlugin\\Model\\Event\:\:\$fields with generic interface Doctrine\\Common\\Collections\\Collection does not specify its types\: TKey, T$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Model/Event.php
+
+		-
+			message: '#^Property NFQ\\SyliusOmnisendPlugin\\Model\\Event\:\:\$id is never written, only read\.$#'
+			identifier: property.onlyRead
+			count: 1
+			path: src/Model/Event.php
+
+		-
+			message: '#^Property NFQ\\SyliusOmnisendPlugin\\Model\\EventField\:\:\$id is never written, only read\.$#'
+			identifier: property.onlyRead
+			count: 1
+			path: src/Model/EventField.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Model\\ProductPicker\:\:getTags\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/ProductPicker.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Model\\ProductPicker\:\:setTags\(\) has parameter \$tags with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/ProductPicker.php
+
+		-
+			message: '#^Property NFQ\\SyliusOmnisendPlugin\\Model\\ProductPicker\:\:\$tags type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/ProductPicker.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\NFQSyliusOmnisendPlugin\:\:getSupportedDrivers\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/NFQSyliusOmnisendPlugin.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Resolver\\ContactIdResolver\:\:resolve\(\) should return string\|null but returns bool\|float\|int\|string\|null\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Resolver/ContactIdResolver.php
+
+		-
+			message: '#^Only booleans are allowed in an if condition, bool\|null given\.$#'
+			identifier: if.condNotBoolean
+			count: 1
+			path: src/Resolver/ContactIdResolver.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Resolver\\CustomerAdditionalDataResolverInterface\:\:geCustomProperties\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Resolver/CustomerAdditionalDataResolverInterface.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Resolver\\CustomerAdditionalDataResolverInterface\:\:getTags\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Resolver/CustomerAdditionalDataResolverInterface.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Resolver\\DefaultCustomerAdditionalDataResolver\:\:geCustomProperties\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Resolver/DefaultCustomerAdditionalDataResolver.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Resolver\\DefaultCustomerAdditionalDataResolver\:\:getTags\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Resolver/DefaultCustomerAdditionalDataResolver.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Resolver\\DefaultOrderAdditionalDataResolver\:\:getTags\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Resolver/DefaultOrderAdditionalDataResolver.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Resolver\\OrderAdditionalDataResolverInterface\:\:getTags\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Resolver/OrderAdditionalDataResolverInterface.php
+
+		-
+			message: '#^Argument of an invalid type mixed supplied for foreach, only iterables are supported\.$#'
+			identifier: foreach.nonIterable
+			count: 3
+			path: src/Resolver/ProductAdditionalDataResolver.php
+
+		-
+			message: '#^Cannot access offset mixed on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 2
+			path: src/Resolver/ProductAdditionalDataResolver.php
+
+		-
+			message: '#^Cannot access offset string\|null on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 2
+			path: src/Resolver/ProductAdditionalDataResolver.php
+
+		-
+			message: '#^Cannot call method format\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: src/Resolver/ProductAdditionalDataResolver.php
+
+		-
+			message: '#^Cannot cast mixed to string\.$#'
+			identifier: cast.string
+			count: 3
+			path: src/Resolver/ProductAdditionalDataResolver.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Resolver\\ProductAdditionalDataResolver\:\:__construct\(\) has parameter \$attributes with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Resolver/ProductAdditionalDataResolver.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Resolver\\ProductAdditionalDataResolver\:\:getCustomFields\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Resolver/ProductAdditionalDataResolver.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Resolver\\ProductAdditionalDataResolver\:\:getTags\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Resolver/ProductAdditionalDataResolver.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Resolver\\ProductAdditionalDataResolver\:\:resolveAttributeValue\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Resolver/ProductAdditionalDataResolver.php
+
+		-
+			message: '#^Parameter \#1 \$attributeCode of method Sylius\\Component\\Attribute\\Model\\AttributeSubjectInterface\:\:getAttributeByCodeAndLocale\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 3
+			path: src/Resolver/ProductAdditionalDataResolver.php
+
+		-
+			message: '#^Parameter \#1 \$dateTime of static method NFQ\\SyliusOmnisendPlugin\\Utils\\DatetimeHelper\:\:format\(\) expects DateTimeInterface\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Resolver/ProductAdditionalDataResolver.php
+
+		-
+			message: '#^Property NFQ\\SyliusOmnisendPlugin\\Resolver\\ProductAdditionalDataResolver\:\:\$attributes type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Resolver/ProductAdditionalDataResolver.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Resolver\\ProductAdditionalDataResolverInterface\:\:getCustomFields\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Resolver/ProductAdditionalDataResolverInterface.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Resolver\\ProductAdditionalDataResolverInterface\:\:getTags\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Resolver/ProductAdditionalDataResolverInterface.php
+
+		-
+			message: '#^Only booleans are allowed in an elseif condition, Sylius\\Component\\Core\\Model\\ImageInterface\|false given\.$#'
+			identifier: elseif.condNotBoolean
+			count: 1
+			path: src/Resolver/ProductImageResolver.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Resolver\\ProductOriginalPriceResolver\:\:calculateOriginal\(\) has parameter \$context with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Resolver/ProductOriginalPriceResolver.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Serializer\\Normalizer\\ProductPickerNormalizer\:\:normalize\(\) has parameter \$context with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Serializer/Normalizer/ProductPickerNormalizer.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Serializer\\Normalizer\\ProductPickerNormalizer\:\:normalize\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Serializer/Normalizer/ProductPickerNormalizer.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Serializer\\Normalizer\\ProductPickerNormalizer\:\:normalize\(\) return type with generic class ArrayObject does not specify its types\: TKey, TValue$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Serializer/Normalizer/ProductPickerNormalizer.php
+
+		-
+			message: '#^Cannot cast mixed to string\.$#'
+			identifier: cast.string
+			count: 1
+			path: src/Validator/Constraints/CustomEventFieldsValidator.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Validator\\Constraints\\CustomEventFieldsValidator\:\:__construct\(\) has parameter \$eventRepository with generic interface Sylius\\Resource\\Doctrine\\Persistence\\RepositoryInterface but does not specify its types\: T$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Validator/Constraints/CustomEventFieldsValidator.php
+
+		-
+			message: '#^Parameter \#1 \$value \(NFQ\\SyliusOmnisendPlugin\\Message\\Command\\PushCustomEvent\) of method NFQ\\SyliusOmnisendPlugin\\Validator\\Constraints\\CustomEventFieldsValidator\:\:validate\(\) should be contravariant with parameter \$value \(mixed\) of method Symfony\\Component\\Validator\\ConstraintValidatorInterface\:\:validate\(\)$#'
+			identifier: method.childParameterType
+			count: 2
+			path: src/Validator/Constraints/CustomEventFieldsValidator.php
+
+		-
+			message: '#^Property NFQ\\SyliusOmnisendPlugin\\Validator\\Constraints\\CustomEventFieldsValidator\:\:\$eventRepository with generic interface Sylius\\Resource\\Doctrine\\Persistence\\RepositoryInterface does not specify its types\: T$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Validator/Constraints/CustomEventFieldsValidator.php
+
+		-
+			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Validator\\Constraints\\UniqueEventFieldValidator\:\:validate\(\) has parameter \$value with generic interface Doctrine\\Common\\Collections\\Collection but does not specify its types\: TKey, T$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Validator/Constraints/UniqueEventFieldValidator.php
+
+		-
+			message: '#^Parameter \#1 \$value \(Doctrine\\Common\\Collections\\Collection\) of method NFQ\\SyliusOmnisendPlugin\\Validator\\Constraints\\UniqueEventFieldValidator\:\:validate\(\) should be contravariant with parameter \$value \(mixed\) of method Symfony\\Component\\Validator\\ConstraintValidatorInterface\:\:validate\(\)$#'
+			identifier: method.childParameterType
+			count: 2
+			path: src/Validator/Constraints/UniqueEventFieldValidator.php

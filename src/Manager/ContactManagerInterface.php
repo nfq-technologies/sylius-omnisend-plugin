@@ -19,5 +19,5 @@ use Sylius\Component\Core\Model\CustomerInterface;
 
 interface ContactManagerInterface
 {
-    public function pushToOmnisend(CustomerInterface&ContactAwareInterface $customer, ?string $channelCode): ?ContactSuccess;
+    public function pushToOmnisend(ContactAwareInterface $customer, ?string $channelCode): ?ContactSuccess;
 }

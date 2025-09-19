@@ -78,7 +78,7 @@ class OmnisendClient implements LoggerAwareInterface, OmnisendClientInterface
         $this->clientFactory = $httpClient;
     }
 
-    public function postContact(Contact $contact, ?string $channelCode): ?object
+    public function postContact(Contact $contact, ?string $channelCode): ?ContactSuccess
     {
         $response = $this->sendRequest(
             $this->messageFactory->create(
@@ -339,6 +339,7 @@ class OmnisendClient implements LoggerAwareInterface, OmnisendClientInterface
         return $this->parseResponse($response, EventSuccess::class);
     }
 
+    /** @return Event[]|null */
     public function getEvents(?string $channelCode): ?array
     {
         $response = $this->sendRequest(
@@ -352,7 +353,7 @@ class OmnisendClient implements LoggerAwareInterface, OmnisendClientInterface
         return $this->parseResponse($response, Event::class . '[]');
     }
 
-    public function patchContact(string $contactId, Contact $contact, ?string $channelCode): ?object
+    public function patchContact(string $contactId, Contact $contact, ?string $channelCode): ?ContactSuccess
     {
         $response = $this->sendRequest(
             $this->messageFactory->create(
@@ -366,7 +367,7 @@ class OmnisendClient implements LoggerAwareInterface, OmnisendClientInterface
         return $this->parseResponse($response, ContactSuccess::class);
     }
 
-    public function getContactByEmail(?string $email, ?string $channelCode): ?object
+    public function getContactByEmail(string $email, ?string $channelCode): ?ContactSuccessList
     {
         $response = $this->sendRequest(
             $this->messageFactory->create(
@@ -379,7 +380,7 @@ class OmnisendClient implements LoggerAwareInterface, OmnisendClientInterface
         return $this->parseResponse($response, ContactSuccessList::class);
     }
     
-    public function getContactByPhone(?string $phone, ?string $channelCode): ?object
+    public function getContactByPhone(string $phone, ?string $channelCode): ?ContactSuccessList
     {
         $response = $this->sendRequest(
             $this->messageFactory->create(
@@ -428,6 +429,12 @@ class OmnisendClient implements LoggerAwareInterface, OmnisendClientInterface
         return null;
     }
 
+    /**
+     * @template T ob object
+     *
+     * @param class-string<T>|(class-string<T>)[]|string|null $type
+     * @return T|T[]|null
+     */
     private function parseResponse(?ResponseInterface $response, ?string $type = null)
     {
         if ($response !== null && $response->getStatusCode() === 200 && $type !== null) {
