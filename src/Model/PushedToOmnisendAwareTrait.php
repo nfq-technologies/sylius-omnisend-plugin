@@ -32,7 +32,7 @@ trait PushedToOmnisendAwareTrait
         return $this->pushedToOmnisend;
     }
 
-    public function setPushedToOmnisend(DateTimeInterface $dateTime = null): void
+    public function setPushedToOmnisend(?DateTimeInterface $dateTime = null): void
     {
         $dateTime ??= new DateTime();
 

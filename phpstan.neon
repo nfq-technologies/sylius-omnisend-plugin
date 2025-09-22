@@ -1,3 +1,6 @@
+includes:
+	- phpstan-baseline.neon
+
 parameters:
     phpVersion: 80200
     reportUnmatchedIgnoredErrors: true
@@ -13,8 +16,8 @@ parameters:
 
     ignoreErrors:
         - identifier: trait.unused
+        - identifier: empty.notAllowed
         - '/Variable method call on NFQ\\SyliusOmnisendPlugin\\Client\\Request\\Model\\ContactIdentifierChannel./'
         - '/Call to an undefined method Sylius\\Component\\Core\\Model\\OrderInterface::getOmnisendOrderDetails\(\)./'
         - '/Call to an undefined method Symfony\\Component\\HttpFoundation\\Session\\SessionInterface::getFlashBag\(\)./'
-        - '/Call to an undefined method Sylius\\Component\\Core\\Model\\CustomerInterface::isSubscribedToSMS\(\)./'
         - '/Call to function method_exists\(\) with */'

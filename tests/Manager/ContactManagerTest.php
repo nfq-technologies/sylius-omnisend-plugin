@@ -25,6 +25,8 @@ use Tests\NFQ\SyliusOmnisendPlugin\Application\Entity\Customer;
 
 class ContactManagerTest extends TestCase
 {
+    private const PHONE_NUMBER = '+37061111111';
+
     /** @var ContactManager */
     private $manager;
 
@@ -50,10 +52,11 @@ class ContactManagerTest extends TestCase
         );
     }
 
-    public function testIfAddOmnisendContactID()
+    public function testIfAddOmnisendContactID(): void
     {
         $customer = new Customer();
         $customer->setEmail('emai@sylius.com');
+        $customer->setPhoneNumber(self::PHONE_NUMBER);
         $this->contactBuilderDirector
             ->expects($this->exactly(1))
             ->method('build')
@@ -75,10 +78,11 @@ class ContactManagerTest extends TestCase
         $this->assertEquals($customer->getOmnisendContactId(), 'ID');
     }
 
-    public function testIfDoNotAddOmnisendContactIDOnInvalidResponse()
+    public function testIfDoNotAddOmnisendContactIDOnInvalidResponse(): void
     {
         $customer = new Customer();
         $customer->setEmail('emai@sylius.com');
+        $customer->setPhoneNumber(self::PHONE_NUMBER);
         $this->contactBuilderDirector
             ->expects($this->exactly(1))
             ->method('build')

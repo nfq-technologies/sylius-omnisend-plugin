@@ -14,13 +14,14 @@ declare(strict_types=1);
 namespace NFQ\SyliusOmnisendPlugin\Builder\Request;
 
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Contact;
+use NFQ\SyliusOmnisendPlugin\Model\ContactAwareInterface;
 use Sylius\Component\Core\Model\CustomerInterface;
 
 interface ContactBuilderInterface
 {
     public function createContact(): void;
 
-    public function addIdentifiers(CustomerInterface $customer): void;
+    public function addIdentifiers(ContactAwareInterface $customer): void;
 
     public function addCustomerDetails(CustomerInterface $customer): void;
 

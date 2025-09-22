@@ -15,8 +15,11 @@ namespace Tests\NFQ\SyliusOmnisendPlugin\Builder\Request;
 
 use NFQ\SyliusOmnisendPlugin\Builder\Request\ContactBuilder;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\ContactIdentifier;
+use NFQ\SyliusOmnisendPlugin\Client\Request\Model\ContactIdentifierChannelValue;
 use NFQ\SyliusOmnisendPlugin\Factory\Request\ContactIdentifierFactory;
 use NFQ\SyliusOmnisendPlugin\Resolver\DefaultCustomerAdditionalDataResolver;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Sylius\Component\Core\Model\Address;
 use Tests\NFQ\SyliusOmnisendPlugin\Application\Entity\Customer;
@@ -24,11 +27,9 @@ use DateTime;
 
 class ContactBuilderTest extends TestCase
 {
-    /** @var ContactIdentifierFactory */
-    private $factory;
+    private ContactIdentifierFactory&MockObject $factory;
 
-    /** @var ContactBuilder */
-    private $builder;
+    private ContactBuilder $builder;
 
     protected function setUp(): void
     {
@@ -36,7 +37,7 @@ class ContactBuilderTest extends TestCase
         $this->builder = new ContactBuilder($this->factory, new DefaultCustomerAdditionalDataResolver());
     }
 
-    public function testIfAddsCustomProperties()
+    public function testIfAddsCustomProperties(): void
     {
         $customer = new Customer();
         $this->builder->createContact();
@@ -47,7 +48,7 @@ class ContactBuilderTest extends TestCase
         $this->assertEquals($result->getCustomProperties(), null);
     }
 
-    public function testIfNotAddsAddress()
+    public function testIfNotAddsAddress(): void
     {
         $customer = new Customer();
         $this->builder->createContact();
@@ -57,7 +58,7 @@ class ContactBuilderTest extends TestCase
         $this->assertEquals($result->getCountryCode(), null);
     }
 
-    public function testIfAddsAddress()
+    public function testIfAddsAddress(): void
     {
         $customer = new Customer();
         $address = new Address();
@@ -78,7 +79,7 @@ class ContactBuilderTest extends TestCase
         $this->assertEquals($result->getState(), 'Province');
     }
 
-    public function testIfAddsCustomerDetails()
+    public function testIfAddsCustomerDetails(): void
     {
         $customer = new Customer();
         $customer->setFirstName('first');
@@ -95,28 +96,39 @@ class ContactBuilderTest extends TestCase
         $this->assertEquals($result->getBirthday(), '2019-01-02T12:12:12+00:00');
     }
 
-    public function testIfAddsEmailIdentifiers()
+    /** @return bool[][]|null[][]|string[][] */
+    public static function emailConsentProvider(): array
+    {
+        return [
+            [null, ContactIdentifierChannelValue::NON_SUBSCRIBED],
+            [true, ContactIdentifierChannelValue::SUBSCRIBED],
+            [false, ContactIdentifierChannelValue::UNSUBSCRIBED],
+        ];
+    }
+
+    #[DataProvider('emailConsentProvider')]
+    public function testIfAddsEmailIdentifiers(?bool $emailConsent, string $expectedSubscriptionStatus): void
     {
         $this->factory
             ->expects($this->once())
             ->method('create')
             ->willReturnCallback(
-                function (string $type, string $id, string $status) {
+                function (string $type, string $id, string $status) use ($expectedSubscriptionStatus) {
                     $this->assertEquals('email', $type);
                     $this->assertEquals('test@nfq.lt', $id);
-                    $this->assertEquals('subscribed', $status);
+                    $this->assertSame($expectedSubscriptionStatus, $status);
 
                     return new ContactIdentifier();
                 }
             );
         $customer = new Customer();
         $customer->setEmail('test@nfq.lt');
-        $customer->setSubscribedToNewsletter(true);
+        $customer->setSubscribedToEmail($emailConsent);
         $this->builder->createContact();
         $this->builder->addIdentifiers($customer);
     }
 
-    public function testIfAddsPhoneIdentifiers()
+    public function testIfAddsPhoneIdentifiers(): void
     {
         $this->factory
             ->expects($this->once())
@@ -125,7 +137,7 @@ class ContactBuilderTest extends TestCase
                 function (string $type, string $id, string $status) {
                     $this->assertEquals('phone', $type);
                     $this->assertEquals('123423452', $id);
-                    $this->assertEquals('nonSubscribed', $status);
+                    $this->assertEquals(ContactIdentifierChannelValue::NON_SUBSCRIBED, $status);
 
                     return new ContactIdentifier();
                 }
@@ -136,7 +148,7 @@ class ContactBuilderTest extends TestCase
         $this->builder->addIdentifiers($customer);
     }
 
-    public function testIfAddsBothIdentifiers()
+    public function testIfAddsBothIdentifiers(): void
     {
         $this->factory
             ->expects($this->exactly(2))

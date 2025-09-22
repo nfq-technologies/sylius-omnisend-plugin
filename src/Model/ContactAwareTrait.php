@@ -44,9 +44,4 @@ trait ContactAwareTrait
     {
         return null;
     }
-
-    public function isSubscribedToSMS(): bool
-    {
-        return false;
-    }
 }

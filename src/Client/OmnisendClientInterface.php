@@ -20,16 +20,18 @@ use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Contact;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\CreateEvent;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Order;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Product;
+use NFQ\SyliusOmnisendPlugin\Client\Response\Model\ContactSuccess;
+use NFQ\SyliusOmnisendPlugin\Client\Response\Model\ContactSuccessList;
 
 interface OmnisendClientInterface
 {
-    public function postContact(Contact $contact, ?string $channelCode): ?object;
+    public function postContact(Contact $contact, ?string $channelCode): ?ContactSuccess;
 
-    public function getContactByEmail(?string $email, ?string $channelCode): ?object;
+    public function getContactByEmail(string $email, ?string $channelCode): ?ContactSuccessList;
     
-    public function getContactByPhone(?string $phone, ?string $channelCode): ?object;
+    public function getContactByPhone(string $phone, ?string $channelCode): ?ContactSuccessList;
 
-    public function patchContact(string $contactId, Contact $contact, ?string $channelCode): ?object;
+    public function patchContact(string $contactId, Contact $contact, ?string $channelCode): ?ContactSuccess;
 
     public function postCategory(Category $category, ?string $channelCode): ?object;
 

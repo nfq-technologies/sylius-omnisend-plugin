@@ -15,29 +15,24 @@ namespace NFQ\SyliusOmnisendPlugin\Message\Handler;
 
 use NFQ\SyliusOmnisendPlugin\Manager\ContactManagerInterface;
 use NFQ\SyliusOmnisendPlugin\Message\Command\UpdateContact;
+use NFQ\SyliusOmnisendPlugin\Model\ContactAwareInterface;
 use Sylius\Component\Core\Model\CustomerInterface;
 use Sylius\Component\Core\Repository\CustomerRepositoryInterface;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
 class UpdateContactHandler implements MessageHandlerInterface
 {
-    /** @var ContactManagerInterface */
-    private $contactManager;
-
-    /** @var CustomerRepositoryInterface */
-    private $customerRepository;
 
     public function __construct(
-        ContactManagerInterface $contactManager,
-        CustomerRepositoryInterface $customerRepository
+        private readonly ContactManagerInterface $contactManager,
+        /** @var CustomerRepositoryInterface<CustomerInterface> */
+        private readonly CustomerRepositoryInterface $customerRepository
     ) {
-        $this->customerRepository = $customerRepository;
-        $this->contactManager = $contactManager;
     }
 
     public function __invoke(UpdateContact $message): void
     {
-        /** @var CustomerInterface|null $customer */
+        /** @var ContactAwareInterface|null $customer */
         $customer = $this->customerRepository->find($message->getCustomerId());
 
         if (null !== $customer) {

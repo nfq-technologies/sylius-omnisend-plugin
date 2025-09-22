@@ -17,7 +17,10 @@ class ContactIdentifierChannelValue
 {
     public const SUBSCRIBED = 'subscribed';
 
+    /** non-subscribed can only be changed into subscribed/unsubscribed but not other way around */
     public const NON_SUBSCRIBED = 'nonSubscribed';
+    
+    public const UNSUBSCRIBED = 'unsubscribed';
 
     /** @var string */
     private $status;

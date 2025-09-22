@@ -49,24 +49,24 @@ class ContactBuilder implements ContactBuilderInterface
         $this->contact = new Contact();
     }
 
-    public function addIdentifiers(CustomerInterface $customer): void
+    public function addIdentifiers(ContactAwareInterface $customer): void
     {
-        if (null !== $customer->getEmail()) {
+        if ($customer->getEmail() !== null) {
             $this->contact->addIdentifier(
                 $this->contactIdentifierFactory->create(
                     ContactIdentifier::TYPE_EMAIL,
                     $customer->getEmail(),
-                    $customer->isSubscribedToNewsletter() ? ContactIdentifierChannelValue::SUBSCRIBED : ContactIdentifierChannelValue::NON_SUBSCRIBED
+                    $this->mapToConsent($customer->getSubscribedToEmail())
                 )
             );
         }
 
-        if (null !== $customer->getPhoneNumber()) {
+        if ($customer->getPhoneNumber() !== null) {
             $this->contact->addIdentifier(
                 $this->contactIdentifierFactory->create(
                     ContactIdentifier::TYPE_PHONE,
                     $customer->getPhoneNumber(),
-                    $customer->isSubscribedToSMS() ? ContactIdentifierChannelValue::SUBSCRIBED : ContactIdentifierChannelValue::NON_SUBSCRIBED
+                    $this->mapToConsent($customer->getSubscribedToSms())
                 )
             );
         }
@@ -78,13 +78,13 @@ class ContactBuilder implements ContactBuilderInterface
             ->setFirstName($customer->getFirstName())
             ->setLastName($customer->getLastName())
             ->setGender(GenderHelper::resolve($customer->getGender()))
-            ->setBirthday($customer->getBirthday() !== null ? DatetimeHelper::format($customer->getBirthday()) : null)
+            ->setBirthday(DatetimeHelper::format($customer->getBirthday()))
             ->setCreatedAt(DatetimeHelper::format($customer->getCreatedAt()));
     }
 
     public function addAddress(CustomerInterface $customer): void
     {
-        if (null !== $customer->getDefaultAddress()) {
+        if ($customer->getDefaultAddress() !== null) {
             $this->contact
                 ->setCountryCode($customer->getDefaultAddress()->getCountryCode())
                 ->setCountry($this->getCountryName($customer->getDefaultAddress()->getCountryCode()))
@@ -115,9 +115,18 @@ class ContactBuilder implements ContactBuilderInterface
 
         try {
             return Countries::getName($countryCode);
-        } catch (MissingResourceException $exception) {
+        } catch (MissingResourceException) {
         }
 
         return null;
+    }
+
+    private function mapToConsent(?bool $subscriptionStatus): string
+    {
+        return match ($subscriptionStatus) {
+            null => ContactIdentifierChannelValue::NON_SUBSCRIBED,
+            true => ContactIdentifierChannelValue::SUBSCRIBED,
+            false => ContactIdentifierChannelValue::UNSUBSCRIBED,
+        };
     }
 }

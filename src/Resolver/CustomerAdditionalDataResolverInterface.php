@@ -13,11 +13,12 @@ declare(strict_types=1);
 
 namespace NFQ\SyliusOmnisendPlugin\Resolver;
 
+use NFQ\SyliusOmnisendPlugin\Model\ContactAwareInterface;
 use Sylius\Component\Core\Model\CustomerInterface;
 
 interface CustomerAdditionalDataResolverInterface
 {
-    public function geCustomProperties(CustomerInterface $customer): ?array;
+    public function geCustomProperties(ContactAwareInterface $customer): ?array;
 
-    public function getTags(CustomerInterface $customer): ?array;
+    public function getTags(ContactAwareInterface $customer): ?array;
 }

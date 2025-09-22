@@ -31,5 +31,5 @@ interface PushedToOmnisendAwareInterface
     /**
      * If null is given the method will set the last omnisend sync to 'now'
      */
-    public function setPushedToOmnisend(DateTimeInterface $dateTime = null): void;
+    public function setPushedToOmnisend(?DateTimeInterface $dateTime = null): void;
 }

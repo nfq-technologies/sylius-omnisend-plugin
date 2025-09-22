@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace NFQ\SyliusOmnisendPlugin\Builder\Request;
 
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Contact;
+use NFQ\SyliusOmnisendPlugin\Model\ContactAwareInterface;
 use Sylius\Component\Core\Model\CustomerInterface;
 
 class ContactBuilderDirector implements ContactBuilderDirectorInterface
@@ -26,7 +27,7 @@ class ContactBuilderDirector implements ContactBuilderDirectorInterface
         $this->contactBuilder = $contactBuilder;
     }
 
-    public function build(CustomerInterface $customer): Contact
+    public function build(ContactAwareInterface $customer): Contact
     {
         $this->contactBuilder->createContact();
         $this->contactBuilder->addIdentifiers($customer);

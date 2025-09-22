@@ -16,13 +16,9 @@ namespace NFQ\SyliusOmnisendPlugin\Client\Response\Model;
 class ContactSuccessList
 {
     /** @var ContactSuccess[] */
-    private $contacts;
+    private array $contacts = [];
 
-    public function __construct()
-    {
-        $this->contacts = [];
-    }
-
+    /** @return ContactSuccess[] */
     public function getContacts(): array
     {
         return $this->contacts;
@@ -33,8 +29,18 @@ class ContactSuccessList
         $this->contacts[] = $contact;
     }
 
+    /** @param ContactSuccess[] $contacts */
     public function setContacts(array $contacts): void
     {
         $this->contacts = $contacts;
+    }
+
+    /**
+     * @phpstan-assert-if-true array{} $this->contacts
+     * @phpstan-assert-if-false non-empty-array<ContactSuccess> $this->contacts
+     */
+    public function isEmpty(): bool
+    {
+        return empty($this->contacts);
     }
 }
