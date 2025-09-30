@@ -78,7 +78,7 @@ class ContactManager implements ContactManagerInterface
             return $this->getFirstContact($contacts);
         }
 
-        $contacts = empty($customer->getEmail()) ? null : $this->omnisendClient->getContactByPhone(
+        $contacts = empty($customer->getPhoneNumber()) ? null : $this->omnisendClient->getContactByPhone(
             $customer->getPhoneNumber(),
             $channelCode,
         );
