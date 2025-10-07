@@ -27,7 +27,7 @@ interface ContactBuilderInterface
 
     public function addAddress(CustomerInterface $customer): void;
 
-    public function addCustomProperties(CustomerInterface $customer): void;
+    public function addCustomProperties(ContactAwareInterface $customer): void;
 
     public function getContact(): Contact;
 }

@@ -95,7 +95,7 @@ class ContactBuilder implements ContactBuilderInterface
         }
     }
 
-    public function addCustomProperties(CustomerInterface $customer): void
+    public function addCustomProperties(ContactAwareInterface $customer): void
     {
         $this->contact
             ->setTags($this->customerAdditionalDataResolverInterface->getTags($customer))

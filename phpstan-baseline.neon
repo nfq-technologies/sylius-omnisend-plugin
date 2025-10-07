@@ -823,12 +823,6 @@ parameters:
 			path: src/Manager/ContactManager.php
 
 		-
-			message: '#^Parameter \#1 \$phone of method NFQ\\SyliusOmnisendPlugin\\Client\\OmnisendClientInterface\:\:getContactByPhone\(\) expects string, string\|null given\.$#'
-			identifier: argument.type
-			count: 1
-			path: src/Manager/ContactManager.php
-
-		-
 			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Mapper\\EventFieldTypeDefaultValueMapper\:\:map\(\) has no return type specified\.$#'
 			identifier: missingType.return
 			count: 1
