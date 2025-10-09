@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace NFQ\SyliusOmnisendPlugin\Resolver;
 
 use NFQ\SyliusOmnisendPlugin\Model\ContactAwareInterface;
-use Sylius\Component\Core\Model\CustomerInterface;
 
 interface CustomerAdditionalDataResolverInterface
 {
