@@ -56,7 +56,7 @@ class SyncEventsHandler implements MessageHandlerInterface
             $channel = $this->channelRepository->findOneBy(['code' => $message->getChannelCode()]);
             foreach ($events as $event) {
                 /** @var Event|null $systemEvent */
-                $systemEvent = $this->eventRepository->findOneBy(['systemName' => $event->getSystemName()]);
+                $systemEvent = $event->getSystemName() ? $this->eventRepository->findOneBy(['systemName' => $event->getSystemName()]) : null;
                 if (null !== $systemEvent) {
                     $systemEvent->setEventID($event->getEventID());
                     $systemEvent->setName($event->getName());
