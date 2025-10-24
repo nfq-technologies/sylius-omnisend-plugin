@@ -20,6 +20,7 @@ services:
       - '@nfq_sylius_omnisend_plugin.repository.event'
       - '@nfq_sylius_omnisend_plugin.builder.request.event_director'
       - '@nfq_sylius_omnisend_plugin.client.omnisend'
+      - '@sylius.repository.channel'
     tags: [ messenger.message_handler ]
 
   nfq_sylius_omnisend_plugin.message.handler.sync_events:
