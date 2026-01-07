@@ -7,7 +7,7 @@ cd "${PROJECT_ROOT}"
 
 echo "## Executing Unit Tests"
 rm -rf "$PROJECT_ROOT/tests/Application/var/cache/"
-./vendor/bin/phpunit --log-junit test_unit.xml
+./bin/phpunit --log-junit test_unit.xml
 
 code=$?
 
@@ -18,7 +18,7 @@ fi
 
 echo "## Executing phpstan"
 
-vendor/bin/phpstan analyse -c phpstan.neon -l max src/
+./bin/phpstan analyse -c phpstan.neon -l max src/
 
 code=$?
 
