@@ -18,6 +18,7 @@ use NFQ\SyliusOmnisendPlugin\Client\OmnisendClientInterface;
 use NFQ\SyliusOmnisendPlugin\Client\Response\Model\ContactSuccess;
 use NFQ\SyliusOmnisendPlugin\Client\Response\Model\ContactSuccessList;
 use NFQ\SyliusOmnisendPlugin\Model\ContactAwareInterface;
+use NFQ\SyliusOmnisendPlugin\Utils\PhoneHelper;
 use Sylius\Component\Core\Model\CustomerInterface;
 use Sylius\Component\Core\Repository\CustomerRepositoryInterface;
 
@@ -78,8 +79,9 @@ class ContactManager implements ContactManagerInterface
             return $this->getFirstContact($contacts);
         }
 
+        // phone number should be normalized before searching, cause omnisend prefixes all numbers with plus on creation
         $contacts = empty($customer->getPhoneNumber()) ? null : $this->omnisendClient->getContactByPhone(
-            $customer->getPhoneNumber(),
+            PhoneHelper::normalize($customer->getPhoneNumber()),
             $channelCode,
         );
 
