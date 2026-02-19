@@ -810,17 +810,6 @@ parameters:
 			count: 1
 			path: src/Manager/ContactManager.php
 
-		-
-			message: '#^Parameter \#1 \$contactId of method NFQ\\SyliusOmnisendPlugin\\Client\\OmnisendClientInterface\:\:patchContact\(\) expects string, string\|null given\.$#'
-			identifier: argument.type
-			count: 1
-			path: src/Manager/ContactManager.php
-
-		-
-			message: '#^Parameter \#1 \$omnisendTrackingKey of method NFQ\\SyliusOmnisendPlugin\\Model\\ContactAwareInterface\:\:setOmnisendContactId\(\) expects string, string\|null given\.$#'
-			identifier: argument.type
-			count: 1
-			path: src/Manager/ContactManager.php
 
 		-
 			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Mapper\\EventFieldTypeDefaultValueMapper\:\:map\(\) has no return type specified\.$#'
@@ -1022,12 +1011,6 @@ parameters:
 
 		-
 			message: '#^Method NFQ\\SyliusOmnisendPlugin\\Message\\Handler\\PushCustomEventHandler\:\:__construct\(\) has parameter \$eventRepository with generic interface Sylius\\Resource\\Doctrine\\Persistence\\RepositoryInterface but does not specify its types\: T$#'
-			identifier: missingType.generics
-			count: 1
-			path: src/Message/Handler/PushCustomEventHandler.php
-
-		-
-			message: '#^Property NFQ\\SyliusOmnisendPlugin\\Message\\Handler\\PushCustomEventHandler\:\:\$eventRepository with generic interface Sylius\\Resource\\Doctrine\\Persistence\\RepositoryInterface does not specify its types\: T$#'
 			identifier: missingType.generics
 			count: 1
 			path: src/Message/Handler/PushCustomEventHandler.php
