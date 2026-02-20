@@ -37,7 +37,7 @@ class ContactManager implements ContactManagerInterface
     public function __construct(
         ContactBuilderDirectorInterface $contactBuilderDirector,
         OmnisendClientInterface $omnisendClient,
-        CustomerRepositoryInterface $customerRepository
+        CustomerRepositoryInterface $customerRepository,
     ) {
         $this->contactBuilderDirector = $contactBuilderDirector;
         $this->omnisendClient = $omnisendClient;
@@ -46,45 +46,41 @@ class ContactManager implements ContactManagerInterface
 
     public function pushToOmnisend(ContactAwareInterface $customer, ?string $channelCode): ?ContactSuccess
     {
-        $updatedContact = $this->contactBuilderDirector->build($customer);
+        // don't update contact info to avoid collisions between contact identifiers
+        $contactByEmail = $this->trySyncByEmail($customer, $channelCode);
+        $contactByPhone = $this->trySyncByPhone($customer, $channelCode);
 
-        if (!empty($customer->getOmnisendContactId())) {
-            return $this->omnisendClient->patchContact(
-                $customer->getOmnisendContactId(),
-                $updatedContact,
-                $channelCode
-            );
+        $emailFound = $contactByEmail !== null;
+        $phoneFound = $contactByPhone !== null;
+        $hasEmail = !empty($customer->getEmail());
+        $hasPhone = !empty($customer->getPhoneNumber());
+
+        Assert::true($hasEmail || $hasPhone, 'Customer must have either email or phone number');
+
+        if (!$emailFound && !$phoneFound) {
+            return $this->createFullContact($customer, $channelCode);
         }
 
-        $contactByEmail = $this->updateByEmail($customer, $channelCode);
-        $contactByPhone = $this->updateByPhone($customer, $channelCode);
+        if ($emailFound && !$phoneFound && $hasPhone) {
+            $contactByPhone = $this->createContactWithPhoneOnly($customer, $channelCode);
+        }
 
-
-        if ($contactByEmail === null && $contactByPhone === null) {
-            $newContact = $this->omnisendClient->postContact(
-                $updatedContact,
-                $channelCode
-            );
-
-            Assert::notNull($newContact, 'Failed to create contact');
-            Assert::notEmpty($newContact->getContactID(), 'Contact ID cannot be empty');
-            $customer->setOmnisendContactId($newContact->getContactID());
-            $this->customerRepository->add($customer);
-
-            return $newContact;
+        if ($phoneFound && !$emailFound && $hasEmail) {
+            $contactByEmail = $this->createContactWithEmailOnly($customer, $channelCode);
         }
 
         return $contactByPhone ?? $contactByEmail;
     }
 
-    private function updateByEmail(ContactAwareInterface $customer, ?string $channelCode): ?ContactSuccess
+    private function trySyncByEmail(ContactAwareInterface $customer, ?string $channelCode): ?ContactSuccess
     {
-        if (empty($customer->getEmail())) {
+        $email = $customer->getEmail();
+        if (empty($email)) {
             return null;
         }
 
         $contacts = $this->omnisendClient->getContactByEmail(
-            $customer->getEmail(),
+            $email,
             $channelCode,
         );
 
@@ -99,57 +95,14 @@ class ContactManager implements ContactManagerInterface
             return null;
         }
 
+        // Only update consent using the existing email from contact, not customer's email
         $this->omnisendClient->patchContact(
             $contactId,
-            $this->contactBuilderDirector->build($customer),
-            $channelCode
-        );
-
-        $customer->setOmnisendContactId($contactId);
-        $this->customerRepository->add($customer);
-
-        return $contact;
-    }
-    private function updateByPhone(ContactAwareInterface $customer, ?string $channelCode): ?ContactSuccess
-    {
-        if (empty($customer->getPhoneNumber())) {
-            return null;
-        }
-
-        $contacts = $this->omnisendClient->getContactByPhone(
-            PhoneHelper::normalize($customer->getPhoneNumber()),
+            $this->contactBuilderDirector->buildWithoutPhone($customer),
             $channelCode,
         );
 
-        $contact = self::getFirstContact($contacts);
-
-        if ($contact === null) {
-            return null;
-        }
-
-        $contactId = $contact->getContactID();
-        if ($contactId === null) {
-            return null;
-        }
-
-        $this->omnisendClient->patchContact(
-            $contactId,
-            $this->contactBuilderDirector->build($customer),
-            $channelCode
-        );
-
-        $customer->setOmnisendContactId($contactId);
-        $this->customerRepository->add($customer);
-
         return $contact;
-    }
-
-    /**
-     * @phpstan-assert-if-false ContactSuccessList $contacts
-     */
-    private static function isEmpty(?ContactSuccessList $contacts): bool
-    {
-        return $contacts?->isEmpty() ?? true;
     }
 
     private static function getFirstContact(?ContactSuccessList $contacts): ?ContactSuccess
@@ -159,5 +112,90 @@ class ContactManager implements ContactManagerInterface
         }
 
         return $contacts->getContacts()[0] ?? null;
+    }
+
+    /**
+     * @phpstan-assert-if-false ContactSuccessList $contacts
+     * @phpstan-assert-if-true null $contacts
+     */
+    private static function isEmpty(?ContactSuccessList $contacts): bool
+    {
+        return $contacts?->isEmpty() ?? true;
+    }
+
+    private function trySyncByPhone(ContactAwareInterface $customer, ?string $channelCode): ?ContactSuccess
+    {
+        $phone = $customer->getPhoneNumber();
+        if (empty($phone)) {
+            return null;
+        }
+
+        $normalizedPhone = PhoneHelper::normalize($phone);
+        $contacts = $this->omnisendClient->getContactByPhone(
+            $normalizedPhone,
+            $channelCode,
+        );
+
+        $contact = self::getFirstContact($contacts);
+
+        if ($contact === null) {
+            return null;
+        }
+
+        $contactId = $contact->getContactID();
+        if ($contactId === null) {
+            return null;
+        }
+
+        // Only update consent using the existing phone from contact, not customer's phone
+        $this->omnisendClient->patchContact(
+            $contactId,
+            $this->contactBuilderDirector->buildWithoutEmail($customer),
+            $channelCode,
+        );
+
+        return $contact;
+    }
+
+    private function createFullContact(ContactAwareInterface $customer, ?string $channelCode): ContactSuccess
+    {
+        $newContact = $this->omnisendClient->postContact(
+            $this->contactBuilderDirector->build($customer),
+            $channelCode,
+        );
+
+        Assert::notNull($newContact, 'Failed to create contact');
+        Assert::notEmpty($newContact->getContactID(), 'Contact ID cannot be empty');
+
+        $customer->setOmnisendContactId($newContact->getContactID());
+        $this->customerRepository->add($customer);
+
+        return $newContact;
+    }
+
+    private function createContactWithPhoneOnly(ContactAwareInterface $customer, ?string $channelCode): ContactSuccess
+    {
+        $newContact = $this->omnisendClient->postContact(
+            $this->contactBuilderDirector->buildWithoutEmail($customer),
+            $channelCode,
+        );
+
+        Assert::notNull($newContact, 'Failed to create contact with phone');
+        Assert::notEmpty($newContact->getContactID(), 'Contact ID cannot be empty');
+
+        return $newContact;
+    }
+
+    private function createContactWithEmailOnly(ContactAwareInterface $customer, ?string $channelCode): ContactSuccess
+    {
+        $newContact = $this->omnisendClient->postContact(
+            $this->contactBuilderDirector->buildWithoutPhone($customer),
+            $channelCode,
+        );
+
+        Assert::notNull($newContact, 'Failed to create contact with email');
+        Assert::notEmpty($newContact->getContactID(), 'Contact ID cannot be empty');
+
+        return $newContact;
     }
 }

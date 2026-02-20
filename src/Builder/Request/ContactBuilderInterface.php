@@ -23,6 +23,10 @@ interface ContactBuilderInterface
 
     public function addIdentifiers(ContactAwareInterface $customer): void;
 
+    public function addEmailIdentifier(ContactAwareInterface $customer): void;
+
+    public function addPhoneIdentifier(ContactAwareInterface $customer): void;
+
     public function addCustomerDetails(CustomerInterface $customer): void;
 
     public function addAddress(CustomerInterface $customer): void;
