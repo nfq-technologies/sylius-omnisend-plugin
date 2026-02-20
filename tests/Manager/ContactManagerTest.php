@@ -13,8 +13,6 @@ declare(strict_types=1);
 
 namespace Tests\NFQ\SyliusOmnisendPlugin\Manager;
 
-use InvalidArgumentException;
-use NFQ\SyliusOmnisendPlugin\Builder\Request\ContactBuilderDirector;
 use NFQ\SyliusOmnisendPlugin\Builder\Request\ContactBuilderDirectorInterface;
 use NFQ\SyliusOmnisendPlugin\Client\OmnisendClientInterface;
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Contact;
@@ -25,14 +23,24 @@ use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Sylius\Component\Core\Repository\CustomerRepositoryInterface;
 use Tests\NFQ\SyliusOmnisendPlugin\Application\Entity\Customer;
+use Webmozart\Assert\InvalidArgumentException;
 
 class ContactManagerTest extends TestCase
 {
+    private const EMAIL = 'email@sylius.com';
     private const PHONE_NUMBER = '+37061111111';
+    private const CONTACT_ID_1 = '5f8e9a1b';
+    private const CONTACT_ID_2 = '7c3d4e2f';
+    private const NEW_CONTACT_ID = 'NEW_ID';
+    private const NEW_CONTACT_ID_1 = '1a2b3c4d';
+    private const NEW_CONTACT_ID_2 = '2d4f6a8c';
 
     private ContactManager $manager;
+
     private ContactBuilderDirectorInterface&MockObject $contactBuilderDirector;
+
     private OmnisendClientInterface&MockObject $omnisendClient;
+
     private CustomerRepositoryInterface&MockObject $customerRepository;
 
     protected function setUp(): void
@@ -44,23 +52,20 @@ class ContactManagerTest extends TestCase
         $this->manager = new ContactManager(
             $this->contactBuilderDirector,
             $this->omnisendClient,
-            $this->customerRepository
+            $this->customerRepository,
         );
     }
 
-    public function testIfAddOmnisendContactID(): void
+    public function testCreateContactWithBothWhenNotFoundByEmailOrPhone(): void
     {
         $customer = new Customer();
-        $customer->setEmail('emai@sylius.com');
+        $customer->setEmail(self::EMAIL);
         $customer->setPhoneNumber(self::PHONE_NUMBER);
+
         $this->contactBuilderDirector
             ->expects($this->once())
             ->method('build')
             ->willReturn(new Contact());
-        $this->omnisendClient
-            ->expects($this->once())
-            ->method('postContact')
-            ->willReturn((new ContactSuccess())->setContactID('ID'));
         $this->omnisendClient
             ->expects($this->once())
             ->method('getContactByEmail')
@@ -69,27 +74,46 @@ class ContactManagerTest extends TestCase
             ->expects($this->once())
             ->method('getContactByPhone')
             ->willReturn(null);
+        $this->omnisendClient
+            ->expects($this->once())
+            ->method('postContact')
+            ->willReturn((new ContactSuccess())->setContactID(self::NEW_CONTACT_ID));
         $this->customerRepository
             ->expects($this->once())
             ->method('add');
 
-        $this->manager->pushToOmnisend($customer, 'default');
+        $result = $this->manager->pushToOmnisend($customer, 'default');
 
-        $this->assertEquals($customer->getOmnisendContactId(), 'ID');
+        $this->assertEquals(self::NEW_CONTACT_ID, $customer->getOmnisendContactId());
+        $this->assertEquals(self::NEW_CONTACT_ID, $result->getContactID());
     }
 
-    public function testIfThrowsExceptionWhenPostContactReturnsNull(): void
+    public function testThrowsExceptionWhenPostContactReturnsNull(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Failed to create contact');
 
         $customer = new Customer();
-        $customer->setEmail('emai@sylius.com');
+        $customer->setEmail(self::EMAIL);
         $customer->setPhoneNumber(self::PHONE_NUMBER);
+
         $this->contactBuilderDirector
-            ->expects($this->once())
             ->method('build')
             ->willReturn(new Contact());
+        $this->contactBuilderDirector
+            ->method('buildWithoutPhone')
+            ->willReturn(new Contact());
+        $this->contactBuilderDirector
+            ->method('buildWithoutEmail')
+            ->willReturn(new Contact());
+        $this->omnisendClient
+            ->expects($this->once())
+            ->method('getContactByEmail')
+            ->willReturn(null);
+        $this->omnisendClient
+            ->expects($this->once())
+            ->method('getContactByPhone')
+            ->willReturn(null);
         $this->omnisendClient
             ->expects($this->once())
             ->method('postContact')
@@ -97,133 +121,23 @@ class ContactManagerTest extends TestCase
         $this->customerRepository
             ->expects($this->never())
             ->method('add');
-        $this->omnisendClient
-            ->expects($this->once())
-            ->method('getContactByEmail')
-            ->willReturn(null);
-        $this->omnisendClient
-            ->expects($this->once())
-            ->method('getContactByPhone')
-            ->willReturn(null);
 
         $this->manager->pushToOmnisend($customer, 'default');
     }
 
-    public function testUpdateContactWhenOmnisendContactIdExists(): void
+    public function testUpdateConsentOnlyWhenContactFoundByEmail(): void
     {
         $customer = new Customer();
-        $customer->setEmail('email@sylius.com');
-        $customer->setOmnisendContactId('EXISTING_ID');
-
-        $this->contactBuilderDirector
-            ->expects($this->once())
-            ->method('build')
-            ->willReturn(new Contact());
-        $this->omnisendClient
-            ->expects($this->once())
-            ->method('patchContact')
-            ->with('EXISTING_ID', $this->anything(), 'default')
-            ->willReturn((new ContactSuccess())->setContactID('EXISTING_ID'));
-        $this->omnisendClient
-            ->expects($this->never())
-            ->method('getContactByEmail');
-        $this->omnisendClient
-            ->expects($this->never())
-            ->method('postContact');
-
-        $result = $this->manager->pushToOmnisend($customer, 'default');
-
-        $this->assertEquals('EXISTING_ID', $result->getContactID());
-    }
-
-    public function testUpdateByEmailWhenContactFoundByEmail(): void
-    {
-        $customer = new Customer();
-        $customer->setEmail('email@sylius.com');
+        $customer->setEmail(self::EMAIL);
         $customer->setPhoneNumber(self::PHONE_NUMBER);
 
-        $existingContact = (new ContactSuccess())->setContactID('EMAIL_CONTACT_ID');
-        $contactList = new ContactSuccessList();
-        $contactList->setContacts([$existingContact]);
-
-        $this->contactBuilderDirector
-            ->expects($this->exactly(2))
-            ->method('build')
-            ->willReturn(new Contact());
-        $this->omnisendClient
-            ->expects($this->once())
-            ->method('getContactByEmail')
-            ->with('email@sylius.com', 'default')
-            ->willReturn($contactList);
-        $this->omnisendClient
-            ->expects($this->once())
-            ->method('getContactByPhone')
-            ->willReturn(null);
-        $this->omnisendClient
-            ->expects($this->once())
-            ->method('patchContact')
-            ->with('EMAIL_CONTACT_ID', $this->anything(), 'default');
-        $this->omnisendClient
-            ->expects($this->never())
-            ->method('postContact');
-        $this->customerRepository
-            ->expects($this->once())
-            ->method('add');
-
-        $result = $this->manager->pushToOmnisend($customer, 'default');
-
-        $this->assertEquals('EMAIL_CONTACT_ID', $customer->getOmnisendContactId());
-    }
-
-    public function testUpdateByPhoneWhenContactFoundByPhone(): void
-    {
-        $customer = new Customer();
-        $customer->setPhoneNumber(self::PHONE_NUMBER);
-
-        $existingContact = (new ContactSuccess())->setContactID('PHONE_CONTACT_ID');
-        $contactList = new ContactSuccessList();
-        $contactList->setContacts([$existingContact]);
-
-        $this->contactBuilderDirector
-            ->expects($this->exactly(2))
-            ->method('build')
-            ->willReturn(new Contact());
-        $this->omnisendClient
-            ->expects($this->once())
-            ->method('getContactByPhone')
-            ->willReturn($contactList);
-        $this->omnisendClient
-            ->expects($this->once())
-            ->method('patchContact')
-            ->with('PHONE_CONTACT_ID', $this->anything(), 'default');
-        $this->omnisendClient
-            ->expects($this->never())
-            ->method('postContact');
-        $this->customerRepository
-            ->expects($this->once())
-            ->method('add');
-
-        $result = $this->manager->pushToOmnisend($customer, 'default');
-
-        $this->assertEquals('PHONE_CONTACT_ID', $customer->getOmnisendContactId());
-    }
-
-    public function testPhoneContactTakesPriorityWhenBothFound(): void
-    {
-        $customer = new Customer();
-        $customer->setEmail('email@sylius.com');
-        $customer->setPhoneNumber(self::PHONE_NUMBER);
-
-        $emailContact = (new ContactSuccess())->setContactID('EMAIL_CONTACT_ID');
+        $emailContact = (new ContactSuccess())->setContactID(self::CONTACT_ID_1);
         $emailContactList = new ContactSuccessList();
         $emailContactList->setContacts([$emailContact]);
 
-        $phoneContact = (new ContactSuccess())->setContactID('PHONE_CONTACT_ID');
-        $phoneContactList = new ContactSuccessList();
-        $phoneContactList->setContacts([$phoneContact]);
-
         $this->contactBuilderDirector
-            ->method('build')
+            ->expects($this->once())
+            ->method('buildWithoutEmail')
             ->willReturn(new Contact());
         $this->omnisendClient
             ->expects($this->once())
@@ -232,14 +146,95 @@ class ContactManagerTest extends TestCase
         $this->omnisendClient
             ->expects($this->once())
             ->method('getContactByPhone')
-            ->willReturn($phoneContactList);
+            ->willReturn(null);
+        // Patch for email consent, then postContact for new phone contact
         $this->omnisendClient
-            ->expects($this->exactly(2))
-            ->method('patchContact');
+            ->expects($this->once())
+            ->method('patchContact')
+            ->with(self::CONTACT_ID_1, $this->isInstanceOf(Contact::class), 'default');
+        $this->omnisendClient
+            ->expects($this->once())
+            ->method('postContact')
+            ->willReturn((new ContactSuccess())->setContactID(self::NEW_CONTACT_ID_1));
 
         $result = $this->manager->pushToOmnisend($customer, 'default');
 
-        $this->assertEquals('PHONE_CONTACT_ID', $result->getContactID());
+        // Phone contact is returned (newly created) when email found but phone not
+        $this->assertEquals(self::NEW_CONTACT_ID_1, $result->getContactID());
+    }
+
+    public function testUpdateConsentOnlyWhenContactFoundByPhone(): void
+    {
+        $customer = new Customer();
+        $customer->setEmail(self::EMAIL);
+        $customer->setPhoneNumber(self::PHONE_NUMBER);
+
+        $phoneContact = (new ContactSuccess())->setContactID(self::CONTACT_ID_2);
+        $phoneContactList = new ContactSuccessList();
+        $phoneContactList->setContacts([$phoneContact]);
+
+        $this->contactBuilderDirector
+            ->expects($this->once())
+            ->method('buildWithoutPhone')
+            ->willReturn(new Contact());
+
+        $this->omnisendClient
+            ->expects($this->once())
+            ->method('getContactByEmail')
+            ->willReturn(null);
+        $this->omnisendClient
+            ->expects($this->once())
+            ->method('getContactByPhone')
+            ->willReturn($phoneContactList);
+        // Patch for phone consent, then postContact for new email contact
+        $this->omnisendClient
+            ->expects($this->once())
+            ->method('patchContact')
+            ->with(self::CONTACT_ID_2, $this->isInstanceOf(Contact::class), 'default');
+        $this->omnisendClient
+            ->expects($this->once())
+            ->method('postContact')
+            ->willReturn((new ContactSuccess())->setContactID(self::NEW_CONTACT_ID_2));
+
+        $result = $this->manager->pushToOmnisend($customer, 'default');
+
+        $this->assertEquals(self::CONTACT_ID_2, $result->getContactID());
+    }
+
+    public function testUpdateConsentOnlyWhenBothContactsFound(): void
+    {
+        $customer = new Customer();
+        $customer->setEmail(self::EMAIL);
+        $customer->setPhoneNumber(self::PHONE_NUMBER);
+
+        $emailContact = (new ContactSuccess())->setContactID(self::CONTACT_ID_1);
+        $emailContactList = new ContactSuccessList();
+        $emailContactList->setContacts([$emailContact]);
+
+        $phoneContact = (new ContactSuccess())->setContactID(self::CONTACT_ID_2);
+        $phoneContactList = new ContactSuccessList();
+        $phoneContactList->setContacts([$phoneContact]);
+
+        $this->omnisendClient
+            ->expects($this->once())
+            ->method('getContactByEmail')
+            ->willReturn($emailContactList);
+        $this->omnisendClient
+            ->expects($this->once())
+            ->method('getContactByPhone')
+            ->willReturn($phoneContactList);
+        // Two patches: one for email consent, one for phone consent
+        $this->omnisendClient
+            ->expects($this->exactly(2))
+            ->method('patchContact');
+        $this->omnisendClient
+            ->expects($this->never())
+            ->method('postContact');
+
+        $result = $this->manager->pushToOmnisend($customer, 'default');
+
+        // Phone contact takes priority when both found
+        $this->assertEquals(self::CONTACT_ID_2, $result->getContactID());
     }
 
     public function testSkipEmailSearchWhenEmailEmpty(): void
@@ -248,8 +243,10 @@ class ContactManagerTest extends TestCase
         $customer->setPhoneNumber(self::PHONE_NUMBER);
 
         $this->contactBuilderDirector
-            ->expects($this->once())
             ->method('build')
+            ->willReturn(new Contact());
+        $this->contactBuilderDirector
+            ->method('buildWithoutEmail')
             ->willReturn(new Contact());
         $this->omnisendClient
             ->expects($this->never())
@@ -261,21 +258,23 @@ class ContactManagerTest extends TestCase
         $this->omnisendClient
             ->expects($this->once())
             ->method('postContact')
-            ->willReturn((new ContactSuccess())->setContactID('NEW_ID'));
+            ->willReturn((new ContactSuccess())->setContactID(self::NEW_CONTACT_ID));
 
-        $this->manager->pushToOmnisend($customer, 'default');
+        $result = $this->manager->pushToOmnisend($customer, 'default');
 
-        $this->assertEquals('NEW_ID', $customer->getOmnisendContactId());
+        $this->assertEquals(self::NEW_CONTACT_ID, $result->getContactID());
     }
 
     public function testSkipPhoneSearchWhenPhoneEmpty(): void
     {
         $customer = new Customer();
-        $customer->setEmail('email@sylius.com');
+        $customer->setEmail(self::EMAIL);
 
         $this->contactBuilderDirector
-            ->expects($this->once())
             ->method('build')
+            ->willReturn(new Contact());
+        $this->contactBuilderDirector
+            ->method('buildWithoutPhone')
             ->willReturn(new Contact());
         $this->omnisendClient
             ->expects($this->once())
@@ -287,10 +286,94 @@ class ContactManagerTest extends TestCase
         $this->omnisendClient
             ->expects($this->once())
             ->method('postContact')
-            ->willReturn((new ContactSuccess())->setContactID('NEW_ID'));
+            ->willReturn((new ContactSuccess())->setContactID(self::NEW_CONTACT_ID));
 
-        $this->manager->pushToOmnisend($customer, 'default');
+        $result = $this->manager->pushToOmnisend($customer, 'default');
 
-        $this->assertEquals('NEW_ID', $customer->getOmnisendContactId());
+        $this->assertEquals(self::NEW_CONTACT_ID, $result->getContactID());
+    }
+
+    public function testEmailFoundNoPhoneOnCustomer(): void
+    {
+        $customer = new Customer();
+        $customer->setEmail(self::EMAIL);
+
+        $emailContact = (new ContactSuccess())->setContactID(self::CONTACT_ID_1);
+        $emailContactList = new ContactSuccessList();
+        $emailContactList->setContacts([$emailContact]);
+
+        $this->omnisendClient
+            ->expects($this->once())
+            ->method('getContactByEmail')
+            ->willReturn($emailContactList);
+        $this->omnisendClient
+            ->expects($this->never())
+            ->method('getContactByPhone');
+        $this->omnisendClient
+            ->expects($this->once())
+            ->method('patchContact')
+            ->with(self::CONTACT_ID_1, $this->isInstanceOf(Contact::class), 'default');
+        $this->omnisendClient
+            ->expects($this->never())
+            ->method('postContact');
+
+        $result = $this->manager->pushToOmnisend($customer, 'default');
+
+        $this->assertEquals(self::CONTACT_ID_1, $result->getContactID());
+    }
+
+    public function testPhoneFoundNoEmailOnCustomer(): void
+    {
+        $customer = new Customer();
+        $customer->setPhoneNumber(self::PHONE_NUMBER);
+
+        $phoneContact = (new ContactSuccess())->setContactID(self::CONTACT_ID_2);
+        $phoneContactList = new ContactSuccessList();
+        $phoneContactList->setContacts([$phoneContact]);
+
+        $this->omnisendClient
+            ->expects($this->never())
+            ->method('getContactByEmail');
+        $this->omnisendClient
+            ->expects($this->once())
+            ->method('getContactByPhone')
+            ->willReturn($phoneContactList);
+        $this->omnisendClient
+            ->expects($this->once())
+            ->method('patchContact')
+            ->with(self::CONTACT_ID_2, $this->isInstanceOf(Contact::class), 'default');
+        $this->omnisendClient
+            ->expects($this->never())
+            ->method('postContact');
+
+        $result = $this->manager->pushToOmnisend($customer, 'default');
+
+        $this->assertEquals(self::CONTACT_ID_2, $result->getContactID());
+    }
+
+    public function testThrowsExceptionWhenBothEmailAndPhoneEmpty(): void
+    {
+        $customer = new Customer();
+
+        $this->contactBuilderDirector
+            ->expects($this->never())
+            ->method('build')
+            ->willReturn(new Contact());
+        $this->omnisendClient
+            ->expects($this->never())
+            ->method('getContactByEmail');
+        $this->omnisendClient
+            ->expects($this->never())
+            ->method('getContactByPhone');
+        $this->omnisendClient
+            ->expects($this->never())
+            ->method('postContact')
+            ->willReturn((new ContactSuccess())->setContactID(self::NEW_CONTACT_ID));
+        $this->customerRepository
+            ->expects($this->never())
+            ->method('add');
+
+        $this->expectException(InvalidArgumentException::class);
+        $result = $this->manager->pushToOmnisend($customer, 'default');
     }
 }

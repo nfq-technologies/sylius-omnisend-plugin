@@ -15,12 +15,12 @@ namespace NFQ\SyliusOmnisendPlugin\Builder\Request;
 
 use NFQ\SyliusOmnisendPlugin\Client\Request\Model\Contact;
 use NFQ\SyliusOmnisendPlugin\Model\ContactAwareInterface;
+use SensitiveParameter;
 use Sylius\Component\Core\Model\CustomerInterface;
 
 class ContactBuilderDirector implements ContactBuilderDirectorInterface
 {
-    /** @var ContactBuilderInterface */
-    private $contactBuilder;
+    private ContactBuilderInterface $contactBuilder;
 
     public function __construct(ContactBuilderInterface $contactBuilder)
     {
@@ -31,6 +31,28 @@ class ContactBuilderDirector implements ContactBuilderDirectorInterface
     {
         $this->contactBuilder->createContact();
         $this->contactBuilder->addIdentifiers($customer);
+        $this->contactBuilder->addCustomerDetails($customer);
+        $this->contactBuilder->addAddress($customer);
+        $this->contactBuilder->addCustomProperties($customer);
+
+        return $this->contactBuilder->getContact();
+    }
+
+    public function buildWithoutPhone(ContactAwareInterface $customer): Contact
+    {
+        $this->contactBuilder->createContact();
+        $this->contactBuilder->addEmailIdentifier($customer);
+        $this->contactBuilder->addCustomerDetails($customer);
+        $this->contactBuilder->addAddress($customer);
+        $this->contactBuilder->addCustomProperties($customer);
+
+        return $this->contactBuilder->getContact();
+    }
+
+    public function buildWithoutEmail(ContactAwareInterface $customer): Contact
+    {
+        $this->contactBuilder->createContact();
+        $this->contactBuilder->addPhoneIdentifier($customer);
         $this->contactBuilder->addCustomerDetails($customer);
         $this->contactBuilder->addAddress($customer);
         $this->contactBuilder->addCustomProperties($customer);
