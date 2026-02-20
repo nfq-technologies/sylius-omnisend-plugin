@@ -20,4 +20,8 @@ use Sylius\Component\Core\Model\CustomerInterface;
 interface ContactBuilderDirectorInterface
 {
     public function build(ContactAwareInterface $customer): Contact;
+
+    public function buildWithoutPhone(ContactAwareInterface $customer): Contact;
+
+    public function buildWithoutEmail(ContactAwareInterface $customer): Contact;
 }

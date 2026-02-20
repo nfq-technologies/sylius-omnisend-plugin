@@ -21,6 +21,7 @@ use NFQ\SyliusOmnisendPlugin\Model\ContactAwareInterface;
 use NFQ\SyliusOmnisendPlugin\Resolver\CustomerAdditionalDataResolverInterface;
 use NFQ\SyliusOmnisendPlugin\Utils\DatetimeHelper;
 use NFQ\SyliusOmnisendPlugin\Utils\GenderHelper;
+use SensitiveParameter;
 use Sylius\Component\Core\Model\CustomerInterface;
 use Symfony\Component\Intl\Countries;
 use Symfony\Component\Intl\Exception\MissingResourceException;
@@ -51,22 +52,31 @@ class ContactBuilder implements ContactBuilderInterface
 
     public function addIdentifiers(ContactAwareInterface $customer): void
     {
+        $this->addEmailIdentifier($customer);
+        $this->addPhoneIdentifier($customer);
+    }
+
+    public function addEmailIdentifier(ContactAwareInterface $customer): void
+    {
         if ($customer->getEmail() !== null) {
             $this->contact->addIdentifier(
                 $this->contactIdentifierFactory->create(
                     ContactIdentifier::TYPE_EMAIL,
                     $customer->getEmail(),
-                    $this->mapToConsent($customer->getSubscribedToEmail())
+                    self::mapToConsent($customer->getSubscribedToEmail())
                 )
             );
         }
+    }
 
+    public function addPhoneIdentifier(ContactAwareInterface $customer): void
+    {
         if ($customer->getPhoneNumber() !== null) {
             $this->contact->addIdentifier(
                 $this->contactIdentifierFactory->create(
                     ContactIdentifier::TYPE_PHONE,
                     $customer->getPhoneNumber(),
-                    $this->mapToConsent($customer->getSubscribedToSms())
+                    self::mapToConsent($customer->getSubscribedToSms())
                 )
             );
         }
@@ -121,7 +131,7 @@ class ContactBuilder implements ContactBuilderInterface
         return null;
     }
 
-    private function mapToConsent(?bool $subscriptionStatus): string
+    private static function mapToConsent(?bool $subscriptionStatus): string
     {
         return match ($subscriptionStatus) {
             null => ContactIdentifierChannelValue::NON_SUBSCRIBED,
