@@ -15,11 +15,10 @@ namespace NFQ\SyliusOmnisendPlugin\Client\Response\Model;
 
 class ContactSuccess
 {
-    /** @var string|null */
-    private $email;
+    private ?string $email = null;
 
-    /** @var string|null */
-    private $contactID;
+    private ?string $contactID = null;
+
 
     public function getEmail(): ?string
     {
